@@ -1,0 +1,84 @@
+{
+  "_meta": "NO EDITAR A MANO. Punto de inyeccion del skill build-client-site: este archivo se regenera en cada clon a partir de la ficha de /clients/. Los valores aqui son PLACEHOLDERS del template (reemplazables por la ficha).",
+  "tema": {
+    "primary": "#DB1FFF",
+    "accent": "#FFFFFF",
+    "fuente": "Outfit",
+    "orden_secciones": ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"]
+  },
+  "content": {
+    "prestador": {
+      "nombre": "Lic. Nombre Apellido",
+      "rol": "Nutricionista · Matrícula habilitada",
+      "titulo": "Comé mejor sin dietas imposibles ni efecto rebote",
+      "bajada": "Consultoría gratuita de 20 minutos para armar un plan realista, a tu medida y sin morir de hambre en el intento.",
+      "bio": "PLACEHOLDER: Bio del prestador (formacion, matricula, enfoque). Se inyecta desde la ficha.",
+      "enfoque": "PLACEHOLDER: Enfoque del prestador (que problema del paciente resuelve y como trabaja). Se inyecta desde la ficha."
+    },
+    "problema": {
+      "tag": "El problema real",
+      "titulo": "Comer 'bien' no tendría que ser una prueba constante",
+      "descripcion": "PLACEHOLDER: Problemas del paciente que resuelve el prestador. Se inyecta desde la ficha.",
+      "pains": [
+        { "tag": "Sin rumbo", "t": "Dietas a prueba y error", "d": "Probaste de todo: comer menos, dietas de moda, vueltas y vueltas. Nada se sostiene porque el plan no encaja con tu vida real." },
+        { "tag": "Sin constancia", "t": "Resultados que no duran", "d": "Bajaste alguna vez y lo recuperaste todo. Sin seguimiento ni plan realista, el esfuerzo se esfuma en un par de meses." },
+        { "tag": "Sin tiempo", "t": "No sabés por dónde empezar", "d": "Entre trabajo y familia, no hay cabeza para armar un plan. Necesitás alguien que lo haga por vos, concreto y simple." }
+      ]
+    },
+    "pasos": {
+      "tag": "Cómo funciona",
+      "titulo": "Tu primer paso: la consultoría gratuita",
+      "footer": "Sin cargo, sin compromiso. Si no es para vos, no es para vos.",
+      "steps": [
+        { "n": "01", "k": "Agendá", "d": "Elegí día y horario en 2 clics. Te llega la confirmación y el recordatorio automático." },
+        { "n": "02", "k": "Charlamos", "d": "Consultoría gratuita de 20 minutos: te escucho, evaluamos tu caso y respondo tus dudas." },
+        { "n": "03", "k": "Plan a tu medida", "d": "Si avanzamos, armamos un plan realista con tu contexto: tu rutina, tu comida, tus gustos." }
+      ]
+    },
+    "reviews": {
+      "tag": "Lo que dicen mis pacientes",
+      "titulo": "Opiniones reales, sin humo",
+      "items": [
+        { "nombre": "Paciente de Google Maps", "texto": "PLACEHOLDER: Reseña publica de Google Maps o testimonio con consentimiento escrito.", "fuente": "Google Maps" }
+      ]
+    },
+    "casos": {
+      "tag": "Casos de éxito",
+      "titulo": "Resultados comprobables, con autorización",
+      "items": [
+        { "titulo": "PLACEHOLDER: Caso de éxito", "descripcion": "PLACEHOLDER: Situacion inicial y proceso. Se inyecta desde la ficha.", "resultado": "PLACEHOLDER: Resultado comprobable" }
+      ]
+    },
+    "pricing": {
+      "tag": "Tu primera consulta",
+      "titulo": "Empezá con una consultoría gratuita, sin costo ni compromiso",
+      "plan": "Consultoría gratuita",
+      "precio_ars": 0,
+      "precio_label": "Primera consultoría · 20 minutos · Online",
+      "precio_sub": "Sin cargo y sin compromiso: si no es para vos, no es para vos.",
+      "detalle_titulo": "Qué te llevás de la primera charla",
+      "incluido": [
+        "Evaluación inicial de 20 minutos por video llamada",
+        "Escucho tu caso y respondo tus dudas reales",
+        "Un plan de acción inicial realista, a tu medida",
+        "Sin letra chica ni promesas mágicas",
+        "Si avanzamos, definimos juntos cómo seguir"
+      ],
+      "garantia": "Sin cargo ni compromiso",
+      "cta": "Agendá tu consultoría gratuita"
+    },
+    "faq": {
+      "tag": "Claridad total",
+      "titulo": "Preguntas frecuentes",
+      "items": [
+        { "q": "PLACEHOLDER: Pregunta frecuente 1", "a": "PLACEHOLDER: Respuesta clara y directa. Se inyecta desde la ficha." },
+        { "q": "PLACEHOLDER: Pregunta frecuente 2", "a": "PLACEHOLDER: Respuesta clara y directa. Se inyecta desde la ficha." }
+      ]
+    },
+    "links": {
+      "calendly": "https://calendly.com/PLACEHOLDER/consultoria-gratuita",
+      "whatsapp": "https://wa.me/5491100000000"
+    },
+    "consentimiento_testimonios": false
+  }
+}

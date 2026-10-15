@@ -1,0 +1,81 @@
+---
+import { SITE } from "../config";
+const included = [
+  "Landing estática ultra-veloz en Astro con tu marca",
+  "Botón y widget de agenda sincronizado (Calendly / Meet)",
+  "WhatsApp Business optimizado con respuestas automáticas",
+  "Recordatorios automáticos para reducir ausencias",
+  "Subdominio de NexoBow y hosting CDN global de alta disponibilidad",
+];
+---
+
+<section id="precios" class="relative mx-auto max-w-5xl px-6 py-24">
+  <div class="text-center mb-14">
+    <div class="inline-block rounded-full bg-white/5 border border-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-[#DB1FFF] mb-3">
+      Inversión transparente
+    </div>
+    <h2 class="font-outfit text-4xl font-extrabold tracking-tight text-white md:text-5xl">
+      Precio claro, sin letra chica ni sorpresas.
+    </h2>
+  </div>
+
+  <div class="grid gap-8 md:grid-cols-2 items-stretch">
+    <!-- Pricing Card Main -->
+    <div class="relative overflow-hidden rounded-[36px] border-2 border-[#DB1FFF]/50 bg-gradient-to-b from-neutral-900 via-neutral-950 to-black p-8 sm:p-10 shadow-[0_0_50px_rgba(219,31,255,0.2)] flex flex-col justify-between">
+      <div class="absolute -top-12 -right-12 h-36 w-36 rounded-full bg-[#DB1FFF]/30 blur-3xl"></div>
+      
+      <div>
+        <span class="inline-block rounded-full bg-[#DB1FFF] px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-sm">
+          Plan Llave en Mano
+        </span>
+        <p class="mt-6 text-sm uppercase tracking-wider text-white/60 font-medium">Setup e Implementación (pago único)</p>
+        <p class="mt-2 font-outfit text-5xl font-extrabold text-white">{SITE.setupPrice}</p>
+        
+        <div class="my-6 border-t border-white/10"></div>
+
+        <p class="text-sm uppercase tracking-wider text-white/60 font-medium">Abono mensual de soporte y optimización</p>
+        <p class="mt-2 font-outfit text-4xl font-bold text-white">{SITE.monthlyPrice}</p>
+      </div>
+
+      <div class="mt-8 rounded-2xl bg-white/5 border border-white/10 p-4">
+        <p class="text-sm font-semibold text-[#DB1FFF] flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full bg-[#DB1FFF] animate-ping"></span>
+          Garantía: Primer mes de prueba sin costo de abono
+        </p>
+      </div>
+    </div>
+
+    <!-- Included Checklist Card -->
+    <div class="rounded-[36px] border border-white/10 bg-white/[0.03] p-8 sm:p-10 backdrop-blur-md flex flex-col justify-between">
+      <div>
+        <h3 class="font-outfit text-2xl font-bold text-white">Qué incluye tu solución</h3>
+        <p class="mt-2 text-sm text-white/60">Todo lo necesario para que el embudo comience a recibir pacientes.</p>
+        
+        <ul class="mt-6 space-y-4">
+          {included.map((i) => (
+            <li class="flex items-start gap-3 text-sm text-white/80">
+              <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#DB1FFF]/20 text-[#DB1FFF]">
+                ✓
+              </span>
+              <span>{i}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="mt-10">
+        <a
+          href={SITE.bookingUrl}
+          class="group relative flex w-full items-center justify-between rounded-full bg-white/10 p-2 pl-6 pr-2 text-sm font-bold tracking-wide text-white backdrop-blur-md border border-white/20 transition-all duration-300 hover:border-[#DB1FFF] hover:bg-white/15 hover:shadow-[0_0_30px_rgba(219,31,255,0.4)]"
+        >
+          <span>Agendá tu consultoría gratuita</span>
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-[#DB1FFF] text-white transition-all duration-300 group-hover:scale-105 group-hover:translate-x-0.5">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

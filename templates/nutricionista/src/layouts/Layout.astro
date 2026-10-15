@@ -1,0 +1,66 @@
+---
+import "../styles/global.css";
+import { THEME, CONTENT } from "../site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+const fontName = (THEME.fuente || "Outfit").trim();
+const fontFamily = fontName.replace(/ /g, "+");
+const fontUrl = `https://fonts.googleapis.com/css2?family=${fontFamily}:wght@400;500;600;700;800&display=swap`;
+
+const hex = THEME.primary.replace("#", "");
+const [r, g, b] = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+const lin = (c: number) => (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
+const lum = 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+const onPrimary = lum > 0.18 ? "#0a0a0c" : "#ffffff";
+
+const rootStyle = `--color-primary: ${THEME.primary}; --color-accent: ${THEME.accent}; --color-on-primary: ${onPrimary}; --font-sans: "${fontName}", system-ui, sans-serif;`;
+
+const pageTitle =
+  title ?? `${CONTENT.prestador.nombre} | Consultoría gratuita de nutrición`;
+const pageDescription =
+  description ??
+  (CONTENT.prestador.bajada || CONTENT.prestador.enfoque || "").slice(0, 160);
+---
+
+<!doctype html>
+<html lang="es-AR" style={rootStyle}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href={fontUrl} rel="stylesheet" />
+  </head>
+  <body
+    class="selection:bg-(--color-primary) selection:text-(--color-on-primary) relative min-h-screen"
+  >
+    <div class="pointer-events-none fixed inset-0 overflow-hidden z-0">
+      <div
+        class="animate-glow-mesh absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full bg-[#DB1FFF]/15 blur-[140px]"
+      ></div>
+      <div
+        class="animate-glow-mesh absolute top-1/3 -right-40 h-[500px] w-[500px] rounded-full bg-violet-600/10 blur-[130px]"
+        style="animation-delay: -4s;"
+      ></div>
+      <div
+        class="animate-glow-mesh absolute -bottom-40 left-1/4 h-[550px] w-[550px] rounded-full bg-[#DB1FFF]/10 blur-[150px]"
+        style="animation-delay: -2s;"
+      ></div>
+    </div>
+
+    <div class="relative z-10">
+      <slot />
+    </div>
+  </body>
+</html>

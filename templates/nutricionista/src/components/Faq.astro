@@ -1,0 +1,39 @@
+---
+import { CONTENT } from "../site";
+
+const { faq } = CONTENT;
+---
+
+<section id="faq" class="relative mx-auto max-w-4xl px-6 py-24">
+  <div class="text-center mb-12">
+    <div
+      class="inline-block rounded-full bg-white/5 border border-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-(--color-primary) mb-3"
+    >
+      {faq.tag}
+    </div>
+    <h2 class="font-sans text-4xl font-extrabold tracking-tight text-white md:text-5xl">
+      {faq.titulo}
+    </h2>
+  </div>
+
+  <div class="space-y-4">
+    {faq.items.map((f) => (
+      <details
+        class="group rounded-2xl border border-white/10 bg-white/[0.02] p-6 transition-all duration-300 hover:border-white/20 open:border-(--color-primary)/40 open:bg-white/[0.04]"
+      >
+        <summary
+          class="flex cursor-pointer list-none items-center justify-between font-sans text-lg font-bold text-white"
+        >
+          <span>{f.q}</span>
+          <span
+            aria-hidden="true"
+            class="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-(--color-primary) transition-transform duration-300 group-open:rotate-45"
+          >
+            +
+          </span>
+        </summary>
+        <p class="mt-4 text-sm leading-relaxed text-white/70">{f.a}</p>
+      </details>
+    ))}
+  </div>
+</section>

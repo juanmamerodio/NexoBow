@@ -1,0 +1,49 @@
+---
+const faqs = [
+  {
+    q: "¿Para qué tipo de profesionales está diseñado?",
+    a: "Para prestadores de servicios que reciben consultas recurrentes por Google Maps, WhatsApp o Instagram: nutricionistas, psicólogos, abogados, consultores y kinesiólogos.",
+  },
+  {
+    q: "¿Ustedes cobran las consultas por mí?",
+    a: "No. La primera consultoría inicial se agenda de forma gratuita para evaluar al paciente, y los honorarios de tus sesiones los cobrás vos directamente con tu método habitual.",
+  },
+  {
+    q: "¿Necesito pagar la API oficial de WhatsApp o planes caros?",
+    a: "No. Configuramos WhatsApp Business y webhooks directos sin costos mensuales ocultos en plataformas SaaS externas, manteniendo tu infraestructura económica.",
+  },
+  {
+    q: "¿Cómo gestionan testimonios y reseñas?",
+    a: "Mostramos únicamente reseñas públicas que ya tenés en tu ficha de Google Maps o testimonios con tu consentimiento explícito, garantizando máxima credibilidad y confianza.",
+  },
+  {
+    q: "¿Puedo usar mi propio dominio (.com o .com.ar)?",
+    a: "Sí, podemos vincular tu dominio personalizado cuando lo desees. El setup inicial ya te incluye un subdominio rápido de NexoBow listo para operar.",
+  },
+];
+---
+
+<section id="faq" class="relative mx-auto max-w-4xl px-6 py-24">
+  <div class="text-center mb-12">
+    <div class="inline-block rounded-full bg-white/5 border border-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-[#DB1FFF] mb-3">
+      Claridad total
+    </div>
+    <h2 class="font-outfit text-4xl font-extrabold tracking-tight text-white md:text-5xl">
+      Preguntas frecuentes
+    </h2>
+  </div>
+
+  <div class="space-y-4">
+    {faqs.map((f) => (
+      <details class="group rounded-2xl border border-white/10 bg-white/[0.02] p-6 transition-all duration-300 hover:border-white/20 open:border-[#DB1FFF]/40 open:bg-white/[0.04]">
+        <summary class="flex cursor-pointer list-none items-center justify-between font-outfit text-lg font-bold text-white">
+          <span>{f.q}</span>
+          <span aria-hidden="true" class="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[#DB1FFF] transition-transform duration-300 group-open:rotate-45">
+            +
+          </span>
+        </summary>
+        <p class="mt-4 text-sm leading-relaxed text-white/70">{f.a}</p>
+      </details>
+    ))}
+  </div>
+</section>

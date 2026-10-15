@@ -1,0 +1,45 @@
+---
+import { SITE } from "../config";
+const links = [
+  { href: "#metodo", label: "Método" },
+  { href: "#problema", label: "El problema" },
+  { href: "#precios", label: "Precios" },
+  { href: "#faq", label: "Preguntas" },
+];
+---
+
+<div class="sticky top-4 z-50 mx-auto max-w-5xl px-4 sm:px-6">
+  <header class="flex items-center justify-between rounded-full border border-white/10 bg-black/60 px-6 py-3.5 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+    <!-- Brand Logo: Nexo in white/black + Bow in #DB1FFF (Outfit Bold) -->
+    <a href="/" class="group flex items-center gap-1 font-outfit text-2xl font-extrabold tracking-tight">
+      <span class="text-white transition-colors">Nexo</span>
+      <span class="text-[#DB1FFF] drop-shadow-[0_0_12px_rgba(219,31,255,0.6)]">Bow</span>
+      <span class="h-2 w-2 rounded-full bg-[#DB1FFF] inline-block ml-0.5 animate-pulse"></span>
+    </a>
+
+    <!-- Nav Links with subtle pill hover -->
+    <nav class="hidden gap-1 text-sm font-medium text-white/70 md:flex" aria-label="Principal">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          class="rounded-full px-4 py-2 transition-all duration-200 hover:bg-white/10 hover:text-white"
+        >
+          {l.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Büro-style Interactive Action Button -->
+    <a
+      href={SITE.bookingUrl}
+      class="group relative inline-flex items-center gap-2.5 rounded-full bg-white/5 p-1 pl-5 pr-1.5 text-xs font-semibold tracking-wide text-white uppercase backdrop-blur-md border border-white/15 transition-all duration-300 hover:border-[#DB1FFF]/60 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(219,31,255,0.4)]"
+    >
+      <span>Agendá</span>
+      <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[#DB1FFF] text-white transition-all duration-300 group-hover:scale-105 group-hover:translate-x-0.5 shadow-[0_0_10px_rgba(219,31,255,0.5)]">
+        <svg class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </span>
+    </a>
+  </header>
+</div>
