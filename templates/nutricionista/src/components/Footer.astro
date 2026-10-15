@@ -1,23 +1,78 @@
 ---
 import { CONTENT } from "../site";
+import { SECTION_NAV } from "../sections";
+
+const { prestador, links, footer } = CONTENT;
+const year = new Date().getFullYear();
 ---
 
-<footer class="relative mx-auto max-w-6xl px-6 pb-12 pt-8 text-sm text-white/50">
-  <div
-    class="flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 md:flex-row"
-  >
-    <div class="flex items-center gap-1 font-sans text-lg font-extrabold tracking-tight">
-      <span class="text-white">Nexo</span>
-      <span class="text-[#DB1FFF]">Bow</span>
+<footer class="border-t border-(--color-ink)/10 bg-white/40">
+  <div class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-3">
+    <div>
+      <p class="font-display text-2xl font-semibold tracking-tight">
+        {prestador.nombre}
+      </p>
+      <p class="mt-2 text-sm text-(--color-ink)/60">{prestador.rol}</p>
+      <p class="mt-4 max-w-xs text-sm leading-6 text-(--color-ink)/70">
+        {footer.blurb}
+      </p>
     </div>
 
-    <p class="text-center md:text-left text-xs">
-      Landing de {CONTENT.prestador.nombre} · Fábrica automatizada de embudos de
-      venta y agendamiento para profesionales.
-    </p>
+    <nav aria-label="Secciones">
+      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-(--color-ink)/60">
+        Secciones
+      </p>
+      <ul class="mt-4 space-y-2">
+        {
+          SECTION_NAV.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="text-sm text-(--color-ink)/70 transition-colors hover:text-(--color-ink)"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
 
-    <p class="text-xs">
-      © {new Date().getFullYear()} NexoBow. Todos los derechos reservados.
-    </p>
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-(--color-ink)/60">
+        Contacto
+      </p>
+      <ul class="mt-4 space-y-2">
+        <li>
+          <a
+            href={links.calendly}
+            target="_blank"
+            rel="noopener"
+            class="text-sm font-medium text-(--color-primary) underline-offset-4 hover:underline"
+          >
+            Agendá tu consultoría gratuita
+          </a>
+        </li>
+        <li>
+          <a
+            href={links.whatsapp}
+            target="_blank"
+            rel="noopener"
+            class="text-sm font-medium text-(--color-primary) underline-offset-4 hover:underline"
+          >
+            Escribime por WhatsApp
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-(--color-ink)/10">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-6 py-6 text-xs text-(--color-ink)/50">
+      <p>
+        © {year} {prestador.nombre} · {prestador.rol}
+      </p>
+      <p>{footer.credit}</p>
+    </div>
   </div>
 </footer>

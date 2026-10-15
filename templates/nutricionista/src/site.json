@@ -1,23 +1,34 @@
 {
-  "_meta": "NO EDITAR A MANO. Punto de inyeccion del skill build-client-site: este archivo se regenera en cada clon a partir de la ficha de /clients/. Los valores aqui son PLACEHOLDERS del template (reemplazables por la ficha).",
+  "_meta": "NO EDITAR A MANO. Punto de inyeccion del skill build-client-site: este archivo se regenera en cada clon a partir de la ficha de /clients/. Los valores aqui son PLACEHOLDERS del template (reemplazables por la ficha). Convencion: en titulos, *texto* marca la palabra en italica serif.",
   "tema": {
-    "primary": "#DB1FFF",
-    "accent": "#FFFFFF",
-    "fuente": "Outfit",
+    "primary": "#e70025",
+    "accent": "#e3c1ad",
+    "fondo": "#fcf3ed",
+    "tinta": "#35221a",
+    "fuente": "Fraunces",
+    "fuente_sans": "Archivo",
     "orden_secciones": ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"]
   },
   "content": {
+    "hero": {
+      "eyebrow": "Nutrición online · Sin dietas de moda",
+      "card_caption": "Así llega tu paciente de WhatsApp a la agenda",
+      "card_footer": "Confirmación y recordatorio automáticos por email."
+    },
+    "marquee": {
+      "items": ["Sin dietas de moda", "Sin efecto rebote", "Plan a tu medida", "Consultoría gratuita", "Sin cargo ni compromiso"]
+    },
     "prestador": {
       "nombre": "Lic. Nombre Apellido",
       "rol": "Nutricionista · Matrícula habilitada",
-      "titulo": "Comé mejor sin dietas imposibles ni efecto rebote",
+      "titulo": "Comé mejor sin *dietas imposibles* ni efecto rebote",
       "bajada": "Consultoría gratuita de 20 minutos para armar un plan realista, a tu medida y sin morir de hambre en el intento.",
       "bio": "PLACEHOLDER: Bio del prestador (formacion, matricula, enfoque). Se inyecta desde la ficha.",
       "enfoque": "PLACEHOLDER: Enfoque del prestador (que problema del paciente resuelve y como trabaja). Se inyecta desde la ficha."
     },
     "problema": {
       "tag": "El problema real",
-      "titulo": "Comer 'bien' no tendría que ser una prueba constante",
+      "titulo": "Comer 'bien' no tendría que ser una *prueba constante*",
       "descripcion": "PLACEHOLDER: Problemas del paciente que resuelve el prestador. Se inyecta desde la ficha.",
       "pains": [
         { "tag": "Sin rumbo", "t": "Dietas a prueba y error", "d": "Probaste de todo: comer menos, dietas de moda, vueltas y vueltas. Nada se sostiene porque el plan no encaja con tu vida real." },
@@ -27,7 +38,7 @@
     },
     "pasos": {
       "tag": "Cómo funciona",
-      "titulo": "Tu primer paso: la consultoría gratuita",
+      "titulo": "Tu primer paso: la *consultoría gratuita*",
       "footer": "Sin cargo, sin compromiso. Si no es para vos, no es para vos.",
       "steps": [
         { "n": "01", "k": "Agendá", "d": "Elegí día y horario en 2 clics. Te llega la confirmación y el recordatorio automático." },
@@ -51,7 +62,7 @@
     },
     "pricing": {
       "tag": "Tu primera consulta",
-      "titulo": "Empezá con una consultoría gratuita, sin costo ni compromiso",
+      "titulo": "Empezá con una consultoría *gratuita*, sin costo ni compromiso",
       "plan": "Consultoría gratuita",
       "precio_ars": 0,
       "precio_label": "Primera consultoría · 20 minutos · Online",
@@ -78,6 +89,14 @@
     "links": {
       "calendly": "https://calendly.com/PLACEHOLDER/consultoria-gratuita",
       "whatsapp": "https://wa.me/5491100000000"
+    },
+    "footer": {
+      "blurb": "PLACEHOLDER: Tagline del prestador para el footer. Se inyecta desde la ficha.",
+      "credit": "Landing por NexoBow"
+    },
+    "final_cta": {
+      "titulo": "Tu primera consulta es *gratis*: empezá hoy",
+      "bajada": "Elegí tu horario en 2 clics y chateamos: sin letra chica, sin promesas mágicas."
     },
     "consentimiento_testimonios": false
   }

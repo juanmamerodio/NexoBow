@@ -8,6 +8,8 @@ import Pricing from "./components/Pricing.astro";
 import Faq from "./components/Faq.astro";
 import FinalCta from "./components/FinalCta.astro";
 
+import { resolveOrder, SECTION_NAV } from "./order";
+
 export const SECTIONS: Record<string, AstroComponentFactory> = {
   Hero,
   Problem,
@@ -19,19 +21,4 @@ export const SECTIONS: Record<string, AstroComponentFactory> = {
   FinalCta,
 };
 
-export const SECTION_NAV = [
-  { key: "Problem", href: "#problema", label: "El problema" },
-  { key: "Steps", href: "#metodo", label: "Método" },
-  { key: "Reviews", href: "#opiniones", label: "Opiniones" },
-  { key: "CaseStudy", href: "#casos", label: "Casos" },
-  { key: "Pricing", href: "#precios", label: "Precios" },
-  { key: "Faq", href: "#faq", label: "Preguntas" },
-];
-
-export function resolveOrder(order: string[]): string[] {
-  const out: string[] = [];
-  for (const key of [...order, "Faq", "FinalCta"]) {
-    if (SECTIONS[key] && !out.includes(key)) out.push(key);
-  }
-  return out;
-}
+export { resolveOrder, SECTION_NAV };

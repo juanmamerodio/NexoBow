@@ -1,0 +1,18 @@
+---
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+const parts = text.split("*");
+---
+
+{
+  parts.map((p, i) =>
+    i % 2 === 1 ? (
+      <em class="font-display italic text-(--color-primary)">{p}</em>
+    ) : (
+      <span>{p}</span>
+    )
+  )
+}

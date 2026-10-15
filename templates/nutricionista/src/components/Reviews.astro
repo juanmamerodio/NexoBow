@@ -1,51 +1,52 @@
 ---
+import SectionHead from "./ui/SectionHead.astro";
 import { CONTENT } from "../site";
 
 const { reviews } = CONTENT;
-
-const visibles = reviews.items.filter(
-  (r) => CONTENT.consentimiento_testimonios || r.fuente === "Google Maps"
-);
-
-if (visibles.length === 0) return;
+const consent = CONTENT.consentimiento_testimonios;
+const visibles = consent
+  ? reviews.items
+  : reviews.items.filter((review) => review.fuente === "Google Maps");
 ---
 
-<section id="opiniones" class="relative mx-auto max-w-6xl px-6 py-24">
-  <div class="text-center mb-14">
-    <div
-      class="inline-block rounded-full bg-white/5 border border-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-(--color-primary) mb-3"
-    >
-      {reviews.tag}
-    </div>
-    <h2
-      class="font-sans text-4xl font-extrabold tracking-tight text-white md:text-5xl"
-    >
-      {reviews.titulo}
-    </h2>
-  </div>
+{
+  visibles.length > 0 && (
+    <section id="opiniones" class="border-b border-(--color-ink)/10">
+      <div class="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <SectionHead tag={reviews.tag} title={reviews.titulo} />
 
-  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-    {visibles.map((r) => (
-      <figure
-        class="flex flex-col justify-between rounded-3xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]"
-      >
-        <div>
-          <div class="flex gap-0.5 text-(--color-primary)" aria-label="5 de 5 estrellas">
-            {[0, 1, 2, 3, 4].map(() => (
-              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.958a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.367 2.446a1 1 0 00-.363 1.118l1.286 3.958c.3.921-.755 1.688-1.54 1.118l-3.367-2.446a1 1 0 00-1.175 0l-3.367 2.446c-.784.57-1.838-.197-1.539-1.118l1.285-3.958a1 1 0 00-.363-1.118L2.574 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.958z"
-                />
-              </svg>
-            ))}
-          </div>
-          <blockquote class="mt-4 text-sm leading-relaxed text-white/80">{r.texto}</blockquote>
+        <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {
+            visibles.map((review) => (
+              <figure class="flex flex-col border border-(--color-ink)/15 bg-white/60 p-8">
+                <p
+                  class="text-sm tracking-[0.3em] text-(--color-primary)"
+                  aria-label="5 de 5 estrellas"
+                >
+                  ★★★★★
+                </p>
+                <blockquote class="mt-5 flex-1 font-display text-xl italic leading-snug">
+                  “{review.texto}”
+                </blockquote>
+                <figcaption class="mt-6 border-t border-(--color-ink)/10 pt-4">
+                  <p class="text-sm font-semibold">{review.nombre}</p>
+                  <p class="text-xs uppercase tracking-[0.2em] text-(--color-ink)/60">
+                    {review.fuente}
+                  </p>
+                </figcaption>
+              </figure>
+            ))
+          }
         </div>
-        <figcaption class="mt-6 flex items-center gap-2 text-xs text-white/50">
-          <span class="font-semibold text-white/70">{r.nombre}</span>
-          <span class="rounded-full bg-white/5 border border-white/10 px-2 py-0.5">{r.fuente}</span>
-        </figcaption>
-      </figure>
-    ))}
-  </div>
-</section>
+
+        {
+          !consent && (
+            <p class="mt-8 text-sm text-(--color-ink)/50">
+              Reseñas públicas de Google Maps, citadas con su fuente.
+            </p>
+          )
+        }
+      </div>
+    </section>
+  )
+}

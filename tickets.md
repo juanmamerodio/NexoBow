@@ -51,10 +51,10 @@ Dependientes del embudo vivo:
 
 **Status:** ready-for-agent
 
-- [x] El `Hero` pasa el gate de `standard` (logo `Nexo`/`Bow`, tipografía Outfit, micro-interacción de botón Büro, `prefers-reduced-motion`).
-- [x] El CTA principal abre el link de Calendly; el secundario abre WhatsApp (ambos configurables).
-- [x] Un paciente puede ir del `Hero` a Calendly en menos de 3 clics, con JS deshabilitado.
-- [x] `npm run build` verde.
+- [ ] El `Hero` pasa el gate de `standard` (logo `Nexo`/`Bow`, tipografía Outfit, micro-interacción de botón Büro, `prefers-reduced-motion`).
+- [ ] El CTA principal abre el link de Calendly; el secundario abre WhatsApp (ambos configurables).
+- [ ] Un paciente puede ir del `Hero` a Calendly en menos de 3 clics, con JS deshabilitado.
+- [ ] `npm run build` verde.
 
 ### T03 — Secciones de confianza completas (Problem, Steps, Pricing, Reviews, CaseStudy)
 
@@ -64,10 +64,10 @@ Dependientes del embudo vivo:
 
 **Status:** ready-for-agent
 
-- [x] Componentes `Reviews` y `CaseStudy` creados (no existen aún) y `Problem`, `Steps`, `Pricing` pasados a contenido de ficha.
-- [x] Reseñas solo de Google Maps públicas o con `consentimiento_testimonios: true` (regla de salud).
-- [x] Montos en ARS con formato explícito (`$200.000 ARS` / `$10.000 ARS`), copy voseo argentino, regla Hormozi (cero humo).
-- [x] `npm run build` verde y layout responde a `orden_secciones`.
+- [ ] Componentes `Reviews` y `CaseStudy` creados (no existen aún) y `Problem`, `Steps`, `Pricing` pasados a contenido de ficha.
+- [ ] Reseñas solo de Google Maps públicas o con `consentimiento_testimonios: true` (regla de salud).
+- [ ] Montos en ARS con formato explícito (`$200.000 ARS` / `$10.000 ARS`), copy voseo argentino, regla Hormozi (cero humo).
+- [ ] `npm run build` verde y layout responde a `orden_secciones`.
 
 ---
 
@@ -81,10 +81,10 @@ Dependientes del embudo vivo:
 
 **Status:** ready-for-agent
 
-- [x] Lee la ficha (`_ficha-template.md`) y valida campos obligatorios antes de clonar; frena con pregunta si faltan datos (gate Ask-First).
-- [x] Aplica tema (paleta, fuente, orden) y contenido (bio, reseñas, casos, FAQ) **sin tocar componentes**.
-- [x] Verifica `npm run build` del clon generado.
-- [x] Nunca edita a mano el clon para corregir datos de negocio (se edita la ficha y se regenera).
+- [ ] Lee la ficha (`_ficha-template.md`) y valida campos obligatorios antes de clonar; frena con pregunta si faltan datos (gate Ask-First).
+- [ ] Aplica tema (paleta, fuente, orden) y contenido (bio, reseñas, casos, FAQ) **sin tocar componentes**.
+- [ ] Verifica `npm run build` del clon generado.
+- [ ] Nunca edita a mano el clon para corregir datos de negocio (se edita la ficha y se regenera).
 
 ### T05 — Skill `audit-code` (auditoría en sesión limpia)
 
@@ -94,10 +94,10 @@ Dependientes del embudo vivo:
 
 **Status:** ready-for-agent
 
-- [x] Produce un reporte checklist (logo, Hero con flujo WhatsApp→agenda, botones, `prefers-reduced-motion`, build 0 errores, regla Hormozi).
-- [x] Revisa accesibilidad y contraste de CTAs.
-- [x] Purga clases duplicadas de Tailwind.
-- [x] Se ejecuta en sesión limpia (anti sesgo de confirmación), nunca en la misma sesión que generó el clon.
+- [ ] Produce un reporte checklist (logo, Hero con flujo WhatsApp→agenda, botones, `prefers-reduced-motion`, build 0 errores, regla Hormozi).
+- [ ] Revisa accesibilidad y contraste de CTAs.
+- [ ] Purga clases duplicadas de Tailwind.
+- [ ] Se ejecuta en sesión limpia (anti sesgo de confirmación), nunca en la misma sesión que generó el clon.
 
 ---
 
@@ -164,7 +164,7 @@ Dependientes del embudo vivo:
 
 **Status:** ready-for-agent
 
-- [x] Definido cómo se mide "concretada" *(decisión 2026-10-14: panel de Calendly para agendadas; "concretada" se confirma con el prestador al cierre del mes)*.
+- [ ] Definido cómo se mide "concretada" (dato manual del prestador o panel de Calendly — pendiente del spec).
 - [ ] Se registra en `metricas` de la ficha (agendadas_mes / concretadas_mes).
 - [ ] Proceso de actualización mensual documentado.
 
@@ -183,11 +183,7 @@ Dependientes del embudo vivo:
 
 ## Frontera (orden de trabajo)
 
-Estado al 2026-10-14: **T01 → T05 completados** (template `nutricionista` theme-driven, Hero tracer, secciones completas, skills `build-client-site` y `audit-code` validadas con smoke test). Siguientes: **T06** (bloqueado: requiere ficha real del primer prestador + aprobación humana de deploy), **T07/T08/T11** (ready-for-human), **T09/T10** (bloqueados por T06).
-
-**Decisiones de producto (2026-10-14):**
-- Pricing de la landing = oferta al paciente (consultoría gratuita `$0 ARS`, sin costo ni compromiso). `setup_ars`/`abono_ars` de la ficha son datos comerciales internos de NexoBow, NO se publican en la landing.
-- Métrica "concretada" (T10) = agendadas desde panel de Calendly + confirmación del prestador al cierre de mes.
+Estado al 2026-10-14: **T01 completado** (template `nutricionista` reconstruido con dirección estética del usuario: referencia **Delta Cafés** — editorial crema/café/rojo `#e70025`, serif Fraunces + sans Archivo, REA de deltacafes.com; theme-driven vía `site.json` con `fondo`/`tinta`/`fuente_sans` nuevos, tests `node:test` en `tests/`). Siguientes: **T02 → T03** (pendientes, con T02 sin gate `standard`: el estándar del template es el estilo Delta, no el de NexoBow — ver ERROR-001), luego **T04 ∥ T05** (skills borradas en el reset, recrear contra el template nuevo), **T06 → (T09, T10)**. T07/T08/T11: ready-for-human.
 
 ## Pendientes abiertos que bloquean tickets
 

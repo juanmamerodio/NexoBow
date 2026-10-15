@@ -1,7 +1,8 @@
 import site from "./site.json";
+import type { ThemeTokens } from "./theme";
+import { ars, fontUrl, onColor, themeVars } from "./theme";
 
-export const THEME = site.tema;
+export const THEME: ThemeTokens & { orden_secciones: string[] } = site.tema;
 export const CONTENT = site.content;
 
-export const ars = (n: number): string =>
-  "$" + n.toLocaleString("es-AR") + " ARS";
+export { ars, fontUrl, onColor, themeVars };

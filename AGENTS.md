@@ -4,7 +4,7 @@
 Repositorio central de **NexoBow**: fábrica automatizada de embudos de venta y agendamiento para profesionales de servicios (nutricionistas, psicólogos). Transformamos tráfico de WhatsApp, Instagram y Maps en consultorías agendadas mediante landings estáticas de carga instantánea.
 - **Stack:** Astro (SSG estricto, 0 JS innecesario en cliente) + Tailwind CSS.
 - **Integraciones:** Calendly / Google Calendar, Webhooks para WhatsApp Bots.
-- **Contratos del Sistema:** Leé `/brain.md` (estado actual y memoria operativa) y `/spec.md` (contrato del MVP) **antes** de planificar o tocar código[cite: 1]. Para términos de negocio, consultá `/GLOSSARY.md`[cite: 1].
+- **Contratos del Sistema:** Leé `/brain.md` (conciencia técnica), `/memory.md` (estado del proyecto y errores documentados) y `/spec.md` (contrato del MVP) **antes** de planificar o tocar código[cite: 1]. Para términos de negocio, consultá `/GLOSSARY.md`[cite: 1]. **IMPORTANTE:** `web/` = página de NexoBow, `/templates/` + `/sites/` = landings de prestadores. Identidades visuales TOTALMENTE distintas (ver `memory.md` → Errores Documentados).
 
 ## 💻 Comandos de Ejecución y Verificación
 *(Ajustar según gestor de paquetes del template activo en `/sites/{cliente}` o `/templates/{rubro}`)*[cite: 1]
@@ -26,8 +26,10 @@ Repositorio central de **NexoBow**: fábrica automatizada de embudos de venta y 
 
 ## 📂 Mapa de Directorios y Límites (Boundaries)
 - `/brain.md` -> **[LECTURA/ESCRITURA]** Cerebro de ejecución[cite: 1]. Leelo al iniciar sesión; actualizalo al cerrar una tarea[cite: 1].
+- `/memory.md` -> **[LECTURA/ESCRITURA]** Estado del proyecto + errores documentados (ERROR-001: NexoBow ≠ prestador)[cite: 1]. Leelo al iniciar sesión; actualizalo al cerrar una tarea[cite: 1].
+- `/web/` -> **[SOLO LECTURA POR DEFECTO]** Página propia de la agencia NexoBow. Identidad visual distinta a la de los templates. No copiar componentes a `/templates/` sin rediseño.
 - `/clients/N-rubro-nombre.md` -> **[FUENTE DE VERDAD]** Ficha del prestador (YAML frontmatter + Markdown)[cite: 1]. Plantilla base en `/clients/_ficha-template.md`[cite: 1].
-- `/templates/{rubro}/` -> **[SOLO LECTURA POR DEFECTO]** Proyecto Astro maestro por vertical (ej: `nutricionista`)[cite: 1]. **Prohibido editar** salvo que el usuario pida explícitamente mejorar la plantilla base[cite: 1].
+- `/templates/{rubro}/` -> **[SOLO LECTURA POR DEFECTO]** Proyecto Astro maestro por vertical (ej: `nutricionista`)[cite: 1]. **Prohibido editar** salvo que el usuario pida explícitamente mejorar la plantilla base[cite: 1]. Estilo de prestadores: propio de cada rubro, NO el de NexoBow.
 - `/sites/N-rubro-nombre/` -> **[GENERADO / EFÍMERO]** Clon compilable del cliente[cite: 1]. **Nunca se edita a mano para corregir datos del negocio**: se edita la ficha en `/clients/` y se regenera mediante skill[cite: 1].
 - `/assets/N-rubro-nombre/` -> **[LECTURA]** Recursos gráficos optimizados del prestador[cite: 1].
 - `/.agents/skills/` -> **[PULL CONTEXT]** SOPs modulares ejecutables bajo demanda[cite: 1].
@@ -41,4 +43,5 @@ Repositorio central de **NexoBow**: fábrica automatizada de embudos de venta y 
 
 ## 🧠 Aprendizaje Aplicado (Self-Evolving Log)
 *Regla: Cuando algo falle repetidamente o el usuario te corrija un patrón, agregá un bullet acá abajo (máximo 15 palabras, sin explicaciones, solo la regla accionable).*
-- [Espacio reservado para reglas aprendidas en producción]
+- NexoBow ≠ prestador: page web/ y landings de templates/ tienen identidades visuales independientes (ERROR-001).
+- No asumir el estilo de un template sin dirección estética previa del usuario (gate Ask-First de diseño).

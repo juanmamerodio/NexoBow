@@ -175,11 +175,8 @@ NexoBow se optimiza para **Costo Cero de Infraestructura**:
 
 ## 8. Memoria de Sesión (Operativa)
 
-### 2026-10-14 — T01→T05 ejecutados (ver `tickets.md`)
-- Creado `templates/nutricionista/`: Astro SSG + Tailwind v4, theme-driven. Tokens en `src/site.json` (`tema` + `content`), leídos por componentes vía `src/site.ts`. `orden_secciones` resuelto por `src/sections.ts` (registro + `resolveOrder`, siempre agrega Faq/FinalCta al final).
-- Componentes: `Hero` (CTA Calendly + WhatsApp, mockup 3D WhatsApp→agenda, gate `standard`), `Problem`, `Steps`, `Pricing`, `Reviews` y `CaseStudy` (nuevos, gate de consentimiento), `Faq`, `FinalCta`, `Header`, `Footer`.
-- Contraste resuelto en build: `Layout.astro` calcula `--color-on-primary` (ink o blanco según luminancia del primary, umbral L>0.18) — el texto sobre primario cumple WCAG AA para cualquier color de ficha.
-- Creado `.agents/skills/build-client-site/` con script determinístico `scripts/build-site.mjs` (valida ficha → clona → inyecta `site.json` → build). Exit 2 = gate Ask-First (faltan campos, frenar y preguntar). Smoke test end-to-end OK (tema, reviews, casos, FAQ, links, ARS, orden).
-- Creado `.agents/skills/audit-code/` con `report-template.md`; validado en sub-agente de sesión limpia (detectó y permitió corregir el fallo de contraste 2.28:1 y dead code).
-- Pendientes bloqueados: T06 (ficha real del primer prestador), T09/T10 (dependen de T06), T07/T08/T11 (ready-for-human).
-- **Decisiones de producto:** Pricing de la landing = oferta al paciente (consultoría gratuita `$0 ARS`); `setup_ars`/`abono_ars` quedan como datos comerciales internos de NexoBow (no se publican). Métrica "concretada" = panel de Calendly (agendadas) + confirmación del prestador al cierre de mes.
+### 2026-10-14 — T01 reejecutado: template `nutricionista` con estilo Delta Cafés
+- Usuario definió la dirección estética de los templates: **deltacafes.com** como objetivo de diseño (ingeniería inversa vía REA sobre HTML/CSS del sitio: paleta rojo `#e70025`/espresso `#35221a`/crema `#fcf3ed`/tan `#e3c1ad`, serif display `delta-season` → **Fraunces**, sans `trade-gothic` → **Archivo**, marquee strip, itálicas serif, números 01/02/03, botones pill con flecha). Resuelve ERROR-001/002.
+- Reconstruido `templates/nutricionista/` (reset previo borró src y skills): arquitectura theme-driven preservada (`site.json` `tema`+`content`), con tokens nuevos `fondo`/`tinta`/`fuente_sans`. Lógica pura separada en `src/theme.ts` y `src/order.ts` (seams TDD). Componentes `ui/`: `Lead` (itálicas `*texto*`), `SectionHead`, `Button` (variants primary/outline/light/ghost-light).
+- **TDD**: 14 tests `node:test` en `tests/` (red→green) sin dependencias extra; `npm test` + `npm run build` verdes; HTML final con **0 scripts** (SSG estricto), marquee CSS-only con `prefers-reduced-motion`.
+- Pendientes: T02→T05 reseteados (skills `build-client-site`/`audit-code` borradas, recrear contra template nuevo), T06+ bloqueados por ficha real.
