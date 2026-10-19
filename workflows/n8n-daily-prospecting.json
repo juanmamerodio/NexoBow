@@ -1,0 +1,154 @@
+{
+  "name": "NexoBow - Prospección Diaria Automática & Google Sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1-5"
+            }
+          ]
+        }
+      },
+      "id": "node-cron-trigger",
+      "name": "Disparador Matutino (08:00 AM L-V)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:3000/api/batch-scout",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.NEXOBOW_SYSTEM_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "count",
+              "value": "15"
+            },
+            {
+              "name": "query",
+              "value": "nutricionista en Palermo, Buenos Aires"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-api-batch",
+      "name": "Disparar Batch en NexoBow System",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "http://127.0.0.1:3000/api/leads",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.NEXOBOW_SYSTEM_KEY}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-get-leads",
+      "name": "Obtener Leads Generados",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Prospección Diaria",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Fecha": "={{ $now.format('YYYY-MM-DD') }}",
+            "Nombre": "={{ $json.nombre }}",
+            "Teléfono": "={{ $json.telefono }}",
+            "Rating": "={{ $json.rating }}",
+            "Dirección": "={{ $json.direccion }}",
+            "URL Demo": "={{ $json.previewUrl }}",
+            "Mensaje WhatsApp": "={{ $json.whatsappOutreachLink }}",
+            "Estado": "={{ $json.status || 'nuevo' }}"
+          },
+          "matchingColumns": [
+            "URL Demo"
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-google-sheets",
+      "name": "Sincronizar a Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "Disparador Matutino (08:00 AM L-V)": {
+      "main": [
+        [
+          {
+            "node": "Disparar Batch en NexoBow System",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Disparar Batch en NexoBow System": {
+      "main": [
+        [
+          {
+            "node": "Obtener Leads Generados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Leads Generados": {
+      "main": [
+        [
+          {
+            "node": "Sincronizar a Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
