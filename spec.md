@@ -1,115 +1,77 @@
-# NexoBow - Spec del MVP
+# NexoBow System — Spec del Sistema de Prospección & Web Privada
 
-Términos definidos en [GLOSSARY.md](./GLOSSARY.md).
+Términos de dominio definidos en [GLOSSARY.md](./GLOSSARY.md).
 
-## Qué y por qué
+## Problem Statement
 
-NexoBow vende a **prestadores** un **embudo** que lleva **pacientes** desde Google Maps, WhatsApp o Instagram hasta una **consultoría gratuita agendada**. La venta posterior (el upsell del prestador) no es parte del sistema.
+El operador de NexoBow necesita prospectar diariamente 15 prestadores de salud (nutricionistas) contactándolos en frío por WhatsApp con una demostración interactiva de su landing real ya compilada y accesible en línea.
 
-La **landing** es el núcleo: concentra confianza (casos de éxito, reseñas, información) y su botón principal lleva a Calendly. Calendly es una pieza de terceros, no el producto.
+Actualmente:
+1. El canal de comunicación móvil con el sistema estaba ideado mediante un bot de Telegram, lo cual introduce dependencia de la infraestructura y límites de la plataforma de Telegram, fragmenta la experiencia de usuario y agrega complejidad innecesaria.
+2. No existía un concentrador unificado para almacenar y servir las 15 demos diarias bajo una URL limpia y profesional para enviar a prospectos sin saturar la creación de proyectos individuales en Cloudflare.
+3. El pipeline de generación de prospectos (`lead-to-live`) funciona por CLI localmente, pero carece del acople determinista para ser invocado automáticamente cada mañana, sincronizarse con Google Sheets y ser monitoreado desde el celular del operador.
 
-## Alcance del MVP
+## Solution
 
-- Rubro único: **nutricionistas**, con template `nutricionista`.
-- Un solo tipo de turno: consultoría gratuita (Calendly, plan gratis, un tipo de evento).
-- WhatsApp **sin API de Meta**: WhatsApp Business con mensaje de bienvenida y respuestas rápidas que envían el link de Calendly.
-- Recordatorios por email de Calendly (gratis).
-- Landing estática en Astro con Tailwind. Copy en español argentino, montos en ARS.
-- Hosting: Vercel como estándar; Netlify para los primeros casos de éxito (dominio personalizado gratis).
-- Subdominio de NexoBow incluido en el setup; dominio propio como extra.
+1. **Suspensión formal de Telegram** y reemplazo por **"NexoBow System"**: una web privada / PWA ligera, protegida por token/PIN, optimizada para consumo mobile del operador y sus equipos seleccionados.
+2. **Subrutas de Demos Unificadas**: Unificación del despliegue de previews bajo subrutas de un único dominio estático: `preview.nexobow.com/{slug}`.
+3. **Orquestación Matutina con n8n**: Un workflow de n8n que dispara diariamente la ejecución local del pipeline de prospección (`lead-to-live` por lotes), recibe el reporte JSON de los 15 prospectos generados, actualiza automáticamente la planilla de Google Sheets del operador con datos de contacto y URL de demo, y emite una notificación de "Lote Listo" al dashboard web de NexoBow System.
 
-## Fuera de alcance (por ahora)
+## Seams de Prueba y Verificación (Test Seams)
 
-- Cobro de consultas con Mercado Pago (el pago lo resuelve el prestador en la llamada).
-- Obras sociales y precios de consultas.
-- Bot de WhatsApp con Cloud API de Meta (fase 2, con un cliente que pague).
-- Recordatorios por WhatsApp (fase 2).
-- Scraping automatizado de Google Maps y mensajes masivos automáticos.
-- Otros rubros (psicólogos: después de validar nutricionistas).
+Se definen dos costuras (seams) de alto nivel:
+1. **Pipeline Seam (CLI/Batch API)**: `scripts/prospect-batch.mjs` que acepta parámetros de búsqueda geográfica/rubro, genera las fichas y compila las landings en una carpeta unificada `dist-previews/{slug}/` emitiendo un reporte JSON determinista estructurado.
+2. **Webhook / Server Seam de NexoBow System**: Endpoint local ultraligero que sirve tanto la PWA privada como el endpoint de ingesta/consulta consumido por n8n y el teléfono móvil.
 
-## Oferta comercial
+## User Stories
 
-| Concepto | Valor |
-|---|---|
-| Setup (único) | \$200.000 ARS |
-| Abono mensual | \$10.000 ARS |
-| Primer mes | Prueba, sin abono |
+1. As an operador de NexoBow, I want Telegram to be completely deprecated and removed from the operational roadmap, so that all communication and controls live in a self-owned web interface.
+2. As an operador de NexoBow, I want a private web application ("NexoBow System") accessible from my mobile phone, so that I can monitor daily prospect batches and access prospect links without opening a terminal.
+3. As an operador de NexoBow, I want the web interface to be restricted to selected internal team members via access token or credentials, so that no external party can view operational lead data.
+4. As an operador de NexoBow, I want my automated morning workflow in n8n to trigger the prospect generation pipeline, so that 15 new personalized demo sites are ready when my workday starts.
+5. As an operador de NexoBow, I want all generated demo landings to be hosted under a single root domain with subpaths (`preview.nexobow.com/{slug}`), so that prospect links look professional and don't require managing dozens of Cloudflare projects.
+6. As an operador de NexoBow, I want the system to sync each generated lead's name, phone, Google Maps rating, address and preview URL directly into a Google Sheet, so that I can conduct manual cold WhatsApp outreach directly from my spreadsheet.
+7. As an operador de NexoBow, I want each demo landing to remain 100% pure static SSG (zero unnecessary client JS, Delta Cafés editorial style), so that page load speed on the prospect's mobile device is instantaneous.
+8. As an operador de NexoBow, I want to trigger a manual batch run directly from the NexoBow System web interface, so that I can generate additional leads on demand if needed.
+9. As an operador de NexoBow, I want clear status indicators (generando, completado, error) in NexoBow System, so that I know immediately if a Google Maps quota or network issue occurred during batch scouting.
+10. As an operador de NexoBow, I want the Google Sheet row to link directly to WhatsApp with a prefilled cold pitch message mentioning their specific clinic name, so that outreach takes less than 15 seconds per lead.
 
-Los primeros 1 o 2 prestadores reciben el setup gratis o muy rebajado, a cambio de autorizar la publicación de sus resultados.
+## Implementation Decisions
 
-## Métrica de éxito
+1. **Deprecación de Telegram**:
+   - Todo rastro de bot de Telegram se elimina del alcance del MVP y de la documentación activa.
 
-Consultorías agendadas por mes y cuántas se concretaron. Es lo que se le muestra al prestador para que renueve.
+2. **NexoBow System Web (PWA Privada)**:
+   - Implementada con Astro / Svelte o vanilla web ultraligero con tailwind y service worker básico (instalable en Android/iOS).
+   - Autenticación simple basada en pre-shared key (PSK / Bearer Token o Basic Auth) en headers o cookie segura.
+   - Vista móvil con lista de los 15 leads del día, enlace directo a preview, enlace a WhatsApp con mensaje precargado y botón de "Disparar nuevo lote".
 
-## Contenido de la landing
+3. **Arquitectura de Demos (`preview.nexobow.com/{slug}`)**:
+   - El script `build-client-site.mjs` y el nuevo orquestador por lote compilan cada landing con `--base /{slug}/` hacia `dist-previews/{slug}/`.
+   - Se despliega el directorio `dist-previews/` hacia el proyecto único de Cloudflare Pages `nexobow-previews` conectado al subdominio `preview.nexobow.com`.
 
-Se arma con el template en `Hero`, `Problem`, `Steps`, `Pricing`, más `Reviews` y `CaseStudy`. El contenido lo aporta el prestador mediante un cuestionario de onboarding único.
+4. **Orquestación con n8n**:
+   - Se crea la especificación y el JSON exportable del workflow de n8n:
+     - Disparador Cron (Lunes a Viernes 08:00 AM).
+     - HTTP Request al webhook local de NexoBow System (`POST /api/batch-scout`).
+     - Nodo Google Sheets: Agrega filas a la pestaña "Prospección Diaria" con columnas: `Fecha`, `Nombre`, `Teléfono`, `Rating`, `Dirección`, `URL Demo`, `Estado Contacto`.
+     - Notificación Push/Webhook de finalización.
 
-## Reglas de confianza y datos de salud
+5. **Batch Scout CLI (`scripts/prospect-batch.mjs`)**:
+   - Wrapper que ejecuta `lead-to-live` en serie o concurrencia controlada para 15 prospectos basados en una consulta (ej. "nutricionista en Belgrano, Buenos Aires"), generando fichas en `/clients/` y previews en `dist-previews/{slug}/`.
 
-- Testimonios de pacientes solo con consentimiento escrito.
-- Sin consentimiento, solo reseñas ya públicas en Google Maps.
-- Cuidar la publicidad de resultados en salud y la Ley 25.326 de datos personales.
+## Testing Decisions
 
-## Captación de prestadores
+- **Seam Tests**: Pruebas automáticas en Node.js (`node:test`) para `scripts/prospect-batch.mjs` verificando que 2 prospectos de prueba generen sus estructuras en `dist-previews/{slug}/` con base path correcto, URLs relativas y salida JSON estructurada sin fallos.
+- **Auth & API Test**: Test de seguridad simple sobre el endpoint de NexoBow System asegurando rechazo 401 si no se provee el token configurado en `.env`.
+- **Compatibilidad con tests existentes**: Todos los tests de `tests/pipeline-tanda1.test.mjs` y `tests/pipeline-e2e.test.mjs` deben continuar pasando al 100%.
 
-- Fuente principal: Google Maps (fichas con reseñas, WhatsApp visible, sin agenda online ni web).
-- Contacto por WhatsApp. Instagram descartado como canal principal.
-- Ritmo: al menos 20 contactos por semana, a mano y con planilla.
-- Meta: primer cliente en 30 días.
-- Prospectar desde la semana 1; la plantilla de landing lista en la semana 2.
+## Out of Scope
 
-## Criterios de aceptación
+- Chatbots automatizados que respondan automáticamente por WhatsApp (el contacto en frío sigue siendo humano y manual).
+- Roles complejos multi-usuario y base de datos relacional para usuarios de la web (un solo token de equipo es suficiente para esta etapa).
+- Integración de pasarelas de pago dentro de las landings demo.
 
-- Un paciente puede ir de la ficha de Google Maps a la landing, y de ahí a Calendly, en menos de 3 clics.
-- Un paciente que escribe por WhatsApp recibe automáticamente el link de Calendly.
-- La landing carga en milisegundos (sitio estático, sin JS innecesario).
-- Cada prestador tiene su subdominio funcionando.
-- Existe una planilla de prospección con los 20 contactos semanales.
+## Further Notes
 
-## Pendientes abiertos
-
-- Redactar el cuestionario de onboarding.
-- Definir cómo se mide "consultoría concretada" (dato manual del prestador o del panel de Calendly).
-- Revisar el marco legal de publicidad en salud con un profesional.
-- Investigar la API de WhatsApp antes de la fase 2.
-
-## Flujo agéntico (semi-automatizado)
-
-**Principio:** el agente gestiona a los prestadores a nivel programación. NexoBow no escribe una landing desde cero por cliente: **clona el template Astro y adapta solo la ficha y algunos rasgos visuales**, para que las páginas no parezcan iguales.
-
-### Estructura de archivos
-
-```text
-/templates/nutricionista/        <-- proyecto Astro base (un solo template por rubro)
-/clients/
-  _ficha-template.md             <-- plantilla vacía de la ficha
-  1-nutri-camilomedina.md        <-- ficha: datos, branding, contenido, estado
-/sites/1-nutri-camilomedina/     <-- clon generado (Astro), nunca se edita a mano
-/.agents/skills/
-  build-client-site/             <-- clona template + aplica ficha
-  audit-code/                    <-- revisión en sesión limpia
-```n
-### Ficha de cliente (N-rubro-nombre.md)
-
-Frontmatter YAML con datos estructurados, cuerpo Markdown con textos libres:
-- **Frontmatter:** nombre, rubro, WhatsApp, link de Calendly, subdominio, estado del embudo, paleta (primary, ccent, ont), variante de layout (orden/estilo de secciones), consentimiento de testimonios (sí/no).
-- **Cuerpo:** bio, enfoque, reseñas (con fuente), casos de éxito, preguntas frecuentes.
-- **Estado:** prospecto, onboarding, en-construccion, publicado, prueba (mes gratis), ctivo.
-
-### Qué cambia entre clones (y qué no)
-
-- **Cambia:** paleta, tipografía, orden de secciones, imágenes, copy, subdominio.
-- **No cambia:** estructura de componentes (Hero, Problem, Steps, Pricing, Reviews, CaseStudy), integración con Calendly y botón de WhatsApp.
-- La personalización se hace por **variables de tema** (Tailwind/CSS), no tocando los componentes.
-
-### Pasos semi-automatizados
-
-1. Prospecto: se crea la ficha desde la plantilla (el agente puede pre-llenarla con datos públicos de Google Maps).
-2. Onboarding: el prestador completa lo que falta; el agente valida campos obligatorios.
-3. Build: el agente clona el template a `/sites/`, aplica la ficha y genera la landing.
-4. Auditoría: sesión limpia con `audit-code`.
-5. Deploy: Netlify (primeros casos) o Vercel.
-6. Seguimiento: el agente actualiza el estado y las métricas mensuales en la ficha.
-
-**Humano en el medio (a propósito):** enviar mensajes en frío, aprobar el copy, el consentimiento de testimonios y el deploy final.
+- Respeto estricto de la Ley 25.326 y directivas de salud: los testimonios en las demos solo se mostrarán si provienen de reseñas verificadas públicas de Google Maps.

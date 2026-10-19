@@ -197,5 +197,14 @@ NexoBow se optimiza para **Costo Cero de Infraestructura**:
 - **Orquestador Maestro (`lead-to-live`)**: Creado `scripts/lead-to-live.mjs` unificando todo el flujo en 1 comando.
 - **TDD & Verificación**: Tests automatizados (`tests/pipeline-tanda1.test.mjs` y `tests/pipeline-e2e.test.mjs`) 100% pasando en ~14s con cero scripts en cliente. Pipeline listo para producción.
 
+### 2026-10-19 — Implementación NexoBow System (Prospección & Web Privada, N01-N05)
+- **Generador por Lotes & Subrutas (`prospect-batch`)**: `scripts/prospect-batch.mjs` procesa los 15 prospectos diarios compilando Astro SSG en `dist-previews/{slug}/` bajo dominio unificado `preview.nexobow.com/{slug}` con base path aislado y 0 scripts en cliente.
+- **Deploy Unificado Cloudflare Pages (`deploy-previews`)**: `scripts/deploy-previews.mjs` sincroniza `dist-previews/` hacia el proyecto único `nexobow-previews` con soporte dry-run y producción.
+- **Servidor y API con Autenticación Bearer (`server/index.mjs`)**: API REST con token pre-compartido `NEXOBOW_SYSTEM_KEY` para endpoints `GET /api/leads`, `POST /api/batch-scout` y `POST /api/leads/:slug/status`.
+- **PWA Mobile-First (`public/index.html` + `manifest.webmanifest`)**: Interfaz web privada para el celular del operador con persistencia de token, links directos a WhatsApp prellenados, visualización de demos con 1 tap y disparo de nuevos lotes.
+- **Workflow n8n & Google Sheets (`workflows/n8n-daily-prospecting.json`)**: Automatización matutina (08:00 AM) que consume la API de NexoBow System e inserta filas en Google Sheets con URLs de preview y enlaces directos de prospección.
+- **TDD & Calidad**: 13 tests de integración pasando en verde al 100% (`npm test`). Rama de integración: `feature/nexobow-system`.
+
+
 
 

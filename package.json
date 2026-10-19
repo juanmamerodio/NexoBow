@@ -4,12 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "test": "node --test tests/*.test.mjs",
     "lead-to-live": "node scripts/lead-to-live.mjs",
     "scout-lead": "node scripts/scout-lead.mjs",
     "generate-fiche": "node scripts/generate-client-fiche.mjs",
     "build-site": "node scripts/build-client-site.mjs",
     "audit-site": "node scripts/audit-site.mjs",
-    "deploy-cf": "node scripts/deploy-cloudflare.mjs"
+    "deploy-cf": "node scripts/deploy-cloudflare.mjs",
+    "prospect-batch": "node scripts/prospect-batch.mjs",
+    "deploy-previews": "node scripts/deploy-previews.mjs",
+    "server": "node server/index.mjs"
   },
   "dependencies": {
     "@rive-app/canvas": "^2.45.0",

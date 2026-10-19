@@ -84,8 +84,10 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
 
 ---
 
-## 6. Aprendizaje Aplicado (Self-Evolving Log)
-
 - [2026-10-14] NexoBow (web/) y prestadores (templates/) son identidades visuales distintas: jamás clonar el look de web/ en un template.
 - [2026-10-14] No asumir el estilo de un template: esperar la dirección estética del usuario (gate Ask-First de diseño).
 - [2026-10-14] Dirección estética de templates definida: Delta Cafés (deltacafes.com) — editorial crema/café/rojo, serif con itálicas, marquee.
+- [2026-10-19] Telegram suspendido formalmente: reemplazado por NexoBow System (PWA/Web privada) + n8n + previews unificadas.
+- [2026-10-19] NexoBow System (N01-N05) implementado con TDD 100% verde: batch previews, deploy unificado, API auth Bearer, PWA móvil y workflow n8n Sheets.
+
+

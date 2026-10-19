@@ -181,12 +181,40 @@ Dependientes del embudo vivo:
 
 ---
 
+## NexoBow System — Prospección & Web Privada (Tickets N01 - N05)
+
+Gestionados también como archivos individuales bajo `.scratch/nexobow-system/issues/`:
+
+### N01 — Generador por Lotes de Demos y Subrutas Unificadas
+**Qué entrega:** Script CLI (`scripts/prospect-batch.mjs`) que procesa 15 prospectos de Google Maps, genera fichas en `/clients/` y compila cada landing en `dist-previews/{slug}/` devolviendo un JSON con metadatos y enlaces a `preview.nexobow.com/{slug}`.
+**Blocked by:** Ninguno.
+**Status:** completed (2026-10-19)
+
+### N02 — Despliegue Unificado a Cloudflare Pages (preview.nexobow.com)
+**Qué entrega:** Script de despliegue (`scripts/deploy-previews.mjs`) que sincroniza el directorio unificado `dist-previews/` con el proyecto de Cloudflare Pages para `preview.nexobow.com`.
+**Blocked by:** N01.
+**Status:** completed (2026-10-19)
+
+### N03 — Servidor Privado y API de NexoBow System
+**Qué entrega:** Microservidor en Node.js (`server/index.mjs`) con auth por Token Bearer (`NEXOBOW_SYSTEM_KEY`) para listar prospectos (`GET /api/leads`), disparar lote (`POST /api/batch-scout`) y actualizar estado (`POST /api/leads/:slug/status`).
+**Blocked by:** N01.
+**Status:** completed (2026-10-19)
+
+### N04 — PWA / Dashboard Web Privado para Celular
+**Qué entrega:** Dashboard mobile-first instalable como PWA en el celular del operador para revisar los 15 leads matutinos, ver preview con un tap, abrir WhatsApp con copy prellenado y disparar lotes.
+**Blocked by:** N03.
+**Status:** completed (2026-10-19)
+
+### N05 — Workflow de Automatización n8n & Sincronización con Google Sheets
+**Qué entrega:** Workflow exportable en JSON (`workflows/n8n-daily-prospecting.json`) que corre a las 08:00 AM, invoca la API de NexoBow System, vuelca los leads en Google Sheets y notifica a la web móvil.
+**Blocked by:** N01, N03.
+**Status:** completed (2026-10-19)
+
+---
+
 ## Frontera (orden de trabajo)
 
-Estado al 2026-10-14: **T01 completado** (template `nutricionista` reconstruido con dirección estética del usuario: referencia **Delta Cafés** — editorial crema/café/rojo `#e70025`, serif Fraunces + sans Archivo, REA de deltacafes.com; theme-driven vía `site.json` con `fondo`/`tinta`/`fuente_sans` nuevos, tests `node:test` en `tests/`). Siguientes: **T02 → T03** (pendientes, con T02 sin gate `standard`: el estándar del template es el estilo Delta, no el de NexoBow — ver ERROR-001), luego **T04 ∥ T05** (skills borradas en el reset, recrear contra el template nuevo), **T06 → (T09, T10)**. T07/T08/T11: ready-for-human.
+- **Fase Core Pipeline**: Pipeline individual `lead-to-live` 100% verificado con tests verdes (2026-10-19).
+- **Fase NexoBow System**: Tickets N01, N02, N03, N04 y N05 implementados y 100% verificados con tests automatizados.
+- **Próximos pasos**: Revisión y configuración en vivo de credenciales de Cloudflare Pages (`preview.nexobow.com`) y Google Sheets en n8n por el operador.
 
-## Pendientes abiertos que bloquean tickets
-
-- **T10** depende de decidir cómo se mide "consultoría concretada" (Pendiente abierto del spec).
-- **T11** requiere un profesional legal (Pendiente abierto del spec).
-- **Fase 2 (fuera de MVP):** bot WhatsApp con Cloud API de Meta, recordatorios por WhatsApp, scraping de Maps — no entran en estos tickets.
