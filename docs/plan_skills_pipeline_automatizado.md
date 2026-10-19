@@ -36,10 +36,15 @@ flowchart TD
 ## 2. Acuerdos de Diseño del Grill
 
 1. **Orquestador Maestro (`lead-to-live`):** Un solo comando encadena todas las fases y reporta la URL final lista.
-2. **Fallback Inteligente de Agendamiento:** Si el lead no tiene Calendly público, el embudo configura automáticamente el CTA hacia su WhatsApp con mensaje predeterminado de reserva (`wa.me/{telefono}?text=...`), dejando la web 100% operativa desde el primer segundo.
-3. **Persistencia Local de Assets:** Descarga de imágenes y avatar a `/assets/{slug}/` para evitar enlaces caídos por expiración de URLs de Instagram/Google CDN.
-4. **Compliance y Salud:** Reseñas atribuidas a Google Maps y `consentimiento_testimonios: false` por defecto para respetar la Ley 25.326.
-5. **Despliegue Autónomo a Cloudflare Pages:** Mediante Wrangler CLI con variables de entorno (`CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`) para publicación instantánea en `*.pages.dev` y subdominio `*.nexobow.com`.
+2. **Integración con Google Maps Platform (Places API New & Static Maps 0 JS):**
+   - En `scout-lead`, extracción estructurada mediante Places API (New) (`places.googleapis.com/v1/places:searchText` y detalles): teléfono verificado, dirección, calificación, reseñas de usuarios y descarga de fotos de alta resolución a `/assets/{slug}/`.
+   - Soporte para Maps Static API (`maps.googleapis.com/maps/api/staticmap`) generando un mapa estático de 0 JS para la landing page.
+   - Modo Dual de credenciales: uso de `GOOGLE_MAPS_API_KEY` en `.env` con soporte de Maps Demo Key o Mock determinista para desarrollo sin tarjeta ni fricción.
+3. **Copywriting Híbrido (`generate-client-fiche`):** Soporta `GEMINI_API_KEY` (@google/genai) para generación autónoma de dolores Hormozi y voseo argentino en CLI, manteniendo plantilla determinista de fallback y SOP para el agente de Antigravity.
+4. **Fallback Inteligente de Agendamiento:** Si el lead no tiene Calendly público, el embudo configura automáticamente el CTA hacia su WhatsApp con mensaje predeterminado de reserva (`wa.me/{telefono}?text=...`), dejando la web 100% operativa desde el primer segundo.
+5. **Persistencia Local de Assets:** Descarga de imágenes, mapa estático y avatar a `/assets/{slug}/` (y copia a `sites/{slug}/public/assets/` durante build) para evitar enlaces rotos por expiración de URLs externas.
+6. **Compliance y Salud:** Reseñas atribuidas a Google Maps y `consentimiento_testimonios: false` por defecto para respetar la Ley 25.326.
+7. **Despliegue Autónomo a Cloudflare Pages:** Mediante Wrangler CLI con variables de entorno (`CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`) para publicación instantánea en `*.pages.dev` y subdominio `*.nexobow.com`.
 
 ---
 

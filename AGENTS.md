@@ -37,8 +37,12 @@ Repositorio central de **NexoBow**: fábrica automatizada de embudos de venta y 
 ## 🛠️ Enrutamiento de Skills (Pull Workflows)
 *No cargues estas instrucciones en memoria hasta que el usuario solicite la tarea. Cuando ocurra, leé el `SKILL.md` correspondiente en `/.agents/skills/`:*[cite: 1]
 - **`standard`**: **[GATE OBLIGATORIO DE CALIDAD VISUAL & 3D]** Define el estándar estético de clase mundial (referencia Delta Cafés / Bürocratik) adaptado a Astro SSG: logo Outfit Bold (`Nexo` en negro/blanco y `Bow` en `#DB1FFF`), gradientes violeta dinámicos, botones con micro-interacciones de expansión, mockups interactivos 3D del flujo de WhatsApp/Agenda y respeto a `prefers-reduced-motion`. Todo sitio debe pasar este checklist antes de auditarse.
-- **`build-client-site`**: Usar cuando se pida crear o actualizar la landing de un cliente[cite: 1]. Clona `/templates/{rubro}/` hacia `/sites/`, inyecta el contenido/tema de `/clients/N-rubro-nombre.md` y verifica el build[cite: 1].
-- **`audit-code`**: Ejecutar **siempre en un sub-agente con sesión limpia** tras construir o actualizar un sitio[cite: 1]. Audita performance en Astro, accesibilidad, contraste de CTAs y purga clases duplicadas de Tailwind[cite: 1].
+- **`scout-lead`**: Extrae datos de prospección y enriquece con Google Maps Platform (Places API New, fotos y reseñas oficiales) o Instagram, persistiendo assets en `/assets/{slug}/`.
+- **`generate-client-fiche`**: Genera `/clients/{slug}.md` con copywriting en voseo argentino y dolores Hormozi (soporte Gemini API o manual), fallback a WhatsApp y cumplimiento Ley 25.326.
+- **`build-client-site`**: Usar cuando se pida crear o actualizar la landing de un cliente[cite: 1]. Clona `/templates/{rubro}/` hacia `/sites/`, inyecta assets locales y el contenido/tema de `/clients/N-rubro-nombre.md` y verifica el build[cite: 1].
+- **`audit-code`**: Ejecutar **siempre en un sub-agente con sesión limpia** tras construir o actualizar un sitio[cite: 1]. Audita performance en Astro, accesibilidad, contraste de CTAs, 0 JS en cliente y purga clases duplicadas de Tailwind[cite: 1].
+- **`deploy-cloudflare`**: Publica el sitio en Cloudflare Pages usando Wrangler CLI y configura subdominio `*.nexobow.com`.
+- **`lead-to-live`**: Orquestador maestro end-to-end: ejecuta scout-lead → generate-client-fiche → build-client-site → audit-code → deploy-cloudflare.
 - **`whatsapp-bot`** *(Fase 2 - Fuera de MVP)*: Flujos de automatización con API de Meta y webhooks[cite: 1]. Ignorar salvo instrucción explícita[cite: 1].
 
 ## 🧠 Aprendizaje Aplicado (Self-Evolving Log)

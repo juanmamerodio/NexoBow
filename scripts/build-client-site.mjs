@@ -2,7 +2,7 @@
 // Uso: node scripts/build-client-site.mjs <ruta-a-ficha.md>
 // Códigos de salida: 0 = ok · 1 = error técnico · 2 = ficha inválida (Gate Ask-First)
 
-import { readFileSync, writeFileSync, cpSync, existsSync, rmSync, statSync, symlinkSync } from "node:fs";
+import { readFileSync, writeFileSync, cpSync, existsSync, rmSync, statSync, symlinkSync, mkdirSync } from "node:fs";
 import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
@@ -15,7 +15,6 @@ const REQUIRED = [
   "slug",
   "nombre",
   "whatsapp",
-  "calendly",
   "subdominio",
   "consentimiento_testimonios",
 ];
@@ -150,6 +149,10 @@ const waLink = String(fm.whatsapp).startsWith("http")
   ? fm.whatsapp
   : `https://wa.me/${cleanPhone}`;
 
+const bookingUrl = (fm.calendly && String(fm.calendly).trim() !== "")
+  ? fm.calendly
+  : `https://wa.me/${cleanPhone}?text=Hola!%20Quiero%20agendar%20mi%20primera%20consultor%C3%ADa%20gratuita`;
+
 const patch = {
   tema: {
     primary: fm.tema?.primary || baseSite.tema.primary,
@@ -192,7 +195,7 @@ const patch = {
       items: faqItems.length > 0 ? faqItems : baseSite.content.faq.items,
     },
     links: {
-      calendly: fm.calendly,
+      calendly: bookingUrl,
       whatsapp: waLink,
     },
     consentimiento_testimonios: Boolean(fm.consentimiento_testimonios),
@@ -214,6 +217,18 @@ cpSync(templateDir, siteDir, {
     return !["node_modules", "dist", ".astro", ".git"].includes(top);
   },
 });
+
+// Copiar assets locales del cliente si existen en assets/{slug}/
+const clientAssetsDir = join(REPO_ROOT, "assets", slug);
+const publicAssetsDir = join(siteDir, "public", "assets");
+if (existsSync(clientAssetsDir)) {
+  mkdirSync(publicAssetsDir, { recursive: true });
+  cpSync(clientAssetsDir, publicAssetsDir, {
+    recursive: true,
+    filter: (src) => !src.endsWith(".json"),
+  });
+  console.log(`\x1b[32m[build-site] ✓\x1b[0m Assets locales copiados a sites/${slug}/public/assets/.`);
+}
 
 writeFileSync(
   join(siteDir, "src", "site.json"),

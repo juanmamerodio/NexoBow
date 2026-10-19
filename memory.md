@@ -48,10 +48,13 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
 - **`scripts/`** — `build-client-site.mjs` orquestador local para generar sitios de clientes en 1 comando.
 
 ### 3.2 Estado de tickets y automatización (ver `tickets.md` y `docs/plan_skills_pipeline_automatizado.md`)
-- **Completados**: T01 (template `nutricionista` Delta Cafés + tests), T04 (skill y script `build-client-site` implementados y probados con éxito).
+- **Completados**: 
+  - T01 (template `nutricionista` Delta Cafés + tests).
+  - T04 (skill y script `build-client-site` implementados y probados con éxito).
+  - T05 (`audit-code` y `scripts/audit-site.mjs` implementados con verificación estricta de 0 JS).
+  - Pipeline Automatizado Lead-to-Live completo: `scout-lead` (Google Maps Places API New + persistencia de assets), `generate-client-fiche` (voseo Hormozi + Ley 25.326 + WhatsApp fallback), `deploy-cloudflare` (Wrangler CLI) y orquestador maestro `lead-to-live`.
 - **Demo Comercial Lista**: `sites/demo-nutri-sofia/` lista para deploy y prospección.
-- **Plan Final Lead-to-Live Aprobado (2026-10-19)**: Ver `docs/plan_skills_pipeline_automatizado.md` — Orquestador maestro que encadena `scout-lead` (IG/Maps) → `generate-client-fiche` → `build-client-site` → `audit-code` → `deploy-cloudflare`.
-- **Próximo a ejecutar**: Implementación de las 5 skills y scripts de la suite automatizada.
+- **Suite de Tests Automatizada**: `tests/pipeline-tanda1.test.mjs` y `tests/pipeline-e2e.test.mjs` verificados (100% pasando).
 - **Ready-for-human**: T07 (cuestionario onboarding), T08 (planilla prospección), T11 (revisión legal).
 
 ---

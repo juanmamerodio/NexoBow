@@ -4,10 +4,22 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build-site": "node scripts/build-client-site.mjs"
+    "lead-to-live": "node scripts/lead-to-live.mjs",
+    "scout-lead": "node scripts/scout-lead.mjs",
+    "generate-fiche": "node scripts/generate-client-fiche.mjs",
+    "build-site": "node scripts/build-client-site.mjs",
+    "audit-site": "node scripts/audit-site.mjs",
+    "deploy-cf": "node scripts/deploy-cloudflare.mjs"
   },
   "dependencies": {
+    "@rive-app/canvas": "^2.45.0",
+    "@types/gsap": "^1.20.2",
+    "@types/three": "^0.186.0",
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.27",
     "motion": "^14.3.0",
+    "sharp": "^0.35.5",
+    "three": "^0.186.1",
     "yaml": "^2.7.0"
   }
 }

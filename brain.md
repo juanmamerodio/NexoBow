@@ -188,11 +188,14 @@ NexoBow se optimiza para **Costo Cero de Infraestructura**:
 - Corregido contraste de itálicas en `FinalCta.astro` + `Lead.astro` (`emClass` con `--color-on-primary` sobre fondo `--color-primary`) tras auditoría en sub-agente limpio.
 - Sistema listo para prospección comercial inmediata.
 
-### 2026-10-19 — Alineación y Plan Final de Skills Automatizadas (`lead-to-live`)
-- Completado ciclo `/grill-me` y redactado plan maestro `/plan` para automatización 100% de punta a punta.
-- Pipeline acordado: `scout-lead` (extracción/assets) → `generate-client-fiche` (Hormozi/salud) → `build-client-site` (Astro/Delta Cafés) → `audit-code` (a11y/0 JS) → `deploy-cloudflare` (Wrangler/Pages).
-- Decisiones ratificadas: fallback inteligente a WhatsApp si falta Calendly, descarga y persistencia local de fotos en `/assets/{slug}/`, proyectos Cloudflare Pages autónomos por cliente (`*.pages.dev` + subdominio).
-- Plan documentado y versionado en `docs/plan_skills_pipeline_automatizado.md`. Listo para ejecución en próxima sesión.
+### 2026-10-19 — Implementación Completa del Pipeline Automatizado Lead-to-Live
+- **Google Maps Platform (`google-maps-platform`) Integrada**: Implementada en `scripts/scout-lead.mjs` usando Places API (New) con field mask (`displayName`, `formattedAddress`, `nationalPhoneNumber`, `rating`, `userRatingCount`, `reviews`, `photos`, `location`). Descarga local de fotos y mapa estático (Maps Static API, 0 JS) a `/assets/{slug}/`. Soporte dual con `GOOGLE_MAPS_API_KEY` o modo mock/demo sin fricción.
+- **Copywriting Hormozi & Compliance (`generate-client-fiche`)**: Implementado en `scripts/generate-client-fiche.mjs` con voseo argentino, dolores de Alex Hormozi para salud, soporte opcional de Gemini API (@google/genai), fallback inteligente a WhatsApp si falta Calendly y cumplimiento estricto de Ley 25.326 (`consentimiento_testimonios: false`).
+- **Build con Assets (`build-client-site`)**: Actualizado para copiar `/assets/{slug}/` a `sites/{slug}/public/assets/` y manejar fallback de agendamiento.
+- **Auditoría Automatizada (`audit-code`)**: Creado `scripts/audit-site.mjs` verificando 16 tests unitarios, marcado accesible y 0 JS en cliente (Astro SSG puro).
+- **Despliegue Instantáneo (`deploy-cloudflare`)**: Creado `scripts/deploy-cloudflare.mjs` con Wrangler CLI y flags para `--dry-run` o producción.
+- **Orquestador Maestro (`lead-to-live`)**: Creado `scripts/lead-to-live.mjs` unificando todo el flujo en 1 comando.
+- **TDD & Verificación**: Tests automatizados (`tests/pipeline-tanda1.test.mjs` y `tests/pipeline-e2e.test.mjs`) 100% pasando en ~14s con cero scripts en cliente. Pipeline listo para producción.
 
 
 
