@@ -1,0 +1,60 @@
+---
+import Button from "./ui/Button.astro";
+import SectionHead from "./ui/SectionHead.astro";
+import { ars, CONTENT } from "../site";
+
+const { pricing, links } = CONTENT;
+---
+
+<section id="precios" class="border-b border-(--color-ink)/10">
+  <div class="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+    <SectionHead tag={pricing.tag} title={pricing.titulo} align="center" />
+
+    <div class="mx-auto mt-14 max-w-2xl bg-(--color-ink) p-10 text-(--color-paper) lg:p-14">
+      <p
+        class="text-xs font-semibold uppercase tracking-[0.25em] text-(--color-accent)"
+      >
+        {pricing.plan}
+      </p>
+
+      <p class="mt-6 font-display text-6xl tracking-tight">
+        {ars(pricing.precio_ars)}
+      </p>
+      <p class="mt-2 text-sm text-(--color-paper)/70">{pricing.precio_label}</p>
+      <p class="mt-2 font-display italic text-(--color-paper)/80">
+        {pricing.precio_sub}
+      </p>
+
+      <hr class="my-10 border-(--color-paper)/15" />
+
+      <p
+        class="text-xs font-semibold uppercase tracking-[0.25em] text-(--color-accent)"
+      >
+        {pricing.detalle_titulo}
+      </p>
+      <ul class="mt-6 space-y-4">
+        {
+          pricing.incluido.map((item) => (
+            <li class="flex items-start gap-3 leading-6">
+              <span aria-hidden="true" class="font-bold text-(--color-accent)">
+                ✓
+              </span>
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-10">
+        <Button
+          href={links.calendly}
+          label={pricing.cta}
+          variant="light"
+          size="lg"
+          external={true}
+        />
+      </div>
+      <p class="mt-6 text-sm text-(--color-paper)/60">{pricing.garantia}</p>
+    </div>
+  </div>
+</section>

@@ -42,23 +42,17 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
 ### 3.1 Lo que existe
 - **`web/`** — Sitio de la agencia NexoBow (Astro SSG + Tailwind). Componentes: `Header`, `Hero`, `Problem`, `Steps`, `Pricing`, `Faq`, `FinalCta`, `Footer`. Datos fijos en `src/config.ts` (bookingUrl placeholder `#agendar`, `$200.000 ARS` setup / `$10.000 ARS` mensual). Es el prototipo donde nació el estándar visual NexoBow.
 - **`templates/nutricionista/`** — Template Astro theme-driven con **estilo Delta editorial** (dirección estética del usuario, 2026-10-14): crema `#fcf3ed` + tinta café `#35221a` + rojo Delta `#e70025`; serif Fraunces (display con itálicas `*texto*`) + sans Archivo; marquee CSS-only, pasos numerados 01/02/03, botones pill con flecha deslizante, `prefers-reduced-motion`. Tokens en `src/site.json` (`tema`: primary/accent/fondo/tinta/fuente/fuente_sans/orden_secciones + `content`: hero/marquee/footer/final_cta/prestador/...), lógica pura en `src/theme.ts` (ars, luminance, onColor con tinta/fondo custom, themeVars, fontUrl) y `src/order.ts` (resolveOrder), componentes en `src/components/` (Header con nav filtrada por orden, Hero, Problem, Steps, Reviews, CaseStudy, Pricing, Faq, FinalCta, Footer + `ui/` con Lead, SectionHead, Button). **Gate de salud**: con `consentimiento_testimonios: false` solo se muestran reseñas con fuente "Google Maps" y `CaseStudy` se oculta. Tests `node:test` en `tests/` (16 tests verdes, sin dependencias). Build SSG estricto: 0 scripts en el HTML.
-- **`.agents/skills/`** — `standard` (estándar estético NexoBow), `build-client-site` y `audit-code` **BORRADOS en el reset 2026-10-14** (se recrean en T04/T05 contra el template nuevo).
-- **`clients/`** — Solo `_ficha-template.md` (sin prestador real aún).
-- **`sites/`** — Vacío (no hay clones generados todavía).
-- **`docs/`, `example/`, `web/dist/`, `templates/nutricionista/dist/`** — Complementos/builds.
+- **`.agents/skills/`** — `standard` (estándar estético NexoBow) y `build-client-site` (recreada y operativa). `audit-code` pendiente de recreación (T05).
+- **`clients/`** — `_ficha-template.md` y `demo-nutri-sofia.md` (ficha demo de alta fidelidad para prospección).
+- **`sites/`** — `demo-nutri-sofia/` (clon compilable de la demo comercial con 16 tests verdes y build SSG verificado).
+- **`scripts/`** — `build-client-site.mjs` orquestador local para generar sitios de clientes en 1 comando.
 
-### 3.2 Estado de tickets (ver `tickets.md`)
-- **Completados**: T01 (template `nutricionista` reconstruido con estilo Delta editorial + tests). Reset: T02 → T05 vuelven a estar pendientes (T04/T05 requieren recrear las skills borradas).
-- **Bloqueado**: T06 (primer prestador e2e + deploy) — requiere ficha real + aprobación humana.
+### 3.2 Estado de tickets y automatización (ver `tickets.md` y `docs/plan_skills_pipeline_automatizado.md`)
+- **Completados**: T01 (template `nutricionista` Delta Cafés + tests), T04 (skill y script `build-client-site` implementados y probados con éxito).
+- **Demo Comercial Lista**: `sites/demo-nutri-sofia/` lista para deploy y prospección.
+- **Plan Final Lead-to-Live Aprobado (2026-10-19)**: Ver `docs/plan_skills_pipeline_automatizado.md` — Orquestador maestro que encadena `scout-lead` (IG/Maps) → `generate-client-fiche` → `build-client-site` → `audit-code` → `deploy-cloudflare`.
+- **Próximo a ejecutar**: Implementación de las 5 skills y scripts de la suite automatizada.
 - **Ready-for-human**: T07 (cuestionario onboarding), T08 (planilla prospección), T11 (revisión legal).
-- **Bloqueados por T06**: T09 (WhatsApp Business), T10 (métrica agendadas/concretadas).
-- **Decisiones de producto**: pricing de la landing = oferta al paciente (consultoría gratuita `$0 ARS`); `setup_ars`/`abono_ars` son datos internos de NexoBow (no se publican); "concretada" = panel Calendly + confirmación del prestador al cierre de mes.
-
-### 3.3 Pendientes / próximos pasos
-1. T02 → T03: revalidar Hero tracer y secciones contra el nuevo estilo Delta (sin gate `standard`: ese estándar es de NexoBow, no del template).
-2. T04/T05: recrear skills `build-client-site` y `audit-code` (borradas en el reset) contra el template nuevo.
-3. T06: ficha real del primer prestador (con consentimiento, WhatsApp y Calendly) para generar el primer clon.
-4. T07/T08/T11: humano-en-el-medio.
 
 ---
 

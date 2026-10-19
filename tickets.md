@@ -79,12 +79,12 @@ Dependientes del embudo vivo:
 
 **Blocked by:** T03.
 
-**Status:** ready-for-agent
+**Status:** completed (2026-10-18)
 
-- [ ] Lee la ficha (`_ficha-template.md`) y valida campos obligatorios antes de clonar; frena con pregunta si faltan datos (gate Ask-First).
-- [ ] Aplica tema (paleta, fuente, orden) y contenido (bio, reseñas, casos, FAQ) **sin tocar componentes**.
-- [ ] Verifica `npm run build` del clon generado.
-- [ ] Nunca edita a mano el clon para corregir datos de negocio (se edita la ficha y se regenera).
+- [x] Lee la ficha (`_ficha-template.md` o cliente real) y valida campos obligatorios antes de clonar; frena con pregunta si faltan datos (gate Ask-First).
+- [x] Aplica tema (paleta Delta Cafés, fuente, orden) y contenido (bio, reseñas, casos, FAQ) **sin tocar componentes**.
+- [x] Verifica `npm run build` del clon generado (build verde estático con 0 errores y 16 tests pasando).
+- [x] Nunca edita a mano el clon para corregir datos de negocio (se edita la ficha y se regenera).
 
 ### T05 — Skill `audit-code` (auditoría en sesión limpia)
 

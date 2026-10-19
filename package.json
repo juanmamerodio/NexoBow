@@ -1,0 +1,13 @@
+{
+  "name": "nexobow-factory",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build-site": "node scripts/build-client-site.mjs"
+  },
+  "dependencies": {
+    "motion": "^14.3.0",
+    "yaml": "^2.7.0"
+  }
+}

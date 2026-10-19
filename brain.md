@@ -179,4 +179,20 @@ NexoBow se optimiza para **Costo Cero de Infraestructura**:
 - Usuario definió la dirección estética de los templates: **deltacafes.com** como objetivo de diseño (ingeniería inversa vía REA sobre HTML/CSS del sitio: paleta rojo `#e70025`/espresso `#35221a`/crema `#fcf3ed`/tan `#e3c1ad`, serif display `delta-season` → **Fraunces**, sans `trade-gothic` → **Archivo**, marquee strip, itálicas serif, números 01/02/03, botones pill con flecha). Resuelve ERROR-001/002.
 - Reconstruido `templates/nutricionista/` (reset previo borró src y skills): arquitectura theme-driven preservada (`site.json` `tema`+`content`), con tokens nuevos `fondo`/`tinta`/`fuente_sans`. Lógica pura separada en `src/theme.ts` y `src/order.ts` (seams TDD). Componentes `ui/`: `Lead` (itálicas `*texto*`), `SectionHead`, `Button` (variants primary/outline/light/ghost-light).
 - **TDD**: 14 tests `node:test` en `tests/` (red→green) sin dependencias extra; `npm test` + `npm run build` verdes; HTML final con **0 scripts** (SSG estricto), marquee CSS-only con `prefers-reduced-motion`.
-- Pendientes: T02→T05 reseteados (skills `build-client-site`/`audit-code` borradas, recrear contra template nuevo), T06+ bloqueados por ficha real.
+- Pendientes: T02→T03 integrados en template, T05 (`audit-code`) pendiente, T06+ bloqueados por ficha real.
+
+### 2026-10-18 — T04 completado y verificado: script build-client-site + landing demo Lic. Sofía Ramos
+- Recreado el orquestador `scripts/build-client-site.mjs` y la skill `.agents/skills/build-client-site/SKILL.md` adaptados al nuevo esquema Delta Cafés (`site.json`).
+- Implementado soporte de vinculación rápida de dependencias y deep-merge sin fugas de placeholders.
+- Creada ficha demo `clients/demo-nutri-sofia.md` ("Lic. Sofía Ramos - Nutrición Funcional & Deportiva") y compilado el clon en `sites/demo-nutri-sofia/` (16 tests pasando, SSG puro de 27.8 KB, 0 JS).
+- Corregido contraste de itálicas en `FinalCta.astro` + `Lead.astro` (`emClass` con `--color-on-primary` sobre fondo `--color-primary`) tras auditoría en sub-agente limpio.
+- Sistema listo para prospección comercial inmediata.
+
+### 2026-10-19 — Alineación y Plan Final de Skills Automatizadas (`lead-to-live`)
+- Completado ciclo `/grill-me` y redactado plan maestro `/plan` para automatización 100% de punta a punta.
+- Pipeline acordado: `scout-lead` (extracción/assets) → `generate-client-fiche` (Hormozi/salud) → `build-client-site` (Astro/Delta Cafés) → `audit-code` (a11y/0 JS) → `deploy-cloudflare` (Wrangler/Pages).
+- Decisiones ratificadas: fallback inteligente a WhatsApp si falta Calendly, descarga y persistencia local de fotos en `/assets/{slug}/`, proyectos Cloudflare Pages autónomos por cliente (`*.pages.dev` + subdominio).
+- Plan documentado y versionado en `docs/plan_skills_pipeline_automatizado.md`. Listo para ejecución en próxima sesión.
+
+
+

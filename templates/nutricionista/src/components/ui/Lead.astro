@@ -1,16 +1,17 @@
 ---
 interface Props {
   text: string;
+  emClass?: string;
 }
 
-const { text } = Astro.props;
+const { text, emClass = "text-(--color-primary)" } = Astro.props;
 const parts = text.split("*");
 ---
 
 {
   parts.map((p, i) =>
     i % 2 === 1 ? (
-      <em class="font-display italic text-(--color-primary)">{p}</em>
+      <em class={`font-display italic ${emClass}`}>{p}</em>
     ) : (
       <span>{p}</span>
     )
