@@ -5,6 +5,8 @@ node_modules
 
 # Astro build outputs
 dist/
+dist-previews/
+sites/
 .astro/
 
 # Environment
