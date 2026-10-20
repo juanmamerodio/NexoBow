@@ -35,7 +35,7 @@ test("N01 - prospect-batch genera previews en dist-previews/{slug}/ con reporte 
 
   for (const lead of report.leads) {
     assert.ok(lead.slug, "Cada lead debe tener un slug");
-    assert.ok(lead.previewUrl.startsWith("https://preview.nexobow.com/"), "La previewUrl debe apuntar a preview.nexobow.com/{slug}");
+    assert.ok(lead.previewUrl.startsWith("https://preview.nexobow."), "La previewUrl debe apuntar a preview.nexobow.*");
     
     // Verificar que exista dist-previews/{slug}/index.html
     const previewIndex = join(REPO_ROOT, "dist-previews", lead.slug, "index.html");

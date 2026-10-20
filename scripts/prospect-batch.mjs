@@ -143,7 +143,8 @@ async function main() {
 
     // Cargar datos procesados para el reporte
     const rawData = JSON.parse(readFileSync(join(REPO_ROOT, rawPath), "utf8"));
-    const previewUrl = `https://preview.nexobow.com/${currentSlug}`;
+    const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site";
+    const previewUrl = `https://preview.${rootDomain}/${currentSlug}`;
     const cleanPhone = String(rawData.telefono || "").replace(/\D/g, "");
     const waText = encodeURIComponent(
       `Hola ${rawData.nombre}! Vi tu perfil en Google Maps y preparé esta demo de tu consultorio online para agendar pacientes: ${previewUrl}`

@@ -45,7 +45,8 @@ async function main() {
   });
 
   const projectName = "nexobow-previews";
-  const customDomain = "preview.nexobow.com";
+  const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site";
+  const customDomain = `preview.${rootDomain}`;
 
   console.log(`\x1b[36m[deploy-previews]\x1b[0m Preparando despliegue de \x1b[1m${entries.length} demos\x1b[0m hacia ${projectName}...`);
 
