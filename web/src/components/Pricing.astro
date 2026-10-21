@@ -1,81 +1,201 @@
 ---
 import { SITE } from "../config";
-const included = [
-  "Landing estática ultra-veloz en Astro con tu marca",
-  "Botón y widget de agenda sincronizado (Calendly / Meet)",
-  "WhatsApp Business optimizado con respuestas automáticas",
-  "Recordatorios automáticos para reducir ausencias",
-  "Subdominio de NexoBow y hosting CDN global de alta disponibilidad",
-];
 ---
 
-<section id="precios" class="relative mx-auto max-w-5xl px-6 py-24">
-  <div class="text-center mb-14">
-    <div class="inline-block rounded-full bg-white/5 border border-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-[#DB1FFF] mb-3">
-      Inversión transparente
+<section id="planes" class="relative mx-auto max-w-6xl px-6 py-24">
+  <div class="mx-auto max-w-3xl text-center mb-10">
+    <div class="mb-3 inline-block rounded-full border border-[#4928C2]/40 bg-[#0B0D12] px-4 py-1 text-xs font-semibold tracking-wider text-[#E3D9FC] uppercase">
+      Inversión Transparente · Escalera de Valor
     </div>
-    <h2 class="font-outfit text-4xl font-extrabold tracking-tight text-white md:text-5xl">
-      Precio claro, sin letra chica ni sorpresas.
+    <h2 class="font-outfit text-3xl font-extrabold tracking-tight text-[#F8F6FF] sm:text-4xl md:text-5xl">
+      Elegí el plan para <span class="text-[#BF40FA]">escalar tu consultorio</span> hoy
     </h2>
+    <p class="mt-3 text-base text-[#E3D9FC]/80">
+      Precios claros en Pesos Argentinos, sin comisiones por turno agendado y con el primer mes 100% bonificado.
+    </p>
   </div>
 
-  <div class="grid gap-8 md:grid-cols-2 items-stretch">
-    <!-- Pricing Card Main -->
-    <div class="relative overflow-hidden rounded-[36px] border-2 border-[#DB1FFF]/50 bg-gradient-to-b from-neutral-900 via-neutral-950 to-black p-8 sm:p-10 shadow-[0_0_50px_rgba(219,31,255,0.2)] flex flex-col justify-between">
-      <div class="absolute -top-12 -right-12 h-36 w-36 rounded-full bg-[#DB1FFF]/30 blur-3xl"></div>
-      
+  <!-- 7-Day Active Server Expiration Urgency Banner -->
+  <div class="mb-12 rounded-2xl border border-[#BF40FA]/50 bg-gradient-to-r from-[#5B2A62]/30 via-[#0B0D12] to-[#4928C2]/25 p-5 text-center shadow-[0_0_30px_rgba(191,64,250,0.15)]">
+    <p class="text-xs sm:text-sm font-semibold text-[#F8F6FF]">
+      ⏱️ <span class="text-[#BF40FA] uppercase tracking-wide font-extrabold">POLÍTICA DE SERVIDOR ACTIVO:</span> Si recibiste una demo personalizada por WhatsApp, tu archivo y diseño quedan reservados por <strong>7 días corridos</strong>. Pasado ese plazo sin actividad, el sistema libera el cupo y elimina la demo automáticamente.
+    </p>
+  </div>
+
+  <!-- 3-Plan Ladder -->
+  <div class="grid gap-8 lg:grid-cols-3 items-stretch">
+    <!-- Plan 1: Sistema NexoBow Core (Featured) -->
+    <div class="relative flex flex-col justify-between rounded-3xl border-2 border-[#BF40FA] bg-gradient-to-b from-[#5B2A62]/25 via-[#0B0D12] to-[#040607] p-8 shadow-[0_0_50px_rgba(191,64,250,0.2)]">
       <div>
-        <span class="inline-block rounded-full bg-[#DB1FFF] px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-sm">
-          Plan Llave en Mano
-        </span>
-        <p class="mt-6 text-sm uppercase tracking-wider text-white/60 font-medium">Setup e Implementación (pago único)</p>
-        <p class="mt-2 font-outfit text-5xl font-extrabold text-white">{SITE.setupPrice}</p>
-        
-        <div class="my-6 border-t border-white/10"></div>
+        <div class="flex items-center justify-between">
+          <span class="rounded-full bg-[#BF40FA] px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#F8F6FF]">
+            Más Elegido
+          </span>
+          <span class="text-xs font-semibold text-[#E3D9FC]">Profesionales Independientes</span>
+        </div>
 
-        <p class="text-sm uppercase tracking-wider text-white/60 font-medium">Abono mensual de soporte y optimización</p>
-        <p class="mt-2 font-outfit text-4xl font-bold text-white">{SITE.monthlyPrice}</p>
-      </div>
+        <h3 class="mt-5 font-outfit text-2xl font-extrabold text-[#F8F6FF]">Sistema NexoBow Core</h3>
+        <p class="mt-1 text-xs text-[#E3D9FC]/75">Tu embudo llave en mano listo para recibir pacientes esta semana.</p>
 
-      <div class="mt-8 rounded-2xl bg-white/5 border border-white/10 p-4">
-        <p class="text-sm font-semibold text-[#DB1FFF] flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full bg-[#DB1FFF] animate-ping"></span>
-          Garantía: Primer mes de prueba sin costo de abono
-        </p>
-      </div>
-    </div>
+        <div class="mt-6 border-t border-[#4928C2]/30 pt-5">
+          <p class="text-xs uppercase tracking-wider text-[#E3D9FC]/70 font-medium">
+            Setup e Implementación (pago único) · <span class="line-through text-[#E3D9FC]/50">{SITE.setupOldPrice}</span>
+          </p>
+          <p class="mt-1 font-outfit text-4xl font-extrabold text-[#F8F6FF]">{SITE.setupPrice}</p>
+        </div>
 
-    <!-- Included Checklist Card -->
-    <div class="rounded-[36px] border border-white/10 bg-white/[0.03] p-8 sm:p-10 backdrop-blur-md flex flex-col justify-between">
-      <div>
-        <h3 class="font-outfit text-2xl font-bold text-white">Qué incluye tu solución</h3>
-        <p class="mt-2 text-sm text-white/60">Todo lo necesario para que el embudo comience a recibir pacientes.</p>
-        
-        <ul class="mt-6 space-y-4">
-          {included.map((i) => (
-            <li class="flex items-start gap-3 text-sm text-white/80">
-              <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#DB1FFF]/20 text-[#DB1FFF]">
-                ✓
-              </span>
-              <span>{i}</span>
-            </li>
-          ))}
+        <div class="mt-4 rounded-2xl border border-[#4928C2]/35 bg-[#040607]/90 p-4">
+          <p class="text-xs uppercase tracking-wider text-[#E3D9FC]/70 font-medium">Mantenimiento y Hosting Ultra-Rápido</p>
+          <p class="mt-1 font-outfit text-2xl font-bold text-[#BF40FA]">{SITE.monthlyPrice} finales/mes</p>
+          <p class="mt-0.5 text-[11px] text-emerald-400 font-semibold">✓ 1er mes 100% bonificado</p>
+        </div>
+
+        <ul class="mt-6 space-y-3 text-xs text-[#E3D9FC]">
+          <li class="flex items-start gap-2.5"><span class="text-[#BF40FA] font-bold">✓</span><span>Landing Astro SSG personalizada (&lt;0.8s)</span></li>
+          <li class="flex items-start gap-2.5"><span class="text-[#BF40FA] font-bold">✓</span><span>Conexión a WhatsApp pre-filtrado + Agenda (Calendly/Meet)</span></li>
+          <li class="flex items-start gap-2.5"><span class="text-[#BF40FA] font-bold">✓</span><span>Reseñas reales de Google Maps y cumplimiento Ley 25.326</span></li>
+          <li class="flex items-start gap-2.5"><span class="text-[#BF40FA] font-bold">✓</span><span>Dominio/subdominio SSL y cambios rápidos a pedido</span></li>
         </ul>
       </div>
 
-      <div class="mt-10">
+      <div class="mt-8">
         <a
           href={SITE.bookingUrl}
-          class="group relative flex w-full items-center justify-between rounded-full bg-white/10 p-2 pl-6 pr-2 text-sm font-bold tracking-wide text-white backdrop-blur-md border border-white/20 transition-all duration-300 hover:border-[#DB1FFF] hover:bg-white/15 hover:shadow-[0_0_30px_rgba(219,31,255,0.4)]"
+          class="flex w-full items-center justify-center rounded-full bg-[#BF40FA] px-6 py-3.5 text-sm font-bold text-[#F8F6FF] transition-all duration-200 hover:bg-[#A82EE3] shadow-[0_0_25px_rgba(191,64,250,0.4)]"
         >
-          <span>Agendá tu consultoría gratuita</span>
-          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-[#DB1FFF] text-white transition-all duration-300 group-hover:scale-105 group-hover:translate-x-0.5">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </span>
+          Activar Plan Core + 3 Bonos →
         </a>
       </div>
+    </div>
+
+    <!-- Plan 2: Sistema NexoBow Clínica / Pro -->
+    <div class="flex flex-col justify-between rounded-3xl border border-[#4928C2]/40 bg-[#0B0D12] p-8">
+      <div>
+        <div class="flex items-center justify-between">
+          <span class="rounded-full border border-[#4928C2]/50 bg-[#040607] px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#E3D9FC]">
+            Clínicas &amp; Estudios
+          </span>
+          <span class="text-xs font-semibold text-[#E3D9FC]/70">Multi-Especialista</span>
+        </div>
+
+        <h3 class="mt-5 font-outfit text-2xl font-extrabold text-[#F8F6FF]">Sistema NexoBow Clínica / Pro</h3>
+        <p class="mt-1 text-xs text-[#E3D9FC]/75">Para consultorios compartidos, centros médicos y estudios asociados.</p>
+
+        <div class="mt-6 border-t border-[#4928C2]/25 pt-5">
+          <p class="text-xs uppercase tracking-wider text-[#E3D9FC]/70 font-medium">Setup e Implementación (pago único)</p>
+          <p class="mt-1 font-outfit text-4xl font-extrabold text-[#F8F6FF]">{SITE.clinicSetupPrice}</p>
+        </div>
+
+        <div class="mt-4 rounded-2xl border border-[#4928C2]/30 bg-[#040607]/90 p-4">
+          <p class="text-xs uppercase tracking-wider text-[#E3D9FC]/70 font-medium">Mantenimiento Multi-Agenda</p>
+          <p class="mt-1 font-outfit text-2xl font-bold text-[#E3D9FC]">{SITE.clinicMonthlyPrice} finales/mes</p>
+          <p class="mt-0.5 text-[11px] text-emerald-400 font-semibold">✓ 1er mes 100% bonificado</p>
+        </div>
+
+        <ul class="mt-6 space-y-3 text-xs text-[#E3D9FC]/85">
+          <li class="flex items-start gap-2.5"><span class="text-[#BF40FA] font-bold">✓</span><span>Todo lo incluido en el Plan Core</span></li>
+          <li class="flex items-start gap-2.5"><span class="text-[#BF40FA] font-bold">✓</span><span>Derivación inteligente por profesional o especialidad</span></li>
+          <li class="flex items-start gap-2.5"><span class="text-[#BF40FA] font-bold">✓</span><span>Múltiples calendarios de equipo sincronizados</span></li>
+          <li class="flex items-start gap-2.5"><span class="text-[#BF40FA] font-bold">✓</span><span>Optimización mensual continua basada en métricas</span></li>
+        </ul>
+      </div>
+
+      <div class="mt-8">
+        <a
+          href={SITE.bookingUrl}
+          class="flex w-full items-center justify-center rounded-full border border-[#4928C2]/60 bg-[#040607] px-6 py-3.5 text-sm font-bold text-[#F8F6FF] transition-all duration-200 hover:border-[#BF40FA] hover:bg-[#5B2A62]/20"
+        >
+          Consultar por Plan Clínica →
+        </a>
+      </div>
+    </div>
+
+    <!-- Plan 3: Full Growth + Mes de Contenido Audiovisual (AfterBow Partnership) -->
+    <div class="flex flex-col justify-between rounded-3xl border border-[#4928C2]/50 bg-gradient-to-b from-[#0B0D12] via-[#0B0D12] to-[#5B2A62]/20 p-8">
+      <div>
+        <div class="flex items-center justify-between">
+          <span class="rounded-full bg-[#4928C2] px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#F8F6FF]">
+            Alianza AfterBow
+          </span>
+          <span class="text-xs font-semibold text-[#BF40FA]">Embudo + Videos</span>
+        </div>
+
+        <h3 class="mt-5 font-outfit text-2xl font-extrabold text-[#F8F6FF]">
+          Full Growth + Mes de Contenido Audiovisual
+        </h3>
+        <p class="mt-2 text-xs leading-relaxed text-[#E3D9FC]/85">
+          ¿Además del embudo necesitás que te grabemos 1 mes entero de contenido profesional en video (Reels, Ads y piezas de autoridad) para estallar tu agenda?
+        </p>
+
+        <div class="mt-6 border-t border-[#4928C2]/25 pt-5">
+          <p class="text-xs uppercase tracking-wider text-[#E3D9FC]/70 font-medium">Modalidad llave en mano integral</p>
+          <p class="mt-1 font-outfit text-2xl font-extrabold text-[#F8F6FF]">Plan Personalizado a Medida</p>
+        </div>
+
+        <div class="mt-4 rounded-2xl border border-[#4928C2]/35 bg-[#040607]/90 p-4 text-xs text-[#E3D9FC]">
+          🎬 Producido junto a nuestra agencia audiovisual{" "}
+          <a
+            href={SITE.afterbowUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-bold text-[#BF40FA] underline decoration-[#BF40FA]/60 underline-offset-2 hover:text-[#F8F6FF]"
+          >
+            AfterBow (afterbow.com)
+          </a>
+        </div>
+
+        <ul class="mt-6 space-y-3 text-xs text-[#E3D9FC]/85">
+          <li class="flex items-start gap-2.5"><span class="text-[#BF40FA] font-bold">✓</span><span>Sistema NexoBow completo + Guiones de alta retención</span></li>
+          <li class="flex items-start gap-2.5"><span class="text-[#BF40FA] font-bold">✓</span><span>Jornada de rodaje profesional y edición dinámica (Reels &amp; Ads)</span></li>
+          <li class="flex items-start gap-2.5"><span class="text-[#BF40FA] font-bold">✓</span><span>Estrategia de tráfico directo desde tus videos hacia tu embudo</span></li>
+        </ul>
+      </div>
+
+      <div class="mt-8 space-y-2.5">
+        <a
+          href={SITE.bookingUrl}
+          class="flex w-full items-center justify-center rounded-full border border-[#BF40FA]/60 bg-[#5B2A62]/30 px-6 py-3.5 text-sm font-bold text-[#F8F6FF] transition-all duration-200 hover:bg-[#BF40FA] hover:text-[#F8F6FF]"
+        >
+          Cotizar Plan Embudo + Mes de Contenido
+        </a>
+        <a
+          href={SITE.afterbowUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block text-center text-xs font-semibold text-[#E3D9FC]/75 hover:text-[#BF40FA]"
+        >
+          Ver portfolio audiovisual en afterbow.com ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hormozi Fast-Action Bonus Stack -->
+  <div class="mt-14 rounded-3xl border border-[#4928C2]/45 bg-[#0B0D12] p-8 sm:p-10">
+    <div class="text-center mb-8">
+      <span class="rounded-full bg-[#BF40FA]/20 border border-[#BF40FA]/40 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#BF40FA]">
+        Stack de Acción Rápida · Bonificado al 100%
+      </span>
+      <h3 class="mt-3 font-outfit text-2xl font-extrabold text-[#F8F6FF] sm:text-3xl">
+        3 Bonos incluidos GRATIS activando tu sistema antes de los 7 días
+      </h3>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-3">
+      {SITE.bonuses.map((b) => (
+        <div class="flex flex-col justify-between rounded-2xl border border-[#4928C2]/30 bg-[#040607] p-6">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-[#BF40FA]">{b.number}</span>
+              <span class="rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-bold text-emerald-400">
+                Valuado en {b.value} → GRATIS
+              </span>
+            </div>
+            <h4 class="mt-3 font-outfit text-lg font-bold text-[#F8F6FF]">{b.title}</h4>
+            <p class="mt-2 text-xs leading-relaxed text-[#E3D9FC]/75">{b.description}</p>
+          </div>
+        </div>
+      ))}
     </div>
   </div>
 </section>

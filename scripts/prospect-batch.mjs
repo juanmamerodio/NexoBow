@@ -40,17 +40,6 @@ const MOCK_PROSPECTS = [
     userRatingCount: 47,
   },
   {
-    nombre: "Lic. Sofía Ramos",
-    slug: "demo-nutri-sofia",
-    rubro: "nutricionista",
-    especialidad: "Nutrición Funcional & Deportiva",
-    direccion: "Av. Libertador 4500, Palermo, CABA",
-    telefono: "5491144556677",
-    telefonoFormato: "+54 9 11 4455-6677",
-    rating: 5.0,
-    userRatingCount: 52,
-  },
-  {
     nombre: "Lic. Martín Palermo",
     slug: "demo-nutri-palermo",
     rubro: "nutricionista",

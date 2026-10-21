@@ -45,5 +45,13 @@ test("N01 - prospect-batch genera previews en dist-previews/{slug}/ con reporte 
     // Verificar 0 scripts en cliente (SSG puro)
     assert.ok(!html.includes("<script"), `La landing demo ${lead.slug} no debe incluir tags <script>`);
     assert.ok(html.includes(lead.nombre), `La landing demo debe incluir el nombre del profesional ${lead.nombre}`);
+
+    // Limpiar artefactos mock generados por el test
+    const fichePath = join(REPO_ROOT, "clients", `${lead.slug}.md`);
+    const assetsDir = join(REPO_ROOT, "assets", lead.slug);
+    const siteDir = join(REPO_ROOT, "sites", lead.slug);
+    if (existsSync(fichePath)) rmSync(fichePath, { force: true });
+    if (existsSync(assetsDir)) rmSync(assetsDir, { recursive: true, force: true });
+    if (existsSync(siteDir)) rmSync(siteDir, { recursive: true, force: true });
   }
 });

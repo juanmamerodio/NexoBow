@@ -1,10 +1,10 @@
-// scripts/generate-client-fiche.mjs — NexoBow: generación de ficha /clients/{slug}.md con copywriting Hormozi y compliance
-// Uso: node scripts/generate-client-fiche.mjs assets/demo-nutri-camila/lead-raw.json
+// scripts/generate-client-fiche.mjs — NexoBow: generación de ficha /clients/{slug}.md con copywriting Hormozi, correlatividad Sheets y TTL 7 días
+// Uso: node scripts/generate-client-fiche.mjs assets/22-alejandra-martinez-nutri/lead-raw.json [--sheet-id 22]
 // Códigos de salida: 0 = ok · 1 = error técnico · 2 = datos insuficientes
 
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname, resolve, basename } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -15,6 +15,12 @@ try {
   }
 } catch {
   // Ignorar si no se puede cargar automáticamente
+}
+
+export function addDaysToIsoDate(isoDateStr, days = 7) {
+  const base = new Date(`${isoDateStr}T00:00:00Z`);
+  base.setUTCDate(base.getUTCDate() + Number(days));
+  return base.toISOString().split("T")[0];
 }
 
 function parseArgs() {
@@ -110,7 +116,6 @@ Responde ÚNICAMENTE con el objeto JSON válido, sin bloques de código markdown
 }
 
 function getDefaultCopy(lead) {
-  const nombreLimpio = lead.nombre.replace(/^(lic\.?|dra\.?|dr\.?)\s+/i, "");
   return {
     bio: `${lead.nombre}, especialista en nutrición clínica y hábitos sostenibles. Ayudo a personas ocupadas a recuperar su energía, optimizar su composición corporal y ordenar su alimentación sin pasar hambre ni vivir a dieta.`,
     enfoque: `Trabajamos con educación alimentaria y hábitos del mundo real. Sin suplementos innecesarios, sin contar calorías obsesivamente y con recetas sencillas de 15 minutos adaptadas a tu trabajo, vida social y familia.`,
@@ -171,6 +176,19 @@ async function main() {
     console.warn(`\x1b[33m[generate-fiche AVISO]\x1b[0m El lead no tiene teléfono detectado. Se requerirá completar WhatsApp.`);
   }
 
+  // Correlatividad con Google Sheets (sheet_id) y metadatos de ciclo de vida (TTL 7 días)
+  const slugIdMatch = slug.match(/^(\d+)-/);
+  const sheetId = Number(
+    flags["sheet-id"] ??
+      rawData.sheet_id ??
+      (slugIdMatch ? slugIdMatch[1] : rawData.id ?? 0)
+  );
+  const todayStr = new Date().toISOString().split("T")[0];
+  const createdAt = rawData.created_at || todayStr;
+  const lastActivityAt = rawData.last_activity_at || createdAt;
+  const expiresAt = rawData.expires_at || addDaysToIsoDate(lastActivityAt, 7);
+  const leadStatus = rawData.lead_status || "1. Prospecto Identificado";
+
   // Fallback inteligente para agendamiento: si no tiene Calendly, apuntar el CTA a WhatsApp con mensaje predeterminado
   const fallbackWaBooking = cleanPhone
     ? `https://wa.me/${cleanPhone}?text=Hola!%20Quiero%20agendar%20mi%20primera%20consultor%C3%ADa%20gratuita`
@@ -179,7 +197,7 @@ async function main() {
     ? rawData.website
     : fallbackWaBooking;
 
-  console.log(`\x1b[36m[generate-fiche]\x1b[0m Redactando ficha para ${rawData.nombre} (Slug: ${slug})...`);
+  console.log(`\x1b[36m[generate-fiche]\x1b[0m Redactando ficha para ${rawData.nombre} (Slug: ${slug}, Sheet ID: ${sheetId})...`);
 
   let copy = null;
   const geminiKey = process.env.GEMINI_API_KEY;
@@ -208,7 +226,12 @@ async function main() {
     .join("\n");
 
   const clientMdContent = `---
-id: ${Date.now().toString().slice(-4)}
+id: ${sheetId || Date.now().toString().slice(-4)}
+sheet_id: ${sheetId}
+lead_status: "${leadStatus}"
+created_at: "${createdAt}"
+last_activity_at: "${lastActivityAt}"
+expires_at: "${expiresAt}"
 rubro: ${rawData.rubro || "nutricionista"}
 nombre: "${rawData.nombre}"
 slug: "${slug}"
@@ -227,8 +250,8 @@ tema:
   fuente_sans: "Archivo"
   orden_secciones: ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"]
 consentimiento_testimonios: false
-setup_ars: 200000
-abono_ars: 10000
+setup_ars: 189999
+abono_ars: 12259
 mes_de_prueba: true
 metricas:
   agendadas_mes: 0
@@ -252,6 +275,8 @@ ${faqMarkdown}
 
 ## Notas internas
 - Lead generado automáticamente por pipeline NexoBow vía scout-lead.
+- Correlatividad Google Sheets: Fila ID #${sheetId} (${leadStatus}).
+- Vigencia de servidor activo: vence el ${expiresAt} (7 días desde última actividad).
 - Origen de datos: ${rawData.source || "Google Maps Platform (Places API New)"}.
 - Rating detectado: ${rawData.rating}★ (${rawData.userRatingCount} opiniones públicas).
 - Fallback de agendamiento: ${calendlyUrl.includes("wa.me") ? "WhatsApp directo con mensaje de reserva" : "Calendly detectado"}.
@@ -264,7 +289,8 @@ ${faqMarkdown}
 \x1b[32m=======================================================
 ✓ FICHA GENERADA CON ÉXITO: clients/${slug}.md
 =======================================================\x1b[0m
-- Cliente: \x1b[1m${rawData.nombre}\x1b[0m
+- Cliente: \x1b[1m${rawData.nombre}\x1b[0m (Sheet ID: ${sheetId})
+- Vigencia Demo (7d): ${createdAt} → ${expiresAt}
 - WhatsApp: ${cleanPhone || "Requerido"}
 - CTA Agendamiento: ${calendlyUrl}
 - Compliance Ley 25.326: consentimiento_testimonios: false (Reseñas Google Maps)
@@ -273,7 +299,9 @@ ${faqMarkdown}
 `);
 }
 
-main().catch((err) => {
-  console.error(`\x1b[31m[generate-fiche ERROR FATAL]\x1b[0m ${err.message}`);
-  process.exit(1);
-});
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((err) => {
+    console.error(`\x1b[31m[generate-fiche ERROR FATAL]\x1b[0m ${err.message}`);
+    process.exit(1);
+  });
+}

@@ -197,14 +197,16 @@ NexoBow se optimiza para **Costo Cero de Infraestructura**:
 - **Orquestador Maestro (`lead-to-live`)**: Creado `scripts/lead-to-live.mjs` unificando todo el flujo en 1 comando.
 - **TDD & Verificación**: Tests automatizados (`tests/pipeline-tanda1.test.mjs` y `tests/pipeline-e2e.test.mjs`) 100% pasando en ~14s con cero scripts en cliente. Pipeline listo para producción.
 
-### 2026-10-19 — Implementación NexoBow System (Prospección & Web Privada, N01-N05)
-- **Generador por Lotes & Subrutas (`prospect-batch`)**: `scripts/prospect-batch.mjs` procesa los 15 prospectos diarios compilando Astro SSG en `dist-previews/{slug}/` bajo dominio unificado `preview.nexobow.com/{slug}` con base path aislado y 0 scripts en cliente.
-- **Deploy Unificado Cloudflare Pages (`deploy-previews`)**: `scripts/deploy-previews.mjs` sincroniza `dist-previews/` hacia el proyecto único `nexobow-previews` con soporte dry-run y producción.
-- **Servidor y API con Autenticación Bearer (`server/index.mjs`)**: API REST con token pre-compartido `NEXOBOW_SYSTEM_KEY` para endpoints `GET /api/leads`, `POST /api/batch-scout` y `POST /api/leads/:slug/status`.
-- **PWA Mobile-First (`public/index.html` + `manifest.webmanifest`)**: Interfaz web privada para el celular del operador con persistencia de token, links directos a WhatsApp prellenados, visualización de demos con 1 tap y disparo de nuevos lotes.
-- **Workflow n8n & Google Sheets (`workflows/n8n-daily-prospecting.json`)**: Automatización matutina (08:00 AM) que consume la API de NexoBow System e inserta filas en Google Sheets con URLs de preview y enlaces directos de prospección.
-- **TDD & Calidad**: 13 tests de integración pasando en verde al 100% (`npm test`). Rama de integración: `feature/nexobow-system`.
+### 2026-10-19 — Simplificación y Portabilidad In-Conversation (Cancelación de n8n & Localhost)
+- **Desmantelamiento de Infraestructura Local**: Eliminados definitivamente `server/`, `workflows/` y `public/`. Cero daemons, cero puertos abiertos y cero mantenimiento de túneles o n8n.
+- **Prospección In-Conversation Directa (`scripts/prospect-in-conversation.mjs` & `scripts/sheets-sync.mjs`)**: Ejecutable directo por Antigravity desde la conversación ("Che, buscame abogados en Campana").
+- **Deduplicación & Filtro Web**: Consulta previa contra el Google Sheet (`1fIr3Lug-AALrlGN-Lr3N1syYmMVYTTCaNy0vfXEH2qY`) para evitar prospectos repetidos; filtra y descarta quienes ya tienen sitio web corporativo propio, priorizando a profesionales sin web.
+- **Esquema de 18 Columnas**: Inserción estricta respetando el formato de `Prospección NexoBow` con enlaces directos a WhatsApp precargados.
+- **Portabilidad Total**: El sistema funciona indistintamente en la laptop o en la PC de escritorio únicamente con `git pull` y el plugin nativo `gsheets`.
 
-
-
+### 2026-10-20 — Rebranding Soft-Obsidian (12 Secciones B2B), Correlatividad Columna B & Motor TTL 7 Días
+- **Rebranding `web/` a Soft-Obsidian (`T-WEB-01` → `T-WEB-04`)**: Eliminado el neón `#DB1FFF` en favor de la paleta ejecutiva 60-30-10 (`#040607` Ink, `#0B0D12` Surface, `#5B2A62` Velvet, `#4928C2` Ultrasonic, `#BF40FA` Hyper Magenta, `#E3D9FC` Periwinkle). Implementado el nuevo funnel psicológico de 12 secciones (`Header`, `Hero` 3D CSS, `BeforeAfter`, `InteractiveFunnel` 0-JS, `TemplateCatalog` +10 estilos REA, `RoiCalculator` 0-JS, `CaseStudies`, `Pricing` con 3 planes `$189.999 ARS` / `$12.259 ARS`, alianza con **AfterBow** `afterbow.com`, 3 Bonos Hormozi y regla de 7 días, `CreateBowSystem` Fase 2 API, `Founder` **Juanma Merodio** `juanmamerodio.github.io/cv`, `Faq`, `FinalCta` y `Footer`). Compilación Astro SSG con **0 bytes de JS en cliente**.
+- **Alineación Google Sheets Columna B y Correlatividad 1:1 (`T-SYS-01`)**: `scripts/sheets-sync.mjs` ancla en `'Prospección NexoBow'!B11:S1000` (Columna B = ID) y exporta `buildCorrelativeSlug()` generando `{id}-{nombre}-{apellido}-{rubro}.md`. `scripts/generate-client-fiche.mjs` inyecta `sheet_id`, `lead_status`, `created_at`, `last_activity_at` y `expires_at` (+7 días).
+- **Motor de Ciclo de Vida 7 Días & Mejora Continua (`T-SYS-02`)**: Creado `scripts/lead-lifecycle.mjs` (renovación automática +7d si cambia el estado en el Sheet, alertas con link de WhatsApp de urgencia en días 5–6, y purga automática en `>=7d` o `"Descartado"` protegiendo `_ficha-template.md` y `demo-*`) y `scripts/continuous-improvement.mjs` (análisis de KPIs y tasas de respuesta por nicho).
+- **Nuevas Agent Skills (`T-SYS-03`)**: Creadas `edit-client-site` (`/editar-web-cliente`), `lead-lifecycle` (`/seguimiento-leads`) y `flow-advisor` (`/next-step` / `/ask-matt`). Backlog de +10 templates mediante REA documentado para ejecución progresiva ahorrando 50% de tokens.
 

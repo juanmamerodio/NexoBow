@@ -1,0 +1,91 @@
+---
+const beforeItems = [
+  "1. Te escriben 'Hola, precio' a las 11 de la noche",
+  "2. Mandás un audio o texto largo explicando cómo trabajás",
+  "3. Te clavan el visto porque están comparando 5 profesionales a la vez",
+  "4. Perdés 6 horas por semana haciendo de secretaria en vez de atender",
+];
+
+const afterItems = [
+  "1. El paciente entra desde Maps o Instagram a una página que abre en 0.6 segundos",
+  "2. Ve tus reseñas reales, tu método y resuelve sus dudas antes de escribirte",
+  "3. Toca un botón con intención real de reserva y elige horario o te envía su consulta pre-calificada",
+  "4. Vos solo abrís tu agenda y atendés pacientes listos para avanzar",
+];
+---
+
+<section id="problema" class="relative mx-auto max-w-6xl px-6 py-24">
+  <div class="mx-auto max-w-3xl text-center mb-14">
+    <div class="mb-3 inline-block rounded-full border border-[#4928C2]/40 bg-[#0B0D12] px-4 py-1 text-xs font-semibold tracking-wider text-[#E3D9FC] uppercase">
+      Diagnóstico Real · Antes vs. Después
+    </div>
+    <h2 class="font-outfit text-3xl font-extrabold tracking-tight text-[#F8F6FF] sm:text-4xl md:text-5xl">
+      El problema no es que te falten consultas. Es que tu WhatsApp hoy funciona como un <span class="text-[#BF40FA]">embudo roto.</span>
+    </h2>
+    <p class="mt-4 text-base text-[#E3D9FC]/80">
+      Cuando respondés a mano sin una estructura previa que filtre y eduque al paciente, regalás tu tiempo más valioso a personas que todavía no entienden el valor de tu consulta.
+    </p>
+  </div>
+
+  <div class="grid gap-8 md:grid-cols-2">
+    <!-- Left Column: Without NexoBow -->
+    <div class="rounded-3xl border border-red-500/20 bg-[#0B0D12] p-8 sm:p-10">
+      <div class="flex items-center justify-between border-b border-red-500/15 pb-4">
+        <span class="font-outfit text-xl font-bold text-[#F8F6FF]">Tu consultorio hoy — Sin Sistema</span>
+        <span class="rounded-full bg-red-500/15 px-3 py-1 text-xs font-semibold text-red-300">Fricción Alta</span>
+      </div>
+
+      <ul class="mt-6 space-y-4">
+        {beforeItems.map((item) => (
+          <li class="flex items-start gap-3.5 text-sm leading-relaxed text-[#E3D9FC]/80">
+            <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-500/15 text-xs font-bold text-red-400">
+              ✕
+            </span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-8 rounded-2xl border border-red-500/15 bg-[#040607]/80 p-4 text-xs text-red-200/80">
+        <strong>Resultado habitual:</strong> Desgaste diario respondiendo lo mismo y pacientes que se van con otro profesional simplemente porque contestó 10 minutos antes.
+      </div>
+    </div>
+
+    <!-- Right Column: With NexoBow Active -->
+    <div class="rounded-3xl border border-[#4928C2]/50 bg-gradient-to-b from-[#5B2A62]/20 to-[#0B0D12] p-8 sm:p-10 shadow-[0_0_45px_rgba(73,40,194,0.15)]">
+      <div class="flex items-center justify-between border-b border-[#4928C2]/30 pb-4">
+        <span class="font-outfit text-xl font-bold text-[#F8F6FF]">Con NexoBow Activo — Embudo 24/7</span>
+        <span class="rounded-full bg-[#BF40FA] px-3 py-1 text-xs font-bold text-[#F8F6FF]">Automatizado</span>
+      </div>
+
+      <ul class="mt-6 space-y-4">
+        {afterItems.map((item) => (
+          <li class="flex items-start gap-3.5 text-sm leading-relaxed text-[#F8F6FF]">
+            <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#BF40FA]/25 text-xs font-bold text-[#BF40FA]">
+              ✓
+            </span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-8 rounded-2xl border border-[#4928C2]/40 bg-[#040607]/90 p-4 text-xs text-[#E3D9FC]">
+        <strong class="text-[#BF40FA]">Resultado medible:</strong> Tu agenda se llena con pacientes informados, pre-calificados y listos para pagar tu servicio profesional.
+      </div>
+    </div>
+  </div>
+
+  <!-- 7-Day Urgency Bar -->
+  <div class="mt-8 flex flex-col items-center justify-between gap-4 rounded-2xl border border-[#4928C2]/35 bg-[#0B0D12]/90 px-6 py-4 text-xs text-[#E3D9FC]/85 sm:flex-row">
+    <div class="flex items-center gap-2.5">
+      <span class="inline-flex h-2 w-2 rounded-full bg-[#BF40FA] animate-pulse"></span>
+      <span>
+        <strong class="text-[#F8F6FF]">Ventana de Reserva de 7 Días:</strong> Las demos personalizadas armadas para tu consultorio permanecen activas por 7 días corridos antes de liberar el cupo de tu zona.
+      </span>
+    </div>
+    <a href="#planes" class="shrink-0 font-bold text-[#BF40FA] hover:text-[#E3D9FC] transition-colors">
+      Ver planes y bonos →
+    </a>
+  </div>
+</section>
+

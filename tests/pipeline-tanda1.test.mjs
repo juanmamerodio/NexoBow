@@ -71,4 +71,9 @@ test("Pipeline Tanda 1: Scout Lead -> Generate Fiche -> Build Site", async (t) =
     const distHtml = join(siteDir, "dist", "index.html");
     assert.ok(existsSync(distHtml), "dist/index.html debe haberse generado tras build");
   });
+
+  // Limpieza post-test para no dejar residuos en el working tree
+  if (existsSync(assetsDir)) rmSync(assetsDir, { recursive: true, force: true });
+  if (existsSync(fichePath)) rmSync(fichePath, { force: true });
+  if (existsSync(siteDir)) rmSync(siteDir, { recursive: true, force: true });
 });

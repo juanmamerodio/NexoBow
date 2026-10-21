@@ -1,48 +1,53 @@
 ---
+import { SITE } from "../config";
+
 const faqs = [
   {
-    q: "¿Para qué tipo de profesionales está diseñado?",
-    a: "Para prestadores de servicios que reciben consultas recurrentes por Google Maps, WhatsApp o Instagram: nutricionistas, psicólogos, abogados, consultores y kinesiólogos.",
+    q: "¿Cuánto tardan en entregar mi sistema funcionando?",
+    a: "Desde que confirmás tu diseño y nos pasás tus datos básicos de agenda y WhatsApp, tu embudo queda compilado, auditado y online en menos de 72 horas hábiles.",
   },
   {
-    q: "¿Ustedes cobran las consultas por mí?",
-    a: "No. La primera consultoría inicial se agenda de forma gratuita para evaluar al paciente, y los honorarios de tus sesiones los cobrás vos directamente con tu método habitual.",
+    q: "¿Por qué la demo personalizada expira a los 7 días?",
+    a: "Porque mantenemos infraestructura dedicada y cupos limitados por ciudad para no saturar el mismo nicho en tu zona. Si recibiste una demo y no se activa dentro de los 7 días corridos, nuestro motor libera el servidor automáticamente.",
   },
   {
-    q: "¿Necesito pagar la API oficial de WhatsApp o planes caros?",
-    a: "No. Configuramos WhatsApp Business y webhooks directos sin costos mensuales ocultos en plataformas SaaS externas, manteniendo tu infraestructura económica.",
+    q: "¿Cómo pido cambios de precios, horarios o textos en mi página?",
+    a: `Con tu Setup único de ${SITE.setupPrice} y tu abono de mantenimiento de ${SITE.monthlyPrice} finales/mes tenés actualizaciones rápidas incluidas: nos mandás un mensaje por WhatsApp con el cambio que necesitás y nuestro sistema regenera tu landing en minutos, sin cobrarte extras.`,
   },
   {
-    q: "¿Cómo gestionan testimonios y reseñas?",
-    a: "Mostramos únicamente reseñas públicas que ya tenés en tu ficha de Google Maps o testimonios con tu consentimiento explícito, garantizando máxima credibilidad y confianza.",
+    q: "¿Cómo cuidan la privacidad de mis pacientes y las reseñas?",
+    a: "Cumplimos estrictamente con la Ley 25.326 de Protección de Datos Personales. Por defecto mostramos únicamente reseñas públicas verificadas de tu ficha de Google Maps y jamás publicamos datos sensibles sin consentimiento expreso.",
   },
   {
     q: "¿Puedo usar mi propio dominio (.com o .com.ar)?",
-    a: "Sí, podemos vincular tu dominio personalizado cuando lo desees. El setup inicial ya te incluye un subdominio rápido de NexoBow listo para operar.",
+    a: "Sí. Podés salir andando hoy mismo con un subdominio oficial ultra-rápido de NexoBow o conectar tu propio dominio .com / .com.ar con certificado SSL incluido.",
   },
 ];
 ---
 
 <section id="faq" class="relative mx-auto max-w-4xl px-6 py-24">
   <div class="text-center mb-12">
-    <div class="inline-block rounded-full bg-white/5 border border-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-[#DB1FFF] mb-3">
-      Claridad total
+    <div class="mb-3 inline-block rounded-full border border-[#4928C2]/40 bg-[#0B0D12] px-4 py-1 text-xs font-semibold tracking-wider text-[#E3D9FC] uppercase">
+      Claridad Total · Cero Letra Chica
     </div>
-    <h2 class="font-outfit text-4xl font-extrabold tracking-tight text-white md:text-5xl">
+    <h2 class="font-outfit text-3xl font-extrabold tracking-tight text-[#F8F6FF] sm:text-4xl md:text-5xl">
       Preguntas frecuentes
     </h2>
   </div>
 
   <div class="space-y-4">
     {faqs.map((f) => (
-      <details class="group rounded-2xl border border-white/10 bg-white/[0.02] p-6 transition-all duration-300 hover:border-white/20 open:border-[#DB1FFF]/40 open:bg-white/[0.04]">
-        <summary class="flex cursor-pointer list-none items-center justify-between font-outfit text-lg font-bold text-white">
+      <details class="group rounded-2xl border border-[#4928C2]/30 bg-[#0B0D12] p-6 transition-all duration-300 hover:border-[#4928C2]/60 open:border-[#BF40FA]/60 open:bg-[#0B0D12]">
+        <summary class="flex cursor-pointer list-none items-center justify-between font-outfit text-lg font-bold text-[#F8F6FF]">
           <span>{f.q}</span>
-          <span aria-hidden="true" class="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[#DB1FFF] transition-transform duration-300 group-open:rotate-45">
+          <span
+            aria-hidden="true"
+            class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#4928C2]/40 bg-[#040607] text-[#BF40FA] transition-transform duration-300 group-open:rotate-45"
+          >
             +
           </span>
         </summary>
-        <p class="mt-4 text-sm leading-relaxed text-white/70">{f.a}</p>
+        <p class="mt-4 text-sm leading-relaxed text-[#E3D9FC]/80">{f.a}</p>
       </details>
     ))}
   </div>

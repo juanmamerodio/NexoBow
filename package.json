@@ -13,7 +13,9 @@
     "deploy-cf": "node scripts/deploy-cloudflare.mjs",
     "prospect-batch": "node scripts/prospect-batch.mjs",
     "deploy-previews": "node scripts/deploy-previews.mjs",
-    "server": "node server/index.mjs"
+    "prospect": "node scripts/prospect-in-conversation.mjs",
+    "lead-lifecycle": "node scripts/lead-lifecycle.mjs",
+    "continuous-improvement": "node scripts/continuous-improvement.mjs"
   },
   "dependencies": {
     "@rive-app/canvas": "^2.45.0",

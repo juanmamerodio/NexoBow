@@ -1,22 +1,30 @@
 ---
 id: 0
+sheet_id: 0
+lead_status: "1. Prospecto Identificado"
+created_at: "2026-10-20"
+last_activity_at: "2026-10-20"
+expires_at: "2026-10-27"
 rubro: nutricionista
 nombre: ""
-slug: ""                # ej: 1-nutri-camilomedina (nombre de archivo y de /sites/)
+slug: ""                # ej: 22-alejandra-martinez-nutri (correlativo con Col B de Google Sheets)
 estado: prospecto       # prospecto | onboarding | en-construccion | publicado | prueba | activo
-subdominio: ""          # ej: camilomedina.nexobow.com
+subdominio: ""          # ej: 22-alejandra-martinez-nutri.nexobow.com
 whatsapp: ""            # formato internacional, ej: 5491112345678
 calendly: ""            # link del evento "Consultoría gratuita"
 google_maps: ""         # URL de la ficha
 instagram: ""
 tema:
-  primary: "#FACC15"    # color principal (CTA)
-  accent: "#FFFFFF"
-  fuente: "Inter"
+  primary: "#e70025"    # color principal (CTA)
+  accent: "#e3c1ad"
+  fondo: "#fcf3ed"
+  tinta: "#35221a"
+  fuente: "Fraunces"
+  fuente_sans: "Archivo"
   orden_secciones: [Hero, Problem, Steps, Reviews, CaseStudy, Pricing]
 consentimiento_testimonios: false   # true solo con consentimiento escrito
-setup_ars: 200000
-abono_ars: 10000
+setup_ars: 189999
+abono_ars: 12259
 mes_de_prueba: true
 metricas:
   agendadas_mes: 0

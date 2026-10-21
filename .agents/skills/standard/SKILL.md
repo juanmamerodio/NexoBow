@@ -1,54 +1,51 @@
 ---
 name: standard
-description: "Estándar de calidad estética y de interacción NexoBow (estilo Delta Cafés / Burocratik). Define animaciones, interacción 3D, tipografía y rendimiento bajo Astro + Tailwind. Invocar obligatoriamente antes de audit-code en build-client-site y en desarrollo de landings."
+description: "Estándar de calidad estética y de interacción NexoBow Soft-Obsidian (Minimalista Soft-Tech Ejecutivo inspirado en Bürocratik). Define paleta 60-30-10, tipografía, interacción 3D CSS y rendimiento 0-JS bajo Astro + Tailwind."
 tools: ["read_file", "write_to_file", "execute_command"]
 ---
 
-# 💎 NexoBow Visual & Motion Standard (Delta Cafés Benchmark)
+# 💎 NexoBow Visual & Motion Standard (Soft-Obsidian Executive Benchmark)
 
 ## Propósito y Contexto
-Esta skill estandariza la excelencia visual, micro-interacciones de alto impacto y sensación inmersiva 3D inspiradas en la ingeniería web de **Delta Cafés** (diseñado por *Bürocratik*), adaptándolas rigurosamente a la arquitectura **Astro SSG + Tailwind CSS + Vanilla JS/GSAP** de NexoBow sin sacrificar velocidad ni violar la regla de "0 JS innecesario".
+Esta skill estandariza la excelencia visual, jerarquía ejecutiva y micro-interacciones 3D de la agencia **NexoBow** (`web/`), aplicando un sistema de diseño **Minimalista Soft-Tech Ejecutivo** con contrastes accesibles AAA/AA bajo la arquitectura **Astro SSG + Tailwind CSS (0 JS ejecutable en cliente)**.
+
+> **IMPORTANTE (ERROR-001):** Este estándar aplica **exclusivamente** a la web de la agencia (`web/`). Las landings de los prestadores (`/templates/` y `/sites/`) utilizan sus propias direcciones estéticas por rubro (ej: Editorial Delta, Clinical Pure, Obsidian Authority).
 
 ---
 
-## 🏛️ Los 5 Pilares del Estándar
+## 🏛️ Los 5 Pilares del Estándar Soft-Obsidian
 
-### 1. Identidad Tipográfica y Paleta "NexoBow"
-- **Logo:** `Nexo` en negro (`#000000` / `#0a0a0a`) + `Bow` en violeta vibrante (`#DB1FFF`). Fuente: **Outfit Bold** (700/800).
-- **Acento Primario:** Violeta eléctrico `#DB1FFF`. Gradientes dinámicos `from-[#DB1FFF] via-[#8B5CF6] to-[#6366F1]`.
-- **Fondos:** Modo oscuro profundo (`#0b0b0e` a `#121118`) con destellos de malla radial (`radial-gradient`), o crema premium suave para secciones específicas.
-- **Jerarquía:** Display typography grande con contrastes de peso, tracking ajustado (`tracking-tight`) e interlineado compacto (`leading-[1.05]`).
+### 1. Identidad Tipográfica y Paleta "Soft-Obsidian" (Regla 60-30-10)
+- **Logo:** `Nexo` en blanco cálido (`#F8F6FF`) + `Bow` en Hyper Magenta (`#BF40FA`). Fuente: **Outfit Bold** (700/800).
+- **Canvas Principal (60% — `--color-ink`):** `#040607` (*Obsidian Black* — espacioso, profundo y sereno).
+- **Superficie Elevada (`--color-ink-surface`):** `#0B0D12` con bordes sutiles.
+- **Amortiguador Atmosférico (30% — `--color-velvet`):** `#5B2A62` (*Velvet Purple*) en opacidades del `10%` al `22%` para glows ambientales suaves, eliminando cualquier dureza neón.
+- **Acento Secundario / Estructura (`--color-ultrasonic`):** `#4928C2` (*Ultrasonic Blue*) para bordes activos, conectores del sistema y badges técnicos.
+- **Tono Intermedio / Énfasis Suave (`--color-periwinkle`):** `#E3D9FC` (*Periwinkle*) para subtítulos, palabras en itálica, íconos y microcopys de alta legibilidad (`14.2:1` sobre `#040607`).
+- **Acento Primario de Conversión (10% — `--color-accent`):** `#BF40FA` (*Hyper Magenta*) reservado exclusivamente para CTAs principales, indicadores críticos y el `Bow` del isotipo.
 
 ### 2. Micro-Interacciones de Botones (Büro Magnetic & Morph)
-- Botones de doble capa tipo píldora (`rounded-full`) con cápsula interior de icono.
-- En `hover`, expansión de ancho (`transition-all duration-300 cubic-bezier(0.19, 1, 0.22, 1)`), desplazamiento de etiqueta e inversión suave de icono (deslizamiento diagonal/horizontal).
-- Brillo perimetral (`glow`) sutil mediante gradientes o borde translúcido con efecto glassmorphism (`backdrop-blur-md`).
+- Botones de doble capa tipo píldora (`rounded-full`) con cápsula interior de icono en `#BF40FA`.
+- En `hover`, expansión suave (`transition-all duration-300`), desplazamiento de etiqueta e icono, y borde activo `#4928C2` / `#BF40FA`.
 
-### 3. Experiencia 3D y Mockup Interactivo
-- **Enfoque Hormozi / NexoBow:** Mostrar el flujo real que genera dinero: **Mockup de smartphone 3D interactivo** mostrando la conversación de WhatsApp automatizada y la confirmación inmediata de la consulta en calendario.
-- **Técnica 3D:** Transformaciones CSS 3D coordinadas con movimiento de mouse/giroscopio (`perspective(1000px) rotateX(...) rotateY(...)`) y capas flotantes con profundidad (`translateZ`), con fallback accesible y rendimiento a 60fps constante sin el peso desmedido de un runtime WebGL completo a menos que sea estrictamente necesario.
-- **Animaciones de scroll:** Parallax multicapa con `IntersectionObserver` y aceleración por GPU (`will-change: transform`).
+### 3. Experiencia 3D CSS y Mockups Interactivos (0 JS)
+- **Enfoque Hormozi / NexoBow:** Mostrar el flujo real que genera dinero: **Escena 3D CSS del embudo** (*Google Maps / IG → Landing `<0.8s` → WhatsApp Pre-filtrado → Turno Confirmado*) y controles interactivos (tabs de embudo y calculadora ROI) resueltos 100% con CSS (`:checked`, `perspective`, `rotateX/Y`).
+- **Política 0 JS:** Prohibido inyectar `<script>` ejecutables en cliente cuando puede resolverse con HTML semántico (`<details>`, `<input type="radio" class="peer">`) y CSS moderno.
 
 ### 4. Suavidad y Fluidez de Navegación
-- Header flotante tipo píldora desacoplado de los bordes con efecto *glassmorphism* (`backdrop-blur-xl bg-black/40 border border-white/10`).
-- Transiciones de entrada escalonadas (`stagger`) al entrar en viewport para títulos, tarjetas y listas de beneficios.
+- Header ejecutivo sticky con `backdrop-blur-xl bg-[#040607]/85 border-b border-[#4928C2]/20`, indicador de cupos activos y acceso directo a demo y planes.
 
 ### 5. Accesibilidad y Modo Reducido (Hard Rule)
-- Todo efecto de rotación continua, parallax o gradiente animado **debe pausarse o anularse** si el usuario tiene activo `@media (prefers-reduced-motion: reduce)`.
-- El contenido y la funcionalidad del embudo deben ser 100% legibles y operativos aun con JavaScript deshabilitado.
+- Todo efecto de rotación, flotación o gradiente animado **debe pausarse o anularse** si el usuario tiene activo `@media (prefers-reduced-motion: reduce)`.
+- El contenido y la interactividad del embudo son 100% operativos con 0 bytes de JavaScript.
 
 ---
 
 ## 📋 Checklist de Verificación (Quality Gate)
-Antes de certificar una landing:
-1. [ ] ¿El logo cumple exactamente `Nexo` (negro/blanco según fondo) + `Bow` (`#DB1FFF`) en Outfit Bold?
-2. [ ] ¿El Hero incluye el dispositivo interactivo con el flujo visual WhatsApp → Consultoría agendada?
-3. [ ] ¿Los botones principales implementan la interacción de deslizamiento/glow tipo Büro?
-4. [ ] ¿Se verificó `prefers-reduced-motion` en CSS y scripts?
-5. [ ] ¿El build de Astro (`npm run build`) termina con 0 errores y el bundle es ultra-rápido?
-6. [ ] ¿Cumple con la regla Hormozi (beneficio directo, copy voseo argentino profesional, cero humo)?
-
----
-
-## 📚 Documentación Técnica Detallada
-Para ver la ingeniería inversa completa de Delta Cafés (animaciones, Rive, GSAP, WebGL vs CSS 3D) y recetas de código, consultar [reference.md](reference.md).
+Antes de certificar `web/`:
+1. [ ] ¿El logo cumple `Nexo` (`#F8F6FF`) + `Bow` (`#BF40FA`) en Outfit Bold y no queda rastro de `#DB1FFF`?
+2. [ ] ¿El Hero incluye la escena 3D CSS con el flujo Maps/IG → Landing `<0.8s` → WhatsApp → Turno?
+3. [ ] ¿Los componentes interactivos (`InteractiveFunnel`, `RoiCalculator`, `Faq`) funcionan con 0 `<script>` en cliente?
+4. [ ] ¿Se verificó `prefers-reduced-motion` en CSS?
+5. [ ] ¿El build de Astro (`npm run build`) termina con 0 errores y 0 etiquetas `<script>`?
+6. [ ] ¿Cumple con la regla Hormozi (precios psicológicos en ARS, bonos, urgencia real de 7 días, voseo argentino profesional)?

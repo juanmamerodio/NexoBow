@@ -1,37 +1,38 @@
 ---
 name: scout-lead
-description: "Extrae y enriquece información comercial y reseñas verificadas de un prestador de salud mediante Google Maps Platform (Places API New) o fuentes públicas, persistiendo fotos y assets en /assets/{slug}/."
+description: "Extrae y enriquece información comercial y prospectos sin sitio web propio mediante Google Maps Platform (Places API New) y sincroniza con Google Sheets directamente in-conversation."
 tools: ["read_file", "write_to_file", "execute_command"]
 ---
 
-# Scout Lead — Extracción & Enriquecimiento de Prospectos
+# Scout Lead — Prospección & Enriquecimiento In-Conversation
 
 ## Propósito y Contexto
-Esta skill automatiza la primera fase del pipeline `lead-to-live` de NexoBow. Dado el nombre de un profesional, consultorio o dirección, localiza al prestador en **Google Maps Platform** utilizando la API moderna **Places API (New)**, extrae datos de contacto, reseñas oficiales de pacientes, fotos del lugar y genera un mapa estático de 0 JS persistiendo todo localmente en `/assets/{slug}/`.
+Esta skill automatiza la prospección de profesionales de servicios (abogados, nutricionistas, psicólogos) directamente desde una conversación de Antigravity:
+1. Localiza prestadores en **Google Maps Platform (Places API New)** en la zona indicada.
+2. **Filtra candidatos**: descarta a quienes ya tienen sitio web corporativo propio, priorizando a profesionales sin web (o solo con redes sociales/Instagram).
+3. **Deduplica contra Google Sheets**: verifica la planilla de NexoBow (`1fIr3Lug-AALrlGN-Lr3N1syYmMVYTTCaNy0vfXEH2qY`) para no repetir prospectos.
+4. **Inserta prospectos (máximo 10)**: formatea exactamente a las 18 columnas oficiales de `Prospección NexoBow` con sus links de WhatsApp prellenados.
 
 ## Requisitos Previos y Entradas
-- Argumento de búsqueda: `--query "Nombre o Consultorio, Localidad"` o `--mock` para desarrollo local sin claves.
-- Credenciales: `GOOGLE_MAPS_API_KEY` en `.env` (o Maps Demo Key para prototipado).
-- Script ejecutor: `node scripts/scout-lead.mjs --query "..."` o `npm run scout-lead -- --query "..."`.
+- Consulta en lenguaje natural o flag: `--query "abogados en Campana"` o `--mock` para modo demo.
+- Opciones adicionales: `--nicho "Abogacía"` y `--limit 10`.
+- Autenticación Google Sheets activa (`gsheets auth status`).
+- Script ejecutor: `node scripts/prospect-in-conversation.mjs --query "..." --nicho "..."`.
 
 ## Paso a Paso de Ejecución (SOP)
-1. **Verificar entrada:** Identificar el nombre comercial, ubicación o handle del profesional.
-2. **Ejecutar scout-lead:**
+1. **Identificar Nicho y Zona**:
+   - Extraer del pedido del usuario el nicho (ej: Abogados, Nutricionistas, Psicólogos) y la localidad geográfica (ej: Campana, Buenos Aires).
+2. **Ejecutar Prospección In-Conversation**:
    ```bash
-   node scripts/scout-lead.mjs --query "NutriAr, Belgrano 1221, Campana"
+   node scripts/prospect-in-conversation.mjs --query "abogados en Campana, Buenos Aires" --nicho "Abogacía" --limit 10
    ```
-   *(Si se está en entorno sin conexión o sin clave de Google Maps, agregar `--mock`)*.
-3. **Persistencia de Assets:**
-   - Verifica que se haya creado el directorio `/assets/{slug}/`.
-   - Revisa `assets/{slug}/lead-raw.json`.
-   - Si la API devolvió fotos o ubicación, confirma que se hayan descargado `avatar.jpg` y `map.png`.
-4. **Validación de Datos Mínimos:**
-   - Nombre del prestador.
-   - Teléfono o WhatsApp de contacto.
-   - Reseñas con calificación y texto de pacientes.
-5. **Transición a Siguiente Fase:** Invocar o notificar que el lead está listo para la skill `generate-client-fiche`.
+   *(Si no hay clave de Google Maps configurada en `.env`, el script recurre de forma segura a candidatos mock para desarrollo).*
+3. **Verificación y Reporte**:
+   - Informar al usuario la cantidad de prospectos encontrados, los deduplicados omitidos y los agregados a la planilla.
+   - Listar los enlaces directos a WhatsApp para inicio de outreach manual en 1 clic.
 
 ## Negaciones Explícitas (Qué NO hacer)
-- NO almacenar URLs remotas efímeras de Google CDN o Instagram en los archivos finales; siempre descargar y guardar en `/assets/{slug}/`.
-- NO inventar reseñas: solo utilizar las provistas por Places API o marcar explícitamente atribución a Google Maps.
-- NO usar endpoints deprecados como `PlacesService` o `google.maps.places.Autocomplete`.
+- NO ingresar más de 10 prospectos por lote (control de cuota y tokens).
+- NO duplicar prospectos existentes en el Google Sheet.
+- NO incorporar profesionales que ya tengan sitio web corporativo establecido.
+- NO depender de servidores locales (`localhost`), túneles ni workflows de n8n.

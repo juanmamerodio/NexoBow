@@ -1,0 +1,282 @@
+#!/usr/bin/env node
+/**
+ * scripts/prospect-in-conversation.mjs
+ * Orquestador ligero de prospección in-conversation con Google Sheets y Places API.
+ * Uso: node scripts/prospect-in-conversation.mjs --query "abogados en Campana" [--nicho "Abogacía"] [--limit 10] [--mock]
+ */
+
+import { existsSync } from 'node:fs';
+import { join, dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import {
+  fetchExistingSheetKeys,
+  filterEligiblePlaces,
+  formatLeadToSheetRow,
+  appendRowToSheet,
+  buildCorrelativeSlug,
+  DEFAULT_SPREADSHEET_ID,
+  DEFAULT_SHEET_TAB
+} from './sheets-sync.mjs';
+
+const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+
+// Cargar variables de entorno si existe .env
+try {
+  if (existsSync(join(REPO_ROOT, '.env'))) {
+    process.loadEnvFile(join(REPO_ROOT, '.env'));
+  }
+} catch {
+  // Ignorar si no se puede cargar automáticamente
+}
+
+function parseArgs() {
+  const args = process.argv.slice(2);
+  const flags = {};
+  for (let i = 0; i < args.length; i++) {
+    if (args[i].startsWith('--')) {
+      const key = args[i].slice(2);
+      const next = args[i + 1];
+      if (next && !next.startsWith('--')) {
+        flags[key] = next;
+        i++;
+      } else {
+        flags[key] = true;
+      }
+    }
+  }
+  return flags;
+}
+
+function slugify(text) {
+  return text
+    .toString()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '');
+}
+
+async function searchSerperPlaces(query, apiKey, limit = 20) {
+  const url = 'https://google.serper.dev/places';
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-KEY': apiKey
+    },
+    body: JSON.stringify({
+      q: query,
+      gl: 'ar',
+      hl: 'es',
+      num: limit
+    })
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Serper API Error (${res.status}): ${errText}`);
+  }
+
+  const data = await res.json();
+  return (data.places || []).map(p => ({
+    displayName: p.title || '',
+    formattedAddress: p.address || '',
+    nationalPhoneNumber: p.phoneNumber || '',
+    websiteUri: p.website || '',
+    rating: p.rating || 5.0,
+    userRatingCount: p.ratingCount || 0
+  }));
+}
+
+async function searchMultiplePlaces(query, serperKey, googleKey, limit = 20) {
+  if (serperKey) {
+    return await searchSerperPlaces(query, serperKey, limit);
+  }
+  if (!googleKey) {
+    throw new Error('No se encontró SERPER_API_KEY ni GOOGLE_MAPS_API_KEY');
+  }
+  const url = 'https://places.googleapis.com/v1/places:searchText';
+  const fieldMask = [
+    'places.id',
+    'places.displayName',
+    'places.formattedAddress',
+    'places.nationalPhoneNumber',
+    'places.internationalPhoneNumber',
+    'places.websiteUri',
+    'places.rating',
+    'places.userRatingCount',
+    'places.location'
+  ].join(',');
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Goog-Api-Key': googleKey,
+      'X-Goog-FieldMask': fieldMask
+    },
+    body: JSON.stringify({
+      textQuery: query,
+      languageCode: 'es',
+      pageSize: limit
+    })
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Google Places API Error (${res.status}): ${errText}`);
+  }
+
+  const data = await res.json();
+  return (data.places || []).map(p => ({
+    displayName: p.displayName?.text || '',
+    formattedAddress: p.formattedAddress || '',
+    nationalPhoneNumber: p.internationalPhoneNumber || p.nationalPhoneNumber || '',
+    websiteUri: p.websiteUri || '',
+    rating: p.rating || 5.0,
+    userRatingCount: p.userRatingCount || 0
+  }));
+}
+
+function getMockPlaces(query, nicho) {
+  return [
+    {
+      displayName: `Estudio Jurídico ${query.split(' ')[0] || 'Campana'}`,
+      formattedAddress: 'San Martín 240, Campana, Buenos Aires',
+      nationalPhoneNumber: '+54 9 3489 55-1234',
+      websiteUri: '', // sin web -> elegible
+      rating: 4.8,
+      userRatingCount: 19
+    },
+    {
+      displayName: 'Dra. Silvina Rodríguez - Asuntos Civiles y Laborales',
+      formattedAddress: 'Belgrano 450, Campana, Buenos Aires',
+      nationalPhoneNumber: '+54 9 3489 66-5678',
+      websiteUri: 'https://instagram.com/silvina.abogada', // instagram -> elegible
+      rating: 4.9,
+      userRatingCount: 24
+    },
+    {
+      displayName: 'Estudio Integral con Web Corporativa',
+      formattedAddress: 'Rivadavia 120, Campana, Buenos Aires',
+      nationalPhoneNumber: '+54 9 3489 77-9900',
+      websiteUri: 'https://estudiocorporativo.com.ar', // web propia -> descartado por filtro
+      rating: 4.7,
+      userRatingCount: 31
+    }
+  ];
+}
+
+async function main() {
+  const flags = parseArgs();
+  const query = flags.query || flags.q;
+  const nicho = flags.nicho || 'Servicios Profesionales';
+  const limit = parseInt(flags.limit || '10', 10);
+  const isMock = Boolean(flags.mock);
+  const dryRun = Boolean(flags['dry-run']);
+
+  if (!query && !isMock) {
+    console.error(`[ERROR] Especificá una consulta con --query. Ejemplo: --query "abogados en Campana"`);
+    process.exit(1);
+  }
+
+  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+  const serperKey = process.env.SERPER_API_KEY;
+
+  console.log(`\n\x1b[36m⚡ NexoBow Prospección In-Conversation\x1b[0m`);
+  console.log(`- Consulta: "${query || 'Mock Query'}"`);
+  console.log(`- Nicho: ${nicho}`);
+  console.log(`- Límite máximo: ${limit} prospectos`);
+  if (serperKey) {
+    console.log(`- Fuente de datos: Serper Dev (Google Places Scraper)`);
+  } else if (apiKey) {
+    console.log(`- Fuente de datos: Google Maps Platform (Places API New)`);
+  }
+
+  // 1. Obtener prospectos existentes en el Google Sheet para deduplicación
+  console.log(`\n1. Verificando prospectos existentes en Google Sheet (${DEFAULT_SPREADSHEET_ID})...`);
+  const existingKeys = fetchExistingSheetKeys();
+  console.log(`✓ ${existingKeys.length} registros existentes identificados para deduplicación.`);
+
+  // 2. Extraer prospectos candidatos
+  let candidatePlaces = [];
+  if (isMock || (!apiKey && !serperKey)) {
+    if (!isMock && !apiKey && !serperKey) {
+      console.warn(`[AVISO] No se encontró SERPER_API_KEY ni GOOGLE_MAPS_API_KEY. Usando candidatos de demostración.`);
+    }
+    candidatePlaces = getMockPlaces(query || 'Campana', nicho);
+  } else {
+    console.log(`\n2. Consultando API para encontrar profesionales en la zona...`);
+    candidatePlaces = await searchMultiplePlaces(query, serperKey, apiKey, 20);
+  }
+
+  console.log(`✓ ${candidatePlaces.length} candidatos encontrados en la zona.`);
+
+  // 3. Filtrar candidatos (sin web corporativa + sin duplicados + tope 10)
+  const eligibleLeads = filterEligiblePlaces(candidatePlaces, existingKeys, limit);
+
+  if (eligibleLeads.length === 0) {
+    console.log(`\n\x1b[33m[AVISO] No se encontraron prospectos nuevos sin web en la zona especificada.\x1b[0m`);
+    console.log(`Posibles motivos: todos los encontrados ya están en el Sheet o ya disponen de sitio web corporativo propio.`);
+    return;
+  }
+
+  console.log(`\n3. Prospectos elegibles filtrados (sin web y sin duplicar): ${eligibleLeads.length}`);
+
+  // 4. Formatear e insertar en Google Sheets
+  const startIndex = Math.floor(existingKeys.length / 2) + 1; // estimado de Nº
+  const addedLeads = [];
+
+  for (let i = 0; i < eligibleLeads.length; i++) {
+    const item = eligibleLeads[i];
+    const rowId = startIndex + i;
+    const itemSlug = buildCorrelativeSlug({
+      id: rowId,
+      displayName: item.displayName,
+      nicho
+    });
+    const leadFormatted = {
+      ...item,
+      nicho,
+      slug: itemSlug
+    };
+
+    const row = formatLeadToSheetRow(leadFormatted, rowId, flags.pitch || null);
+
+    if (dryRun) {
+      console.log(`[DRY-RUN] Fila preparada para ${leadFormatted.displayName}`);
+    } else {
+      console.log(`Guardando en Google Sheets: ${leadFormatted.displayName}...`);
+      try {
+        appendRowToSheet(row);
+      } catch (err) {
+        console.error(`Error al insertar fila para ${leadFormatted.displayName}: ${err.message}`);
+      }
+    }
+
+    addedLeads.push({
+      nombre: leadFormatted.displayName,
+      telefono: leadFormatted.nationalPhoneNumber,
+      ubicacion: leadFormatted.formattedAddress,
+      rating: leadFormatted.rating,
+      waLink: row[4],
+      demoUrl: row[5]
+    });
+  }
+
+  console.log(`\n\x1b[32m=======================================================`);
+  console.log(`✓ ${addedLeads.length} PROSPECTOS AGREGADOS CON ÉXITO AL GOOGLE SHEET`);
+  console.log(`=======================================================\x1b[0m\n`);
+
+  addedLeads.forEach((l, idx) => {
+    console.log(`${idx + 1}. \x1b[1m${l.nombre}\x1b[0m (${l.telefono || 'Sin tel'})`);
+    console.log(`   - Ubicación: ${l.ubicacion}`);
+    console.log(`   - WhatsApp Directo: ${l.waLink}`);
+  });
+}
+
+main().catch(err => {
+  console.error(`[ERROR FATAL] ${err.message}`);
+  process.exit(1);
+});

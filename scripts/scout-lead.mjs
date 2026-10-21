@@ -92,6 +92,46 @@ function getMockLead(query, slug) {
   };
 }
 
+async function searchSerperPlace(query, apiKey) {
+  const url = 'https://google.serper.dev/places';
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-KEY': apiKey
+    },
+    body: JSON.stringify({
+      q: query,
+      gl: 'ar',
+      hl: 'es',
+      num: 5
+    })
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Serper API Error (${res.status}): ${errText}`);
+  }
+
+  const data = await res.json();
+  if (!data.places || data.places.length === 0) {
+    return null;
+  }
+  const p = data.places[0];
+  return {
+    id: p.cid || p.title,
+    displayName: { text: p.title || '' },
+    formattedAddress: p.address || '',
+    nationalPhoneNumber: p.phoneNumber || '',
+    internationalPhoneNumber: p.phoneNumber || '',
+    websiteUri: p.website || '',
+    rating: p.rating || 5.0,
+    userRatingCount: p.ratingCount || 0,
+    location: p.latitude && p.longitude ? { latitude: p.latitude, longitude: p.longitude } : null,
+    reviews: []
+  };
+}
+
 async function searchGooglePlaces(query, apiKey) {
   const url = "https://places.googleapis.com/v1/places:searchText";
   const fieldMask = [
@@ -160,23 +200,29 @@ async function main() {
   }
 
   const apiKey = process.env.GOOGLE_MAPS_API_KEY || flags["api-key"];
+  const serperKey = process.env.SERPER_API_KEY;
   const targetSlug = flags.slug || (query ? slugify(query.slice(0, 30)) : "demo-nutri-lead");
   const assetsDir = join(REPO_ROOT, "assets", targetSlug);
   mkdirSync(assetsDir, { recursive: true });
 
   let leadData = null;
 
-  if (isMock || !apiKey) {
-    if (!isMock && !apiKey) {
-      console.warn(`\x1b[33m[scout-lead AVISO]\x1b[0m No se encontró GOOGLE_MAPS_API_KEY en .env.`);
+  if (isMock || (!apiKey && !serperKey)) {
+    if (!isMock && !apiKey && !serperKey) {
+      console.warn(`\x1b[33m[scout-lead AVISO]\x1b[0m No se encontró SERPER_API_KEY ni GOOGLE_MAPS_API_KEY en .env.`);
       console.warn(`[scout-lead] Generando extracción de demostración / mock basada en la consulta.`);
     }
     leadData = getMockLead(query, targetSlug);
   } else {
-    console.log(`\x1b[36m[scout-lead]\x1b[0m Consultando Google Maps Platform (Places API New) para: "${query}"...`);
-    const place = await searchGooglePlaces(query, apiKey);
+    console.log(`\x1b[36m[scout-lead]\x1b[0m Consultando API para: "${query}"...`);
+    let place = null;
+    if (serperKey) {
+      place = await searchSerperPlace(query, serperKey);
+    } else {
+      place = await searchGooglePlaces(query, apiKey);
+    }
     if (!place) {
-      console.error(`\x1b[31m[scout-lead ERROR]\x1b[0m No se encontraron resultados en Google Maps para "${query}".`);
+      console.error(`\x1b[31m[scout-lead ERROR]\x1b[0m No se encontraron resultados para "${query}".`);
       process.exit(1);
     }
 

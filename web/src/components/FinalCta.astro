@@ -2,31 +2,33 @@
 import { SITE } from "../config";
 ---
 
-<section id="agendar" class="relative mx-auto max-w-5xl px-6 pb-28 text-center">
-  <div class="relative overflow-hidden rounded-[40px] border border-white/20 bg-gradient-to-b from-[#DB1FFF]/20 via-neutral-950 to-neutral-950 px-8 py-20 backdrop-blur-xl shadow-[0_0_80px_rgba(219,31,255,0.25)]">
-    <!-- Ambient Radial Glow -->
-    <div class="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[#DB1FFF]/30 blur-3xl"></div>
+<section id="agendar" class="relative mx-auto max-w-5xl px-6 pb-24 pt-8 text-center">
+  <div class="relative overflow-hidden rounded-[36px] border border-[#4928C2]/50 bg-gradient-to-b from-[#5B2A62]/30 via-[#0B0D12] to-[#040607] px-8 py-16 sm:py-20 shadow-[0_0_70px_rgba(91,42,98,0.3)]">
+    <!-- Ambient Soft Velvet Glow -->
+    <div class="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[#5B2A62]/35 blur-3xl"></div>
 
-    <p class="inline-block rounded-full bg-white/10 border border-white/15 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-[#DB1FFF] mb-4">
-      ¿Listo para escalar tus consultas?
+    <p class="mb-4 inline-block rounded-full border border-[#BF40FA]/40 bg-[#040607]/80 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-[#E3D9FC]">
+      ⏱️ Reserva de Demo por 7 Días · 1er Mes 100% Bonificado
     </p>
 
-    <h2 class="font-outfit mx-auto max-w-3xl text-4xl font-extrabold tracking-tight text-white md:text-6xl">
-      Mostrate donde ya te buscan y <span class="text-[#DB1FFF]">agendá más pacientes</span> hoy.
+    <h2 class="font-outfit mx-auto max-w-3xl text-3xl font-extrabold tracking-tight text-[#F8F6FF] sm:text-5xl">
+      Dejá de hacer de secretaria en WhatsApp y <span class="text-[#BF40FA]">activá tu Sistema NexoBow</span> hoy.
     </h2>
 
-    <p class="mx-auto mt-6 max-w-xl text-base text-white/70">
-      Dejá de perder tiempo contestando mensajes sueltos y empezá a recibir pacientes confirmados directamente en tu calendario.
+    <p class="mx-auto mt-5 max-w-xl text-base text-[#E3D9FC]/80">
+      Asegurá tu diseño exclusivo por rubro, los 3 Bonos de Acción Rápida y empezá a recibir pacientes pre-calificados en tu calendario esta misma semana.
     </p>
 
-    <div class="mt-10 flex justify-center">
+    <div class="mt-9 flex flex-wrap justify-center gap-4">
       <a
-        href={SITE.bookingUrl}
-        class="group relative inline-flex items-center gap-4 rounded-full bg-white/15 p-2 pl-8 pr-2 text-base font-bold tracking-wide text-white backdrop-blur-md border border-white/30 transition-all duration-300 hover:border-[#DB1FFF] hover:bg-white/25 hover:shadow-[0_0_40px_rgba(219,31,255,0.5)] hover:scale-105"
+        href={SITE.whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group relative inline-flex items-center gap-4 rounded-full border border-[#BF40FA] bg-[#BF40FA] p-2 pl-7 pr-2.5 text-sm font-bold tracking-wide text-[#F8F6FF] shadow-[0_0_35px_rgba(191,64,250,0.4)] transition-all duration-300 hover:bg-[#A82EE3]"
       >
-        <span>Agendá tu consultoría gratuita</span>
-        <span class="flex h-12 w-12 items-center justify-center rounded-full bg-[#DB1FFF] text-white transition-all duration-300 group-hover:scale-110 group-hover:translate-x-1 shadow-[0_0_15px_rgba(219,31,255,0.7)]">
-          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <span>Quiero activar mi Sistema NexoBow</span>
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-[#040607] text-[#BF40FA] transition-transform duration-300 group-hover:translate-x-0.5">
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
         </span>

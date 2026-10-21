@@ -1,0 +1,65 @@
+---
+import { SITE } from "../config";
+---
+
+<section id="crea-tu-sistema-bow" class="relative mx-auto max-w-6xl px-6 py-24">
+  <div class="relative overflow-hidden rounded-3xl border border-[#4928C2]/50 bg-gradient-to-br from-[#0B0D12] via-[#040607] to-[#5B2A62]/25 p-8 sm:p-12 shadow-[0_20px_60px_rgba(4,6,7,0.9)]">
+    <div class="grid items-center gap-10 lg:grid-cols-12">
+      <!-- Left Copy -->
+      <div class="lg:col-span-7">
+        <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-[#4928C2]/50 bg-[#4928C2]/15 px-3.5 py-1 text-xs font-bold tracking-wider text-[#E3D9FC] uppercase">
+          <span class="h-2 w-2 rounded-full bg-[#BF40FA]"></span>
+          <span>PRÓXIMAMENTE EN FASE 2 · ARQUITECTURA AUTÓNOMA</span>
+        </div>
+
+        <h2 class="font-outfit text-3xl font-extrabold tracking-tight text-[#F8F6FF] sm:text-4xl">
+          CREÁ TU SISTEMA BOW: <span class="text-[#BF40FA]">Tu infraestructura generada en vivo vía API</span>
+        </h2>
+
+        <p class="mt-4 text-base leading-relaxed text-[#E3D9FC]/85">
+          Estamos construyendo el primer motor autoservicio donde ingresás el link de Google Maps de tu consultorio y nuestra API agéntica ensambla tu landing, redacta tu oferta y conecta tu WhatsApp en menos de 90 segundos.
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <a
+            href={SITE.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-3 rounded-full border border-[#BF40FA]/60 bg-[#5B2A62]/30 px-6 py-3.5 text-sm font-bold text-[#F8F6FF] transition-all duration-200 hover:bg-[#BF40FA]"
+          >
+            <span>Pedir acceso anticipado por WhatsApp</span>
+            <span>→</span>
+          </a>
+          <span class="text-xs text-[#E3D9FC]/70">
+            Prioridad de acceso para clientes activos del Plan Core y Clínica.
+          </span>
+        </div>
+      </div>
+
+      <!-- Right API Console Mockup -->
+      <div class="lg:col-span-5">
+        <div class="rounded-2xl border border-[#4928C2]/45 bg-[#040607] p-5 font-mono text-xs text-[#E3D9FC] shadow-inner">
+          <div class="flex items-center justify-between border-b border-[#4928C2]/25 pb-3 mb-3">
+            <div class="flex items-center gap-1.5">
+              <span class="h-2.5 w-2.5 rounded-full bg-red-500/70"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-amber-400/70"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/70"></span>
+            </div>
+            <span class="text-[11px] text-[#BF40FA] font-bold">POST /api/v1/bow-system/create</span>
+          </div>
+
+          <div class="space-y-2 text-[11px] leading-relaxed">
+            <p class="text-[#E3D9FC]/60">// 1. Input desde Google Maps</p>
+            <p><span class="text-[#BF40FA]">"place_url"</span>: <span class="text-emerald-300">"maps.google.com/?cid=consultorio"</span>,</p>
+            <p><span class="text-[#BF40FA]">"style_preset"</span>: <span class="text-emerald-300">"01-editorial-delta"</span>,</p>
+            <p><span class="text-[#BF40FA]">"whatsapp_sync"</span>: <span class="text-emerald-300">true</span></p>
+            <div class="my-2 border-t border-[#4928C2]/20 pt-2">
+              <p class="text-emerald-400">✓ Astro SSG compiled (0 KB JS · 0.6s LCP)</p>
+              <p class="text-emerald-400">✓ Edge CDN deployed &amp; SSL active</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

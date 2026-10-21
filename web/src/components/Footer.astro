@@ -2,19 +2,42 @@
 import { SITE } from "../config";
 ---
 
-<footer class="relative mx-auto max-w-6xl px-6 pb-12 pt-8 text-sm text-white/50">
-  <div class="flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 md:flex-row">
+<footer class="relative mx-auto max-w-6xl px-6 pb-12 pt-8 text-xs text-[#E3D9FC]/60">
+  <div class="flex flex-col items-center justify-between gap-6 border-t border-[#4928C2]/25 pt-8 md:flex-row">
     <!-- Brand Logo Minimal -->
-    <div class="flex items-center gap-1 font-outfit text-lg font-extrabold tracking-tight">
-      <span class="text-white">Nexo</span>
-      <span class="text-[#DB1FFF]">Bow</span>
+    <div class="flex items-center gap-2">
+      <a href="/" class="flex items-center gap-0.5 font-outfit text-lg font-extrabold tracking-tight">
+        <span class="text-[#F8F6FF]">Nexo</span>
+        <span class="text-[#BF40FA]">Bow</span>
+      </a>
+      <span class="text-[#E3D9FC]/40">·</span>
+      <span>Ingeniería de Embudos B2B en Astro SSG</span>
     </div>
 
-    <p class="text-center md:text-left text-xs">
-      Fábrica automatizada de embudos de venta y agendamiento para profesionales.
-    </p>
+    <!-- Partner & Founder Links -->
+    <div class="flex flex-wrap items-center justify-center gap-5 text-xs font-medium text-[#E3D9FC]/80">
+      <a
+        href={SITE.founderCvUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:text-[#BF40FA] transition-colors"
+      >
+        Juanma Merodio (CV)
+      </a>
+      <a
+        href={SITE.afterbowUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:text-[#BF40FA] transition-colors"
+      >
+        AfterBow Audiovisual
+      </a>
+      <a href="#planes" class="hover:text-[#BF40FA] transition-colors">
+        Planes ({SITE.setupPrice} · {SITE.monthlyPrice} finales/mes)
+      </a>
+    </div>
 
-    <p class="text-xs">
+    <p>
       © {new Date().getFullYear()} {SITE.name}. Todos los derechos reservados.
     </p>
   </div>

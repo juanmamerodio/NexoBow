@@ -1,0 +1,131 @@
+---
+import { SITE } from "../config";
+---
+
+<section id="calculadora-roi" class="relative mx-auto max-w-5xl px-6 py-24">
+  <div class="mx-auto max-w-3xl text-center mb-12">
+    <div class="mb-3 inline-block rounded-full border border-[#4928C2]/40 bg-[#0B0D12] px-4 py-1 text-xs font-semibold tracking-wider text-[#E3D9FC] uppercase">
+      Matemática Simple · Retorno Inmediato
+    </div>
+    <h2 class="font-outfit text-3xl font-extrabold tracking-tight text-[#F8F6FF] sm:text-4xl md:text-5xl">
+      Hacé la cuenta rápida: ¿cuánta plata estás dejando <span class="text-[#BF40FA]">arriba de la mesa</span> cada mes?
+    </h2>
+    <p class="mt-3 text-base text-[#E3D9FC]/80">
+      Elegí tu escenario actual para calcular cuánto facturación y tiempo recuperás al automatizar tu recepción de pacientes.
+    </p>
+  </div>
+
+  <div class="roi-box rounded-3xl border border-[#4928C2]/40 bg-[#0B0D12] p-6 sm:p-10 shadow-[0_20px_50px_rgba(4,6,7,0.85)]">
+    <!-- Hidden Radio Inputs (0 JS) -->
+    <input type="radio" name="roi-tier" id="roi-a" class="sr-only" />
+    <input type="radio" name="roi-tier" id="roi-b" class="sr-only" checked />
+    <input type="radio" name="roi-tier" id="roi-c" class="sr-only" />
+
+    <!-- Scenario Selectors -->
+    <div class="grid gap-4 md:grid-cols-3 mb-8">
+      <label
+        for="roi-a"
+        class="roi-label-a cursor-pointer rounded-2xl border border-[#4928C2]/30 bg-[#040607] p-5 transition-all duration-200 hover:border-[#BF40FA]/60"
+      >
+        <span class="text-xs font-bold tracking-wider text-[#E3D9FC]/70 uppercase">Escenario Conservador</span>
+        <p class="mt-1.5 font-outfit text-base font-bold text-[#F8F6FF]">
+          Pierdo 2 pacientes por mes por no responder a tiempo
+        </p>
+      </label>
+
+      <label
+        for="roi-b"
+        class="roi-label-b cursor-pointer rounded-2xl border border-[#4928C2]/30 bg-[#040607] p-5 transition-all duration-200 hover:border-[#BF40FA]/60"
+      >
+        <span class="text-xs font-bold tracking-wider text-[#BF40FA] uppercase">Promedio Profesional (Habitual)</span>
+        <p class="mt-1.5 font-outfit text-base font-bold text-[#F8F6FF]">
+          Pierdo 5 pacientes por mes en el "visto" de WhatsApp
+        </p>
+      </label>
+
+      <label
+        for="roi-c"
+        class="roi-label-c cursor-pointer rounded-2xl border border-[#4928C2]/30 bg-[#040607] p-5 transition-all duration-200 hover:border-[#BF40FA]/60"
+      >
+        <span class="text-xs font-bold tracking-wider text-[#E3D9FC]/70 uppercase">Alto Volumen / Clínica</span>
+        <p class="mt-1.5 font-outfit text-base font-bold text-[#F8F6FF]">
+          Somos clínica / recibimos +30 consultas semanales
+        </p>
+      </label>
+    </div>
+
+    <!-- Dynamic Output Panels -->
+    <div class="rounded-2xl border border-[#4928C2]/35 bg-gradient-to-br from-[#5B2A62]/25 via-[#040607] to-[#040607] p-6 sm:p-8">
+      <!-- Result A -->
+      <div class="roi-panel-a hidden grid items-center gap-6 md:grid-cols-2">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wider text-[#E3D9FC]/70">Facturación mensual recuperada</p>
+          <p class="mt-1 font-outfit text-3xl font-extrabold text-[#F8F6FF] sm:text-4xl">~$80.000 a $120.000 ARS/mes</p>
+          <p class="mt-2 text-sm text-[#E3D9FC]/80">Considerando el valor promedio de un tratamiento o seguimiento mensual.</p>
+        </div>
+        <div class="rounded-2xl border border-[#4928C2]/30 bg-[#0B0D12] p-5">
+          <p class="text-xs font-semibold uppercase tracking-wider text-[#BF40FA]">Tiempo libre recuperado</p>
+          <p class="mt-1 font-outfit text-2xl font-bold text-[#F8F6FF]">+12 horas libres al mes</p>
+          <p class="mt-1 text-xs text-[#E3D9FC]/75">Sin responder precios a las 11 de la noche.</p>
+        </div>
+      </div>
+
+      <!-- Result B (Default) -->
+      <div class="roi-panel-b grid items-center gap-6 md:grid-cols-2">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wider text-[#E3D9FC]/70">Facturación mensual recuperada</p>
+          <p class="mt-1 font-outfit text-3xl font-extrabold text-[#F8F6FF] sm:text-4xl">~$200.000 a $300.000 ARS/mes</p>
+          <p class="mt-2 text-sm text-[#E3D9FC]/80">Solamente convirtiendo 5 consultas que antes quedaban enfriándose en WhatsApp.</p>
+        </div>
+        <div class="rounded-2xl border border-[#4928C2]/30 bg-[#0B0D12] p-5">
+          <p class="text-xs font-semibold uppercase tracking-wider text-[#BF40FA]">Tiempo libre recuperado</p>
+          <p class="mt-1 font-outfit text-2xl font-bold text-[#F8F6FF]">+24 horas libres al mes</p>
+          <p class="mt-1 text-xs text-[#E3D9FC]/75">Equivalente a 3 jornadas completas de consultorio ahorradas.</p>
+        </div>
+      </div>
+
+      <!-- Result C -->
+      <div class="roi-panel-c hidden grid items-center gap-6 md:grid-cols-2">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wider text-[#E3D9FC]/70">Facturación mensual recuperada</p>
+          <p class="mt-1 font-outfit text-3xl font-extrabold text-[#F8F6FF] sm:text-4xl">+$600.000 ARS/mes</p>
+          <p class="mt-2 text-sm text-[#E3D9FC]/80">Filtrando pacientes por especialidad y eliminando cuellos de botella en recepción.</p>
+        </div>
+        <div class="rounded-2xl border border-[#4928C2]/30 bg-[#0B0D12] p-5">
+          <p class="text-xs font-semibold uppercase tracking-wider text-[#BF40FA]">Ahorro operativo</p>
+          <p class="mt-1 font-outfit text-2xl font-bold text-[#F8F6FF]">+45 hs de secretaría ahorradas</p>
+          <p class="mt-1 text-xs text-[#E3D9FC]/75">Derivación automática las 24 horas, incluso domingos y feriados.</p>
+        </div>
+      </div>
+
+      <!-- Bottom Mathematical Conclusion -->
+      <div class="mt-6 border-t border-[#4928C2]/25 pt-5 text-center">
+        <p class="text-sm font-semibold text-[#E3D9FC]">
+          💡 Conclusión matemática: <span class="text-[#F8F6FF]">Tu abono mensual de {SITE.monthlyPrice} se paga solo con el 25% de UNA sola consulta recuperada.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .roi-box:has(#roi-a:checked) .roi-label-a,
+  .roi-box:has(#roi-b:checked) .roi-label-b,
+  .roi-box:has(#roi-c:checked) .roi-label-c {
+    border-color: #BF40FA;
+    background-color: rgba(91, 42, 98, 0.25);
+    box-shadow: 0 0 25px rgba(191, 64, 250, 0.2);
+  }
+
+  .roi-box:has(#roi-a:checked) .roi-panel-a { display: grid; }
+  .roi-box:has(#roi-a:checked) .roi-panel-b,
+  .roi-box:has(#roi-a:checked) .roi-panel-c { display: none; }
+
+  .roi-box:has(#roi-b:checked) .roi-panel-b { display: grid; }
+  .roi-box:has(#roi-b:checked) .roi-panel-a,
+  .roi-box:has(#roi-b:checked) .roi-panel-c { display: none; }
+
+  .roi-box:has(#roi-c:checked) .roi-panel-c { display: grid; }
+  .roi-box:has(#roi-c:checked) .roi-panel-a,
+  .roi-box:has(#roi-c:checked) .roi-panel-b { display: none; }
+</style>

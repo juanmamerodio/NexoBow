@@ -1,0 +1,118 @@
+---
+import { SITE } from "../config";
+---
+
+<section id="casos-de-exito" class="relative mx-auto max-w-6xl px-6 py-24">
+  <div class="mx-auto max-w-3xl text-center mb-14">
+    <div class="mb-3 inline-block rounded-full border border-[#4928C2]/40 bg-[#0B0D12] px-4 py-1 text-xs font-semibold tracking-wider text-[#E3D9FC] uppercase">
+      Prueba Técnica &amp; Comercial
+    </div>
+    <h2 class="font-outfit text-3xl font-extrabold tracking-tight text-[#F8F6FF] sm:text-4xl md:text-5xl">
+      Ingeniería comprobable, <span class="text-[#BF40FA]">no promesas vacías</span>
+    </h2>
+    <p class="mt-3 text-base text-[#E3D9FC]/80">
+      Cada landing se audita bajo métricas reales de Google Lighthouse y cumplimiento estricto de protección de datos.
+    </p>
+  </div>
+
+  <div class="grid gap-8 lg:grid-cols-2">
+    <!-- Case Study #1: Lic. Sofía Ramos -->
+    <div class="flex flex-col justify-between rounded-3xl border border-[#4928C2]/45 bg-[#0B0D12] p-8 sm:p-10 shadow-[0_15px_40px_rgba(4,6,7,0.75)]">
+      <div>
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="rounded-full bg-[#BF40FA]/20 border border-[#BF40FA]/40 px-3 py-1 text-xs font-bold text-[#E3D9FC]">
+            Caso Destacado #1 · Demo Activa
+          </span>
+          <span class="text-xs font-semibold text-emerald-400">● Estilo #01 Editorial Delta</span>
+        </div>
+
+        <h3 class="mt-4 font-outfit text-2xl font-bold text-[#F8F6FF]">
+          Lic. Sofía Ramos — Nutrición Funcional &amp; Deportiva
+        </h3>
+        <p class="mt-2 text-sm leading-relaxed text-[#E3D9FC]/80">
+          Implementación de embudo con dirección estética editorial (crema cálido, tinta café y acento intenso), integración de reseñas verificadas de Google Maps y paso directo a consultoría de evaluación.
+        </p>
+
+        <div class="mt-6 grid grid-cols-3 gap-3 rounded-2xl border border-[#4928C2]/25 bg-[#040607] p-4 text-center">
+          <div>
+            <p class="font-outfit text-xl font-extrabold text-[#F8F6FF]">0.6s</p>
+            <p class="text-[11px] text-[#E3D9FC]/70">LCP Móvil</p>
+          </div>
+          <div>
+            <p class="font-outfit text-xl font-extrabold text-[#BF40FA]">0 KB</p>
+            <p class="text-[11px] text-[#E3D9FC]/70">JS en Cliente</p>
+          </div>
+          <div>
+            <p class="font-outfit text-xl font-extrabold text-emerald-400">100/100</p>
+            <p class="text-[11px] text-[#E3D9FC]/70">Core Web Vitals</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-[#4928C2]/20 flex flex-wrap items-center justify-between gap-3">
+        <span class="text-xs text-[#E3D9FC]/70">Compilación estática de 27.8 KB totales</span>
+        <div class="flex items-center gap-4">
+          <a
+            href={SITE.demoLiveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-xs font-bold text-[#E3D9FC] underline decoration-[#4928C2] underline-offset-4 hover:text-[#BF40FA] transition-colors"
+          >
+            Ver demo en vivo ↗
+          </a>
+          <a
+            href={SITE.bookingUrl}
+            class="text-xs font-bold text-[#BF40FA] hover:text-[#E3D9FC] transition-colors"
+          >
+            Solicitar demo similar →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case Study #2: Technical Benchmark -->
+    <div class="flex flex-col justify-between rounded-3xl border border-[#4928C2]/35 bg-gradient-to-b from-[#5B2A62]/15 to-[#0B0D12] p-8 sm:p-10">
+      <div>
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="rounded-full border border-[#4928C2]/40 bg-[#040607] px-3 py-1 text-xs font-bold text-[#E3D9FC]">
+            Caso Destacado #2 · Benchmark Técnico
+          </span>
+          <span class="text-xs font-semibold text-[#E3D9FC]/70">Auditoría Comparativa</span>
+        </div>
+
+        <h3 class="mt-4 font-outfit text-2xl font-bold text-[#F8F6FF]">
+          WordPress tradicional vs. Arquitectura Astro SSG NexoBow
+        </h3>
+        <p class="mt-2 text-sm leading-relaxed text-[#E3D9FC]/80">
+          El 42% de los pacientes que hacen clic desde Instagram con datos móviles abandonan si la página tarda más de 3 segundos en abrir. Así rinde NexoBow frente a las agencias tradicionales:
+        </p>
+
+        <div class="mt-6 space-y-3">
+          <div class="rounded-2xl border border-red-500/20 bg-[#040607]/90 p-4">
+            <div class="flex items-center justify-between text-xs font-bold text-red-300">
+              <span>WordPress / Elementor Tradicional</span>
+              <span>4.8s de carga</span>
+            </div>
+            <p class="mt-1 text-xs text-[#E3D9FC]/70">
+              +1.4 MB de scripts pesados, plugins vulnerables y 42% de abandono móvil antes de ver el botón de WhatsApp.
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-[#BF40FA]/45 bg-[#040607] p-4">
+            <div class="flex items-center justify-between text-xs font-bold text-[#BF40FA]">
+              <span>Arquitectura Astro SSG NexoBow</span>
+              <span>0.6s de carga instantánea</span>
+            </div>
+            <p class="mt-1 text-xs text-[#E3D9FC]/85">
+              HTML estático puro en CDN global, retención inmediata del paciente y 0 mantenimiento de plugins rotos.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-[#4928C2]/20 text-xs text-[#E3D9FC]/75">
+        Garantizado por contrato: si tu landing no abre en menos de 1 segundo, no abonás el setup.
+      </div>
+    </div>
+  </div>
+</section>

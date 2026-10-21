@@ -1,220 +1,100 @@
-# Tickets del MVP — NexoBow
+# Tickets — NexoBow System & B2B Flagship Web (v2)
 
-> Descomposición en **tajadas verticales (tracer bullets)** del `spec.md`, bajo el ciclo SDD de `brain.md`: cada ticket corta un camino completo y demoable (ficha → template → clon → build → auditoría → deploy), no una capa horizontal.
+> Descomposición en **tajadas verticales (tracer bullets)** del [`spec.md`](./spec.md), bajo el ciclo SDD de [`brain.md`](./brain.md): cada ticket corta un camino completo, verificable y testeable por sí mismo.
 >
-> **Convenciones:** vocabulario de `GLOSSARY.md` (prestador, paciente, embudo, landing, ficha, template, clon, consultoría gratuita, caso de éxito). Nombres de componentes en inglés (`Hero`, `Problem`, `Steps`, `Pricing`, `Reviews`, `CaseStudy`). Estado `ready-for-agent` salvo donde hay humano-en-el-medio.
+> **Convenciones:** vocabulario de [`GLOSSARY.md`](./GLOSSARY.md) (prestador, paciente, embudo, landing, ficha, template, clon, consultoría gratuita, caso de éxito). Nombres de componentes en inglés.
 
-## Mapa de dependencias (bloqueos)
+---
 
+## Mapa de Dependencias (Grafo de Bloqueos)
+
+```text
+Frente A — Reestructuración B2B de web/ (Paleta Soft-Obsidian + 12 Secciones + 0 JS):
+  01 [T-WEB-01: Tokens Soft-Obsidian + Config + Header/Hero 3D] (DONE)
+       ├──► 02 [T-WEB-02: BeforeAfter + InteractiveFunnel + TemplateCatalog (+10) + RoiCalculator (0 JS)] (DONE)
+       └──► 03 [T-WEB-03: CaseStudies + Pricing ($189.999/$12.259 + Bonos + AfterBow + 7d) + CreateBowSystem + Founder + Faq/Footer] (DONE)
+                 └──► (02 + 03) ──► 04 [T-WEB-04: Suite E2E web-redesign.test.mjs & Build 0-JS Verification] (DONE)
+
+Frente B — Sistema Core, Google Sheets (Col B), TTL 7 Días, Mejora Continua & Skills Autónomas:
+  05 [T-SYS-01: Google Sheets Columna B (B11:S1000) + Slug Correlativo {id}-{nombre}-{apellido}-{rubro}.md] (DONE)
+       └──► 06 [T-SYS-02: Motor TTL 7 Días (Alertas 5-6d + Purga >=7d/Descartado) + Mejora Continua Sheets] (DONE)
+                 └──► 07 [T-SYS-03: Skills Autónomas (/editar-web-cliente, /seguimiento-leads, /next-step) + Docs] (DONE)
 ```
-T01 (scaffold template + tema)          ──►  T02 (Hero tracer: CTA a Calendly) ──► T03 (secciones completas)
-                                                                                        │
-                              ┌─────────────────────────────────────────────────────────┤
-                              ▼                                                         ▼
-                        T04 (skill build-client-site)                            T05 (skill audit-code)
-                              └──────────────────────────────┬──────────────────────────┘
-                                                             ▼
-                                                        T06 (primer prestador e2e + deploy)
-
-Paralelos (sin bloqueo, humano-en-el-medio):
-   T07 (cuestionario de onboarding)   T08 (planilla de prospección)   T11 (revisión legal)
-Dependientes del embudo vivo:
-   T09 (WhatsApp Business)            T10 (métrica agendadas/concretadas)   ← bloqueados por T06
-```
 
 ---
 
-## Prefactor
+## Frente A: Reestructuración Integral de `web/`
 
-### T01 — Scaffold del template `nutricionista` y componentes "theme-driven"
-
-**Qué entrega (de punta a punta):** un proyecto Astro base por rubro donde la paleta, la tipografía y el orden de secciones se resuelven por **variables de tema** (Tailwind/CSS), sin valores hardcodeados de NexoBow. Es el paso "hacé fácil el cambio" antes de inyectar fichas reales.
-
-**Blocked by:** Ninguno (puede empezar ya).
-
-**Status:** ready-for-agent
-
-- [x] Existe `templates/nutricionista/` con Astro SSG + Tailwind, partiendo del prototipo `web/` (se extraen los componentes existentes `Hero`, `Problem`, `Steps`, `Pricing`).
-- [x] Los componentes leen paleta (`primary`, `accent`), `fuente` y `orden_secciones` desde tokens de tema, no desde un `config.ts` fijo.
-- [x] `npm run build` termina con 0 errores y sin JS innecesario en el bundle (SSG estricto).
-- [x] El contenido de ejemplo (lorem) se marca claramente como placeholder reemplazable por la ficha.
+### 01 (`T-WEB-01`) — Fundación Soft-Obsidian, Configuración Central y Hero Tracer Bullet
+- **Blocked by:** None
+- **Status:** `done`
+- **Acceptance Criteria:**
+  - [x] Paleta Soft-Obsidian definida en `@theme` y aplicada en `Layout.astro` sin rastro del neón `#DB1FFF`.
+  - [x] `config.ts` expone precios psicológicos (`$189.999 ARS` y `$12.259 ARS finales/mes`), planes, bonos, catálogo de 10 templates y links a AfterBow y CV del fundador.
+  - [x] `Header.astro` y `Hero.astro` renderizan la promesa Hormozi y el mockup 3D CSS del flujo (`Maps/IG → Landing → WhatsApp → Turno`).
 
 ---
 
-## Núcleo (vertical slices)
-
-### T02 — Hero tracer bullet: CTA a Calendly en <3 clics
-
-**Qué entrega:** el camino más fino del embudo: una landing estática cuyo `Hero` renderiza desde el tema y cuyo botón principal lleva a Calendly, con el botón de WhatsApp. Es el hilo conductor que valida el flujo punta a punta antes de sumar secciones.
-
-**Blocked by:** T01.
-
-**Status:** ready-for-agent
-
-- [ ] El `Hero` pasa el gate de `standard` (logo `Nexo`/`Bow`, tipografía Outfit, micro-interacción de botón Büro, `prefers-reduced-motion`).
-- [ ] El CTA principal abre el link de Calendly; el secundario abre WhatsApp (ambos configurables).
-- [ ] Un paciente puede ir del `Hero` a Calendly en menos de 3 clics, con JS deshabilitado.
-- [ ] `npm run build` verde.
-
-### T03 — Secciones de confianza completas (Problem, Steps, Pricing, Reviews, CaseStudy)
-
-**Qué entrega:** la landing completa del prestador con todas las secciones que concentran confianza (casos de éxito, reseñas, pasos, oferta), todas alimentadas por la ficha y ordenadas por `orden_secciones`.
-
-**Blocked by:** T02.
-
-**Status:** ready-for-agent
-
-- [ ] Componentes `Reviews` y `CaseStudy` creados (no existen aún) y `Problem`, `Steps`, `Pricing` pasados a contenido de ficha.
-- [ ] Reseñas solo de Google Maps públicas o con `consentimiento_testimonios: true` (regla de salud).
-- [ ] Montos en ARS con formato explícito (`$200.000 ARS` / `$10.000 ARS`), copy voseo argentino, regla Hormozi (cero humo).
-- [ ] `npm run build` verde y layout responde a `orden_secciones`.
+### 02 (`T-WEB-02`) — Secciones de Diagnóstico, Embudo Interactivo, Catálogo (+10 Templates) y Calculadora ROI (0 JS)
+- **Blocked by:** `01 (T-WEB-01)`
+- **Status:** `done`
+- **Acceptance Criteria:**
+  - [x] `BeforeAfter.astro` contrasta los dolores reales de WhatsApp manual contra el embudo automatizado NexoBow.
+  - [x] `InteractiveFunnel.astro` y `RoiCalculator.astro` funcionan de forma 100% interactiva usando `<input type="radio">` y CSS puro (`0 bytes` de JS cliente).
+  - [x] `TemplateCatalog.astro` exhibe los 10 estilos exclusivos por rubro dejando claro que ningún prestador comparte diseño clónico.
 
 ---
 
-## Skills de orquestación
-
-### T04 — Skill `build-client-site` (clonar template + inyectar ficha + build)
-
-**Qué entrega:** el SOP que, a partir de una ficha válida en `/clients/`, clona `templates/nutricionista/`, inyecta contenido/tema y genera el clon en `/sites/` con build verde. Es el ejecutor del desacoplamiento Template/Contexto del `brain.md`.
-
-**Blocked by:** T03.
-
-**Status:** completed (2026-10-18)
-
-- [x] Lee la ficha (`_ficha-template.md` o cliente real) y valida campos obligatorios antes de clonar; frena con pregunta si faltan datos (gate Ask-First).
-- [x] Aplica tema (paleta Delta Cafés, fuente, orden) y contenido (bio, reseñas, casos, FAQ) **sin tocar componentes**.
-- [x] Verifica `npm run build` del clon generado (build verde estático con 0 errores y 16 tests pasando).
-- [x] Nunca edita a mano el clon para corregir datos de negocio (se edita la ficha y se regenera).
-
-### T05 — Skill `audit-code` (auditoría en sesión limpia)
-
-**Qué entrega:** el SOP de auditoría que corre en sub-agente con ventana limpia y valida performance Astro, accesibilidad, contraste de CTAs y purga de clases Tailwind, contra el checklist de `standard`.
-
-**Blocked by:** T03.
-
-**Status:** ready-for-agent
-
-- [ ] Produce un reporte checklist (logo, Hero con flujo WhatsApp→agenda, botones, `prefers-reduced-motion`, build 0 errores, regla Hormozi).
-- [ ] Revisa accesibilidad y contraste de CTAs.
-- [ ] Purga clases duplicadas de Tailwind.
-- [ ] Se ejecuta en sesión limpia (anti sesgo de confirmación), nunca en la misma sesión que generó el clon.
+### 03 (`T-WEB-03`) — Casos de Éxito, Escalera de 3 Planes + Bonos + AfterBow, "CREÁ TU SISTEMA BOW" y Founder Bio
+- **Blocked by:** `01 (T-WEB-01)`
+- **Status:** `done`
+- **Acceptance Criteria:**
+  - [x] `Pricing.astro` muestra los 3 planes, los precios psicológicos en ARS, el Stack de 3 Bonos Hormozi, el link a `https://www.afterbow.com` y el banner de urgencia de 7 días de servidor activo.
+  - [x] `CreateBowSystem.astro` presenta el mockup del aprovisionamiento autónomo por API (*"CREÁ TU SISTEMA BOW"* — Fase 2).
+  - [x] `Founder.astro` presenta a Juanma Merodio con enlaces directos verificables a `https://juanmamerodio.github.io/cv` y `https://www.afterbow.com`.
+  - [x] `index.astro` ensambla las 12 secciones en el orden psicológico del funnel.
 
 ---
 
-## Primer caso de éxito (embudo vivo)
-
-### T06 — Primer prestador de punta a punta: ficha → build → audit → deploy con subdominio
-
-**Qué entrega:** el primer clon real de un prestador publicado con subdominio (`*.nexobow.com`) en Netlify (primeros casos) o Vercel, con paciente yendo de Maps a la landing y de ahí a Calendly en <3 clics. Es la tajada que valida el negocio completo.
-
-**Blocked by:** T04, T05.
-
-**Status:** ready-for-agent
-
-- [ ] Ficha real del prestador con consentimiento de testimonios definido, WhatsApp y link de Calendly.
-- [ ] Clon generado y auditado; deploy final aprobado por humano (humano-en-el-medio).
-- [ ] Subdominio funcionando y landing cargando en milisegundos (estático, sin JS innecesario).
-- [ ] Copy y consentimiento aprobados por el prestador antes de publicar.
+### 04 (`T-WEB-04`) — Verificación de Build y Suite E2E de `web/` (`tests/web-redesign.test.mjs`)
+- **Blocked by:** `02 (T-WEB-02)`, `03 (T-WEB-03)`
+- **Status:** `done`
+- **Acceptance Criteria:**
+  - [x] `npm run build` en `/web` finaliza con código 0.
+  - [x] `node --test tests/web-redesign.test.mjs` pasa al 100% verificando 0 scripts en cliente y presencia de todos los bloques del spec.
 
 ---
 
-## Operación y cumplimiento (paralelos, humano-en-el-medio)
+## Frente B: Sistema Core, Google Sheets (`Col B`), Ciclo de 7 Días & Skills Autónomas
 
-### T07 — Cuestionario de onboarding
-
-**Qué entrega:** el cuestionario único que recolecta bio, enfoque, reseñas (con fuente), casos de éxito y FAQ, más el consentimiento de testimonios, para completar la ficha sin asumir datos.
-
-**Blocked by:** Ninguno (puede empezar ya).
-
-**Status:** ready-for-human
-
-- [ ] Captura todos los campos obligatorios del frontmatter de la ficha.
-- [ ] Incluye pregunta explícita de consentimiento escrito para testimonios.
-- [ ] Redactado en voseo argentino profesional.
-
-### T08 — Planilla de prospección (20 contactos/semana)
-
-**Qué entrega:** la planilla de seguimiento del ritmo comercial: al menos 20 contactos semanales desde Google Maps (fichas con reseñas, WhatsApp visible, sin agenda ni web), hacia el meta de primer cliente en 30 días.
-
-**Blocked by:** Ninguno (puede empezar ya).
-
-**Status:** ready-for-human
-
-- [ ] Registra fuente (Google Maps), estado del prestador y próxima acción.
-- [ ] Soporta el ciclo de estados de la ficha (prospecto → onboarding → … → activo).
-- [ ] Envío de mensajes en frío hecho por humano (fuera del agente).
-
-### T09 — WhatsApp Business: bienvenida + respuestas rápidas → link de Calendly
-
-**Qué entrega:** que un paciente que escribe por WhatsApp reciba automáticamente el link de Calendly, **sin API de Meta** (mensaje de bienvenida y respuestas rápidas de WhatsApp Business).
-
-**Blocked by:** T06.
-
-**Status:** ready-for-human
-
-- [ ] Mensaje de bienvenida configurado.
-- [ ] Respuestas rápidas que entregan el link de Calendly del prestador.
-- [ ] Verificado con un envío real de prueba.
-
-### T10 — Métrica de consultorías agendadas / concretadas
-
-**Qué entrega:** la definición y registro mensual de la métrica de éxito (consultorías gratuitas agendadas y cuántas se concretaron) que se muestra al prestador para que renueve.
-
-**Blocked by:** T06.
-
-**Status:** ready-for-agent
-
-- [ ] Definido cómo se mide "concretada" (dato manual del prestador o panel de Calendly — pendiente del spec).
-- [ ] Se registra en `metricas` de la ficha (agendadas_mes / concretadas_mes).
-- [ ] Proceso de actualización mensual documentado.
-
-### T11 — Revisión legal de publicidad en salud (Ley 25.326)
-
-**Qué entrega:** checklist legal mínimo que blinda el copy y los testimonios (consentimiento, publicidad de resultados en salud, datos personales).
-
-**Blocked by:** Ninguno (puede empezar ya).
-
-**Status:** ready-for-human
-
-- [ ] Revisado con un profesional el marco de publicidad en salud.
-- [ ] Checklist incorporado al gate de `standard`/`build-client-site` (testimonios solo con consentimiento; si no, reseñas públicas).
+### 05 (`T-SYS-01`) — Alineación Google Sheets a Columna B (`B11:S1000`) y Correlatividad `{ID}-{nombre}-{apellido}-{rubro}.md`
+- **Blocked by:** None
+- **Status:** `done`
+- **Acceptance Criteria:**
+  - [x] `scripts/sheets-sync.mjs` utiliza el rango `B11:S1000` / `B11` por defecto y exporta `buildCorrelativeSlug()`.
+  - [x] `scripts/generate-client-fiche.mjs` inyecta `sheet_id`, `lead_status`, `created_at`, `last_activity_at` y `expires_at` (+7 días) en la ficha generada.
+  - [x] `node --test tests/sheets-sync.test.mjs` pasa al 100%.
 
 ---
 
-## NexoBow System — Prospección & Web Privada (Tickets N01 - N05)
-
-Gestionados también como archivos individuales bajo `.scratch/nexobow-system/issues/`:
-
-### N01 — Generador por Lotes de Demos y Subrutas Unificadas
-**Qué entrega:** Script CLI (`scripts/prospect-batch.mjs`) que procesa 15 prospectos de Google Maps, genera fichas en `/clients/` y compila cada landing en `dist-previews/{slug}/` devolviendo un JSON con metadatos y enlaces a `preview.nexobow.com/{slug}`.
-**Blocked by:** Ninguno.
-**Status:** completed (2026-10-19)
-
-### N02 — Despliegue Unificado a Cloudflare Pages (preview.nexobow.com)
-**Qué entrega:** Script de despliegue (`scripts/deploy-previews.mjs`) que sincroniza el directorio unificado `dist-previews/` con el proyecto de Cloudflare Pages para `preview.nexobow.com`.
-**Blocked by:** N01.
-**Status:** completed (2026-10-19)
-
-### N03 — Servidor Privado y API de NexoBow System
-**Qué entrega:** Microservidor en Node.js (`server/index.mjs`) con auth por Token Bearer (`NEXOBOW_SYSTEM_KEY`) para listar prospectos (`GET /api/leads`), disparar lote (`POST /api/batch-scout`) y actualizar estado (`POST /api/leads/:slug/status`).
-**Blocked by:** N01.
-**Status:** completed (2026-10-19)
-
-### N04 — PWA / Dashboard Web Privado para Celular
-**Qué entrega:** Dashboard mobile-first instalable como PWA en el celular del operador para revisar los 15 leads matutinos, ver preview con un tap, abrir WhatsApp con copy prellenado y disparar lotes.
-**Blocked by:** N03.
-**Status:** completed (2026-10-19)
-
-### N05 — Workflow de Automatización n8n & Sincronización con Google Sheets
-**Qué entrega:** Workflow exportable en JSON (`workflows/n8n-daily-prospecting.json`) que corre a las 08:00 AM, invoca la API de NexoBow System, vuelca los leads en Google Sheets y notifica a la web móvil.
-**Blocked by:** N01, N03.
-**Status:** completed (2026-10-19)
+### 06 (`T-SYS-02`) — Motor de Expiración de 7 Días (Urgencia + Purga Automática) y Mejora Continua con Google Sheets
+- **Blocked by:** `05 (T-SYS-01)`
+- **Status:** `done`
+- **Acceptance Criteria:**
+  - [x] `evaluateLeadLifecycle()` detecta leads renovados, leads en alerta (días 5–6) y leads expirados (`>=7 días` o `"Descartado"`), protegiendo siempre `_ficha-template.md` y `demo-*`.
+  - [x] `computeSheetMetricsSummary()` calcula tasas de contacto, respuesta, reuniones y recomendaciones por nicho desde los datos del Sheet.
+  - [x] `node --test tests/lead-lifecycle.test.mjs` pasa al 100%.
 
 ---
 
-## Frontera (orden de trabajo)
+### 07 (`T-SYS-03`) — Paquete de Agent Skills Autónomas (`/editar-web-cliente`, `/seguimiento-leads`, `/next-step`) & Documentación
+- **Blocked by:** `06 (T-SYS-02)`
+- **Status:** `done`
+- **Acceptance Criteria:**
+  - [x] Existen `.agents/skills/edit-client-site/SKILL.md`, `.agents/skills/lead-lifecycle/SKILL.md` y `.agents/skills/flow-advisor/SKILL.md` con frontmatter YAML válido.
+  - [x] `AGENTS.md`, `brain.md` y `memory.md` reflejan la nueva arquitectura, el ciclo de 7 días, la paleta Soft-Obsidian y el backlog REA de +10 templates.
 
-- **Fase Core Pipeline**: Pipeline individual `lead-to-live` 100% verificado con tests verdes (2026-10-19).
-- **Fase NexoBow System**: Tickets N01, N02, N03, N04 y N05 implementados y 100% verificados con tests automatizados.
-- **Próximos pasos**: Revisión y configuración en vivo de credenciales de Cloudflare Pages (`preview.nexobow.com`) y Google Sheets en n8n por el operador.
+---
 
+## Histórico de Tickets Completados (Fases Previas)
+- **T01, T04, T05, N01–N05**: Completados y verificados en suites `tests/pipeline-tanda1.test.mjs` y `tests/pipeline-e2e.test.mjs`.

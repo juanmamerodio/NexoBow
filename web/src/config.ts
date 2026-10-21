@@ -1,8 +1,121 @@
-// Single source of truth for links and offer values (see /spec.md).
+// Single source of truth for NexoBow B2B Flagship Web (see /spec.md).
 export const SITE = {
   name: "NexoBow",
-  // TODO: replace with the real Calendly link of NexoBow.
   bookingUrl: "#agendar",
-  setupPrice: "$200.000 ARS",
-  monthlyPrice: "$10.000 ARS",
+  whatsappUrl:
+    "https://wa.me/5491100000000?text=Hola%20Juanma!%20Vi%20la%20web%20de%20NexoBow%20y%20quiero%20implementar%20el%20sistema%20en%20mi%20consultorio.",
+  afterbowUrl: "https://www.afterbow.com",
+  founderCvUrl: "https://juanmamerodio.github.io/cv",
+  demoLiveUrl: "https://demo-nutri-sofia.nexobow.site",
+  setupPrice: "$189.999 ARS",
+  setupOldPrice: "$260.000 ARS",
+  monthlyPrice: "$12.259 ARS",
+  clinicSetupPrice: "$329.999 ARS",
+  clinicMonthlyPrice: "$19.899 ARS",
+  demoExpirationDays: 7,
+  bonuses: [
+    {
+      number: "Bono #1",
+      title: "Optimización SEO Local en Google Maps",
+      description:
+        "Auditamos y optimizamos tu ficha de Google Business Profile para que aparezcas primero en tu ciudad cuando buscan tu especialidad.",
+      value: "$85.000 ARS",
+    },
+    {
+      number: "Bono #2",
+      title: "Protocolo y Guiones de Cierre por WhatsApp para Consultorías",
+      description:
+        "Plantillas de respuesta rápida y estructura de mensajes probada para convertir consultas tibias en pacientes confirmados sin parecer un robot.",
+      value: "$60.000 ARS",
+    },
+    {
+      number: "Bono #3",
+      title: "Primer Mes de Mantenimiento 100% Bonificado + Garantía <1s",
+      description:
+        "No pagás el abono de $12.259 ARS durante los primeros 30 días. Y si tu página no carga en menos de 1 segundo, no pagás el setup.",
+      value: "$12.259 ARS",
+    },
+  ],
+  templateCatalog: [
+    {
+      id: "01",
+      name: "Editorial Delta",
+      niche: "Nutrición & Salud",
+      palette: ["#fcf3ed", "#35221a", "#e70025"],
+      status: "En Vivo (Demo)",
+      description: "Tipografía serif Fraunces + sans Archivo, calidez editorial europea y alta lectura clínica.",
+    },
+    {
+      id: "02",
+      name: "Clinical Pure",
+      niche: "Medicina & Dermatología",
+      palette: ["#F8FAFC", "#0F172A", "#0284C7"],
+      status: "Catálogo REA",
+      description: "Blanco quirúrgico, acentos cian clínico y máxima pulcritud para especialistas médicos.",
+    },
+    {
+      id: "03",
+      name: "Warm Empathy",
+      niche: "Psicología & Terapia",
+      palette: ["#FAF6F0", "#2C2523", "#B45309"],
+      status: "Catálogo REA",
+      description: "Tonos arena y terracota serenos diseñados para transmitir contención, privacidad y cercanía.",
+    },
+    {
+      id: "04",
+      name: "Obsidian Authority",
+      niche: "Abogados & Estudios",
+      palette: ["#090D16", "#F1F5F9", "#D97706"],
+      status: "Catálogo REA",
+      description: "Contraste ejecutivo oscuro con acentos bronce para estudios jurídicos de alta complejidad.",
+    },
+    {
+      id: "05",
+      name: "Kinetic Performance",
+      niche: "Deporte & Kinesiología",
+      palette: ["#0F1419", "#F3F4F6", "#10B981"],
+      status: "Catálogo REA",
+      description: "Estética dinámica de alto rendimiento para rehabilitación deportiva y centros de entrenamiento.",
+    },
+    {
+      id: "06",
+      name: "Minimalist Smile",
+      niche: "Odontología Estética",
+      palette: ["#FFFFFF", "#18181B", "#0D9488"],
+      status: "Catálogo REA",
+      description: "Enfoque visual limpio con comparativas de casos clínicos y reserva rápida de valoración.",
+    },
+    {
+      id: "07",
+      name: "Botanical Balance",
+      niche: "Medicina Funcional",
+      palette: ["#F4F7F4", "#1C2826", "#2E6F40"],
+      status: "Catálogo REA",
+      description: "Verde botánico profundo y textura orgánica para medicina integrativa y bienestar holístico.",
+    },
+    {
+      id: "08",
+      name: "Swiss Advisory",
+      niche: "Contadores & Consultores",
+      palette: ["#F9FAFB", "#111827", "#2563EB"],
+      status: "Catálogo REA",
+      description: "Grilla suiza de precisión matemática para estudios contables, financieros y consultoría B2B.",
+    },
+    {
+      id: "09",
+      name: "Velvet Aesthetics",
+      niche: "Centros de Estética",
+      palette: ["#FDF8F6", "#271C19", "#9D174D"],
+      status: "Catálogo REA",
+      description: "Editorial de lujo suave para medicina estética, armonización facial y spas médicos.",
+    },
+    {
+      id: "10",
+      name: "Executive Clinic",
+      niche: "Clínicas Multi-Especialidad",
+      palette: ["#0B132B", "#F8FAFC", "#3A86FF"],
+      status: "Catálogo REA",
+      description: "Arquitectura institucional con derivación por profesional y múltiples agendas sincronizadas.",
+    },
+  ],
 };
