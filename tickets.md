@@ -21,5 +21,9 @@
 - [x] [14: Copy con 4 ángulos de dolor Hormozi y branding según rubro/reputación](./.scratch/nexobow-v2/issues/14-hormozi-angles-and-branding.md) (`done`)
 - [x] [15: Limpieza de documentación y tracker](./.scratch/nexobow-v2/issues/15-docs-and-tracker-cleanup.md) (`done`)
 
-## Backlog Fase 2 — Catálogo REA (+9 Templates Adicionales)
-- **Estado:** Pendiente de que el usuario elija y pase las URLs de las webs de referencia por vertical antes de iniciar ingeniería inversa (REA).
+## Frente C — Motor de Ingeniería Inversa de Templates (REA)
+- [ ] [16: Inspector REA y Extractor Estético (`scripts/rea-inspect.mjs`)](./.scratch/nexobow-v2/issues/16-rea-inspect-extractor.md) (`ready-for-agent`)
+- [ ] [17: Andamiaje Automatizado de Templates REA (`templates/{rubro}/`)](./.scratch/nexobow-v2/issues/17-rea-template-scaffolding.md) (`ready-for-agent`)
+- [ ] [18: Validación de Demo, Auditoría de Rendimiento JS y Tag Git Inmutable](./.scratch/nexobow-v2/issues/18-rea-demo-build-and-tag.md) (`ready-for-agent`)
+- [ ] [19: Flujo REA End-to-End, Catálogo en `web/` y Verificación Integral](./.scratch/nexobow-v2/issues/19-rea-catalog-and-e2e-workflow.md) (`ready-for-agent`)
+

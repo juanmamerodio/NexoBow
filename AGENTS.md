@@ -47,6 +47,7 @@ Repositorio central de **NexoBow**: fábrica automatizada de embudos de venta y 
 - **`audit-code`**: Ejecutar **siempre en un sub-agente con sesión limpia** tras construir o actualizar un sitio. Audita performance en Astro, accesibilidad, contraste de CTAs, 0 JS estricto en `web/` y presupuesto de JS propio (`<= 35 KB` sin terceros no declarados) en `/sites/`.
 - **`deploy-cloudflare`**: Publica el sitio en Cloudflare Pages usando Wrangler CLI bajo el dominio unificado `https://preview.nexobow.site/{slug}/`.
 - **`lead-to-live`**: Orquestador maestro end-to-end: ejecuta `scout-lead` → `generate-client-fiche` → `build-client-site` → `audit-code` → `deploy-cloudflare`.
+- **`rea-template`**: Motor de Ingeniería Inversa de Templates (REA): toma una URL de referencia y un rubro, extrae la identidad visual (paleta 60-30-10, fuentes, layout), andamia el nuevo template Astro inmutable en `/templates/{rubro}/` con contrato `site.json` desacoplado, compila la demo en `/sites/demo-{rubro}/`, audita presupuesto JS (`<= 35 KB`) y genera el tag git `template/{rubro}@1.0.0`.
 
 ## 🔄 Ciclo de Desarrollo Agéntico & Tracking de Estado (Main Flow)
 Para cualquier tarea de diseño, refactor o feature en el repo, el agente debe seguir obligatoriamente las fases definidas en [`/prompts_structure.md`](file:///home/juanmamerodio/Desktop/NexoBow/prompts_structure.md) e identificar explícitamente en qué etapa se encuentra:
