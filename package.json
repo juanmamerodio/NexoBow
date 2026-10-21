@@ -15,7 +15,8 @@
     "deploy-previews": "node scripts/deploy-previews.mjs",
     "prospect": "node scripts/prospect-in-conversation.mjs",
     "lead-lifecycle": "node scripts/lead-lifecycle.mjs",
-    "continuous-improvement": "node scripts/continuous-improvement.mjs"
+    "continuous-improvement": "node scripts/continuous-improvement.mjs",
+    "rea-inspect": "node scripts/rea-inspect.mjs"
   },
   "dependencies": {
     "@rive-app/canvas": "^2.45.0",
