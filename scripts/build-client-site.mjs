@@ -273,6 +273,19 @@ if (existsSync(htmlPath)) {
   htmlSize = (statSync(htmlPath).size / 1024).toFixed(1);
 }
 
+// Sincronizar automáticamente hacia dist-previews/{slug}/ para el dominio unificado de previews
+const distPreviewsTarget = join(REPO_ROOT, "dist-previews", slug);
+try {
+  mkdirSync(join(REPO_ROOT, "dist-previews"), { recursive: true });
+  if (existsSync(distPreviewsTarget)) {
+    rmSync(distPreviewsTarget, { recursive: true, force: true });
+  }
+  cpSync(distPath, distPreviewsTarget, { recursive: true });
+  console.log(`\x1b[32m[build-site] ✓\x1b[0m Sincronizado a dist-previews/${slug}/ para https://preview.${process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site"}/${slug}/`);
+} catch (err) {
+  console.warn(`[build-site] Advertencia al sincronizar con dist-previews: ${err.message}`);
+}
+
 console.log(`
 \x1b[32m=======================================================
 ✓ SITIO GENERADO CON ÉXITO: sites/${slug}

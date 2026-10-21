@@ -83,7 +83,21 @@ async function main() {
     process.exit(0);
   }
 
-  // Despliegue con Wrangler
+  // Sincronizar hacia dist-previews/{slug}
+  const distPreviewsTarget = join(REPO_ROOT, "dist-previews", slug);
+  try {
+    const { mkdirSync, rmSync, cpSync } = await import("node:fs");
+    mkdirSync(join(REPO_ROOT, "dist-previews"), { recursive: true });
+    if (existsSync(distPreviewsTarget)) {
+      rmSync(distPreviewsTarget, { recursive: true, force: true });
+    }
+    cpSync(distDir, distPreviewsTarget, { recursive: true });
+    console.log(`\x1b[32m[deploy-cf] ✓\x1b[0m Sincronizado a dist-previews/${slug}/.`);
+  } catch (e) {
+    console.warn(`[deploy-cf] Advertencia en dist-previews: ${e.message}`);
+  }
+
+  // Despliegue con Wrangler al proyecto individual
   console.log(`[deploy-cf] Ejecutando: npx wrangler pages deploy sites/${slug}/dist --project-name ${slug} ...`);
   const deployRes = spawnSync(
     "npx",
@@ -105,14 +119,32 @@ async function main() {
     process.exit(1);
   }
 
+  // Despliegue automático al proyecto unificado de previews
+  console.log(`[deploy-cf] Actualizando proyecto unificado 'nexobow-previews' en https://preview.${rootDomain}...`);
+  spawnSync(
+    "npx",
+    ["wrangler", "pages", "deploy", join(REPO_ROOT, "dist-previews"), "--project-name", "nexobow-previews", "--commit-dirty=true"],
+    {
+      cwd: REPO_ROOT,
+      stdio: "inherit",
+      env: {
+        ...process.env,
+        CLOUDFLARE_API_TOKEN: token,
+        CLOUDFLARE_ACCOUNT_ID: accountId,
+      },
+      shell: process.platform === "win32",
+    }
+  );
+
   const publicUrl = `https://${slug}.pages.dev`;
+  const unifiedPreviewUrl = `https://preview.${rootDomain}/${slug}/`;
   console.log(`
 \x1b[32m=======================================================
 ✓ DESPLIEGUE EXITOSO EN CLOUDFLARE PAGES
 =======================================================\x1b[0m
-- Proyecto: \x1b[1m${slug}\x1b[0m
-- URL Pública: \x1b[36m${publicUrl}\x1b[0m
-- Subdominio: ${rootDomain && rootDomain !== "-" ? `https://${slug}.${rootDomain}` : "Sin mapear"}
+- Cliente: \x1b[1m${slug}\x1b[0m
+- URL Directa Pages: \x1b[36m${publicUrl}\x1b[0m
+- URL Unificada NexoBow: \x1b[32m${unifiedPreviewUrl}\x1b[0m
 - Estado: Publicado en red global edge con SSL automático
 `);
 }
