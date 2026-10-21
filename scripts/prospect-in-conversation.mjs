@@ -253,6 +253,46 @@ async function main() {
       } catch (err) {
         console.error(`Error al insertar fila para ${leadFormatted.displayName}: ${err.message}`);
       }
+
+      // Automatización: Generar Ficha Markdown y Compilar Landing
+      try {
+        console.log(`[prospect] Generando ficha y sitio para ${itemSlug}...`);
+        const { spawnSync } = await import('node:child_process');
+        
+        // 1. Guardar lead-raw.json
+        const { writeFileSync, mkdirSync } = await import('node:fs');
+        const assetDir = join(REPO_ROOT, 'assets', itemSlug);
+        mkdirSync(assetDir, { recursive: true });
+        const rawPayload = {
+          source: 'prospect-in-conversation',
+          query,
+          slug: itemSlug,
+          sheetId: rowId,
+          nombre: item.displayName,
+          rubro: 'nutricionista',
+          direccion: item.formattedAddress,
+          telefono: item.nationalPhoneNumber,
+          rating: item.rating || 5,
+          userRatingCount: item.userRatingCount || 0,
+          reviews: item.reviews || []
+        };
+        writeFileSync(join(assetDir, 'lead-raw.json'), JSON.stringify(rawPayload, null, 2), 'utf8');
+
+        // 2. Generar ficha con generate-client-fiche
+        spawnSync('node', ['scripts/generate-client-fiche.mjs', `assets/${itemSlug}/lead-raw.json`], {
+          cwd: REPO_ROOT,
+          shell: process.platform === 'win32'
+        });
+
+        // 3. Compilar sitio con build-client-site (auto-sincroniza con dist-previews/{slug}/)
+        spawnSync('node', ['scripts/build-client-site.mjs', `clients/${itemSlug}.md`], {
+          cwd: REPO_ROOT,
+          shell: process.platform === 'win32'
+        });
+        console.log(`\x1b[32m[prospect] ✓\x1b[0m Landing compilada para ${itemSlug}`);
+      } catch (buildErr) {
+        console.warn(`[prospect] Advertencia al generar landing para ${itemSlug}: ${buildErr.message}`);
+      }
     }
 
     addedLeads.push({
@@ -262,6 +302,17 @@ async function main() {
       rating: leadFormatted.rating,
       waLink: row[4],
       demoUrl: row[5]
+    });
+  }
+
+  // Si no es dry-run y se generaron leads, desplegar automáticamente a Cloudflare Pages
+  if (!dryRun && addedLeads.length > 0) {
+    console.log(`\n\x1b[36m[prospect] Desplegando demos actualizadas hacia Cloudflare Pages...\x1b[0m`);
+    const { spawnSync } = await import('node:child_process');
+    spawnSync('npm', ['run', 'deploy-previews'], {
+      cwd: REPO_ROOT,
+      stdio: 'inherit',
+      shell: process.platform === 'win32'
     });
   }
 

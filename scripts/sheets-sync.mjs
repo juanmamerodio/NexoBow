@@ -170,7 +170,8 @@ export function formatLeadToSheetRow(lead, rowNumber, customPitchTemplate = null
       displayName: lead.displayName,
       nicho: lead.nicho
     });
-  const demoUrl = resolvedSlug ? `https://preview.nexobow.com/${resolvedSlug}` : '';
+  const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || 'nexobow.site';
+  const demoUrl = resolvedSlug ? `https://preview.${rootDomain}/${resolvedSlug}` : '';
 
   let rawMessage = `Hola ${lead.displayName || ''}! Estuve viendo su perfil y preparé una propuesta para agendar consultas sin depender de secretaría. Se las dejo acá: ${demoUrl}`;
   if (customPitchTemplate) {

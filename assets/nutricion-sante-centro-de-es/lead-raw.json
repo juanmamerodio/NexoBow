@@ -1,0 +1,24 @@
+{
+  "source": "google-maps-platform",
+  "query": "Santé - Centro de Estética y Nutrición, Rawson 63, Campana",
+  "slug": "nutricion-sante-centro-de-es",
+  "placeId": "12378699862514815718",
+  "nombre": "Santé - Centro de Estética y Nutrición",
+  "rubro": "nutricionista",
+  "direccion": "Rawson 63, Campana, Provincia de Buenos Aires",
+  "telefono": "03489519909",
+  "telefonoFormato": "03489 51-9909",
+  "website": "",
+  "rating": 4.9,
+  "userRatingCount": 8,
+  "location": {
+    "latitude": -34.157745,
+    "longitude": -58.96108
+  },
+  "reviews": [],
+  "assets": {
+    "avatarDownloaded": false,
+    "mapDownloaded": false,
+    "files": []
+  }
+}

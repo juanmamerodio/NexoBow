@@ -41,7 +41,8 @@ export function diffDays(fromIso, toIso) {
 
 export function buildUrgencyWhatsAppLink({ nombre = 'Profesional', whatsapp = '', slug = '' } = {}) {
   const digits = normalizePhone(whatsapp).replace(/\+/g, '');
-  const demoUrl = slug ? `https://preview.nexobow.com/${slug}` : 'tu demo personalizada';
+  const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || 'nexobow.site';
+  const demoUrl = slug ? `https://preview.${rootDomain}/${slug}` : 'tu demo personalizada';
   const msg = `Hola ${nombre}! Te escribo cortito para avisarte que en 48 hs nuestro sistema da de baja automática la demo que armé para tu consultorio (${demoUrl}) para liberar espacio en el servidor. Si querés que la mantengamos activa con los 3 bonos bonificados, avisame por acá.`;
   return digits ? `https://wa.me/${digits}?text=${encodeURIComponent(msg)}` : '';
 }
