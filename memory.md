@@ -41,21 +41,22 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
 
 ---
 
-## 3. Estado Actual del Proyecto (al 2026-10-20)
+## 3. Estado Actual del Proyecto (al 2026-10-21)
 
 ### 3.1 Lo que existe y está verificado
-- **`web/` (Flagship B2B Soft-Obsidian — 12 Secciones, 0 JS)**:
+- **`web/` (Flagship B2B Soft-Obsidian — 12 Secciones, 0 JS estricto)**:
   - Paleta Soft-Obsidian (`#040607`, `#0B0D12`, `#5B2A62`, `#4928C2`, `#BF40FA`, `#E3D9FC`) sin rastro de `#DB1FFF`.
   - 12 secciones activas: `Header`, `Hero` (escena 3D CSS), `BeforeAfter`, `InteractiveFunnel` (tabs CSS `:checked`, 0 JS), `TemplateCatalog` (+10 estilos REA), `RoiCalculator` (radio CSS `:checked`, 0 JS), `CaseStudies` (Lic. Sofía Ramos + benchmark WordPress vs Astro SSG), `Pricing` (3 planes: Core `$189.999 ARS` + `$12.259 ARS/mes`, Clínica Pro `$329.999 ARS` + `$19.899 ARS/mes`, y Full Growth con 1 mes de contenido audiovisual por [**AfterBow**](https://www.afterbow.com), más 3 Bonos Hormozi y banner de **expiración de demos a los 7 días**), `CreateBowSystem` (*"CREÁ TU SISTEMA BOW"* vía API para Fase 2), `Founder` (**Juanma Merodio** con links a `https://juanmamerodio.github.io/cv` y `https://www.afterbow.com`), `Faq` (acordeones `<details>`, Ley 25.326), `FinalCta` y `Footer`.
-- **Sincronización Google Sheets (`Col B = ID`) y Motor de 7 Días**:
-  - `scripts/sheets-sync.mjs`: rango `'Prospección NexoBow'!B11:S1000` y función `buildCorrelativeSlug({ id, displayName, nicho })` (`22-alejandra-martinez-nutri`).
-  - `scripts/generate-client-fiche.mjs`: inyecta `sheet_id`, `lead_status`, `created_at`, `last_activity_at` y `expires_at` (+7 días).
-  - `scripts/lead-lifecycle.mjs`: renueva +7d si cambia el estado en el Sheet, emite alertas con link de WhatsApp de urgencia en días 5–6 (<48hs) y purga automáticamente en `>=7d` o `"Descartado"` (protegiendo `_ficha-template.md` y `demo-*`).
-  - `scripts/continuous-improvement.mjs`: analiza KPIs (`A1:S10`) y prospectos (`B11:S1000`) por nicho.
+- **Sincronización Google Sheets (`LeadStore`, `Col B = ID`, `Col G = Web Demo URL`) y Motor de 7 Días**:
+  - `scripts/sheets-sync.mjs`: interfaz `LeadStore` (`defaultLeadStore`, `createInMemoryLeadStore`, `createSheetsAdapter`) que encapsula el rango `'Prospección NexoBow'!B11:S1000`, cálculo de ID `max(Col B) + 1` con reintento ante colisión, escape de comillas y escritura de `https://preview.nexobow.site/{slug}/` en **Columna G** (`Web Demo URL`) sin modificar **Columna L** (`Último Contacto`). Ningún script fuera de `sheets-sync.mjs` invoca el binario `gsheets` directamente.
+  - `scripts/generate-client-fiche.mjs`: rotación determinista por slug de los 4 ángulos de dolor Hormozi (`HORMOZI_PAIN_ANGLES`), mapa de paletas/tipografías por `rubro` (`RUBRO_BRANDING_MAP`) con variación según `rating`/`userRatingCount`, y metadatos `sheet_id`, `lead_status`, `created_at`, `last_activity_at` y `expires_at` (+7 días).
+  - `scripts/build-client-site.mjs`: versionado inmutable por tags git (`template/{rubro}@x.y.z`, tag inicial `template/nutricionista@1.0.0`), bloqueo `.template-lock.json`, flag `--upgrade-template` y actualización automática de Columna G al finalizar el build.
+  - `scripts/audit-site.mjs`: política de JS diferenciada (`0 JS` ejecutable estricto en `web/`; presupuesto de JS propio `<= 35 KB` con reporte de peso y bloqueo de scripts externos de terceros no declarados en `/sites/`).
+  - `scripts/lead-lifecycle.mjs` y `scripts/continuous-improvement.mjs`: operan sobre `LeadStore` para renovar leads activos (+7d), emitir alertas de urgencia en días 5–6 (<48hs), purgar demos vencidas (`>=7d` o `"Descartado"`) y analizar KPIs (`A1:S10`).
 - **Biblioteca Completa de Agent Skills (`/.agents/skills/`)**:
   - `standard`, `scout-lead`, `generate-client-fiche`, `build-client-site`, `edit-client-site` (`/editar-web-cliente`), `lead-lifecycle` (`/seguimiento-leads`), `flow-advisor` (`/next-step` / `/ask-matt`), `audit-code`, `deploy-cloudflare`, `lead-to-live`.
-- **Backlog Fase 2 (Optimización de Tokens por REA)**:
-  - Construcción progresiva de los 9 templates adicionales del catálogo (`02. Clinical Pure`, `03. Warm Empathy`, `04. Obsidian Authority`, `05. Kinetic Performance`, `06. Minimalist Smile`, `07. Botanical Balance`, `08. Swiss Advisory`, `09. Velvet Aesthetics`, `10. Executive Clinic`) mediante ingeniería inversa (REA) y endpoint API para `"CREÁ TU SISTEMA BOW"`.
+- **Backlog Fase 2 (9 Templates Adicionales por REA — Pendiente de Webs de Referencia del Usuario)**:
+  - Los 9 templates adicionales del catálogo (`02. Clinical Pure`, `03. Warm Empathy`, `04. Obsidian Authority`, `05. Kinetic Performance`, `06. Minimalist Smile`, `07. Botanical Balance`, `08. Swiss Advisory`, `09. Velvet Aesthetics`, `10. Executive Clinic`) están **pendientes de que el usuario elija y proporcione las URLs de las webs de referencia** para ejecutar ingeniería inversa (REA) bajo el gate Ask-First de diseño, junto con el endpoint API para `"CREÁ TU SISTEMA BOW"`.
 
 ---
 
@@ -64,6 +65,5 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
 - [2026-10-14] Dirección estética del template #01 (`nutricionista`): Editorial Delta (`deltacafes.com`).
 - [2026-10-19] Arquitectura simplificada a prospección nativa In-Conversation con Antigravity + Google Sheets directo.
 - [2026-10-20] Integración Serper Dev (Places Scraper) + rebranding `web/` a Soft-Obsidian (12 secciones, 0 JS, `$189.999 ARS` / `$12.259 ARS`, AfterBow, Founder CV, `"CREÁ TU SISTEMA BOW"`) + alineación Google Sheets a Columna B (`B11:S1000`), slugs correlativos `{id}-{nombre}-{apellido}-{rubro}.md`, motor TTL de 7 días y skills `edit-client-site`, `lead-lifecycle` y `flow-advisor`.
-- [2026-10-21] Purga integral de prospectos y demos en `clients/`, `sites/` y `dist-previews/` (dejando solo `_ficha-template.md`). Fijado el principio de inmutabilidad de templates por versión (`template_version`) desacoplado de mejoras de templates base, arquitectura de previews directa en `preview.nexobow.site/{slug}` y plan senior de orquestación end-to-end con branding y copy dinámico.
-- [2026-10-21] Implementación TDD de `spec.md`: `build-client-site.mjs` con bloqueo `.template-lock.json` (`template_version: "nutricionista@1.0.0"`, flag `--upgrade-template`), `generate-client-fiche.mjs` con matriz rotativa de 4 ángulos de dolor Hormozi (`HORMOZI_PAIN_ANGLES`) y branding contextual (`selectContextualBranding`), `sheets-sync.mjs` con `getNextSheetId` + `createSheetsAdapter` sobre `preview.nexobow.site/{slug}`, aislamiento de `cacheDir` en Astro para builds concurrentes y suite completa `npm test` (26/26 pasando).
-
+- [2026-10-21] Purga integral de prospectos y demos en `clients/`, `sites/` y `dist-previews/` (dejando solo `_ficha-template.md`). Fijado el principio de inmutabilidad de templates por versión (`template_version`) desacoplado de mejoras de templates base, arquitectura de previews directa en `https://preview.nexobow.site/{slug}/` y plan senior de orquestación end-to-end con branding y copy dinámico.
+- [2026-10-21] Cierre de Tickets `07`–`15` (`.scratch/nexobow-v2/issues/`): dominio unificado `https://preview.nexobow.site/{slug}/`, seam `LeadStore` (`defaultLeadStore`, `createInMemoryLeadStore`, `createSheetsAdapter`), escritura automática en Columna G sin tocar Columna L al compilar sitios, versionado por tags git (`template/nutricionista@1.0.0`), auditoría con presupuesto JS (`<= 35 KB` en `/sites/` vs `0 JS` en `web/`), índice en `tickets.md` y backlog REA de 9 templates documentado como pendiente de que el usuario elija las webs de referencia.

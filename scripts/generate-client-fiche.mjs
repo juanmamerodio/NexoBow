@@ -330,12 +330,40 @@ export const CONTEXTUAL_BRANDING_PALETTES = [
   },
 ];
 
+export const RUBRO_BRANDING_MAP = {
+  nutricionista: [CONTEXTUAL_BRANDING_PALETTES[0], CONTEXTUAL_BRANDING_PALETTES[1], CONTEXTUAL_BRANDING_PALETTES[2], CONTEXTUAL_BRANDING_PALETTES[3]],
+  psicologo: [CONTEXTUAL_BRANDING_PALETTES[2], CONTEXTUAL_BRANDING_PALETTES[1], CONTEXTUAL_BRANDING_PALETTES[3], CONTEXTUAL_BRANDING_PALETTES[0]],
+  abogado: [CONTEXTUAL_BRANDING_PALETTES[3], CONTEXTUAL_BRANDING_PALETTES[0], CONTEXTUAL_BRANDING_PALETTES[2], CONTEXTUAL_BRANDING_PALETTES[1]],
+  odontologo: [CONTEXTUAL_BRANDING_PALETTES[3], CONTEXTUAL_BRANDING_PALETTES[1], CONTEXTUAL_BRANDING_PALETTES[0], CONTEXTUAL_BRANDING_PALETTES[2]],
+  kinesiologo: [CONTEXTUAL_BRANDING_PALETTES[1], CONTEXTUAL_BRANDING_PALETTES[3], CONTEXTUAL_BRANDING_PALETTES[0], CONTEXTUAL_BRANDING_PALETTES[2]],
+  estetica: [CONTEXTUAL_BRANDING_PALETTES[2], CONTEXTUAL_BRANDING_PALETTES[0], CONTEXTUAL_BRANDING_PALETTES[1], CONTEXTUAL_BRANDING_PALETTES[3]],
+};
+
+function normalizeRubroKey(raw = "") {
+  const clean = String(raw || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+  if (clean.includes("psic")) return "psicologo";
+  if (clean.includes("abog") || clean.includes("jurid")) return "abogado";
+  if (clean.includes("odont") || clean.includes("dent")) return "odontologo";
+  if (clean.includes("kines") || clean.includes("fisio")) return "kinesiologo";
+  if (clean.includes("estet") || clean.includes("derma")) return "estetica";
+  if (clean.includes("nutri")) return "nutricionista";
+  const slugified = clean.replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
+  return slugified || "nutricionista";
+}
+
 function resolveDeterministicIndex(lead = {}, length = 4) {
-  const numericSeed = Number(lead.sheet_id ?? lead.sheetId ?? lead.id);
+  const slugStr = String(lead.slug || "");
+  const slugMatch = slugStr.match(/^(\d+)-/);
+  const numericSeed = Number(
+    lead.sheet_id ?? lead.sheetId ?? lead.id ?? (slugMatch ? slugMatch[1] : NaN)
+  );
   const baseIdx =
     Number.isFinite(numericSeed) && numericSeed > 0
       ? numericSeed - 1
-      : hashSeed(lead.slug || lead.nombre || "default");
+      : hashSeed(slugStr || lead.nombre || "default");
   return ((baseIdx % length) + length) % length;
 }
 
@@ -351,16 +379,19 @@ export function selectCopyAngle(lead = {}) {
 }
 
 export function selectContextualBranding(lead = {}) {
-  const verticalClean = String(lead.rubro || lead.nicho || "nutricionista").toLowerCase();
-  const verticalOffset = verticalClean.includes("nutri") ? 0 : hashSeed(verticalClean) % CONTEXTUAL_BRANDING_PALETTES.length;
-  const baseIdx = resolveDeterministicIndex(lead, CONTEXTUAL_BRANDING_PALETTES.length);
-  const idx = (baseIdx + verticalOffset) % CONTEXTUAL_BRANDING_PALETTES.length;
-  const chosen = CONTEXTUAL_BRANDING_PALETTES[idx];
+  const rubroKey = normalizeRubroKey(lead.rubro || lead.nicho || lead.query || lead.slug || "nutricionista");
+  const palettes = RUBRO_BRANDING_MAP[rubroKey] || CONTEXTUAL_BRANDING_PALETTES;
+  const baseIdx = resolveDeterministicIndex(lead, palettes.length);
   const highReputation = Number(lead.rating) >= 4.8 && Number(lead.userRatingCount) >= 50;
+  const reputationShift = highReputation ? 1 : 0;
+  const idx = (baseIdx + reputationShift) % palettes.length;
+  const chosen = palettes[idx];
   const defaultOrder = highReputation
     ? ["Hero", "Reviews", "Problem", "Steps", "CaseStudy", "Pricing"]
     : ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"];
   return {
+    rubro: rubroKey,
+    paletteName: chosen.name,
     primary: lead.tema?.primary || chosen.primary,
     accent: lead.tema?.accent || chosen.accent,
     fondo: lead.tema?.fondo || chosen.fondo,
@@ -407,7 +438,7 @@ async function main() {
   const lastActivityAt = rawData.last_activity_at || createdAt;
   const expiresAt = rawData.expires_at || addDaysToIsoDate(lastActivityAt, 7);
   const leadStatus = rawData.lead_status || "1. Prospecto Identificado";
-  const vertical = rawData.rubro || "nutricionista";
+  const vertical = normalizeRubroKey(rawData.rubro || rawData.nicho || rawData.query || slug);
   const templateVersion = rawData.template_version || `${vertical}@1.0.0`;
 
   // Fallback inteligente para agendamiento: si no tiene Calendly, apuntar el CTA a WhatsApp con mensaje predeterminado
@@ -431,7 +462,7 @@ async function main() {
     copy = selectCopyAngle({ ...rawData, sheet_id: sheetId, slug });
   }
 
-  const branding = selectContextualBranding({ ...rawData, sheet_id: sheetId, slug });
+  const branding = selectContextualBranding({ ...rawData, rubro: vertical, sheet_id: sheetId, slug });
 
   // Reseñas oficiales atribuidas a Google Maps
   const reviewsMarkdown = (rawData.reviews && rawData.reviews.length > 0)
@@ -461,7 +492,7 @@ template_version: "${templateVersion}"
 nombre: "${rawData.nombre}"
 slug: "${slug}"
 estado: prospecto
-subdominio: "preview.${rootDomain}/${slug}"
+subdominio: "preview.${rootDomain}/${slug}/"
 whatsapp: "${cleanPhone || "5491100000000"}"
 calendly: "${calendlyUrl}"
 google_maps: "${rawData.website || "https://maps.google.com/?cid=gmp-" + (rawData.placeId || slug)}"

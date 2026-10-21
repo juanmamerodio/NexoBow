@@ -9,16 +9,30 @@ import { existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  fetchExistingSheetKeys,
-  fetchSheetRows,
-  getNextSheetId,
+  defaultLeadStore,
   filterEligiblePlaces,
   formatLeadToSheetRow,
-  appendRowToSheet,
   buildCorrelativeSlug,
-  DEFAULT_SPREADSHEET_ID,
-  DEFAULT_SHEET_TAB
+  DEFAULT_SPREADSHEET_ID
 } from './sheets-sync.mjs';
+
+export function resolveRubroFromLead(nichoOrQuery = '') {
+  const clean = String(nichoOrQuery || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+  if (clean.includes('psic')) return 'psicologo';
+  if (clean.includes('abog') || clean.includes('jurid')) return 'abogado';
+  if (clean.includes('odont') || clean.includes('dent')) return 'odontologo';
+  if (clean.includes('kines') || clean.includes('fisio')) return 'kinesiologo';
+  if (clean.includes('estet') || clean.includes('derma')) return 'estetica';
+  if (clean.includes('vet')) return 'veterinaria';
+  if (clean.includes('conta')) return 'contador';
+  if (clean.includes('arqu')) return 'arquitecto';
+  if (clean.includes('nutri')) return 'nutricionista';
+  const slugified = clean.replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+  return slugified && slugified !== 'servicios-profesionales' ? slugified : 'nutricionista';
+}
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -198,7 +212,14 @@ async function main() {
 
   // 1. Obtener prospectos existentes en el Google Sheet para deduplicación
   console.log(`\n1. Verificando prospectos existentes en Google Sheet (${DEFAULT_SPREADSHEET_ID})...`);
-  const existingKeys = fetchExistingSheetKeys();
+  const existingRows = defaultLeadStore.readRows();
+  const existingKeys = existingRows
+    .filter((r) => Array.isArray(r) && r.length >= 2)
+    .map((r) => ({
+      id: r[0] || '',
+      nombre: r[1] || '',
+      telefono: r[17] || ''
+    }));
   console.log(`✓ ${existingKeys.length} registros existentes identificados para deduplicación.`);
 
   // 2. Extraer prospectos candidatos
@@ -226,33 +247,40 @@ async function main() {
 
   console.log(`\n3. Prospectos elegibles filtrados (sin web y sin duplicar): ${eligibleLeads.length}`);
 
-  // 4. Formatear e insertar en Google Sheets leyendo el último ID real en Columna B
-  const existingRows = fetchSheetRows();
-  const startIndex = getNextSheetId(existingRows);
+  // 4. Formatear e insertar en Google Sheets mediante defaultLeadStore
+  const startIndex = defaultLeadStore.getNextId();
   const addedLeads = [];
+  const leadRubro = resolveRubroFromLead(flags.rubro || nicho || query);
 
   for (let i = 0; i < eligibleLeads.length; i++) {
     const item = eligibleLeads[i];
-    const rowId = startIndex + i;
-    const itemSlug = buildCorrelativeSlug({
+    let rowId = startIndex + i;
+    let itemSlug = buildCorrelativeSlug({
       id: rowId,
       displayName: item.displayName,
       nicho
     });
-    const leadFormatted = {
+    let leadFormatted = {
       ...item,
       nicho,
+      rubro: leadRubro,
       slug: itemSlug
     };
 
-    const row = formatLeadToSheetRow(leadFormatted, rowId, flags.pitch || null);
+    let row = formatLeadToSheetRow(leadFormatted, rowId, flags.pitch || null);
 
     if (dryRun) {
       console.log(`[DRY-RUN] Fila preparada para ${leadFormatted.displayName}`);
     } else {
       console.log(`Guardando en Google Sheets: ${leadFormatted.displayName}...`);
       try {
-        appendRowToSheet(row);
+        const appended = defaultLeadStore.appendLead(leadFormatted, {
+          pitchOverride: flags.pitch || null,
+          expectedId: rowId
+        });
+        rowId = appended.id;
+        itemSlug = appended.slug;
+        row = appended.row;
       } catch (err) {
         console.error(`Error al insertar fila para ${leadFormatted.displayName}: ${err.message}`);
       }
@@ -272,7 +300,7 @@ async function main() {
           slug: itemSlug,
           sheetId: rowId,
           nombre: item.displayName,
-          rubro: 'nutricionista',
+          rubro: leadRubro,
           direccion: item.formattedAddress,
           telefono: item.nationalPhoneNumber,
           rating: item.rating || 5,

@@ -10,7 +10,7 @@ import { readdirSync, readFileSync, writeFileSync, existsSync, rmSync } from 'no
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parse as parseYaml } from 'yaml';
-import { fetchSheetRows, normalizePhone } from './sheets-sync.mjs';
+import { defaultLeadStore, buildPreviewUrl, normalizePhone } from './sheets-sync.mjs';
 import { addDaysToIsoDate } from './generate-client-fiche.mjs';
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -41,8 +41,7 @@ export function diffDays(fromIso, toIso) {
 
 export function buildUrgencyWhatsAppLink({ nombre = 'Profesional', whatsapp = '', slug = '' } = {}) {
   const digits = normalizePhone(whatsapp).replace(/\+/g, '');
-  const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || 'nexobow.site';
-  const demoUrl = slug ? `https://preview.${rootDomain}/${slug}` : 'tu demo personalizada';
+  const demoUrl = slug ? buildPreviewUrl(slug) : 'tu demo personalizada';
   const msg = `Hola ${nombre}! Te escribo cortito para avisarte que en 48 hs nuestro sistema da de baja automática la demo que armé para tu consultorio (${demoUrl}) para liberar espacio en el servidor. Si querés que la mantengamos activa con los 3 bonos bonificados, avisame por acá.`;
   return digits ? `https://wa.me/${digits}?text=${encodeURIComponent(msg)}` : '';
 }
@@ -57,7 +56,7 @@ export function evaluateLeadLifecycle({ clients = [], sheetRows = [], today = ne
   for (const row of sheetRows) {
     if (!Array.isArray(row) || row.length === 0) continue;
     const rowId = Number(row[0]);
-    const demoUrl = String(row[5] || '');
+    const demoUrl = String(row[5] || '').replace(/\/+$/, '');
     const leadStatus = String(row[8] || '').trim();
     const businessStatus = String(row[15] || '').trim();
     const effectiveStatus =
@@ -236,7 +235,7 @@ async function main() {
 
   console.log(`\n\x1b[36m⏱️  NexoBow — Motor de Ciclo de Vida & Expiración 7 Días (${today})\x1b[0m`);
   const clients = loadLocalClients();
-  const sheetRows = fetchSheetRows();
+  const sheetRows = defaultLeadStore.readRows();
 
   const report = evaluateLeadLifecycle({ clients, sheetRows, today });
 

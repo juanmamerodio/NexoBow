@@ -7,6 +7,7 @@ import { join, dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { spawnSync } from "node:child_process";
 import { parse as parseYaml } from "yaml";
+import { defaultLeadStore, buildPreviewUrl } from "./sheets-sync.mjs";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -36,6 +37,42 @@ export function resolveTemplateVersion(fm = {}, templatePkgVersion = "1.0.0") {
     return String(fm.template_version).trim();
   }
   return `${rubro}@${templatePkgVersion}`;
+}
+
+export function verifyTemplateTagExists(requestedVersion, repoRoot = REPO_ROOT) {
+  const tagName = `template/${requestedVersion}`;
+  const res = spawnSync("git", ["rev-parse", "-q", "--verify", `refs/tags/${tagName}`], {
+    cwd: repoRoot,
+    encoding: "utf8",
+  });
+  return res.status === 0;
+}
+
+export function syncBuildPreviewUrlToStore({ fm = {}, slug, leadStore = defaultLeadStore } = {}) {
+  const targetSlug = slug || fm.slug;
+  const previewUrl = buildPreviewUrl(targetSlug);
+  try {
+    const res = leadStore.updatePreviewUrl({
+      sheetId: fm.sheet_id,
+      slug: targetSlug,
+      previewUrl,
+    });
+    if (!res.updated && res.reason === "not-found") {
+      console.warn(
+        `\x1b[33m[build-site AVISO]\x1b[0m El lead '${targetSlug}' (sheet_id: ${fm.sheet_id ?? "N/A"}) no figura en Google Sheets. Se omite escritura en Columna G.`
+      );
+    } else if (res.updated) {
+      console.log(
+        `\x1b[32m[build-site] ✓\x1b[0m Columna G actualizada en Google Sheets (${res.cell}): ${previewUrl}`
+      );
+    }
+    return res;
+  } catch (err) {
+    console.warn(
+      `\x1b[33m[build-site AVISO]\x1b[0m No se pudo sincronizar URL de preview en Google Sheets: ${err.message}`
+    );
+    return { updated: false, reason: "error", error: err.message, previewUrl };
+  }
 }
 
 export function shouldRecloneTemplate({
@@ -196,6 +233,12 @@ function main() {
   const requestedVersion = upgradeRequested
     ? latestVersionString
     : resolveTemplateVersion(fm, templatePkgVersion);
+
+  if (!verifyTemplateTagExists(requestedVersion)) {
+    fail(
+      `La versión de template solicitada '${requestedVersion}' no existe (tag git esperado: template/${requestedVersion}).`
+    );
+  }
 
   if (upgradeRequested && fm.template_version !== requestedVersion) {
     updateFicheTemplateVersion(fichePath, requestedVersion);
@@ -409,6 +452,9 @@ function main() {
   } catch (err) {
     console.warn(`[build-site] Advertencia al sincronizar con dist-previews: ${err.message}`);
   }
+
+  // Sincronizar URL de preview en Columna G de Google Sheets mediante LeadStore
+  syncBuildPreviewUrlToStore({ fm, slug });
 
   console.log(`
 \x1b[32m=======================================================

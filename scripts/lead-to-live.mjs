@@ -106,14 +106,16 @@ async function main() {
   if (!shouldDeploy) deployArgs.push("--dry-run");
   runStep("5. Deploy Cloudflare Pages", "node", deployArgs);
 
+  const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site";
+  const previewUrl = `https://preview.${rootDomain}/${slug}/`;
   console.log(`
 \x1b[32m=======================================================
 🎉 PIPELINE LEAD-TO-LIVE COMPLETADO CON ÉXITO
 =======================================================\x1b[0m
-- Cliente: \x1b[1m${slug}\x1b[0m
+- Prestador: \x1b[1m${slug}\x1b[0m
 - Ficha: clients/${slug}.md
-- Landing: sites/${slug}/dist/ (0 JS en cliente)
-- URL: ${shouldDeploy ? `https://${slug}.pages.dev` : `https://${slug}.pages.dev (Modo Dry-Run listo para deploy)`}
+- Landing: sites/${slug}/dist/
+- URL: ${shouldDeploy ? previewUrl : `${previewUrl} (Modo Dry-Run listo para deploy)`}
 - Estado del embudo: 100% operativo y listo para prospección.
 `);
 }

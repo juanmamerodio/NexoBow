@@ -9,7 +9,7 @@ rubro: nutricionista
 nombre: ""
 slug: ""                # ej: 22-alejandra-martinez-nutri (correlativo con Col B de Google Sheets)
 estado: prospecto       # prospecto | onboarding | en-construccion | publicado | prueba | activo
-subdominio: ""          # ej: 22-alejandra-martinez-nutri.nexobow.com
+subdominio: ""          # ej: preview.nexobow.site/22-alejandra-martinez-nutri/
 whatsapp: ""            # formato internacional, ej: 5491112345678
 calendly: ""            # link del evento "Consultoría gratuita"
 google_maps: ""         # URL de la ficha

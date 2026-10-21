@@ -2,13 +2,13 @@
 
 ## 📌 Misión y Arquitectura Core
 Repositorio central de **NexoBow**: fábrica automatizada de embudos de venta y agendamiento para profesionales de servicios (nutricionistas, psicólogos, abogados, clínicas). Transformamos tráfico de WhatsApp, Instagram y Maps en consultorías agendadas mediante landings estáticas de carga instantánea (`<0.8s`).
-- **Stack:** Astro (SSG estricto, 0 JS ejecutable en cliente) + Tailwind CSS.
-- **Integraciones:** Calendly / Google Calendar, Google Sheets (`'Prospección NexoBow'!B11:S1000`, Col B = ID), Alianza Audiovisual con [**AfterBow**](https://www.afterbow.com).
+- **Stack:** Astro + Tailwind CSS (`web/` mantiene SSG estricto con 0 JS ejecutable en cliente como benchmark; `/templates/` y `/sites/` usan arquitectura PREMIUM con presupuesto de JS propio `<= 35 KB` y cero scripts externos no declarados).
+- **Integraciones:** Calendly / Google Calendar, Google Sheets (`'Prospección NexoBow'!B11:S1000`, Col B = ID, Col G = `Web Demo URL` vía `LeadStore`), Alianza Audiovisual con [**AfterBow**](https://www.afterbow.com).
 - **Contratos del Sistema:** Leé `/brain.md` (conciencia técnica), `/memory.md` (estado del proyecto y errores documentados) y `/spec.md` (contrato maestro) **antes** de planificar o tocar código. Para términos de negocio, consultá `/GLOSSARY.md`. **IMPORTANTE:** `web/` = página de NexoBow (paleta **Soft-Obsidian**: `#040607`, `#0B0D12`, `#5B2A62`, `#4928C2`, `#BF40FA`, `#E3D9FC`), `/templates/` + `/sites/` = landings de prestadores (+10 direcciones estéticas exclusivas por REA). Identidades visuales TOTALMENTE distintas (ver `memory.md` → `ERROR-001`).
 
 ## 💻 Comandos de Ejecución y Verificación
 - **Suite de Tests Completa:** `npm test` (`node --test tests/*.test.mjs`)
-- **Build & Typecheck (`web/` o `/sites/{slug}`):** `npm run build` (Obligatorio ejecutar al finalizar cambios para verificar 0 errores de compilación y 0 `<script>` en Astro).
+- **Build & Typecheck (`web/` o `/sites/{slug}`):** `npm run build` (Obligatorio ejecutar al finalizar cambios para verificar 0 errores de compilación, 0 `<script>` en `web/` y presupuesto JS en `/sites/{slug}`).
 - **Ciclo de Vida 7 Días & Mejora Continua:** `npm run lead-lifecycle` y `npm run continuous-improvement`.
 - **GitHub:** Utilizar git y pushear todo a producción (menos cuando se indique lo contrario).
 
@@ -40,12 +40,12 @@ Repositorio central de **NexoBow**: fábrica automatizada de embudos de venta y 
 - **`standard`**: **[GATE OBLIGATORIO DE CALIDAD VISUAL & 3D]** Define el estándar **Soft-Obsidian** (`#040607`, `#5B2A62`, `#4928C2`, `#BF40FA`, `#E3D9FC`) para `web/`: logo Outfit Bold (`Nexo` en `#F8F6FF` y `Bow` en `#BF40FA`), escena 3D CSS del embudo, interactividad 0-JS y respeto a `prefers-reduced-motion`.
 - **`scout-lead`**: Prospección in-conversation con Google Maps Platform / Serper Dev, filtrado de profesionales sin sitio web propio, deduplicación contra Google Sheets (`'Prospección NexoBow'!B11:S1000`) e inserción desde Columna B con slug correlativo `{id}-{nombre}-{apellido}-{rubro}`.
 - **`generate-client-fiche`**: Genera `/clients/{slug}.md` con copywriting en voseo argentino, dolores Hormozi, metadatos TTL de 7 días (`sheet_id`, `expires_at`), fallback a WhatsApp y cumplimiento Ley 25.326.
-- **`build-client-site`**: Clona `/templates/{rubro}/` hacia `/sites/`, inyecta assets locales y el contenido/tema de `/clients/{slug}.md` y verifica el build.
+- **`build-client-site`**: Clona `/templates/{rubro}/` hacia `/sites/` verificando tag git `template/{rubro}@x.y.z`, inyecta assets locales y el contenido/tema de `/clients/{slug}.md`, verifica el build y registra `https://preview.nexobow.site/{slug}/` en Columna G vía `LeadStore`.
 - **`edit-client-site`** (`/editar-web-cliente`): Modifica en 1 comando la ficha de un cliente en `/clients/`, recompila con `build-client-site` y audita con `audit-code`.
 - **`lead-lifecycle`** (`/seguimiento-leads`): Sincroniza estados con Google Sheets, renueva leads activos (+7d), genera alertas de urgencia en días 5–6 (<48hs) y purga demos vencidas (`>=7d` o `"Descartado"`), además de correr el motor de Mejora Continua (`continuous-improvement.mjs`).
 - **`flow-advisor`** (`/next-step` / `/ask-matt`): Unifica el flujo SDD de Matt Pocock (`prompts_structure.md`), `audit-code` y las métricas de Google Sheets para recomendar el siguiente paso exacto.
-- **`audit-code`**: Ejecutar **siempre en un sub-agente con sesión limpia** tras construir o actualizar un sitio. Audita performance en Astro, accesibilidad, contraste de CTAs y 0 JS en cliente.
-- **`deploy-cloudflare`**: Publica el sitio en Cloudflare Pages usando Wrangler CLI y configura subdominio `*.nexobow.com`.
+- **`audit-code`**: Ejecutar **siempre en un sub-agente con sesión limpia** tras construir o actualizar un sitio. Audita performance en Astro, accesibilidad, contraste de CTAs, 0 JS estricto en `web/` y presupuesto de JS propio (`<= 35 KB` sin terceros no declarados) en `/sites/`.
+- **`deploy-cloudflare`**: Publica el sitio en Cloudflare Pages usando Wrangler CLI bajo el dominio unificado `https://preview.nexobow.site/{slug}/`.
 - **`lead-to-live`**: Orquestador maestro end-to-end: ejecuta `scout-lead` → `generate-client-fiche` → `build-client-site` → `audit-code` → `deploy-cloudflare`.
 
 ## 🔄 Ciclo de Desarrollo Agéntico & Tracking de Estado (Main Flow)
@@ -54,7 +54,7 @@ Para cualquier tarea de diseño, refactor o feature en el repo, el agente debe s
 2. **Fase 2: `/to-spec` (Especificación)** — Colapsar respuestas en criterios de aceptación y arquitectura de componentes.
 3. **Fase 3: `/to-tickets` (Descomposición)** — Dividir el spec en tajadas verticales atómicas con dependencias claras.
 4. **Fase 4: `/implement` (TDD & Build)** — Construcción componente por componente con verificación `npm run build`.
-5. **Fase 5: `/code-review` o `/audit-code` (Auditoría)** — Revisión de estándares (0 JS, a11y, identidad) y fidelidad al spec.
+5. **Fase 5: `/code-review` o `/audit-code` (Auditoría)** — Revisión de estándares (0 JS en `web/`, presupuesto JS en `/sites/`, a11y, identidad) y fidelidad al spec.
 *El agente debe declarar en su respuesta la fase activa actual (ej: `[FASE ACTUAL: 4. IMPLEMENT]`) y guiar al usuario hacia el siguiente prompt de forma automática.*
 
 ## 🧠 Aprendizaje Aplicado (Self-Evolving Log)

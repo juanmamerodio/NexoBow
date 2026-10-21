@@ -62,7 +62,8 @@ async function main() {
 
   const token = process.env.CLOUDFLARE_API_TOKEN;
   const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
-  const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.com";
+  const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site";
+  const unifiedPreviewUrl = `https://preview.${rootDomain}/${slug}/`;
 
   if (!isDryRun && (!token || !accountId)) {
     console.error(`\x1b[31m[deploy-cf ERROR]\x1b[0m Faltan CLOUDFLARE_API_TOKEN o CLOUDFLARE_ACCOUNT_ID en .env.`);
@@ -73,12 +74,9 @@ async function main() {
 
   if (isDryRun) {
     console.log(`\x1b[33m[deploy-cf DRY-RUN]\x1b[0m Modo de simulación activo.`);
-    console.log(`- Proyecto: ${slug}`);
+    console.log(`- Proyecto: nexobow-previews (${slug})`);
     console.log(`- Carpeta a publicar: ${distDir}`);
-    console.log(`- URL esperada: https://${slug}.pages.dev`);
-    if (rootDomain && rootDomain !== "-") {
-      console.log(`- Subdominio esperado: https://${slug}.${rootDomain}`);
-    }
+    console.log(`- URL Oficial Preview: ${unifiedPreviewUrl}`);
     console.log(`\x1b[32m[deploy-cf ✓]\x1b[0m Verificación dry-run exitosa.`);
     process.exit(0);
   }
@@ -120,7 +118,7 @@ async function main() {
   }
 
   // Despliegue automático al proyecto unificado de previews
-  console.log(`[deploy-cf] Actualizando proyecto unificado 'nexobow-previews' en https://preview.${rootDomain}...`);
+  console.log(`[deploy-cf] Actualizando proyecto unificado 'nexobow-previews' en ${unifiedPreviewUrl}...`);
   spawnSync(
     "npx",
     ["wrangler", "pages", "deploy", join(REPO_ROOT, "dist-previews"), "--project-name", "nexobow-previews", "--commit-dirty=true"],
@@ -136,15 +134,12 @@ async function main() {
     }
   );
 
-  const publicUrl = `https://${slug}.pages.dev`;
-  const unifiedPreviewUrl = `https://preview.${rootDomain}/${slug}/`;
   console.log(`
 \x1b[32m=======================================================
 ✓ DESPLIEGUE EXITOSO EN CLOUDFLARE PAGES
 =======================================================\x1b[0m
-- Cliente: \x1b[1m${slug}\x1b[0m
-- URL Directa Pages: \x1b[36m${publicUrl}\x1b[0m
-- URL Unificada NexoBow: \x1b[32m${unifiedPreviewUrl}\x1b[0m
+- Prestador: \x1b[1m${slug}\x1b[0m
+- URL Oficial Preview: \x1b[32m${unifiedPreviewUrl}\x1b[0m
 - Estado: Publicado en red global edge con SSL automático
 `);
 }

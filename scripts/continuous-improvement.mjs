@@ -6,26 +6,13 @@
  * para calcular tasas de respuesta, conversión a reuniones por nicho y recomendaciones de pitch.
  */
 
-import { execSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import {
-  fetchSheetRows,
-  DEFAULT_SPREADSHEET_ID,
-  DEFAULT_SHEET_TAB
+  defaultLeadStore,
+  fetchSheetKpiBlock
 } from './sheets-sync.mjs';
 
-export function fetchSheetKpiBlock(spreadsheetId = DEFAULT_SPREADSHEET_ID, tab = DEFAULT_SHEET_TAB) {
-  try {
-    const stdout = execSync(`gsheets readonly read "${spreadsheetId}" "'${tab}'!A1:S10" --json`, {
-      encoding: 'utf-8',
-      stdio: ['ignore', 'pipe', 'ignore']
-    });
-    const parsed = JSON.parse(stdout);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
+export { fetchSheetKpiBlock };
 
 /**
  * Calcula métricas de embudo comercial y recomendaciones a partir de las filas B11:S1000.
@@ -150,8 +137,8 @@ export function computeSheetMetricsSummary({ rows = [], kpiRows = [] } = {}) {
 
 async function main() {
   console.log(`\n\x1b[36m📈 NexoBow — Motor de Mejora Continua (Google Sheets Analytics)\x1b[0m`);
-  const kpiRows = fetchSheetKpiBlock();
-  const rows = fetchSheetRows();
+  const kpiRows = defaultLeadStore.readKpiRows();
+  const rows = defaultLeadStore.readRows();
   const summary = computeSheetMetricsSummary({ rows, kpiRows });
 
   console.log(`- Total Prospectos (Col B11:S1000): ${summary.totalLeads}`);

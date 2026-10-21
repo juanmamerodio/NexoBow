@@ -1,4 +1,4 @@
-// scripts/deploy-previews.mjs — NexoBow: despliegue unificado de subrutas a Cloudflare Pages (preview.nexobow.com)
+// scripts/deploy-previews.mjs — NexoBow: despliegue unificado de subrutas a Cloudflare Pages (preview.nexobow.site)
 // Uso: node scripts/deploy-previews.mjs [--dry-run]
 // Códigos de salida: 0 = ok · 1 = fallo técnico · 2 = parámetros o credenciales insuficientes
 
@@ -56,7 +56,7 @@ async function main() {
     console.log(`- Directorio raíz: ${distPreviewsDir}`);
     console.log(`- Subrutas listas: ${entries.join(", ") || "(ninguna)"}`);
     console.log(`- Dominio unificado: https://${customDomain}`);
-    console.log(`- URL ejemplo: https://${customDomain}/${entries[0] || "slug-demo"}`);
+    console.log(`- URL ejemplo: https://${customDomain}/${entries[0] || "slug-demo"}/`);
     console.log(`\x1b[32m[deploy-previews ✓]\x1b[0m Verificación dry-run exitosa.`);
     process.exit(0);
   }

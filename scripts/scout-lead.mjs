@@ -45,14 +45,30 @@ function slugify(text) {
     .replace(/(^-|-$)+/g, "");
 }
 
-function getMockLead(query, slug) {
+function inferRubroFromInput(raw = "") {
+  const clean = String(raw || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+  if (clean.includes("psic")) return "psicologo";
+  if (clean.includes("abog") || clean.includes("jurid")) return "abogado";
+  if (clean.includes("odont") || clean.includes("dent")) return "odontologo";
+  if (clean.includes("kines") || clean.includes("fisio")) return "kinesiologo";
+  if (clean.includes("estet") || clean.includes("derma")) return "estetica";
+  if (clean.includes("vet")) return "veterinaria";
+  if (clean.includes("conta")) return "contador";
+  if (clean.includes("arqu")) return "arquitecto";
+  return "nutricionista";
+}
+
+function getMockLead(query, slug, rubro = "nutricionista") {
   return {
     source: "mock",
     query: query || "Lic. Camila Valenzuela - Nutrición & Salud Integral",
     slug: slug || "demo-nutri-camila",
     placeId: "places/ChIJN1t_tDeuEmsRUsoyG83frY4",
     nombre: "Lic. Camila Valenzuela",
-    rubro: "nutricionista",
+    rubro,
     especialidad: "Nutrición Clínica y Composición Corporal",
     direccion: "Av. Corrientes 1234, CABA, Buenos Aires",
     telefono: "5491133445566",
@@ -206,13 +222,14 @@ async function main() {
   mkdirSync(assetsDir, { recursive: true });
 
   let leadData = null;
+  const resolvedRubro = flags.rubro || inferRubroFromInput(flags.nicho || query);
 
   if (isMock || (!apiKey && !serperKey)) {
     if (!isMock && !apiKey && !serperKey) {
       console.warn(`\x1b[33m[scout-lead AVISO]\x1b[0m No se encontró SERPER_API_KEY ni GOOGLE_MAPS_API_KEY en .env.`);
       console.warn(`[scout-lead] Generando extracción de demostración / mock basada en la consulta.`);
     }
-    leadData = getMockLead(query, targetSlug);
+    leadData = getMockLead(query, targetSlug, resolvedRubro);
   } else {
     console.log(`\x1b[36m[scout-lead]\x1b[0m Consultando API para: "${query}"...`);
     let place = null;
@@ -233,7 +250,7 @@ async function main() {
       slug: targetSlug,
       placeId: place.id,
       nombre: place.displayName?.text || query,
-      rubro: "nutricionista",
+      rubro: resolvedRubro,
       direccion: place.formattedAddress || "",
       telefono: cleanPhone,
       telefonoFormato: place.internationalPhoneNumber || place.nationalPhoneNumber || cleanPhone,
