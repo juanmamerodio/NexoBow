@@ -91,8 +91,19 @@ function runCmd(cmd, args, cwd) {
 }
 
 // --- Main ---
-const [, , fichaArg] = process.argv;
-if (!fichaArg) fail("Falta la ruta de la ficha: npm run build-site <ruta-a-ficha.md>");
+const args = process.argv.slice(2);
+let fichaArg = null;
+let baseArg = null;
+for (let i = 0; i < args.length; i++) {
+  if (args[i] === "--base" && args[i + 1]) {
+    baseArg = args[i + 1];
+    i++;
+  } else if (!args[i].startsWith("--") && !fichaArg) {
+    fichaArg = args[i];
+  }
+}
+
+if (!fichaArg) fail("Falta la ruta de la ficha: npm run build-site <ruta-a-ficha.md> [--base /slug/]");
 
 const fichaPath = resolve(process.cwd(), fichaArg);
 if (!existsSync(fichaPath)) fail(`Ficha no encontrada: ${fichaPath}`);
@@ -262,8 +273,13 @@ const testCode = runCmd("npm", ["test"], siteDir);
 if (testCode !== 0) fail("Los tests unitarios fallaron en el clon.");
 
 // Compilar sitio estático
-console.log(`\x1b[36m[build-site]\x1b[0m Compilando Astro SSG en sites/${slug}...`);
-const buildCode = runCmd("npm", ["run", "build"], siteDir);
+const effectiveBase = baseArg || `/${slug}/`;
+console.log(`\x1b[36m[build-site]\x1b[0m Compilando Astro SSG en sites/${slug} (base: ${effectiveBase})...`);
+const buildArgs = ["run", "build"];
+if (effectiveBase && effectiveBase !== "/") {
+  buildArgs.push("--", "--base", effectiveBase);
+}
+const buildCode = runCmd("npm", buildArgs, siteDir);
 if (buildCode !== 0) fail(`Fallo en npm run build (código ${buildCode}).`);
 
 const distPath = join(siteDir, "dist");
