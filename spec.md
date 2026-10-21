@@ -210,62 +210,65 @@ Se definen **2 seams de alto nivel** para pruebas deterministas con `node:test`:
 
 ## Implementation Decisions
 
-1. **Paleta y Tokens CSS en `web/src/styles/global.css`**:
-   - Actualizar `@theme` con los nuevos colores oficiales:
-     * `--color-ink: #040607`
-     * `--color-ink-surface: #0B0D12`
-     * `--color-cream: #F8F6FF`
-     * `--color-periwinkle: #E3D9FC`
-     * `--color-accent: #BF40FA`
-     * `--color-accent-hover: #A82EE3`
-     * `--color-ultrasonic: #4928C2`
-     * `--color-velvet: #5B2A62`
-   - Actualizar `Layout.astro` para que los glows atmosféricos usen `#5B2A62` y `#4928C2` en baja opacidad (`10%–18%`), logrando un look minimalista, limpio y ejecutivo.
-   - Actualizar `.agents/skills/standard/SKILL.md` para reflejar la nueva paleta Soft-Obsidian como estándar oficial de la marca NexoBow.
+1. **Previews Unificadas y Dominio Oficial (`https://preview.nexobow.site/{slug}`)**:
+   - Cada sitio de cliente generado a partir de una ficha Markdown (`{id}-{nombre}-{apellido}-{rubro}.md`) compila en `/sites/{slug}/dist/` y se sincroniza atómicamente a `dist-previews/{slug}/`.
+   - La URL pública oficial es estrictamente:
+     `https://preview.nexobow.site/{id}-{nombre}-{apellido}-{rubro}/`
+   - Dicha URL exacta se registra de forma atómica en la **Columna G** (`Web Demo URL`) de Google Sheets al prospectar o compilar.
 
-2. **Configuración Centralizada en `web/src/config.ts`**:
-   - Expandir `SITE` con los precios psicológicos (`setupPrice: "$189.999 ARS"`, `monthlyPrice: "$12.259 ARS"`), URL de WhatsApp comercial, links externos (`afterbowUrl: "https://www.afterbow.com"`, `founderCvUrl: "https://juanmamerodio.github.io/cv"`), planes, bonos y catálogo de 10 estilos de templates.
+2. **Inmutabilidad y Versionado Estricto de Templates (`template_version`)**:
+   - Cada ficha en `/clients/{slug}.md` incorpora obligatoriamente en su Frontmatter YAML:
+     ```yaml
+     template_version: "nutricionista@1.0.0"
+     ```
+   - **Regla de Desacoplamiento Operativo**: Las mejoras, adición de scripts interactivos o refactors en `/templates/` NO modifican las webs de clientes existentes.
+   - Para migrar un cliente a una versión más reciente de un template se requiere ejecutar un comando explícito:
+     ```bash
+     node scripts/build-client-site.mjs clients/{slug}.md --upgrade-template
+     ```
+   - **La versión no es fija**: el operador puede editar `template_version` en la ficha cuando algo no le gusta o no combina y recompilar. Las versiones de cada template se conservan como tags de git (`template/{rubro}@x.y.z`).
 
-3. **Interactividad 100% CSS (0 JS en Cliente)**:
-   - Tanto `InteractiveFunnel.astro` como `RoiCalculator.astro` utilizarán radio inputs ocultos (`class="peer sr-only"`) combinados con selectores hermanos o `:has(:checked)` en CSS para alternar paneles e importes calculados sin enviar un solo byte de JavaScript al navegador.
+3. **Arquitectura Visual PREMIUM en Templates (Apertura Controlada de JS & Micro-interacciones)**:
+   - Se actualiza el principio en `brain.md`: La restricción estricta de *0 JS* aplica como benchmark técnico a la landing de la agencia (`web/`), mientras que los `/templates/` adoptan una arquitectura **PREMIUM** de nivel internacional: micro-animaciones refinadas, transiciones fluidas de agendamiento y componentes responsivos de alta conversión.
 
-4. **Sincronización Google Sheets en `Columna B` y Correlatividad**:
-   - Actualizar `scripts/sheets-sync.mjs`:
-     * Rango por defecto: `'Prospección NexoBow'!B11:S1000`.
-     * Nueva función exportada `buildCorrelativeSlug({ id, displayName, nicho })` que normaliza acentos, extrae nombre y apellido y abrevia el rubro (`nutricionista -> nutri`, `psicologo -> psico`, `abogado -> abogado`, etc.), produciendo `{id}-{nombre}-{apellido}-{rubroCorto}`.
-   - Actualizar `scripts/generate-client-fiche.mjs` para incluir `sheet_id`, `lead_status`, `created_at`, `last_activity_at` y `expires_at` en el frontmatter YAML.
+4. **Motor de Copywriting Multivariante & Branding Contextual**:
+   - En `scripts/generate-client-fiche.mjs`, se reemplaza el copy estático por una **matriz rotativa de 4 ángulos de dolor (Alex Hormozi)**:
+     1. Rutina colapsada y falta de tiempo.
+     2. Frustración y fatiga por dietas restrictivas / efecto rebote.
+     3. Digestión, energía vital y sintomatología clínica.
+     4. Rendimiento físico, composición corporal y vitalidad.
+   - El branding del cliente asigna de manera autónoma paletas de colores y duplas tipográficas acordes a la vertical y reputación extraída de Google Maps.
 
-5. **Gestión de Ciclo de Vida (TTL 7 Días) y Mejora Continua**:
-   - Crear `scripts/lead-lifecycle.mjs` con lógica pura (`evaluateLeadLifecycle`) y comando CLI para:
-     * Detectar cambios de estado entre Google Sheets y `/clients/*.md`.
-     * Emitir alertas de seguimiento (días 5 y 6).
-     * Purgar archivos `.md`, `/sites/{slug}` y `/assets/{slug}` cuando `inactivityDays >= 7` o el estado en el Sheet contenga `"Descartado"` (ignorando `_ficha-template.md` y archivos `demo-*`).
-   - Crear `scripts/continuous-improvement.mjs` para leer y sintetizar métricas del Sheet (`A1:S10` + `B11:S1000`).
+5. **Sincronización Atómica con Google Sheets (`Col B = ID`)**:
+   - `scripts/sheets-sync.mjs` lee y escribe en `'Prospección NexoBow'!B11:S1000`.
+   - Lee el último ID en Columna B para auto-incrementar de forma atómica y calcular el slug correlativo `{id}-{nombre}-{apellido}-{rubro}`.
+   - Escribe en una sola operación la tupla completa de 18 columnas, incluyendo teléfono normalizado, enlace de WhatsApp y URL de preview.
+   - Se diseña la capa de abstracción con adaptadores (seams) para permitir en el futuro una migración transparente a Supabase o Firebase cuando se escalen flujos automáticos en n8n.
 
-6. **Creación de Skills Autónomas en `/.agents/skills/`**:
-   - `.agents/skills/edit-client-site/SKILL.md`: SOP para `/editar-web-cliente`.
-   - `.agents/skills/lead-lifecycle/SKILL.md`: SOP para `/seguimiento-leads` y purga de 7 días + mejora continua.
-   - `.agents/skills/flow-advisor/SKILL.md`: SOP unificador de `/next-step` (`/ask-matt` + `/audit-code`).
+6. **Desarrollo de los 9 Templates Restantes vía REA (Backlog Fase 2)**:
+   - Los templates se desarrollarán en sesiones aisladas (`1 Template = 1 Sesión Limpia`) haciendo ingeniería inversa visual (REA) sobre sitios referentes para asegurar identidad visual única para cada una de las 10 verticales del catálogo oficial.
 
 ---
 
 ## Testing Decisions
 
-- **Criterio de Buen Test**: Evaluar únicamente comportamiento externo observable y contratos de salida (HTML compilado de Astro, tuplas de 18 columnas para Sheets, slugs correlativos generados y decisiones de purga/alerta por fechas), sin acoplarse a detalles internos.
+- **Criterio de Buen Test**: Evaluar únicamente comportamiento externo observable y contratos de salida (HTML compilado de Astro, tuplas de 18 columnas para Sheets, slugs correlativos generados, preservación de `template_version` y purga/alerta por fechas), sin acoplarse a detalles internos.
 - **Módulos bajo Prueba**:
-  1. `tests/web-redesign.test.mjs`: Verifica que `npm run build` en `web/` compile con código 0, que `web/dist/index.html` contenga las 12 secciones, los precios `$189.999 ARS` y `$12.259 ARS`, los links a `afterbow.com` y `juanmamerodio.github.io/cv`, el apartado `"CREÁ TU SISTEMA BOW"`, la política de 7 días y **0 tags `<script>`**.
-  2. `tests/sheets-sync.test.mjs`: Verifica el rango en Columna B (`B11:S1000`), el formateo de 18 columnas y la generación de slugs correlativos `{id}-{nombre}-{apellido}-{rubro}` (ej. `22-alejandra-martinez-nutri`).
-  3. `tests/lead-lifecycle.test.mjs`: Verifica el motor de expiración de 7 días (renovación al cambiar de estado, alerta en día 5-6, purga en día >=7 o estado `"Descartado"`, y protección de archivos `demo-*` y `_ficha-template.md`).
+  1. `tests/web-redesign.test.mjs`: Verifica build limpio en `web/`, 12 secciones del funnel, paleta Soft-Obsidian y precios en ARS.
+  2. `tests/sheets-sync.test.mjs`: Verifica el rango en Columna B (`B11:S1000`), el formateo de 18 columnas con la URL `https://preview.nexobow.site/{slug}` y slugs correlativos.
+  3. `tests/lead-lifecycle.test.mjs`: Verifica el ciclo de vida de 7 días, alertas de WhatsApp y purga de leads obsoletos.
+  4. `tests/template-versioning.test.mjs`: Verifica que la inyección respete `template_version` y aísle el clon contra updates no solicitados.
 
 ---
 
 ## Out of Scope
 
-- Construcción física de los 9 templates adicionales en `/templates/` en esta sesión (queda registrado en el backlog para ejecutarse uno por uno mediante ingeniería inversa REA ahorrando 50% de tokens).
-- Backend en vivo de la API de Fase 2 para `"CREÁ TU SISTEMA BOW"` (en esta fase se implementa la sección visual interactiva + captura de interesados en `web/`).
+- Automatizaciones avanzadas de WhatsApp con agentes autónomos o n8n autohospedado (previsto para Fase 3 tras alcanzar masa crítica).
+- Base de datos relacional Supabase / Firebase en esta fase (se mantiene Google Sheets optimizado como base atómica actual).
 
 ---
 
 ## Further Notes
 
-- Se respeta estrictamente el desacoplamiento de identidad visual (`ERROR-001`): la paleta Soft-Obsidian (`#040607`, `#BF40FA`, `#4928C2`, `#5B2A62`, `#E3D9FC`) aplica **exclusivamente** a `web/` (agencia NexoBow) y nunca contamina `/templates/`.
+- Se respeta estrictamente el desacoplamiento de identidad visual (`ERROR-001`): la paleta Soft-Obsidian (`#040607`, `#BF40FA`, `#4928C2`, `#5B2A62`, `#E3D9FC`) aplica exclusivamente a `web/` (agencia NexoBow) y nunca contamina `/templates/`.
+

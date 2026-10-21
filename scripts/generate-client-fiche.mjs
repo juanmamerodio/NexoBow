@@ -115,41 +115,259 @@ Responde ÚNICAMENTE con el objeto JSON válido, sin bloques de código markdown
   }
 }
 
-function getDefaultCopy(lead) {
+function hashSeed(str = "") {
+  let h = 0;
+  const s = String(str);
+  for (let i = 0; i < s.length; i++) {
+    h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  }
+  return h;
+}
+
+export const HORMOZI_PAIN_ANGLES = [
+  {
+    id: "rutina-tiempo",
+    label: "1. Rutina colapsada y falta de tiempo",
+    build(nombre) {
+      return {
+        bio: `${nombre}, especialista en nutrición clínica y organización alimentaria para agendas exigentes. Ayudo a profesionales y personas sin tiempo a ordenar sus comidas en 15 minutos sin vivir en la cocina ni depender del delivery.`,
+        enfoque: `Diseñamos sistemas de alimentación simples: compras semanales resueltas en una sola lista, platos de ensamble rápido y viandas prácticas que se adaptan a tus horarios laborales y vida familiar.`,
+        problema: `El problema no es que no sepas qué es saludable: es que después de 9 horas de trabajo no tenés energía para cocinar recetas imposibles. Comer bien tiene que ahorrarte tiempo, no quitártelo.`,
+        casos: [
+          {
+            titulo: "Lautaro M. (34 años, Director Comercial)",
+            descripcion: "Jornadas de 10 horas, almuerzos improvisados en oficina y fatiga constante a la tarde.",
+            resultado: "-8 kg en 3 meses con menús de 15 minutos y cero delivery nocturno.",
+          },
+          {
+            titulo: "Carolina V. (39 años, Médica de guardia)",
+            descripcion: "Turnos rotativos, desorden horario y picoteo por ansiedad al volver a casa.",
+            resultado: "Organización semanal completa, saciedad real y -6 cm de cintura en 8 semanas.",
+          },
+        ],
+        faq: [
+          {
+            q: "¿La primera consultoría tiene algún costo oculto?",
+            a: "No, es 100% gratuita y dura 20 minutos por videollamada o WhatsApp. Evaluamos tu rutina y te llevás un plan de acción claro.",
+          },
+          {
+            q: "¿Qué pasa si no tengo tiempo para cocinar todos los días?",
+            a: "Armamos estrategias de batch-cooking de 40 minutos semanales y platos de ensamble en 10 minutos con ingredientes de cualquier supermercado.",
+          },
+          {
+            q: "¿Tengo que pesar cada gramo de comida?",
+            a: "Para nada. Trabajamos con porciones visuales prácticas para que puedas comer bien tanto en tu casa como en un restaurante o la oficina.",
+          },
+          {
+            q: "¿Cómo es el seguimiento entre sesiones?",
+            a: "Tenés contacto directo por WhatsApp para resolver dudas en el supermercado, ajustar menús y mantener la constancia sin estrés.",
+          },
+        ],
+      };
+    },
+  },
+  {
+    id: "fatiga-rebote",
+    label: "2. Frustración y fatiga por dietas restrictivas / efecto rebote",
+    build(nombre) {
+      return {
+        bio: `${nombre}, nutricionista enfocada en cambio de hábitos definitivos y relación sana con la comida. Acompaño a personas cansadas del efecto rebote a lograr resultados sostenibles sin prohibiciones absurdas.`,
+        enfoque: `Reemplazamos la mentalidad de "todo o nada" por educación nutricional flexible. Aprendés a integrar tus comidas favoritas y eventos sociales sin culpa ni retrocesos.`,
+        problema: `La mayoría de las personas no fracasan por falta de voluntad, sino por seguir dietas extremas que eliminan grupos enteros de alimentos hasta que el cuerpo y la cabeza no aguantan más.`,
+        casos: [
+          {
+            titulo: "Valeria G. (29 años, Emprendedora)",
+            descripcion: "Historial de 5 años de dietas keto y ayunos extremos seguidos de atracones y rebote.",
+            resultado: "-7 kg sostenidos durante el último año comiendo hidratos y saliendo los fines de semana.",
+          },
+          {
+            titulo: "Martín R. (42 años, Arquitecto)",
+            descripcion: "Estancamiento metabólico y frustración por subir de peso cada vez que dejaba un plan estricto.",
+            resultado: "Reeducación de porciones, -5% de grasa corporal y fin definitivo del efecto yo-yo.",
+          },
+        ],
+        faq: [
+          {
+            q: "¿La primera consultoría inicial tiene costo?",
+            a: "Es sin cargo. Conversamos 20 minutos para entender qué intentaste antes, por qué no funcionó y cómo destrabar tu proceso.",
+          },
+          {
+            q: "¿Voy a tener que dejar las harinas o las juntadas con amigos?",
+            a: "En absoluto. Prohibir lo que te gusta garantiza el abandono. Aprendemos a equilibrar tu semana para que disfrutes sin perder tus avances.",
+          },
+          {
+            q: "¿Usan batidos, polvos o suplementos para adelgazar?",
+            a: "Cero productos mágicos. Todo el proceso se basa en comida real, saciante y accesible en tu barrio.",
+          },
+          {
+            q: "¿Cada cuánto hacemos los controles?",
+            a: "Realizamos revisiones quincenales online o presenciales con soporte continuo por WhatsApp para acompañarte cuando aparece la ansiedad.",
+          },
+        ],
+      };
+    },
+  },
+  {
+    id: "digestion-energia",
+    label: "3. Digestión, energía vital y sintomatología clínica",
+    build(nombre) {
+      return {
+        bio: `${nombre}, especialista en nutrición digestiva, antiinflamatoria y salud metabólica. Ayudo a pacientes con distensión abdominal, acidez y cansancio crónico a recuperar su bienestar diario desde la raíz.`,
+        enfoque: `Abordamos la nutrición desde la fisiología y la clínica: identificamos alimentos gatillo, mejoramos tu microbiota y ordenamos tus nutrientes para que vuelvas a sentirte liviano después de cada comida.`,
+        problema: `Normalizar vivir hinchado, con pesadez estomacal o sueño después de almorzar te apaga el día entero. Cuando corregís la inflamación con el plan adecuado, tu energía cambia en la primera semana.`,
+        casos: [
+          {
+            titulo: "Sofía L. (31 años, Diseñadora UX)",
+            descripcion: "Distensión abdominal diaria, colon irritable y caída de energía todas las tardes.",
+            resultado: "Desinflamación completa en 21 días, digestión liviana y descanso profundo.",
+          },
+          {
+            titulo: "Diego P. (46 años, Contador)",
+            descripcion: "Reflujo gástrico constante, valores de laboratorio alterados y fatiga matutina.",
+            resultado: "Normalización de perfil lipídico y glucemia en 90 días sin acidez.",
+          },
+        ],
+        faq: [
+          {
+            q: "¿Cómo funciona la consultoría de evaluación gratuita?",
+            a: "En una llamada breve de 20 minutos revisamos tus síntomas principales, tus análisis recientes y trazamos el protocolo nutricional indicado.",
+          },
+          {
+            q: "¿El plan sirve si tengo SIBO, gastritis o hipotiroidismo?",
+            a: "Sí, personalizamos la selección y cocción de alimentos según tu diagnóstico médico y tolerancia digestiva individual.",
+          },
+          {
+            q: "¿En cuánto tiempo se empiezan a notar mejoras en la hinchazón?",
+            a: "La mayoría de los pacientes reportan un alivio notable en la distensión y mayor claridad mental entre los primeros 7 y 14 días.",
+          },
+          {
+            q: "¿Necesito llevar estudios de sangre a la primera sesión?",
+            a: "Si tenés análisis de los últimos 6 meses sumalos; si no, podemos arrancar con la evaluación clínica y solicitarlos en el proceso.",
+          },
+        ],
+      };
+    },
+  },
+  {
+    id: "rendimiento-vitalidad",
+    label: "4. Rendimiento físico, composición corporal y vitalidad",
+    build(nombre) {
+      return {
+        bio: `${nombre}, nutricionista orientada a recomposición corporal, rendimiento deportivo y longevidad activa. Ayudo a personas que entrenan a bajar grasa y ganar masa muscular con precisión nutricional.`,
+        enfoque: `Sincronizamos tu ingesta proteica y energética con tu entrenamiento y descanso. Estrategias claras pre y post entreno basadas en evidencia científica para que el esfuerzo en el gimnasio por fin se note.`,
+        problema: `Entrenar fuerte pero comer al azar es como acelerar el auto sin combustible: te estancás, perdés tono muscular y te lesionás más seguido. La nutrición correcta multiplica cada hora que entrenás.`,
+        casos: [
+          {
+            titulo: "Nicolás F. (28 años, Crossfit & Running)",
+            descripcion: "Entrenaba 5 veces por semana pero no lograba definir ni mejorar sus tiempos de recuperación.",
+            resultado: "-4.5% de pliegues adiposos y +2.8 kg de masa muscular limpia en 12 semanas.",
+          },
+          {
+            titulo: "Luciana T. (36 años, Entrenamiento de Fuerza)",
+            descripcion: "Baja ingesta proteica, calambres frecuentes y falta de fuerza en los entrenamientos.",
+            resultado: "Recomposición corporal visible y récord personal de energía y rendimiento.",
+          },
+        ],
+        faq: [
+          {
+            q: "¿Qué incluye la consultoría diagnóstica sin cargo?",
+            a: "Evaluamos tu entrenamiento actual, tus objetivos de composición corporal y definimos la estrategia exacta de macronutrientes.",
+          },
+          {
+            q: "¿Es obligatorio tomar proteína en polvo o creatina?",
+            a: "Nunca es obligatorio. Priorizamos cubrir tus requerimientos con alimentos reales y solo sugerimos suplementos con evidencia si aportan comodidad.",
+          },
+          {
+            q: "¿Cómo medimos el avance si el peso en la balanza no lo es todo?",
+            a: "Seguimos medidas perimetrales, fotos comparativas, progresión de fuerza en el entrenamiento y niveles de recuperación.",
+          },
+          {
+            q: "¿Adaptan el plan para días de entrenamiento vs. días de descanso?",
+            a: "Exacto: ajustamos las porciones de carbohidratos y proteínas según el gasto energético de cada día de tu semana.",
+          },
+        ],
+      };
+    },
+  },
+];
+
+export const CONTEXTUAL_BRANDING_PALETTES = [
+  {
+    name: "Editorial Delta",
+    primary: "#e70025",
+    accent: "#e3c1ad",
+    fondo: "#fcf3ed",
+    tinta: "#35221a",
+    fuente: "Fraunces",
+    fuente_sans: "Archivo",
+  },
+  {
+    name: "Botanical Sage",
+    primary: "#1e5631",
+    accent: "#cfe1b9",
+    fondo: "#f6f8f3",
+    tinta: "#1b2a20",
+    fuente: "Lora",
+    fuente_sans: "Archivo",
+  },
+  {
+    name: "Terracotta Warmth",
+    primary: "#b84a27",
+    accent: "#e8ccb8",
+    fondo: "#fbf6f1",
+    tinta: "#2d1e18",
+    fuente: "Playfair Display",
+    fuente_sans: "Archivo",
+  },
+  {
+    name: "Clinical Cobalt",
+    primary: "#0f4c81",
+    accent: "#c5d9ed",
+    fondo: "#f4f7fb",
+    tinta: "#142433",
+    fuente: "Fraunces",
+    fuente_sans: "Archivo",
+  },
+];
+
+function resolveDeterministicIndex(lead = {}, length = 4) {
+  const numericSeed = Number(lead.sheet_id ?? lead.sheetId ?? lead.id);
+  const baseIdx =
+    Number.isFinite(numericSeed) && numericSeed > 0
+      ? numericSeed - 1
+      : hashSeed(lead.slug || lead.nombre || "default");
+  return ((baseIdx % length) + length) % length;
+}
+
+export function selectCopyAngle(lead = {}) {
+  const idx = resolveDeterministicIndex(lead, HORMOZI_PAIN_ANGLES.length);
+  const angle = HORMOZI_PAIN_ANGLES[idx];
+  const providerName = lead.nombre || lead.displayName || "Profesional";
   return {
-    bio: `${lead.nombre}, especialista en nutrición clínica y hábitos sostenibles. Ayudo a personas ocupadas a recuperar su energía, optimizar su composición corporal y ordenar su alimentación sin pasar hambre ni vivir a dieta.`,
-    enfoque: `Trabajamos con educación alimentaria y hábitos del mundo real. Sin suplementos innecesarios, sin contar calorías obsesivamente y con recetas sencillas de 15 minutos adaptadas a tu trabajo, vida social y familia.`,
-    problema: `La mayoría de las personas no fracasan por falta de fuerza de voluntad, sino por seguir planes restrictivos imposibles de sostener en el tiempo. Comer bien tiene que sumar a tu vida, no volverse una carga mental más.`,
-    casos: [
-      {
-        titulo: "Lautaro M. (34 años, Empleado administrativo)",
-        descripcion: "Jornadas de 9 horas de oficina, delivery continuo y acidez diaria. Organizamos compras semanales y preparaciones rápidas.",
-        resultado: "-8 kg en 3 meses y eliminación total del reflujo gástrico.",
-      },
-      {
-        titulo: "Valeria G. (29 años, Emprendedora)",
-        descripcion: "Cansancio crónico y estancamiento tras múltiples dietas de moda con efecto rebote constante.",
-        resultado: "Reducción del 5% de grasa corporal y energía sostenida durante todo el día.",
-      },
-    ],
-    faq: [
-      {
-        q: "¿La primera consultoría tiene algún costo oculto?",
-        a: "No, es 100% gratuita y dura 20 minutos por videollamada. Evaluamos tu punto de partida y te llevás un diagnóstico claro. Si decidís avanzar, definimos el plan; si no, te vas con herramientas prácticas.",
-      },
-      {
-        q: "¿Tengo que dejar de comer harinas o salir con amigos?",
-        a: "En absoluto. El plan se adapta a tu rutina social, no al revés. Prohibir comidas solo genera ansiedad y abandono; aprendemos a compensar y disfrutar.",
-      },
-      {
-        q: "¿Cómo es el seguimiento si tengo horarios complicados?",
-        a: "El seguimiento es 100% online y personalizado vía WhatsApp: ajustes quincenales, resolución de dudas en el día y feedback de comidas.",
-      },
-      {
-        q: "¿Qué pasa si no tengo tiempo para cocinar?",
-        a: "Diseñamos menús de ensamble rápido de 15 minutos con ingredientes que encontrás en cualquier supermercado o verdulería del barrio.",
-      },
-    ],
+    angleId: angle.id,
+    angleLabel: angle.label,
+    ...angle.build(providerName),
+  };
+}
+
+export function selectContextualBranding(lead = {}) {
+  const verticalClean = String(lead.rubro || lead.nicho || "nutricionista").toLowerCase();
+  const verticalOffset = verticalClean.includes("nutri") ? 0 : hashSeed(verticalClean) % CONTEXTUAL_BRANDING_PALETTES.length;
+  const baseIdx = resolveDeterministicIndex(lead, CONTEXTUAL_BRANDING_PALETTES.length);
+  const idx = (baseIdx + verticalOffset) % CONTEXTUAL_BRANDING_PALETTES.length;
+  const chosen = CONTEXTUAL_BRANDING_PALETTES[idx];
+  const highReputation = Number(lead.rating) >= 4.8 && Number(lead.userRatingCount) >= 50;
+  const defaultOrder = highReputation
+    ? ["Hero", "Reviews", "Problem", "Steps", "CaseStudy", "Pricing"]
+    : ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"];
+  return {
+    primary: lead.tema?.primary || chosen.primary,
+    accent: lead.tema?.accent || chosen.accent,
+    fondo: lead.tema?.fondo || chosen.fondo,
+    tinta: lead.tema?.tinta || chosen.tinta,
+    fuente: lead.tema?.fuente || chosen.fuente,
+    fuente_sans: lead.tema?.fuente_sans || chosen.fuente_sans,
+    orden_secciones: lead.tema?.orden_secciones || defaultOrder,
   };
 }
 
@@ -181,6 +399,7 @@ async function main() {
   const sheetId = Number(
     flags["sheet-id"] ??
       rawData.sheet_id ??
+      rawData.sheetId ??
       (slugIdMatch ? slugIdMatch[1] : rawData.id ?? 0)
   );
   const todayStr = new Date().toISOString().split("T")[0];
@@ -188,6 +407,8 @@ async function main() {
   const lastActivityAt = rawData.last_activity_at || createdAt;
   const expiresAt = rawData.expires_at || addDaysToIsoDate(lastActivityAt, 7);
   const leadStatus = rawData.lead_status || "1. Prospecto Identificado";
+  const vertical = rawData.rubro || "nutricionista";
+  const templateVersion = rawData.template_version || `${vertical}@1.0.0`;
 
   // Fallback inteligente para agendamiento: si no tiene Calendly, apuntar el CTA a WhatsApp con mensaje predeterminado
   const fallbackWaBooking = cleanPhone
@@ -207,8 +428,10 @@ async function main() {
   }
 
   if (!copy) {
-    copy = getDefaultCopy(rawData);
+    copy = selectCopyAngle({ ...rawData, sheet_id: sheetId, slug });
   }
+
+  const branding = selectContextualBranding({ ...rawData, sheet_id: sheetId, slug });
 
   // Reseñas oficiales atribuidas a Google Maps
   const reviewsMarkdown = (rawData.reviews && rawData.reviews.length > 0)
@@ -217,7 +440,7 @@ async function main() {
         .join("\n")
     : `- **Paciente Verificado (Google Maps)**: "Excelente atención y seguimiento. Muy profesional y con planes realistas."`;
 
-  const casosMarkdown = copy.casos
+  const casesMarkdown = copy.casos
     .map((c) => `- **${c.titulo}**: ${c.descripcion}. Resultado: ${c.resultado}`)
     .join("\n");
 
@@ -225,6 +448,7 @@ async function main() {
     .map((f) => `- **${f.q}**: ${f.a}`)
     .join("\n");
 
+  const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site";
   const clientMdContent = `---
 id: ${sheetId || Date.now().toString().slice(-4)}
 sheet_id: ${sheetId}
@@ -232,23 +456,24 @@ lead_status: "${leadStatus}"
 created_at: "${createdAt}"
 last_activity_at: "${lastActivityAt}"
 expires_at: "${expiresAt}"
-rubro: ${rawData.rubro || "nutricionista"}
+rubro: ${vertical}
+template_version: "${templateVersion}"
 nombre: "${rawData.nombre}"
 slug: "${slug}"
 estado: prospecto
-subdominio: "${slug}.nexobow.com"
+subdominio: "preview.${rootDomain}/${slug}"
 whatsapp: "${cleanPhone || "5491100000000"}"
 calendly: "${calendlyUrl}"
 google_maps: "${rawData.website || "https://maps.google.com/?cid=gmp-" + (rawData.placeId || slug)}"
 instagram: "${rawData.website || ""}"
 tema:
-  primary: "#e70025"
-  accent: "#e3c1ad"
-  fondo: "#fcf3ed"
-  tinta: "#35221a"
-  fuente: "Fraunces"
-  fuente_sans: "Archivo"
-  orden_secciones: ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"]
+  primary: "${branding.primary}"
+  accent: "${branding.accent}"
+  fondo: "${branding.fondo}"
+  tinta: "${branding.tinta}"
+  fuente: "${branding.fuente}"
+  fuente_sans: "${branding.fuente_sans}"
+  orden_secciones: ${JSON.stringify(branding.orden_secciones)}
 consentimiento_testimonios: false
 setup_ars: 189999
 abono_ars: 12259
@@ -264,11 +489,14 @@ ${copy.bio}
 ## Enfoque
 ${copy.enfoque}
 
+## Problema
+${copy.problema}
+
 ## Reseñas
 ${reviewsMarkdown}
 
 ## Casos de éxito
-${casosMarkdown}
+${casesMarkdown}
 
 ## Preguntas frecuentes
 ${faqMarkdown}

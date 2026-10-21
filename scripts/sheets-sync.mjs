@@ -263,3 +263,50 @@ export function appendRowToSheet(row, spreadsheetId = DEFAULT_SPREADSHEET_ID, ta
     stdio: ['ignore', 'pipe', 'inherit']
   });
 }
+
+/**
+ * Calcula el próximo ID correlativo leyendo la Columna B (índice 0) de las filas existentes.
+ */
+export function getNextSheetId(rows = []) {
+  if (!Array.isArray(rows) || rows.length === 0) return 1;
+  let maxId = 0;
+  for (const row of rows) {
+    if (!Array.isArray(row) || row.length === 0) continue;
+    const idNum = Number(String(row[0] ?? '').trim());
+    if (Number.isFinite(idNum) && idNum > maxId) {
+      maxId = idNum;
+    }
+  }
+  return maxId + 1;
+}
+
+/**
+ * Crea un adaptador de almacenamiento (seam) para desacoplar la lógica de sincronización
+ * y facilitar una migración transparente a Supabase / Firebase en Fase 3.
+ */
+export function createSheetsAdapter({
+  readRows = () => fetchSheetRows(),
+  appendRow = (row) => appendRowToSheet(row)
+} = {}) {
+  return {
+    readRows,
+    getNextId() {
+      const currentRows = readRows();
+      return getNextSheetId(currentRows);
+    },
+    appendLead(lead = {}, customPitchTemplate = null) {
+      const id = Number(lead.id ?? lead.sheet_id) || this.getNextId();
+      const slug =
+        lead.slug ||
+        buildCorrelativeSlug({
+          id,
+          displayName: lead.displayName || lead.nombre || '',
+          nicho: lead.nicho || lead.rubro || 'nutricionista'
+        });
+      const row = formatLeadToSheetRow({ ...lead, slug }, id, customPitchTemplate);
+      appendRow(row);
+      return { id, slug, row };
+    }
+  };
+}
+

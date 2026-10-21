@@ -76,4 +76,5 @@ test("Pipeline Tanda 1: Scout Lead -> Generate Fiche -> Build Site", async (t) =
   if (existsSync(assetsDir)) rmSync(assetsDir, { recursive: true, force: true });
   if (existsSync(fichePath)) rmSync(fichePath, { force: true });
   if (existsSync(siteDir)) rmSync(siteDir, { recursive: true, force: true });
+  rmSync(join(REPO_ROOT, "dist-previews", testSlug), { recursive: true, force: true });
 });

@@ -1,11 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { existsSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { join, dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   evaluateLeadLifecycle,
   isProtectedClientIdentifier,
-  buildUrgencyWhatsAppLink
+  buildUrgencyWhatsAppLink,
+  purgeExpiredLeadResources
 } from '../scripts/lead-lifecycle.mjs';
 import { computeSheetMetricsSummary } from '../scripts/continuous-improvement.mjs';
+
+const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 test('T-SYS-02.1 - isProtectedClientIdentifier protege _ficha-template.md y demos', () => {
   assert.equal(isProtectedClientIdentifier('_ficha-template.md'), true);
@@ -136,3 +142,24 @@ test('T-SYS-02.3 - computeSheetMetricsSummary calcula tasas por nicho y recomend
   assert.equal(summary.byNiche['Nutrición'].meetings, 1);
   assert.ok(Array.isArray(summary.recommendations) && summary.recommendations.length > 0);
 });
+
+test('T-SYS-02.4 - purgeExpiredLeadResources elimina clients, sites, assets y dist-previews del lead vencido', () => {
+  const slug = '98-test-purge-nutri';
+  const fichePath = join(REPO_ROOT, 'clients', `${slug}.md`);
+  const siteDir = join(REPO_ROOT, 'sites', slug);
+  const assetsDir = join(REPO_ROOT, 'assets', slug);
+  const previewDir = join(REPO_ROOT, 'dist-previews', slug);
+
+  writeFileSync(fichePath, '---\nslug: 98-test-purge-nutri\n---', 'utf8');
+  mkdirSync(siteDir, { recursive: true });
+  mkdirSync(assetsDir, { recursive: true });
+  mkdirSync(previewDir, { recursive: true });
+
+  purgeExpiredLeadResources({ slug, fileName: `${slug}.md` }, REPO_ROOT);
+
+  assert.equal(existsSync(fichePath), false);
+  assert.equal(existsSync(siteDir), false);
+  assert.equal(existsSync(assetsDir), false);
+  assert.equal(existsSync(previewDir), false, 'Debe eliminar también dist-previews/{slug}');
+});
+

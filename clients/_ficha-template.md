@@ -14,6 +14,7 @@ whatsapp: ""            # formato internacional, ej: 5491112345678
 calendly: ""            # link del evento "Consultoría gratuita"
 google_maps: ""         # URL de la ficha
 instagram: ""
+template_version: "nutricionista@1.0.0" # Bloquea el template contra actualizaciones accidentales
 tema:
   primary: "#e70025"    # color principal (CTA)
   accent: "#e3c1ad"
@@ -36,6 +37,9 @@ metricas:
 
 ## Enfoque
 <!-- Qué problema del paciente resuelve y cómo trabaja. -->
+
+## Problema
+<!-- Ángulo de dolor principal (Hormozi) que vive el paciente antes de consultar. -->
 
 ## Reseñas
 <!-- Solo reseñas públicas de Google Maps, o testimonios con consentimiento. Indicar la fuente. -->

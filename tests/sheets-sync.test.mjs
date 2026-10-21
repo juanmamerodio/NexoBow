@@ -9,10 +9,13 @@ import {
   isExcludedWebsite,
   filterEligiblePlaces,
   buildCorrelativeSlug,
+  getNextSheetId,
+  createSheetsAdapter,
   SHEET_COLUMNS_COUNT,
   DEFAULT_SHEET_RANGE,
   DEFAULT_APPEND_ANCHOR
 } from '../scripts/sheets-sync.mjs';
+import { selectCopyAngle, selectContextualBranding, HORMOZI_PAIN_ANGLES } from '../scripts/generate-client-fiche.mjs';
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -67,7 +70,7 @@ test('T02.3 - filterEligiblePlaces filtra existentes, webs corporativas y limita
   assert.equal(filtered[1].displayName, 'Dra. María Paz');
 });
 
-test('T02.4 - formatLeadToSheetRow produce una tupla exacta de 18 columnas comenzando por el ID en Col B', () => {
+test('T02.4 - formatLeadToSheetRow produce una tupla exacta de 18 columnas comenzando por el ID en Col B y URL preview.nexobow.site', () => {
   const lead = {
     displayName: 'Estudio Jurídico Gómez & Asoc.',
     nicho: 'Abogacía',
@@ -88,7 +91,7 @@ test('T02.4 - formatLeadToSheetRow produce una tupla exacta de 18 columnas comen
   assert.equal(row[2], 'Abogacía'); // Nicho (Columna D)
   assert.equal(row[3], 'WhatsApp'); // Canal Contacto (Columna E)
   assert.match(row[4], /^https:\/\/wa\.me\/5491198765432/); // WhatsApp link (Columna F)
-  assert.equal(row[5], 'https://preview.nexobow.com/4-estudio-gomez-abogado'); // Web Demo URL (Columna G)
+  assert.equal(row[5], 'https://preview.nexobow.site/4-estudio-gomez-abogado'); // Web Demo URL (Columna G)
   assert.equal(row[7], 'Campana, Buenos Aires, ARG'); // Ubicación (Columna I)
   assert.equal(row[8], '1. Prospecto Identificado'); // Estado del Lead (Columna J)
   assert.equal(row[14], '$189.999 ARS'); // Valor Potencial (Columna P)
@@ -111,7 +114,7 @@ test('T02.5 - buildCorrelativeSlug genera formato {id}-{nombre}-{apellido}-{rubr
   );
 });
 
-test('T02.6 - generate-client-fiche inyecta sheet_id, lead_status, created_at, last_activity_at y expires_at (+7d)', () => {
+test('T02.6 - generate-client-fiche inyecta sheet_id, template_version, lead_status, created_at, last_activity_at y expires_at (+7d)', () => {
   const slug = '22-alejandra-martinez-nutri';
   const assetsDir = join(REPO_ROOT, 'assets', slug);
   const rawPath = join(assetsDir, 'lead-raw.json');
@@ -145,11 +148,50 @@ test('T02.6 - generate-client-fiche inyecta sheet_id, lead_status, created_at, l
 
   const md = readFileSync(fichePath, 'utf8');
   assert.match(md, /sheet_id:\s*22/);
+  assert.match(md, /template_version:\s*"nutricionista@1\.0\.0"/);
   assert.match(md, /lead_status:\s*"1\. Prospecto Identificado"/);
   assert.match(md, /created_at:\s*"2026-10-20"/);
   assert.match(md, /last_activity_at:\s*"2026-10-20"/);
   assert.match(md, /expires_at:\s*"2026-10-27"/);
+  assert.match(md, /## Problema/);
 
   rmSync(assetsDir, { recursive: true, force: true });
   rmSync(fichePath, { force: true });
 });
+
+test('T02.7 - getNextSheetId auto-incrementa desde Columna B y createSheetsAdapter desacopla el almacenamiento', () => {
+  assert.equal(getNextSheetId([]), 1);
+  assert.equal(getNextSheetId([[1, 'A'], [4, 'B'], [21, 'C']]), 22);
+
+  const memoryRows = [[10, 'Lic. Sofía']];
+  const adapter = createSheetsAdapter({
+    readRows: () => memoryRows,
+    appendRow: (r) => memoryRows.push(r)
+  });
+
+  assert.equal(adapter.getNextId(), 11);
+  const inserted = adapter.appendLead({
+    displayName: 'Lic. Alejandra Martínez',
+    nicho: 'nutricionista',
+    nationalPhoneNumber: '+54 9 11 4444-5555'
+  });
+  assert.equal(inserted.id, 11);
+  assert.equal(inserted.slug, '11-alejandra-martinez-nutri');
+  assert.equal(memoryRows.length, 2);
+});
+
+test('T02.8 - Motor de Copywriting Multivariante rota entre 4 ángulos de dolor Hormozi y asigna branding contextual', () => {
+  assert.equal(HORMOZI_PAIN_ANGLES.length, 4);
+
+  const angles = [1, 2, 3, 4].map((id) => selectCopyAngle({ sheet_id: id, nombre: `Profesional ${id}` }));
+  const uniqueAngleIds = new Set(angles.map((a) => a.angleId));
+  assert.equal(uniqueAngleIds.size, 4, 'Debe rotar por los 4 ángulos de dolor de Alex Hormozi');
+
+  const b1 = selectContextualBranding({ sheet_id: 1, rubro: 'nutricionista', rating: 4.9, userRatingCount: 60 });
+  const b2 = selectContextualBranding({ sheet_id: 2, rubro: 'nutricionista', rating: 4.7, userRatingCount: 15 });
+  assert.ok(b1.primary && b1.fondo && b1.tinta && b1.fuente);
+  assert.notEqual(b1.primary, '#040607', 'Nunca debe usar la paleta Soft-Obsidian de NexoBow');
+  assert.notEqual(b1.primary, '#BF40FA', 'Nunca debe usar el acento de NexoBow');
+  assert.notDeepEqual(b1, b2, 'Prestadores consecutivos deben recibir variaciones contextuales de paleta/tipografía');
+});
+

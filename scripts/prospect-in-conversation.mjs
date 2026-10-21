@@ -10,6 +10,8 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   fetchExistingSheetKeys,
+  fetchSheetRows,
+  getNextSheetId,
   filterEligiblePlaces,
   formatLeadToSheetRow,
   appendRowToSheet,
@@ -224,8 +226,9 @@ async function main() {
 
   console.log(`\n3. Prospectos elegibles filtrados (sin web y sin duplicar): ${eligibleLeads.length}`);
 
-  // 4. Formatear e insertar en Google Sheets
-  const startIndex = Math.floor(existingKeys.length / 2) + 1; // estimado de Nº
+  // 4. Formatear e insertar en Google Sheets leyendo el último ID real en Columna B
+  const existingRows = fetchSheetRows();
+  const startIndex = getNextSheetId(existingRows);
   const addedLeads = [];
 
   for (let i = 0; i < eligibleLeads.length; i++) {

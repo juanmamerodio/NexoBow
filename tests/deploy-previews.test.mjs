@@ -24,4 +24,7 @@ test("N02 - deploy-previews despliega dist-previews/ hacia Cloudflare Pages en m
   assert.ok(res.stdout.includes("DRY-RUN"), "La salida debe confirmar modo DRY-RUN");
   assert.ok(res.stdout.includes("nexobow-previews"), "Debe apuntar al proyecto unificado nexobow-previews");
   assert.ok(res.stdout.includes("preview.nexobow."), "Debe mostrar el dominio preview.nexobow.*");
+
+  const { rmSync } = await import("node:fs");
+  rmSync(testPreviewDir, { recursive: true, force: true });
 });

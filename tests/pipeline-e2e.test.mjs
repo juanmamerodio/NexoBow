@@ -45,4 +45,5 @@ test("E2E Pipeline Lead-to-Live Completo", () => {
   rmSync(assetsDir, { recursive: true, force: true });
   rmSync(fichePath, { force: true });
   rmSync(siteDir, { recursive: true, force: true });
+  rmSync(join(REPO_ROOT, "dist-previews", testSlug), { recursive: true, force: true });
 });

@@ -8,11 +8,6 @@ import { spawnSync } from "node:child_process";
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 test("N01 - prospect-batch genera previews en dist-previews/{slug}/ con reporte JSON", async () => {
-  const distPreviewsDir = join(REPO_ROOT, "dist-previews");
-  if (existsSync(distPreviewsDir)) {
-    rmSync(distPreviewsDir, { recursive: true, force: true });
-  }
-
   // Ejecutamos scripts/prospect-batch.mjs en modo mock con count=2
   const res = spawnSync("node", ["scripts/prospect-batch.mjs", "--mock", "--count", "2"], {
     cwd: REPO_ROOT,
@@ -50,8 +45,12 @@ test("N01 - prospect-batch genera previews en dist-previews/{slug}/ con reporte 
     const fichePath = join(REPO_ROOT, "clients", `${lead.slug}.md`);
     const assetsDir = join(REPO_ROOT, "assets", lead.slug);
     const siteDir = join(REPO_ROOT, "sites", lead.slug);
+    const previewDir = join(REPO_ROOT, "dist-previews", lead.slug);
     if (existsSync(fichePath)) rmSync(fichePath, { force: true });
     if (existsSync(assetsDir)) rmSync(assetsDir, { recursive: true, force: true });
     if (existsSync(siteDir)) rmSync(siteDir, { recursive: true, force: true });
+    if (existsSync(previewDir)) rmSync(previewDir, { recursive: true, force: true });
   }
+  const manifestPath = join(REPO_ROOT, "dist-previews", "manifest.json");
+  if (existsSync(manifestPath)) rmSync(manifestPath, { force: true });
 });

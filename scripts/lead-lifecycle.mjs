@@ -215,17 +215,19 @@ function updateRenewedClientFile(renewedItem) {
   writeFileSync(renewedItem.fullPath, content, 'utf8');
 }
 
-function purgeExpiredLeadResources(item, repoRoot = REPO_ROOT) {
+export function purgeExpiredLeadResources(item, repoRoot = REPO_ROOT) {
   if (isProtectedClientIdentifier(item.slug) || isProtectedClientIdentifier(item.fileName)) {
     return;
   }
   const fichePath = join(repoRoot, 'clients', `${item.slug}.md`);
   const siteDir = join(repoRoot, 'sites', item.slug);
   const assetsDir = join(repoRoot, 'assets', item.slug);
+  const previewDir = join(repoRoot, 'dist-previews', item.slug);
 
   if (existsSync(fichePath)) rmSync(fichePath, { force: true });
   if (existsSync(siteDir)) rmSync(siteDir, { recursive: true, force: true });
   if (existsSync(assetsDir)) rmSync(assetsDir, { recursive: true, force: true });
+  if (existsSync(previewDir)) rmSync(previewDir, { recursive: true, force: true });
 }
 
 async function main() {

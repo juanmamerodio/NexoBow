@@ -13,7 +13,7 @@ NexoBow opera bajo el modelo de **Agencia de Automatizaciones B2B de Alta Precis
 
 ### 1.2 La Regla del Desacoplamiento (Data & Template Decoupling)
 Para escalar sin quemar tokens ni presupuesto (< 10 USD/mes), NexoBow desacopla estrictamente tres capas:
-1. **Templates (`/templates/`)**: Código base probado, estático y modular por rubro.
+1. **Templates (`/templates/`)**: Código base modular por rubro. A diferencia de la página de agencia, los templates adoptan una **arquitectura visual PREMIUM** (micro-interacciones fluidas, animaciones refinadas, excelente diseño responsivo y tipografía de autor), optimizados para máxima conversión sin restricciones dogmáticas de JS, clonables e inmutables por cliente.
 2. **Contexto del Cliente (`/clients/`)**: Datos específicos, branding, reglas de negocio e historias del cliente aisladas.
 3. **Agent Skills (`/.agents/skills/`)**: Procedimientos y SOPs ejecutables que adaptan el Template usando el Contexto del Cliente.
 
@@ -209,4 +209,8 @@ NexoBow se optimiza para **Costo Cero de Infraestructura**:
 - **Alineación Google Sheets Columna B y Correlatividad 1:1 (`T-SYS-01`)**: `scripts/sheets-sync.mjs` ancla en `'Prospección NexoBow'!B11:S1000` (Columna B = ID) y exporta `buildCorrelativeSlug()` generando `{id}-{nombre}-{apellido}-{rubro}.md`. `scripts/generate-client-fiche.mjs` inyecta `sheet_id`, `lead_status`, `created_at`, `last_activity_at` y `expires_at` (+7 días).
 - **Motor de Ciclo de Vida 7 Días & Mejora Continua (`T-SYS-02`)**: Creado `scripts/lead-lifecycle.mjs` (renovación automática +7d si cambia el estado en el Sheet, alertas con link de WhatsApp de urgencia en días 5–6, y purga automática en `>=7d` o `"Descartado"` protegiendo `_ficha-template.md` y `demo-*`) y `scripts/continuous-improvement.mjs` (análisis de KPIs y tasas de respuesta por nicho).
 - **Nuevas Agent Skills (`T-SYS-03`)**: Creadas `edit-client-site` (`/editar-web-cliente`), `lead-lifecycle` (`/seguimiento-leads`) y `flow-advisor` (`/next-step` / `/ask-matt`). Backlog de +10 templates mediante REA documentado para ejecución progresiva ahorrando 50% de tokens.
+- [2026-10-21] Arquitectura de Inmutabilidad y Purga de Leads: Limpieza de prospectos locales en `clients/`, `sites/` y `dist-previews/` conservando solo `_ficha-template.md`. Establecida la regla de inmutabilidad de templates (`template_version`), previews directas en `preview.nexobow.site/{slug}` y arquitectura de branding dinámico multivariante.
+- [2026-10-21] Implementación y Auditoría (`spec.md`): Creada `tests/template-versioning.test.mjs`, implementado bloqueo de versión en `scripts/build-client-site.mjs` (`.template-lock.json` + `--upgrade-template`), matriz de 4 ángulos de dolor Hormozi y paletas contextuales en `scripts/generate-client-fiche.mjs`, auto-incremento atómico `getNextSheetId` y seam `createSheetsAdapter` en `scripts/sheets-sync.mjs`, y aislamiento de caché `.astro`/`.vite` por clon. 26 tests E2E y unitarios en verde.
+
+
 
