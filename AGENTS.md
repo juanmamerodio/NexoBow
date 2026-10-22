@@ -84,6 +84,7 @@ flowchart TD
 | `sites/{slug}/` | Clones compilables efímeros para clientes o demos de catálogo. | Generado por script |
 | `tests/*.test.mjs` | Suites de pruebas unitarias y de integración end-to-end. | Agente |
 | `web/` | Web flagship institucional de NexoBow (0 JS estricto, Soft-Obsidian). | Agente / Usuario |
+| `/.agents/skills/impeccable/` | Motor de triage rápido y filtro anti-slop visual (detect, bolder, polish). | Agente / CLI impeccable |
 
 ---
 
@@ -120,14 +121,22 @@ flowchart TD
     CheckDelta -->|Sí| UsaDelta[Usa deltacafes.com como referente]
     CheckDelta -->|No| NoDelta[OLVIDARSE de Delta Cafés.<br/>Duplicar el referente específico del ticket]
     NoDelta --> ConstruyeTemplate[Crear componentes y layout únicos de la web real]
+    ConstruyeTemplate --> CheckTemplateQuality{¿Anti-patrones o diseño mediocre?}
+    CheckTemplateQuality -->|Sí| ImpeccableFix[Triage Impeccable: detect + bolder / polish]
+    ImpeccableFix --> TemplateReady([Template listo])
+    CheckTemplateQuality -->|No| TemplateReady
 
     PreguntaTipo -->|Crear sitio para un Cliente| EsCliente[Misión: Copywriting + Inyección]
     EsCliente --> RedactaCopy[Escribir dolores Hormozi y bio en clients/{slug}.md]
     RedactaCopy --> ClonaTemplate[build-client-site clona el template correspondiente]
     ClonaTemplate --> InyectaJson[Inyecta copy en site.json sin tocar componentes]
+    InyectaJson --> CheckClientQuality{¿Fallo visual o landing insulsa?}
+    CheckClientQuality -->|Sí| ImpeccableRescue[Triage Impeccable: detect + clarify / polish]
+    ImpeccableRescue --> EsPreview[Servir landing real en preview.nexobow.site]
+    CheckClientQuality -->|No| EsPreview
 
     PreguntaTipo -->|Demo de Catálogo| EsDemo[Compilar sites/demo-{rubro}/ como muestra]
-    PreguntaTipo -->|Preview de Prospecto| EsPreview[Servir landing real en preview.nexobow.site]
+    PreguntaTipo -->|Preview de Prospecto| EsPreview
 ```
 
 ---
@@ -138,6 +147,10 @@ flowchart TD
 3. **Conservación de Tokens y Edición:** Para cambios grandes en un archivo, usá una única operación de escritura completa en vez de múltiples ediciones secuenciales. No leas carpetas de `/sites/` ajenas al cliente actual.
 4. **Orquestación y Sub-agentes:** Si una tarea requiere analizar +3 archivos o hacer auditoría de calidad, delegá en un sub-agente con ventana de contexto limpia.
 5. **Sin Límite Artificial de JS en Templates:** En `/templates/` y `/sites/` no existe restricción de 35 KB. Solo aplican las restricciones de infraestructura de Cloudflare Pages (25 MB por archivo) o de APIs externas.
+6. **Filtro Anti-Mediocridad y Triage Rápido (Skill `impeccable`):** Queda terminantemente prohibido entregar landings mediocres, genéricas ("AI-slop"), con tipografías cliché, contrastes deficientes o layouts planos. Si una generación de web (`web/`, `/templates/` o `/sites/`) resulta insulsa, defectuosa o presenta errores visuales/layout, el agente debe activar el protocolo de remediación inmediata con `impeccable`:
+   - **Diagnóstico Inmediato:** Ejecutar `.agents/skills/impeccable/scripts/impeccable detect <target>` para identificar anti-patrones visuales al instante.
+   - **Triage y Elevación Quirúrgica:** Aplicar la directiva adecuada (`bolder` para amplificar carácter en diseños tímidos, `polish` para micro-interacciones y detalles de alta gama, `distill` para limpiar sobrecargas, o `clarify` para jerarquías tipográficas).
+   - **Verificación:** Correr `impeccable detect` asegurando 0 anti-patrones críticos antes de considerar la entrega final.
 
 ## 📂 Mapa de Directorios y Límites (Boundaries)
 - `/brain.md` -> **[LECTURA/ESCRITURA]** Cerebro de ejecución. Leelo al iniciar sesión; actualizalo al cerrar una tarea.
@@ -162,6 +175,13 @@ flowchart TD
 - **`deploy-cloudflare`**: Publica el sitio en Cloudflare Pages usando Wrangler CLI bajo el dominio unificado `https://preview.nexobow.site/{slug}/`.
 - **`lead-to-live`**: Orquestador maestro end-to-end: ejecuta `scout-lead` → `generate-client-fiche` → `build-client-site` → `audit-code` → `deploy-cloudflare`.
 - **`rea-template`**: Motor de Ingeniería Inversa de Templates (REA): toma una URL de referencia y un rubro, extrae la identidad visual (paleta 60-30-10, fuentes, layout), andamia el nuevo template Astro inmutable en `/templates/{rubro}/` con contrato `site.json` desacoplado, compila la demo en `/sites/demo-{rubro}/` y genera el tag git `template/{rubro}@1.0.0`.
+- **`impeccable`**: **[FILTRO ANTI-SLOP Y TRIAGE RÁPIDO DE DISEÑO]** Detección instantánea de anti-patrones visuales y elevación de craft para erradicar landings mediocres o resolver errores de maquetación/diseño en 1 paso (`.agents/skills/impeccable/scripts/impeccable`):
+  - `detect [target]`: Escaneo estático/DOM ultrarrápido de anti-patrones de diseño (contrastes, fuentes cliché, gradient text, jerarquía débil, espaciados rotos).
+  - `bolder`: Amplifica diseños tímidos o mediocres transformándolos en piezas audaces con dirección de arte distintiva y craft de agencia.
+  - `polish`: Ajuste milimétrico de espaciado, transiciones, ritmo y micro-interacciones antes de entregar.
+  - `critique` / `audit`: Evaluación heurística y técnica inmediata.
+  - `distill`: Elimina ruido y sobrecarga visual manteniendo la esencia pura del diseño.
+  - `clarify` / `typeset`: Perfecciona jerarquías tipográficas, legibilidad y micro-copy de conversión.
 
 ## 🔄 Ciclo de Desarrollo Agéntico & Tracking de Estado (Main Flow)
 Para cualquier tarea de diseño, refactor o feature en el repo, el agente debe seguir obligatoriamente las fases definidas en [`/prompts_structure.md`](file:///home/juanmamerodio/Desktop/NexoBow/prompts_structure.md) e identificar explícitamente en qué etapa se encuentra:
@@ -169,7 +189,7 @@ Para cualquier tarea de diseño, refactor o feature en el repo, el agente debe s
 2. **Fase 2: `/to-spec` (Especificación)** — Colapsar respuestas en criterios de aceptación y arquitectura de componentes.
 3. **Fase 3: `/to-tickets` (Descomposición)** — Dividir el spec en tajadas verticales atómicas con dependencias claras.
 4. **Fase 4: `/implement` (TDD & Build)** — Construcción componente por componente con verificación `npm run build`.
-5. **Fase 5: `/code-review` o `/audit-code` (Auditoría)** — Revisión de estándares (0 JS en `web/`, a11y, identidad) y fidelidad al spec.
+5. **Fase 5: `/code-review`, `/audit-code` y `/impeccable detect` (Auditoría & Triage)** — Revisión de estándares (0 JS en `web/`, a11y, identidad), filtrado con `impeccable detect` para erradicar cualquier mediocridad visual o error en la generación, y fidelidad al spec.
 *El agente debe declarar en su respuesta la fase activa actual (ej: `[FASE ACTUAL: 4. IMPLEMENT]`) y guiar al usuario hacia el siguiente prompt de forma automática.*
 
 ## 🧠 Aprendizaje Aplicado (Self-Evolving Log)
@@ -179,3 +199,4 @@ Para cualquier tarea de diseño, refactor o feature en el repo, el agente debe s
 - En Google Sheets (`Prospección NexoBow`), el ID (`Nº`) comienza en la **Columna B** (`B11:S1000`), nunca en la Columna A.
 - Mantener correlatividad 1:1 entre Google Sheets y fichas locales: `{id}-{nombre}-{apellido}-{rubro}.md` con expiración automática a los 7 días de inactividad.
 - **Template ≠ Demo ≠ Preview ≠ Copywriting**: El template es la web entera del referente internacional; el copy es lo que la IA redacta para el cliente (`ERROR-005`).
+- **Cero Tolerancia a Webs Mediocres**: Toda web generada debe superar el estándar de agencia de alta gama. Ante cualquier generación insulsa, fallo visual o error de layout, `impeccable` (`detect` ➔ `bolder`/`polish`/`distill`) es el mecanismo de rescate y elevación rápido y eficaz obligatorio antes de entregar al usuario.

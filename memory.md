@@ -92,5 +92,10 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
   - Sincronizada y auditada demo `sites/demo-clinica/` (1.87 KB JS propio vs presupuesto <= 35 KB, 0 scripts de terceros).
   - Tags inmutables `template/clinica@1.0.0` y `template/architectural-prestige@1.0.0` actualizados y pusheados a GitHub.
   - Suite completa de 37 tests unitarios y de integración 100% pasando en verde.
+- [2026-10-22] Instalación e Integración de Skill `impeccable`:
+  - Instalado motor `impeccable` v4.7.0 (`.agents/skills/impeccable/` + binario `scripts/bin/linux-x64/impeccable` + hook en `.codex/hooks.json`).
+  - Orquestado en `AGENTS.md` como filtro anti-mediocridad y protocolo de triage rápido para resolución inmediata de errores estéticos o de generación visual (`detect`, `bolder`, `polish`, `distill`, `clarify`).
+  - Integrado en Fase 5 del Main Flow y en el árbol de decisión de generación de sitios y templates.
+  - Verificado con test suite de 37 pruebas en verde.
 
 

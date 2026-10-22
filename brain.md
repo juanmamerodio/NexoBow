@@ -123,10 +123,10 @@ agency-factory/
 ├── BRAIN.md                            <-- Este documento (Conciencia Operativa)
 ├── AGENTS.md                           <-- Instrucciones maestras de orquestación y rutas
 ├── .agents/
-│   └── skills/                         <-- Biblioteca de Agent Skills
 │       ├── standard/                   <-- Estándar estético y 3D de la agencia NexoBow (web/)
 │       ├── build-client-site/          <-- Clona template REA + aplica ficha cliente
-│       └── audit-code/
+│       ├── audit-code/                 <-- Auditoría de performance, a11y y 0-JS
+│       └── impeccable/                 <-- Motor anti-slop, triage y elevación visual rápida
 ├── templates/                          <-- Templates base por vertical de negocio
 │   ├── abogado/
 │   ├── psicologo/
