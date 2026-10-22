@@ -14,7 +14,9 @@ Duplicar la web **ENTERA** de **SkyClinics** (`https://skyclinics.al/`) dentro d
 ## 2. Arquitectura Visual & Componentes Auténticos de SkyClinics
 - **Atmósfera & Estilo:** Prestigio médico internacional, diseño arquitectónico espacioso, serenidad clínica, micro-interacciones suaves y jerarquía de bioseguridad.
 - **Paleta 60-30-10:** Lienzo mineral piedra (`#e8e7e5`), Deep Forest Teal (`#003934`), Menta quirúrgico (`#1a9e8f`), y Slate Navy (`#0f172a`).
-- **Tipografías:** `Plus Jakarta Sans` (Display/Titulares con peso arquitectónico y prestancia) + `Inter` (Sans de lectura clínica clara).
+- **Tipografías (Mismas fuentes de la web o fallback similar):**
+  - **Mismas fuentes originales de SkyClinics:** `Satoshi` (Display arquitectónico y UI de alta gama disponible en Fontshare) + `Inter` (Sans de lectura clínica clara).
+  - **Fallback similar:** `Plus Jakarta Sans` / `General Sans` (misma proporción y peso geométrico de prestigio médico).
 - **Componentes y Secciones Propias de SkyClinics:**
   - `Header.astro`: Navbar espaciosa con logotipo institucional, cruz médica sobria, selector de especialidades y botón prioritario de agendamiento.
   - `Hero.astro`: Composición asimétrica de prestigio médico con badges de acreditación internacional, estadísticas clínicas (horas de quirófano, tasa de éxito) y llamada a la acción hacia valoración inicial.
@@ -31,6 +33,7 @@ Duplicar la web **ENTERA** de **SkyClinics** (`https://skyclinics.al/`) dentro d
 
 ## 3. Criterios de Aceptación
 - [ ] `templates/clinica/` contiene la web ENTERA duplicada de SkyClinics mediante REA con sus propios componentes.
+- [ ] Tipografía: utiliza las fuentes exactas de la web a copiar (`Satoshi` + `Inter`) o fallback visualmente similar verificado (`Plus Jakarta Sans` / `General Sans`).
 - [ ] `site.json` desacopla el copy y permite la inyección de cualquier cliente médico/clínico.
 - [ ] Compila la demo oficial en `sites/demo-clinica/` con código de salida 0.
 - [ ] Tests unitarios en `templates/clinica/tests/` 100% pasando.

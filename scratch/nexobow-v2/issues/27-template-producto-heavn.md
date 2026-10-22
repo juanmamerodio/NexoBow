@@ -4,7 +4,9 @@
 Duplicar la web **ENTERA** de **Heavn One** (`https://heavn-lights.com/`) dentro de `templates/producto/` mediante REA:
 - **No es un re-skin de Delta Cafés.** Es una web de ingeniería de producto de autor, con precisión óptica, rotaciones y micro-interacciones de hardware.
 - Paleta 60-30-10: Deep Matte Black (`#0a0a0a`), Pure White (`#fafafa`), Laser Blue (`#2563eb`), y Borde Metálico (`#27272a`).
-- Tipografías abiertas: `Space Grotesk` (Precisión de ingeniería) + `Inter` (Sans de lectura técnica).
+- Tipografías (Mismas fuentes de la web o fallback similar):
+  - **Mismas fuentes originales de Heavn One:** `Averta` (`Averta-Light`, extraída de los assets web de heavn-lights.com) + `Open Sans`.
+  - **Fallback similar (si la original comercial no estuviera disponible):** `Space Grotesk` o `Plus Jakarta Sans` (Precisión de ingeniería limpia y óptica) + `Inter` (Sans de lectura técnica).
 - Componentes y secciones exclusivas de Heavn One:
   - `Header.astro`: Encabezado minimalista de hardware de precisión con selector de modelo y botón de pedido.
   - `Hero.astro`: Primer plano inmersivo del producto con iluminación dinámica y especificaciones clave.
@@ -25,6 +27,7 @@ None.
 **Status:** ready-for-agent
 
 - [ ] `templates/producto/` contiene la web ENTERA duplicada de Heavn One mediante REA
+- [ ] Tipografía: utiliza las fuentes exactas de la web a copiar (`Averta` + `Open Sans`) o fallback visualmente similar verificado (`Space Grotesk` / `Plus Jakarta Sans` + `Inter`).
 - [ ] Tests unitarios en `templates/producto/tests/` 100% pasando
 - [ ] Demo compilada en `sites/demo-producto/` con código 0 y JS sin límite artificial
 - [ ] Tags git inmutables creados

@@ -102,7 +102,7 @@ sequenceDiagram
 
     Usuario->>Agente: Solicita nuevo template con URL de referencia
     Agente->>WebRef: Inspecciona estructura, navegación, 3D, animaciones y componentes únicos
-    Agente->>REA: Extrae paleta armónica 60-30-10 y tipografías abiertas
+    Agente->>REA: Extrae paleta armónica 60-30-10 y fuentes originales de la web (o fallback similar)
     Agente->>Template: Duplica la web ENTERA (NO usar Delta Cafés como molde)
     Agente->>Template: Configura slots y contrato site.json para inyección de copy
     Agente->>Demo: Compila demo oficial de showroom (build código 0)

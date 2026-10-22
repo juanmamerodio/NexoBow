@@ -4,7 +4,9 @@
 Duplicar la web **ENTERA** de **The Performance Lab** (`https://theperformancelab.ca/`) dentro de `templates/deportes/` mediante REA:
 - **No es un re-skin de Delta Cafés.** Es una web atlética de alto impacto con su propia arquitectura, componentes dinámicos y animaciones de rendimiento.
 - Paleta 60-30-10: Dark Carbon (`#0f1419`), Blanco Puro (`#ffffff`), Kinetic Emerald Green (`#10b981`), y Gris Grafito (`#1f2937`).
-- Tipografías abiertas: `Barlow Semi Condensed` / `Teko` (Display dinámico deportivo) + `Inter` (Sans de lectura atlética).
+- Tipografías (Mismas fuentes de la web o fallback similar):
+  - **Mismas fuentes originales de The Performance Lab:** `ABC Diatype` + display condensada atlética original de theperformancelab.ca.
+  - **Fallback similar (si la original comercial no estuviera disponible):** `Barlow Semi Condensed` / `Teko` (Display dinámico deportivo de alto impacto) + `Inter` (Sans de lectura atlética).
 - Componentes y secciones exclusivas de The Performance Lab:
   - `Header.astro`: Barra compacta atlética con botón de valoración de rendimiento / sesión de prueba.
   - `Hero.astro`: Tipografía masiva de alto rendimiento con métricas de ganancia física y llamada de evaluación atlética.
@@ -25,6 +27,7 @@ None.
 **Status:** ready-for-agent
 
 - [ ] `templates/deportes/` contiene la web ENTERA duplicada de The Performance Lab mediante REA
+- [ ] Tipografía: utiliza las fuentes exactas de la web a copiar (`Diatype` + display original) o fallback visualmente similar verificado (`Barlow Semi Condensed` / `Teko` + `Inter`).
 - [ ] Tests unitarios en `templates/deportes/tests/` 100% pasando
 - [ ] Demo compilada en `sites/demo-deportes/` con código 0 y JS sin límite artificial
 - [ ] Tags git inmutables creados

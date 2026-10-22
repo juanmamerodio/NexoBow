@@ -4,7 +4,9 @@
 Duplicar la web **ENTERA** de **Think Company** (`https://www.thinkcompany.com/`) dentro de `templates/tech/` mediante REA:
 - **No es un re-skin de Delta Cafés.** Es una web digital de sistemas complejos con su propia arquitectura, componentes interactivos y animaciones.
 - Paleta 60-30-10: Canvas Vanilla claro (`#fdffee`), Navy Ink profundo (`#031b36`), Think Red de alto impacto (`#ff2c17`), y Soft Cyan (`#b6ffff`).
-- Tipografías abiertas: `Syne` / `Familjen Grotesk` (Display de producto tecnológico) + `Space Grotesk` (Mono/Tech subheaders) + `Inter` (Sans de lectura).
+- Tipografías (Mismas fuentes de la web o fallback similar):
+  - **Mismas fuentes originales de Think Company:** `Bagoss` (Serif Display tech) + `ABC Diatype` (Sans de diseño suizo y precisión digital) + `Space Mono` (Mono tech para especificaciones).
+  - **Fallback similar (si la original comercial no estuviera disponible):** `Syne` / `Familjen Grotesk` (Display de producto tecnológico) + `Inter` (Sans de lectura) + `Space Mono`.
 - Componentes y secciones exclusivas de Think Company:
   - `Header.astro`: Barra digital minimalista con enlaces a casos de uso y botón de contacto de descubrimiento.
   - `Hero.astro`: Composición split editorial tech con foco en problemas de software complejos y botón directo a agendar demo.
@@ -25,6 +27,7 @@ None.
 **Status:** ready-for-agent
 
 - [ ] `templates/tech/` contiene la web ENTERA duplicada de Think Company mediante REA
+- [ ] Tipografía: utiliza las fuentes exactas de la web a copiar (`Bagoss` + `ABC Diatype` + `Space Mono`) o fallback visualmente similar verificado (`Syne` / `Familjen Grotesk` + `Inter` + `Space Mono`).
 - [ ] Tests unitarios en `templates/tech/tests/` 100% pasando
 - [ ] Demo compilada en `sites/demo-tech/` con código 0 y JS sin límite artificial
 - [ ] Tags git inmutables creados

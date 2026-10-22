@@ -31,7 +31,7 @@ Permite expandir el catálogo de NexoBow a las **+10 direcciones estéticas por 
    - Detectar familias tipográficas:
      - `fuente`: tipografía display/títulos (Serif elegante, Sans geométrica o Display editorial).
      - `fuente_sans`: tipografía de lectura y cuerpo.
-     - *Regla de fuentes abiertas:* si la web usa fuentes cerradas de pago, mapear automáticamente a alternativas libres en Google Fonts de idéntica métrica y peso.
+     - *Regla mandatoria de tipografía (Misma fuente o similar):* Priorizar y utilizar las **mismas fuentes exactas de la web a copiar** (extraídas como webfonts/woff2 o CDNs abiertas como Fontshare/Google Fonts). De no ser viable utilizar la misma fuente original (por restricciones de licencia comercial cerrada o inaccesibilidad), buscar y configurar una **fuente similar / equivalente de máxima fidelidad visual y métrica**.
    - Analizar arquetipos de UI: curvatura de bordes (`rounded-none`, `rounded-xl`, `rounded-full`), sombras, densidad de espaciados y estilo de botones.
 
 2. **Andamiaje del Template (`/templates/{rubro}/`):**
@@ -75,7 +75,7 @@ Permite expandir el catálogo de NexoBow a las **+10 direcciones estéticas por 
 
 - **PROHIBIDO** copiar componentes o estilos de `web/` a `/templates/{rubro}/` (Violación de `ERROR-001`: la identidad Soft-Obsidian ejecutiva es exclusiva de la agencia NexoBow; cada rubro debe tener su identidad visual distintiva).
 - **PROHIBIDO** alterar o romper el esquema de datos en `site.json` (`tema` + `content`), ya que causaría fallos en `scripts/build-client-site.mjs`, `generate-client-fiche.mjs` y `LeadStore`.
-- **PROHIBIDO** incluir dependencias comerciales o fuentes privadas con licencias de pago; utilizar siempre alternativas libres con carga vía Google Fonts.
+- **PROHIBIDO** ignorar la identidad tipográfica de la web de referencia: se deben utilizar las mismas fuentes originales del sitio a copiar (self-hosted o CDNs abiertas); solo si son inaccesibles o cerradas con DRM estricto se permite un fallback similar de máxima proximidad visual.
 - **PROHIBIDO** superar el presupuesto de JS propio de `35 KB` en las landings generadas ni incluir scripts de telemetría de terceros no declarados.
 - **PROHIBIDO** crear o desplegar un template sin su tag git inmutable `template/{rubro}@1.0.0` y su suite de tests unitarios verde.
 

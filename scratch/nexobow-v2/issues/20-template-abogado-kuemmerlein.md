@@ -14,7 +14,9 @@ Duplicar la web **ENTERA** de **Kümmerlein Rechtsanwälte & Notare** (`https://
 ## 2. Arquitectura Visual & Componentes Auténticos de Kümmerlein
 - **Atmósfera & Estilo:** Minimalismo ejecutivo alemán, brutalismo institucional de alta gama, recortes angulares SVG, cuadrículas asimétricas y contraste quirúrgico.
 - **Paleta 60-30-10:** Lienzo `--soft-grey0` (`#f6f6f4` / `#ffffff`), tinta carbón `#111111`, soporte `--dark-shade` `#686155`, y primario Kümmerlein `#f7f788` (amarillo pálido institucional de alto impacto).
-- **Tipografías:** `Space Grotesk` (titulares de impacto brutalista con tracking condensado) + `Inter` (sans de lectura legal clara).
+- **Tipografías (Mismas fuentes de la web o fallback similar):**
+  - **Mismas fuentes originales de Kümmerlein:** `ABC Monument Grotesk` (Regular, Bold, Semi-Mono para estructura y UI) + `Rhymes Display Light` (Display editorial legal de alto prestigio).
+  - **Fallback similar (si la original comercial no estuviera disponible):** `Space Grotesk` o `Syne` (equivalente de métricas a Monument Grotesk) + `Instrument Serif` o `Fraunces` (equivalente a Rhymes Display) + `Inter` (sans de soporte).
 - **Componentes y Secciones Propias de Kümmerlein:**
   - `Header.astro`: Navbar sobria con isotipo institucional, navegación por áreas de práctica y llamada de contacto.
   - `Hero.astro`: Composición asimétrica brutalista (`type__header_big`), micro-eyebrow en mayúsculas, esquinas con recorte SVG y botón signature.
@@ -30,6 +32,7 @@ Duplicar la web **ENTERA** de **Kümmerlein Rechtsanwälte & Notare** (`https://
 
 ## 3. Criterios de Aceptación
 - [ ] `templates/abogado/` contiene la web ENTERA duplicada de Kümmerlein mediante REA con sus propios componentes.
+- [ ] Tipografía: utiliza las fuentes exactas de la web a copiar (`ABC Monument Grotesk` + `Rhymes Display`) o fallback visualmente similar verificado (`Space Grotesk` + `Instrument Serif` / `Inter`).
 - [ ] `site.json` desacopla el copy y permite la inyección de cualquier cliente legal.
 - [ ] Compila la demo oficial en `sites/demo-abogado/` con código de salida 0.
 - [ ] Tests unitarios en `templates/abogado/tests/` 100% pasando.

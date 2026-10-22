@@ -24,6 +24,7 @@
 
 > **Principio Innegociable de Templates:**
 > - **Template (`/templates/{id}/`):** Es una **web ENTERA** duplicada e inspirada en un sitio de referencia real mediante REA (estilo, geometría espacial, navegación, animaciones, componentes únicos, objetos y 3D). Cada template es un desarrollo autónomo con su propia estructura; **NO comparte los componentes ni el layout de Delta Cafés**.
+> - **Regla Mandatoria de Tipografía (Misma Fuente o Fallback Similar):** Las fuentes tipográficas deben ser **las mismas que utiliza la web a copiar** (extraídas e incorporadas desde los assets originales/webfonts del referente). Solo si una fuente original no pudiera utilizarse directamente (licencia comercial cerrada o inaccesible), se debe buscar y utilizar una **fuente similar / equivalente de máxima proximidad visual y anatómica**.
 > - **Copywriting:** El texto (dolores Hormozi, bio, servicios, testimonios, FAQs) es lo que la IA/skill redacta para el cliente y se inyecta en el template. El template provee la infraestructura visual y espacial completa.
 > - **Demo (`/sites/demo-{id}/`):** Compilación de exhibición para el catálogo.
 > - **Preview (`https://preview.nexobow.site/{slug}/`):** Landing generada y personalizada para un prospecto real.
@@ -31,19 +32,19 @@
 
 **Catálogo de Templates REA (Webs Enteras Duplicadas por Referente):**
 - **`templates/nutricionista/`** (`editorial-classic`, v1.0.0): Web duplicada de **Delta Cafés** (`deltacafes.com`). Estética editorial cálida, Fraunces + Archivo, números ordinales y ritmo pausado.
-- **`templates/abogado/`** (`obsidian-authority`, Ticket 20): Web duplicada de **Kümmerlein Rechtsanwälte** (`https://www.kuemmerlein.de/`). Estilo ejecutivo brutalista, recortes SVG, Space Grotesk + Inter, botón rectangular con dot expansivo.
-- **`templates/clinica/`** (`architectural-prestige`, Ticket 21): Web duplicada de **SkyClinics** (`https://skyclinics.al/`). Prestigio médico quirúrgico, composición asimétrica mineral piedra (`#e8e7e5`), Deep Forest Teal (`#003934`), Menta quirúrgico (`#1a9e8f`), tarjetas clínicas, animaciones suaves y elementos 3D/gráficos médicos.
-- **`templates/corporativo/`** (`high-ticket-consulting`, Ticket 22): Web duplicada de **Vetter Consulting** (`https://vetter-consulting-en.webflow.io/`). Cuadrícula táctica estilo ajedrez, Onyx + Tactical Orange, bloques modulares de impacto financiero.
-- **`templates/tech/`** (`tech-editorial-system`, Ticket 23): Web duplicada de **Think Company** (`https://www.thinkcompany.com/`). Editorial tech moderno, Canvas Vanilla + Think Red, resolución de sistemas complejos.
-- **`templates/deportes/`** (`kinetic-performance`, Ticket 24): Web duplicada de **The Performance Lab**. Tipografía atlética masiva, Carbon Dark + Kinetic Emerald.
-- **`templates/dermatologia/`** (`clinical-pure`, Ticket 25): Web duplicada de **Lipedema Guru**. Espacio negativo clínico, acentos cian/turquesa y enfoque empático.
-- **`templates/propiedades/`** (`architectural-spaces`, Ticket 26): Web duplicada de **Lufte**. Tipografía editorial refinada, bronce oak y galerías arquitectónicas.
-- **`templates/producto/`** (`minimalist-hardware`, Ticket 27): Web duplicada de **Heavn One**. Deep Matte Black, precisión óptica e ingeniería de producto.
-- **`templates/construccion/`** (`industrial-authority`, Ticket 28): Web duplicada de **Reliable Paving**. Asphalt Dark + Safety Amber, métricas de obra pesada.
-- **`templates/farmaceutica/`** (`biotech-clarity`, Ticket 29): Web duplicada de **Roveia**. Pure White + Deep Molecule Navy y formulaciones científicas.
-- **`templates/profesional/`** (`island-creative-pure`, Ticket 30): Web duplicada de **Tahiti Numérique**. Pacific Cyan + Lagoon Dark para marca personal ágil.
-- **`templates/turismo/`** (`oceanic-luxury`, Ticket 31): Web duplicada de **Bluemore Yachting**. Midnight Navy + Azure Wave y tipografía de alta costura.
-- **`templates/musica/`** (`harmonic-academy`, Ticket 32): Web duplicada de **Ethos Music Academy**. Acoustic Stage Dark + Vibrant Tone Crimson.
+- **`templates/abogado/`** (`obsidian-authority`, Ticket 20): Web duplicada de **Kümmerlein Rechtsanwälte** (`https://www.kuemmerlein.de/`). Estilo ejecutivo brutalista, recortes SVG, ABC Monument Grotesk + Rhymes Display (o fallback similar Space Grotesk + Instrument Serif), botón rectangular con dot expansivo.
+- **`templates/clinica/`** (`architectural-prestige`, Ticket 21): Web duplicada de **SkyClinics** (`https://skyclinics.al/`). Prestigio médico quirúrgico, composición asimétrica mineral piedra (`#e8e7e5`), Deep Forest Teal (`#003934`), Menta quirúrgico (`#1a9e8f`), Satoshi + Inter (o fallback Plus Jakarta Sans), tarjetas clínicas y micro-interacciones.
+- **`templates/corporativo/`** (`high-ticket-consulting`, Ticket 22): Web duplicada de **Vetter Consulting** (`https://vetter-consulting-en.webflow.io/`). Cuadrícula táctica estilo ajedrez, Onyx + Tactical Orange, Neue Montreal (o fallback similar General Sans / Plus Jakarta Sans), bloques modulares de impacto financiero.
+- **`templates/tech/`** (`tech-editorial-system`, Ticket 23): Web duplicada de **Think Company** (`https://www.thinkcompany.com/`). Editorial tech moderno, Canvas Vanilla + Think Red, Bagoss + ABC Diatype + Space Mono (o fallback Syne + Inter + Space Mono), resolución de sistemas complejos.
+- **`templates/deportes/`** (`kinetic-performance`, Ticket 24): Web duplicada de **The Performance Lab** (`https://theperformancelab.ca/`). ABC Diatype + display atlética condensada (o fallback Barlow Semi Condensed / Teko + Inter), Carbon Dark + Kinetic Emerald.
+- **`templates/dermatologia/`** (`clinical-pure`, Ticket 25): Web duplicada de **Lipedema Guru** (`https://lipedemaguru.com/`). GroteskText + Poppins (o fallback Plus Jakarta Sans + Inter), espacio negativo clínico y acentos cian/turquesa.
+- **`templates/propiedades/`** (`architectural-spaces`, Ticket 26): Web duplicada de **Lufte** (`https://www.lufte.us/`). Outfit + Manrope (o fallback Plus Jakarta Sans), bronce oak y galerías arquitectónicas.
+- **`templates/producto/`** (`minimalist-hardware`, Ticket 27): Web duplicada de **Heavn One** (`https://heavn-lights.com/`). Averta + Open Sans (o fallback Space Grotesk / Plus Jakarta Sans), Deep Matte Black, precisión óptica e ingeniería de producto.
+- **`templates/construccion/`** (`industrial-authority`, Ticket 28): Web duplicada de **Reliable Paving** (`https://reliablepaving.com/`). Roboto + Tahoma (o fallback Oswald + Roboto), Asphalt Dark + Safety Amber, métricas de obra pesada.
+- **`templates/farmaceutica/`** (`biotech-clarity`, Ticket 29): Web duplicada de **Roveia** (`https://roveia.com/`). Manrope (o fallback Plus Jakarta Sans + Inter), Pure White + Deep Molecule Navy y formulaciones científicas.
+- **`templates/profesional/`** (`island-creative-pure`, Ticket 30): Web duplicada de **Tahiti Numérique** (`https://tahitinumerique.com/`). Instrument Sans + Instrument Serif (o fallback Outfit + Inter), Pacific Cyan + Lagoon Dark para marca personal ágil.
+- **`templates/turismo/`** (`oceanic-luxury`, Ticket 31): Web duplicada de **Bluemore Yachting** (`https://bluemoreyachting.com/`). Big Caslon CC + Satoshi (o fallback Playfair Display / Cinzel + Satoshi), Midnight Navy + Azure Wave y tipografía de alta costura.
+- **`templates/musica/`** (`harmonic-academy`, Ticket 32): Web duplicada de **Ethos Music Academy** (`https://ethosmusicacademy.com/`). Playfair Display + Montserrat (o fallback Syne / Clash Display + Inter), Acoustic Stage Dark + Vibrant Tone Crimson.
 
 ---
 

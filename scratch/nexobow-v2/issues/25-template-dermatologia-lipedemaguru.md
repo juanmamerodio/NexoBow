@@ -4,7 +4,9 @@
 Duplicar la web **ENTERA** de **Lipedema Guru** (`https://lipedemaguru.com/`) dentro de `templates/dermatologia/` mediante REA:
 - **No es un re-skin de Delta Cafés.** Es una web dermatológica y clínica con su propia arquitectura, componentes médicos y espacio negativo empático.
 - Paleta 60-30-10: Pure Clinical White (`#f8fafc`), Slate Navy profundo (`#0f172a`), Clinical Medical Blue (`#0284c7`), y Soft Ice (`#e0f2fe`).
-- Tipografías abiertas: `Plus Jakarta Sans` (Display clínico empático) + `Inter` (Sans de divulgación médica).
+- Tipografías (Mismas fuentes de la web o fallback similar):
+  - **Mismas fuentes originales de Lipedema Guru:** `GroteskText` / `GroteskMedium` / `GothicCompact` / `Poppins` (extraídas de la web de Lipedema Guru).
+  - **Fallback similar (si la original comercial no estuviera disponible):** `Poppins` / `Plus Jakarta Sans` (Display clínico empático) + `Inter` (Sans de divulgación médica).
 - Componentes y secciones exclusivas de Lipedema Guru:
   - `Header.astro`: Barra médica con teléfono directo, horarios y agendamiento clínico.
   - `Hero.astro`: Enfoque empático en el diagnóstico temprano, signos clínicos y llamada hacia valoración médica.
@@ -25,6 +27,7 @@ None.
 **Status:** ready-for-agent
 
 - [ ] `templates/dermatologia/` contiene la web ENTERA duplicada de Lipedema Guru mediante REA
+- [ ] Tipografía: utiliza las fuentes exactas de la web a copiar (`GroteskText` / `Poppins`) o fallback visualmente similar verificado (`Poppins` / `Plus Jakarta Sans` + `Inter`).
 - [ ] Tests unitarios en `templates/dermatologia/tests/` 100% pasando
 - [ ] Demo compilada en `sites/demo-dermatologia/` con código 0 y JS sin límite artificial
 - [ ] Tags git inmutables creados

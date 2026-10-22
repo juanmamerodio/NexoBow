@@ -4,7 +4,9 @@
 Duplicar la web **ENTERA** de **Reliable Paving** (`https://reliablepaving.com/`) dentro de `templates/construccion/` mediante REA:
 - **No es un re-skin de Delta Cafés.** Es una web industrial y de infraestructura con su propia arquitectura pesada, métricas de obra y credenciales de maquinaria.
 - Paleta 60-30-10: Asphalt Dark (`#1c1917`), Concrete White (`#fafaf9`), Safety Amber (`#f59e0b`), y Heavy Steel (`#44403c`).
-- Tipografías abiertas: `Oswald` / `Chakra Petch` (Display de ingeniería pesada e industrial) + `Roboto` (Sans de lectura clara).
+- Tipografías (Mismas fuentes de la web o fallback similar):
+  - **Mismas fuentes originales de Reliable Paving:** `Roboto` / `Tahoma` (extraídas de los assets de Reliable Paving).
+  - **Fallback similar (para mayor impacto display industrial o si fuera necesario):** `Oswald` / `Chakra Petch` (Display de ingeniería pesada e industrial) + `Roboto` (Sans de lectura clara).
 - Componentes y secciones exclusivas de Reliable Paving:
   - `Header.astro`: Encabezado industrial con teléfono de emergencias de obra y botón para solicitar cotización.
   - `Hero.astro`: Composición de gran formato con maquinaria pesada, tonelaje pavimentado y botón de solicitud de presupuesto.
@@ -25,6 +27,7 @@ None.
 **Status:** ready-for-agent
 
 - [ ] `templates/construccion/` contiene la web ENTERA duplicada de Reliable Paving mediante REA
+- [ ] Tipografía: utiliza las fuentes exactas de la web a copiar (`Roboto` / `Tahoma`) o fallback visualmente similar verificado (`Oswald` / `Chakra Petch` + `Roboto`).
 - [ ] Tests unitarios en `templates/construccion/tests/` 100% pasando
 - [ ] Demo compilada en `sites/demo-construccion/` con código 0 y JS sin límite artificial
 - [ ] Tags git inmutables creados

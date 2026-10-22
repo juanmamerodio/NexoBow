@@ -4,7 +4,9 @@
 Duplicar la web **ENTERA** de **Ethos Music Academy** (`https://ethosmusicacademy.com/`) dentro de `templates/musica/` mediante REA:
 - **No es un re-skin de Delta Cafés.** Es una web artística y académica con su propia arquitectura musical, reproductores de audio, programas por instrumento y micro-interacciones acústicas.
 - Paleta 60-30-10: Acoustic Stage Dark (`#18181b`), Ivory Key (`#f4f4f5`), Vibrant Tone Crimson (`#e11d48`), y Amber Stage Light (`#f59e0b`).
-- Tipografías abiertas: `Syne` / `Clash Display` (Display contemporáneo y rítmico) + `Inter` (Sans de programas pedagógicos).
+- Tipografías (Mismas fuentes de la web o fallback similar):
+  - **Mismas fuentes originales de Ethos Academy:** `Playfair Display` (Serif Display armónica y de prestigio pedagógico) + `Montserrat` (Sans rítmica para programas y calendario de clases).
+  - **Fallback similar:** `Syne` / `Clash Display` + `Inter` (Sans de programas pedagógicos).
 - Componentes y secciones exclusivas de Ethos Academy:
   - `Header.astro`: Encabezado con selector de instrumento/nivel y botón de clase de audición inicial.
   - `Hero.astro`: Composición escénica inmersiva con testimonios de alumnos, audio clips y llamada a agendar primera clase.
@@ -25,6 +27,7 @@ None.
 **Status:** ready-for-agent
 
 - [ ] `templates/musica/` contiene la web ENTERA duplicada de Ethos Music Academy mediante REA
+- [ ] Tipografía: utiliza las fuentes exactas de la web a copiar (`Playfair Display` + `Montserrat`) o fallback visualmente similar verificado (`Syne` / `Clash Display` + `Inter`).
 - [ ] Tests unitarios en `templates/musica/tests/` 100% pasando
 - [ ] Demo compilada en `sites/demo-musica/` con código 0 y JS sin límite artificial
 - [ ] Tags git inmutables creados
