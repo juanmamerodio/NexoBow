@@ -2,7 +2,7 @@
 
 > **Misión Core**: Transformar tráfico y prospectos fríos de servicios profesionales (nutricionistas, psicólogos, abogados, médicos, clínicas) en consultorías agendadas de alta conversión mediante sistemas "Bow" (landings estáticas ultra-rápidas `<0.8s`, copywriting de alivio Hormozi, agendamiento fluido) y automatizar el 100% del ciclo operativo, legal y comercial con agentes de software autónomos ejecutados a costo marginal cero.
 >
-> **Visión**: Convertir a NexoBow en una fábrica autónoma B2B 24/7 centralizada en un VPS, capaz de prospectar, crear demos personalizadas en vivo, redactar contratos, perseguir cobranzas, optimizar pauta y auditar sistemas con intervención humana únicamente en la toma de decisiones estratégicas.
+> **Visión**: Convertir a NexoBow en una fábrica autónoma B2B 24/7 centralizada en un VPS, capaz de prospectar, crear demos personalizadas en vivo, permitir customización en tiempo real al lead, redactar contratos, perseguir cobranzas, optimizar pauta y auditar sistemas con intervención humana únicamente en la toma de decisiones estratégicas.
 
 ---
 
@@ -13,31 +13,42 @@
 2. **Scouting & Filtrado:** El sistema consulta Google Maps / Serper Dev, extrae datos reales (nombre, rating, reseñas, fotos, teléfono, WhatsApp) y descarta automáticamente a quienes ya tienen web corporativa.
 3. **Correlatividad e Inserción:** Comprueba duplicados contra Google Sheets (`'Prospección NexoBow'!B11:S1000`). Asigna el siguiente ID correlativo atómico en **Columna B**.
 4. **Ficha & Copywriting Hormozi:** Genera `/clients/{id}-{nombre}-{apellido}-{rubro}.md` con dolores específicos del rubro, fallback a WhatsApp y cumplimiento Ley 25.326.
-5. **Preselección de Template e Inyección:** Selecciona el mejor template del rubro (ej. `#01 Editorial Delta` para nutricionistas), inyecta los datos y compila un clon Astro SSG.
-6. **Publicación y Cierre en Google Sheets:** Compila a `dist-previews/{slug}/` (servido en `https://preview.nexobow.site/{slug}/`), actualiza la **Columna G (`Web Demo URL`)** y calcula el mensaje de WhatsApp de prospección listo para enviar.
-7. **Motor TTL 7 Días:** Si el prospecto avanza, se renueva +7 días; si llega a días 5–6 se envía alerta de urgencia; a los 7 días o si es descartado, se purga el clon automáticamente protegiendo el almacenamiento.
+5. **Preselección Inteligente de Arquetipo Visual:** La IA no ata el template al rubro. Analiza el tono, formalidad y arquetipo de marca para asignar el mejor motor de layout (`editorial-classic`, `obsidian-authority`, `minimalist-pure`, `kinetic-cards`) junto con una paleta contextual 60-30-10 y tipografías.
+6. **Compilación con Theme Switcher Interactivo:** Compila un clon Astro SSG a `dist-previews/{slug}/` (servido en `https://preview.nexobow.site/{slug}/`) incluyendo una píldora flotante para que el prospecto pruebe 3-4 paletas en vivo y confirme su preferida por WhatsApp.
+7. **Publicación y Cierre en Google Sheets:** Actualiza la **Columna G (`Web Demo URL`)** y calcula el mensaje de WhatsApp de prospección listo para enviar.
+8. **Motor TTL 7 Días:** Si el prospecto avanza, se renueva +7 días; si llega a días 5–6 se envía alerta de urgencia; a los 7 días o si es descartado, se purga el clon automáticamente protegiendo el almacenamiento.
 
 ---
 
-## 📊 Estado Actual de la Implementación (Octubre 2026)
+## 🏗️ Nueva Arquitectura de Templates: Desacoplamiento de Arquetipos Visuales
 
-| Componente | Estado | Detalle Técnico |
-|---|:---:|---|
-| **Página de Agencia (`web/`)** | ✅ **COMPLETA (100%)** | 12 secciones Soft-Obsidian (`#040607`, `#BF40FA`, `#4928C2`), 3D CSS, 0 JS en cliente, calculadora ROI y catálogo. |
-| **Templates Base (`templates/`)** | 🟡 **PARCIAL (1/10)** | `#01 Editorial Delta` (Nutricionista) 100% listo y versionado (`template/nutricionista@1.0.0`). Faltan 9 templates REA (abogados, psicólogos, clínicas, etc.) esperando URLs de referencia. |
-| **Pipeline Lead-to-Live** | ✅ **COMPLETO (100%)** | `scout-lead` -> `generate-client-fiche` -> `build-client-site` -> `audit-code` -> `deploy-cloudflare`. 32 tests pasando al 100%. |
-| **Google Sheets (`LeadStore`)** | ✅ **COMPLETO (100%)** | Rango `'Prospección NexoBow'!B11:S1000`. ID correlativo en Col B, escritura de demo en Col G sin tocar Col L. |
-| **Ciclo de Vida 7 Días & Mejora** | ✅ **COMPLETO (100%)** | `scripts/lead-lifecycle.mjs` y `scripts/continuous-improvement.mjs`. |
-| **Motor REA (Ingeniería Inversa)**| ✅ **COMPLETO (100%)** | `scripts/rea-inspect.mjs` extrae paleta 60-30-10, fuentes Google y genera bloque `tema` para `site.json`. |
+A partir de esta fase, los templates se desacoplan de la profesión:
+- **`editorial-classic`**: Diseño editorial cálido, tipografías serif + sans estructuradas, números de pasos, estética atemporal (Delta Cafés). Ideal para nutrición, psicología, escribanías, arquitectura o asesoría legal boutique.
+- **`obsidian-authority`**: Modo oscuro ejecutivo, tarjetas con bordes nítidos, acentos bronce/dorado o neón sobrio. Ideal para estudios jurídicos corporativos, odontología de alta gama, estética masculina o consultoría financiera.
+- **`minimalist-pure`**: Espacio negativo clínico, acentos cian/turquesa o neutros, tipografía sans limpia. Ideal para dermatología, medicina general, psicología o consultoría moderna.
+- **`kinetic-cards`**: Alto contraste dinámico, métricas destacadas y módulos visuales interactivos. Ideal para kinesiología deportiva, centros de entrenamiento, estética corporal o rehabilitación.
+
+**Matriz de Selección**: Un abogado puede usar `editorial-classic` o `obsidian-authority`; un odontólogo puede usar `minimalist-pure` u `obsidian-authority`. La IA selecciona según la reputación, estilo y formalidad detectados en el scouting.
 
 ---
 
-## 🔮 Arquitectura de Nuevos Agentes & Fases Futuras
+## 🎨 Theme Switcher en Previews (Retención Anti-Rebote)
+
+Para evitar que un lead descarte la propuesta porque *"no le gustaron los colores"*, todas las previews en `https://preview.nexobow.site/{slug}/` incluyen:
+1. **Píldora Flotante Discreta (Bottom-Right)**: Permite alternar con un clic entre 3 y 4 paletas precalibradas (ej: *Original*, *Obsidian Gold*, *Clinical Cyan*, *Warm Terracotta*).
+2. **Reactividad Instantánea vía CSS Custom Properties**: Modifica `--color-primary`, `--color-accent`, `--color-bg`, `--color-ink` en el `:root` sin recargar la página.
+3. **Persistencia en LocalStorage**: Si el cliente vuelve a entrar al enlace días después, recuerda la paleta que eligió.
+4. **Captura y Cierre por WhatsApp**: Incluye el botón *"Pedir esta versión"* que abre un chat directo con el mensaje:
+   > *"Hola Juanma, estuve viendo la web demo y me encantó la combinación [Nombre de Paleta]. ¿Cómo seguimos para activarla?"*
+
+---
+
+## 🔮 Roadmap de Nuevos Agentes & Fases Futuras
 
 ```mermaid
 flowchart TD
     subgraph NucleoOperativo ["🏢 Central NexoBow (VPS 24/7)"]
-        LeadToLive["⚡ Lead-to-Live Engine<br/>(Scout -> Fiche -> Build -> Deploy)"]
+        LeadToLive["⚡ Lead-to-Live Engine<br/>(Scout -> Fiche -> Build -> ThemeSwitcher -> Deploy)"]
         CRM["📂 NexoBow Client CRM<br/>(Pagos, Recibos, Renovaciones, Backups)"]
         Watchdog["📡 Watchdog & Reporter<br/>(Métricas semanales, Uptime, Alertas Telegram/Email)"]
     end
@@ -56,7 +67,7 @@ flowchart TD
 ```
 
 ### 1. 📈 Agente Business-Bow (CFO & Growth Strategist)
-- **Función**: Administrar números duros, costo por lead (CPL), valor del tiempo de vida (LTV), tasa de conversión de cada template por rubro y proyecciones de inversión (Meta Ads, dominios `.com.ar`, infraestructura).
+- **Función**: Administrar números duros, costo por lead (CPL), valor de vida del cliente (LTV), tasa de conversión de cada arquetipo visual por nicho e inversiones (Meta Ads, dominios `.com.ar`, infraestructura).
 - **Decisiones Ejecutivas**: Evaluador de régimen fiscal (análisis costo-beneficio de Monotributo vs cobro simplificado, pasarelas de pago automáticas, retenciones vs formalidad y confianza de marca).
 - **Salida**: Genera propuestas estratégicas concretas listas para que Juanma decida con un clic o feedback.
 
