@@ -13,17 +13,17 @@ test("luminance devuelve 0 para negro y 1 para blanco", () => {
   assert.equal(luminance("#ffffff"), 1);
 });
 
-test("onColor elige texto claro sobre primarios oscuros (rojo Delta)", () => {
-  assert.equal(onColor("#e70025"), DEFAULT_THEME.fondo);
-  assert.equal(onColor("#35221a"), DEFAULT_THEME.fondo);
+test("onColor elige texto claro sobre primarios oscuros", () => {
+  assert.equal(onColor("#090D16"), DEFAULT_THEME.fondo);
+  assert.equal(onColor("#111111"), DEFAULT_THEME.fondo);
 });
 
 test("onColor elige texto oscuro sobre fondos claros", () => {
-  assert.equal(onColor("#fcf3ed"), DEFAULT_THEME.tinta);
+  assert.equal(onColor("#f6f6f4"), DEFAULT_THEME.tinta);
   assert.equal(onColor("#ffffff"), DEFAULT_THEME.tinta);
 });
 
-test("themeVars aplica defaults Delta cuando el tema no define tokens", () => {
+test("themeVars aplica defaults del arquetipo cuando el tema no define tokens", () => {
   const vars = themeVars({});
   assert.ok(vars.includes(`--color-primary:${DEFAULT_THEME.primary}`));
   assert.ok(vars.includes(`--color-paper:${DEFAULT_THEME.fondo}`));

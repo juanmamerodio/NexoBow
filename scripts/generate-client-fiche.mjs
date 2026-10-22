@@ -600,7 +600,7 @@ calendly: "${calendlyUrl}"
 google_maps: "${rawData.website || "https://maps.google.com/?cid=gmp-" + (rawData.placeId || slug)}"
 instagram: "${rawData.website || ""}"
 tema:
-  nombre: "${branding.paletteName || "Editorial Delta"}"
+  nombre: "${branding.paletteName || "Original"}"
   primary: "${branding.primary}"
   accent: "${branding.accent}"
   fondo: "${branding.fondo}"

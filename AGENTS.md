@@ -15,24 +15,30 @@ Repositorio central de **NexoBow**: fábrica automatizada de embudos de venta y 
 - **GitHub:** Utilizar git y pushear todo a producción (menos cuando se indique lo contrario).
 
 ## 📐 Convenciones e Idioma
-- **Código y Arquitectura:** Nombres de archivos, componentes (`Header.astro`, `Hero.astro`, `BeforeAfter.astro`, `InteractiveFunnel.astro`, `TemplateCatalog.astro`, `RoiCalculator.astro`, `CaseStudies.astro`, `Pricing.astro`, `CreateBowSystem.astro`, `Founder.astro`, `Faq.astro`, `FinalCta.astro`, `Footer.astro`), variables y commits en **inglés**.
+- **Código y Arquitectura:** Nombres de archivos, componentes, variables y commits en **inglés**.
+- **Templates vs Demos vs Previews (Definición Core):**
+  - **Template (`/templates/{id}/`):** Es una **web ENTERA** duplicada mediante REA a partir de un sitio de referencia real (estilo, estructura visual, navegación, animaciones, componentes únicos, objetos gráficos y 3D). Cada template tiene su propia arquitectura de componentes y diseño espacial; NO comparte la estructura de Delta Cafés ni de ningún otro template.
+  - **Copywriting:** Es el texto estratégico (dolores Hormozi, bio, oferta, garantía, testimonios) redactado por la IA / skill para el cliente final, inyectado en los slots del template.
+  - **Demo (`/sites/demo-{id}/`):** Compilación de muestra de un template para showroom/catálogo.
+  - **Preview (`https://preview.nexobow.site/{slug}/`):** Landing compilada personalizada para un prospecto específico a partir de su ficha en `/clients/`.
+  - **Delta Cafés:** Es única y exclusivamente la web de referencia de `templates/nutricionista/`. Prohibido usarla como molde o referencia para otros templates.
 - **Copywriting y UI:** Todo texto visible para el usuario final en **español argentino** (voseo profesional).
 - **Moneda y Precios Psicológicos:** Todo valor monetario debe expresarse en Pesos Argentinos con formato explícito (ej: `$189.999 ARS` Setup / `$12.259 ARS finales/mes`).
 - **Correlatividad Google Sheets ↔ Fichas:** El ID de cada prospecto comienza en la **Columna B** (`B11:S1000`) de Google Sheets y mapea 1 a 1 al archivo `/clients/{id}-{nombre}-{apellido}-{rubro}.md` (ej: `22-alejandra-martinez-nutri.md`).
 - **Política de Servidor Activo (TTL 7 Días):** Las demos de prospectos tienen una vigencia de 7 días desde su última actividad (`last_activity_at`). Si avanzan de estado en Google Sheets se renuevan por +7 días; en días 5–6 disparan alerta de seguimiento con urgencia; a los `>=7` días o estado `"Descartado"` se purgan automáticamente (protegiendo siempre `_ficha-template.md` y `demo-*`).
 
 ## 🛡️ Reglas Operativas del Agente (System Rules)
-1. **Spec-Driven (No Vibe Coding):** Prohibido inventar dependencias, asumir datos faltantes o escribir código sin contexto. Respetá estrictamente la estructura modular del template.
+1. **Spec-Driven (No Vibe Coding):** Prohibido inventar dependencias, asumir datos faltantes o escribir código sin contexto. Respetá estrictamente la arquitectura propia de cada template REA.
 2. **Gate de Planificación (Ask-First):** Si la ficha en `/clients/` tiene datos ambiguos o incompletos, **frená y preguntale al usuario** antes de generar o modificar un sitio.
 3. **Conservación de Tokens y Edición:** Para cambios grandes en un archivo, usá una única operación de escritura completa en vez de múltiples ediciones secuenciales. No leas carpetas de `/sites/` ajenas al cliente actual.
 4. **Orquestación y Sub-agentes:** Si una tarea requiere analizar +3 archivos o hacer auditoría de calidad, delegá en un sub-agente con ventana de contexto limpia.
 
 ## 📂 Mapa de Directorios y Límites (Boundaries)
 - `/brain.md` -> **[LECTURA/ESCRITURA]** Cerebro de ejecución. Leelo al iniciar sesión; actualizalo al cerrar una tarea.
-- `/memory.md` -> **[LECTURA/ESCRITURA]** Estado del proyecto + errores documentados (`ERROR-001`: NexoBow ≠ prestador). Leelo al iniciar sesión; actualizalo al cerrar una tarea.
+- `/memory.md` -> **[LECTURA/ESCRITURA]** Estado del proyecto + errores documentados (`ERROR-001`: NexoBow ≠ prestador; Template ≠ Demo). Leelo al iniciar sesión; actualizalo al cerrar una tarea.
 - `/web/` -> **[SOLO LECTURA POR DEFECTO]** Página propia de la agencia NexoBow (Estándar Soft-Obsidian, 12 secciones). No copiar componentes a `/templates/` sin rediseño.
 - `/clients/{id}-{nombre}-{apellido}-{rubro}.md` -> **[FUENTE DE VERDAD]** Ficha correlativa del prestador (YAML frontmatter con `sheet_id`, `lead_status`, `created_at`, `last_activity_at`, `expires_at` + Markdown). Plantilla base en `/clients/_ficha-template.md`.
-- `/templates/{rubro}/` -> **[SOLO LECTURA POR DEFECTO]** Proyecto Astro maestro por vertical (ej: `nutricionista` Editorial Delta, y catálogo REA de +10 estilos). **Prohibido editar** salvo instrucción explícita.
+- `/templates/{rubro}/` -> **[SOLO LECTURA POR DEFECTO]** Proyectos Astro maestros independientes por referencia REA (cada uno con sus propios componentes, estructura, animaciones y diseño). **Prohibido editar** salvo instrucción explícita.
 - `/sites/{id}-{nombre}-{apellido}-{rubro}/` -> **[GENERADO / EFÍMERO]** Clon compilable del cliente. **Nunca se edita a mano**: se edita la ficha en `/clients/` y se regenera mediante skill (`edit-client-site` / `build-client-site`).
 - `/assets/{id}-{nombre}-{apellido}-{rubro}/` -> **[LECTURA]** Recursos gráficos optimizados del prestador.
 - `/.agents/skills/` -> **[PULL CONTEXT]** SOPs modulares ejecutables bajo demanda.

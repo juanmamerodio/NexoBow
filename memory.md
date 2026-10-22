@@ -39,6 +39,15 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
 - **Qué pasó**: se intentó acceder a `demo-nutri-sofia.nexobow.site` y arrojó Error 522 porque el wildcard `*.nexobow.site` redirige a `nexobow-previews.pages.dev`, pero el proyecto individual `demo-nutri-sofia` no tenía ese subdominio validado en Cloudflare Pages.
 - **Estado**: CORREGIDO el 2026-10-20 — El pipeline unificado ahora sincroniza automáticamente `sites/{slug}/dist` a `dist-previews/{slug}/` en cada build (`build-client-site.mjs` y `deploy-cloudflare.mjs`). Todas las demos se sirven de forma consistente y confiable en `https://preview.nexobow.site/{slug}/`.
 
+### ERROR-005 — Confusión de "Template" con Previews/Demos y forzado universal de Delta Cafés (CRÍTICO)
+- **Qué pasó**: Se tomó la estructura de 10 secciones del primer template (`templates/nutricionista/`, basado en Delta Cafés) y se asumió que todos los futuros templates debían ser esa misma estructura con distinto color y texto de la web de referencia inyectado en el template.
+- **Estado**: CORREGIDO el 2026-10-22 — 
+  - **Template (`/templates/{id}/`):** Es una **web ENTERA** duplicada e inspirada en un sitio de referencia real mediante REA (estilo, geometría espacial, navegación, animaciones, componentes únicos, objetos y 3D). Cada template es un desarrollo autónomo con su propia estructura; **NO comparte los componentes ni el layout de Delta Cafés**.
+  - **Copywriting:** El texto (dolores Hormozi, bio, oferta, garantía) es lo que la IA redacta para el cliente final y se inyecta en los slots del template. El texto de la web de referencia NO se traspasa al template.
+  - **Demo:** Compilación de muestra de un template para showroom.
+  - **Preview:** Landing compilada personalizada para un prospecto específico (`https://preview.nexobow.site/{slug}/`).
+  - **Delta Cafés:** Es única y exclusivamente la web de referencia del template de nutricionista. Queda erradicado como molde obligatorio del sistema.
+
 ---
 
 ## 3. Estado Actual del Proyecto (al 2026-10-21)

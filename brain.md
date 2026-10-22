@@ -124,8 +124,8 @@ agency-factory/
 ├── AGENTS.md                           <-- Instrucciones maestras de orquestación y rutas
 ├── .agents/
 │   └── skills/                         <-- Biblioteca de Agent Skills
-│       ├── standard/                   <-- Estándar estético y 3D (Delta Cafés Benchmark)
-│       ├── build-client-site/          <-- Clona template + aplica ficha (incluye adaptación visual)
+│       ├── standard/                   <-- Estándar estético y 3D de la agencia NexoBow (web/)
+│       ├── build-client-site/          <-- Clona template REA + aplica ficha cliente
 │       └── audit-code/
 ├── templates/                          <-- Templates base por vertical de negocio
 │   ├── abogado/

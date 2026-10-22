@@ -10,13 +10,13 @@ tools: ["read_file", "write_to_file", "execute_command"]
 
 Ejecuta el desacoplamiento Template/Contexto de `brain.md`: a partir de una ficha
 válida en `/clients/N-rubro-nombre.md` genera el clon compilable en `/sites/N-rubro-nombre/`
-aplicando tema (paleta Delta Cafés, tipografías Fraunces/Archivo, orden de secciones) y contenido (bio, enfoque, reseñas,
+aplicando tema (paleta del template o personalizada, tipografías, orden de secciones) y contenido (bio, enfoque, reseñas,
 casos, FAQ, links, oferta) **sin tocar ningún componente**.
 
 ## Requisitos Previos y Entradas
 
 - Ficha de cliente: `/clients/N-rubro-nombre.md` (frontmatter YAML + cuerpo Markdown).
-- Template base: `/templates/{rubro}/` (proyecto Astro; en el MVP inicial: `nutricionista`).
+- Template base: `/templates/{rubro}/` (proyecto Astro correspondiente al arquetipo/rubro del cliente).
 - Automatización: `npm run build-site <ficha>` o `node scripts/build-client-site.mjs <ficha>`.
 
 ## Paso a Paso de Ejecución (SOP)
@@ -29,7 +29,7 @@ casos, FAQ, links, oferta) **sin tocar ningún componente**.
 2. **Clonar:** el script copia `templates/{rubro}/` → `sites/{slug}/` excluyendo
    `dist`, `.astro` y `.git`. Si el clon ya existe, se regenera desde cero de forma determinista.
 3. **Inyectar:** el script escribe `sites/{slug}/src/site.json` con el deep-merge de
-   la ficha sobre los placeholders del template Delta Cafés:
+   la ficha sobre los placeholders del template base seleccionado:
    - `tema` ← frontmatter `tema` (primary, accent, fondo, tinta, fuente, fuente_sans, orden_secciones).
    - `content.prestador.nombre` ← frontmatter `nombre`.
    - `content.links.calendly` ← frontmatter `calendly`.
@@ -50,7 +50,7 @@ casos, FAQ, links, oferta) **sin tocar ningún componente**.
 - NO editar a mano `sites/{slug}/` para corregir datos: se regenera desde la ficha.
 - NO inventar datos faltantes: el gate Ask-First frena con pregunta.
 - NO editar `/templates/` desde esta skill (solo lectura).
-- NO asumir otros rubros: solo `nutricionista` en el MVP.
+- NO asumir que todos los templates tienen la misma estructura o componentes.
 
 ## Salidas
 

@@ -17,11 +17,11 @@ google_maps: ""         # URL de la ficha
 instagram: ""
 template_version: "editorial-classic@1.0.0" # Bloquea el template contra actualizaciones accidentales
 tema:
-  nombre: "Editorial Delta"
-  primary: "#e70025"    # color principal (CTA)
-  accent: "#e3c1ad"
-  fondo: "#fcf3ed"
-  tinta: "#35221a"
+  nombre: "Original"
+  primary: "#003934"    # color principal (CTA)
+  accent: "#1a9e8f"
+  fondo: "#e8e7e5"
+  tinta: "#0f172a"
   fuente: "Fraunces"
   fuente_sans: "Archivo"
   orden_secciones: [Hero, Problem, Steps, Reviews, CaseStudy, Pricing]

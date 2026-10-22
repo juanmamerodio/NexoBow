@@ -12,7 +12,7 @@ Esta skill es la interfaz de más alto nivel de NexoBow. Permite tomar el nombre
 Encadena secuencialmente:
 1. `scout-lead`: Extracción de datos y reseñas mediante Google Maps Platform Places API (New) y persistencia en `/assets/{slug}/`.
 2. `generate-client-fiche`: Redacción persuasiva con voseo argentino y dolores Hormozi en `/clients/{slug}.md`, aplicando fallback inteligente a WhatsApp y Ley 25.326.
-3. `build-client-site`: Clonado del template editorial (Delta Cafés), inyección de `site.json`, copia de assets locales y verificación de tests.
+3. `build-client-site`: Clonado del template correspondiente al rubro/arquetipo, inyección de `site.json`, copia de assets locales y verificación de tests.
 4. `audit-code`: Auditoría estricta de 0 JS en cliente, marcado accesible y contraste.
 5. `deploy-cloudflare`: Publicación instantánea en Cloudflare Pages (`https://{slug}.pages.dev`).
 

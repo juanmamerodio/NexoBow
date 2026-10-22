@@ -20,25 +20,30 @@
 
 ---
 
-## 🏗️ Nueva Arquitectura de Templates: Desacoplamiento de Arquetipos Visuales [EN PROGRESO / CATÁLOGO REA +13]
+## 🏗️ Nueva Arquitectura de Templates: Duplicación Completa REA por Referente Internacional
 
-A partir de esta fase, los templates se desacoplan de la profesión y clonan la arquitectura visual auténtica de sus referentes internacionales:
-- **`editorial-classic`** (`nutricionista`, v1.0.0): Diseño editorial cálido, tipografías Fraunces + Archivo, números de pasos, estética atemporal (Delta Cafés). Ideal para nutrición, psicología, escribanías o asesoría boutique.
-- **`obsidian-authority`** (`abogado`, Ticket 20): Modo oscuro/ejecutivo asimétrico, recortes SVG, tipografía Space Grotesk + Inter, botón con dot expansivo (Kümmerlein Rechtsanwälte). Ideal para estudios jurídicos, derecho corporativo y notaría.
-- **`architectural-prestige`** (`clinica`, Ticket 21): Lienzo mineral piedra, Deep Forest Teal, acento menta quirúrgico y prestigio médico (SkyClinics). Ideal para clínicas de alta complejidad y medicina quirúrgica.
-- **`high-ticket-consulting`** (`corporativo`, Ticket 22): Cuadrícula táctica estilo ajedrez, Onyx + Tactical Orange, bloques de impacto (Vetter Consulting). Ideal para consultorías B2B, finanzas y M&A.
-- **`tech-editorial-system`** (`tech`, Ticket 23): Editorial tech moderno, Canvas Vanilla + Think Red, resolución de sistemas complejos (Think Company). Ideal para agencias de software, IT y productos digitales.
-- **`kinetic-performance`** (`deportes`, Ticket 24): Tipografía atlética masiva, Carbon Dark + Kinetic Emerald (The Performance Lab). Ideal para gimnasios, kinesiología y preparación física.
-- **`clinical-pure`** (`dermatologia`, Ticket 25): Espacio negativo clínico, acentos cian/turquesa y enfoque empático (Lipedema Guru). Ideal para dermatología y especialistas médicos.
-- **`architectural-spaces`** (`propiedades`, Ticket 26): Tipografía editorial refinada, bronce oak y galerías arquitectónicas (Lufte). Ideal para desarrollos inmobiliarios y real estate boutique.
-- **`minimalist-hardware`** (`producto`, Ticket 27): Deep Matte Black, precisión óptica e ingeniería de producto (Heavn One). Ideal para hardware específico, dispositivos y productos de autor.
-- **`industrial-authority`** (`construccion`, Ticket 28): Asphalt Dark + Safety Amber, métricas de obra pesada (Reliable Paving). Ideal para constructoras y servicios industriales.
-- **`biotech-clarity`** (`farmaceutica`, Ticket 29): Pure White + Deep Molecule Navy y formulaciones científicas (Roveia). Ideal para biotecnología y laboratorios.
-- **`island-creative-pure`** (`profesional`, Ticket 30): Pacific Cyan + Lagoon Dark para marca personal ágil (Tahiti Numérique). Ideal para consultores y creadores independientes.
-- **`oceanic-luxury`** (`turismo`, Ticket 31): Midnight Navy + Azure Wave y tipografía de alta costura (Bluemore Yachting). Ideal para chárters náuticos y hotelería de lujo.
-- **`harmonic-academy`** (`musica`, Ticket 32): Acoustic Stage Dark + Vibrant Tone Crimson (Ethos Music Academy). Ideal para academias de música y clases artísticas.
+> **Principio Innegociable de Templates:**
+> - **Template (`/templates/{id}/`):** Es una **web ENTERA** duplicada e inspirada en un sitio de referencia real mediante REA (estilo, geometría espacial, navegación, animaciones, componentes únicos, objetos y 3D). Cada template es un desarrollo autónomo con su propia estructura; **NO comparte los componentes ni el layout de Delta Cafés**.
+> - **Copywriting:** El texto (dolores Hormozi, bio, servicios, testimonios, FAQs) es lo que la IA/skill redacta para el cliente y se inyecta en el template. El template provee la infraestructura visual y espacial completa.
+> - **Demo (`/sites/demo-{id}/`):** Compilación de exhibición para el catálogo.
+> - **Preview (`https://preview.nexobow.site/{slug}/`):** Landing generada y personalizada para un prospecto real.
+> - **Delta Cafés:** Es única y exclusivamente la web de referencia de `templates/nutricionista/`. No es el estándar ni la base estructural de los demás templates.
 
-**Matriz de Selección**: Cada rubro dispone de su propio arquetipo visual optimizado para vender el servicio del prestador en menos de 0.8s, manteniendo el contrato desacoplado `site.json` y el Theme Switcher anti-rebote.
+**Catálogo de Templates REA (Webs Enteras Duplicadas por Referente):**
+- **`templates/nutricionista/`** (`editorial-classic`, v1.0.0): Web duplicada de **Delta Cafés** (`deltacafes.com`). Estética editorial cálida, Fraunces + Archivo, números ordinales y ritmo pausado.
+- **`templates/abogado/`** (`obsidian-authority`, Ticket 20): Web duplicada de **Kümmerlein Rechtsanwälte** (`https://www.kuemmerlein.de/`). Estilo ejecutivo brutalista, recortes SVG, Space Grotesk + Inter, botón rectangular con dot expansivo.
+- **`templates/clinica/`** (`architectural-prestige`, Ticket 21): Web duplicada de **SkyClinics** (`https://skyclinics.al/`). Prestigio médico quirúrgico, composición asimétrica mineral piedra (`#e8e7e5`), Deep Forest Teal (`#003934`), Menta quirúrgico (`#1a9e8f`), tarjetas clínicas, animaciones suaves y elementos 3D/gráficos médicos.
+- **`templates/corporativo/`** (`high-ticket-consulting`, Ticket 22): Web duplicada de **Vetter Consulting** (`https://vetter-consulting-en.webflow.io/`). Cuadrícula táctica estilo ajedrez, Onyx + Tactical Orange, bloques modulares de impacto financiero.
+- **`templates/tech/`** (`tech-editorial-system`, Ticket 23): Web duplicada de **Think Company** (`https://www.thinkcompany.com/`). Editorial tech moderno, Canvas Vanilla + Think Red, resolución de sistemas complejos.
+- **`templates/deportes/`** (`kinetic-performance`, Ticket 24): Web duplicada de **The Performance Lab**. Tipografía atlética masiva, Carbon Dark + Kinetic Emerald.
+- **`templates/dermatologia/`** (`clinical-pure`, Ticket 25): Web duplicada de **Lipedema Guru**. Espacio negativo clínico, acentos cian/turquesa y enfoque empático.
+- **`templates/propiedades/`** (`architectural-spaces`, Ticket 26): Web duplicada de **Lufte**. Tipografía editorial refinada, bronce oak y galerías arquitectónicas.
+- **`templates/producto/`** (`minimalist-hardware`, Ticket 27): Web duplicada de **Heavn One**. Deep Matte Black, precisión óptica e ingeniería de producto.
+- **`templates/construccion/`** (`industrial-authority`, Ticket 28): Web duplicada de **Reliable Paving**. Asphalt Dark + Safety Amber, métricas de obra pesada.
+- **`templates/farmaceutica/`** (`biotech-clarity`, Ticket 29): Web duplicada de **Roveia**. Pure White + Deep Molecule Navy y formulaciones científicas.
+- **`templates/profesional/`** (`island-creative-pure`, Ticket 30): Web duplicada de **Tahiti Numérique**. Pacific Cyan + Lagoon Dark para marca personal ágil.
+- **`templates/turismo/`** (`oceanic-luxury`, Ticket 31): Web duplicada de **Bluemore Yachting**. Midnight Navy + Azure Wave y tipografía de alta costura.
+- **`templates/musica/`** (`harmonic-academy`, Ticket 32): Web duplicada de **Ethos Music Academy**. Acoustic Stage Dark + Vibrant Tone Crimson.
 
 ---
 
