@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Fraunces", Georgia, serif;
-  --font-sans: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --color-paper: #fcf3ed;
-  --color-ink: #35221a;
-  --color-primary: #e70025;
-  --color-accent: #e3c1ad;
+  --font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --color-paper: #e8e7e5;
+  --color-ink: #0f172a;
+  --color-primary: #003934;
+  --color-accent: #1a9e8f;
 }
 
 @keyframes marquee {

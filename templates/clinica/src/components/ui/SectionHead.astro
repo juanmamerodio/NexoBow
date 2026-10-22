@@ -12,28 +12,27 @@ const { tag, title, description, align = "left" } = Astro.props;
 const centered = align === "center";
 ---
 
-<header class={centered ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}>
+<header class={centered ? "mx-auto max-w-3xl text-center" : "max-w-2xl"}>
   {
     tag && (
-      <p
-        class={`flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-(--color-primary) ${
+      <div
+        class={`inline-flex items-center gap-2.5 rounded-[12px] bg-(--color-primary)/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-(--color-primary) ${
           centered ? "justify-center" : ""
         }`}
       >
-        <span aria-hidden="true" class="h-px w-8 bg-(--color-primary)"></span>
-        {tag}
-        {centered && <span aria-hidden="true" class="h-px w-8 bg-(--color-primary)"></span>}
-      </p>
+        <span class="h-2 w-2 rounded-full bg-(--color-accent)" aria-hidden="true"></span>
+        <span>{tag}</span>
+      </div>
     )
   }
   <h2
-    class="mt-5 font-display text-4xl leading-[1.05] tracking-tight text-balance lg:text-5xl"
+    class="mt-6 font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight text-balance text-(--color-ink)"
   >
-    <Lead text={title} />
+    <Lead text={title} emClass="text-(--color-primary) italic font-medium" />
   </h2>
   {
     description && (
-      <p class="mt-5 text-lg leading-7 text-(--color-ink)/70">{description}</p>
+      <p class="mt-5 text-base sm:text-lg leading-relaxed text-(--color-ink)/75 font-sans">{description}</p>
     )
   }
 </header>

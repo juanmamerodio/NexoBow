@@ -11,7 +11,7 @@ export const DEFAULT_THEME = {
   primary: "#003934",
   accent: "#1a9e8f",
   fondo: "#e8e7e5",
-  tinta: "#001e1b",
+  tinta: "#0f172a",
   fuente: "Plus Jakarta Sans",
   fuente_sans: "Inter",
 } as const;

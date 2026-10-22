@@ -6,29 +6,26 @@ import { CONTENT } from "../site";
 const { pricing, links, final_cta } = CONTENT;
 ---
 
-<section class="bg-(--color-primary) text-(--color-on-primary)">
-  <div class="mx-auto max-w-4xl px-6 py-24 text-center lg:py-32">
-    <p
-      class="flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-(--color-on-primary)/70"
-    >
-      <span aria-hidden="true" class="h-px w-8 bg-(--color-on-primary)/60"></span>
-      {pricing.garantia}
-      <span aria-hidden="true" class="h-px w-8 bg-(--color-on-primary)/60"></span>
-    </p>
+<section class="bg-(--color-primary) text-(--color-paper) border-t border-(--color-ink)/10">
+  <div class="mx-auto max-w-5xl px-6 py-24 text-center lg:py-32">
+    <div class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-(--color-accent)">
+      <span class="h-2 w-2 rounded-full bg-(--color-accent)"></span>
+      <span>{pricing.garantia}</span>
+    </div>
 
     <h2
-      class="mt-6 font-display text-4xl leading-[1.05] tracking-tight text-balance sm:text-5xl lg:text-6xl"
+      class="mt-8 font-display text-4xl leading-[1.08] font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl text-white"
     >
-      <Lead text={final_cta.titulo} emClass="text-(--color-on-primary) underline decoration-(--color-accent) decoration-2 underline-offset-8" />
+      <Lead text={final_cta.titulo} emClass="text-(--color-accent) italic font-medium" />
     </h2>
 
-    <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-(--color-on-primary)/80">
+    <p class="mx-auto mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-(--color-paper)/80 font-sans">
       {final_cta.bajada}
     </p>
 
     <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
-      <Button href={links.calendly} label={pricing.cta} variant="light" external={true} />
-      <Button href={links.whatsapp} label="WhatsApp" variant="ghost-light" external={true} />
+      <Button href={links.calendly} label={pricing.cta} variant="light" size="lg" external={true} />
+      <Button href={links.whatsapp} label="Consultá por WhatsApp" variant="ghost-light" size="lg" external={true} />
     </div>
   </div>
 </section>

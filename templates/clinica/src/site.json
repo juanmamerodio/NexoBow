@@ -4,16 +4,16 @@
     "primary": "#003934",
     "accent": "#1a9e8f",
     "fondo": "#e8e7e5",
-    "tinta": "#001e1b",
+    "tinta": "#0f172a",
     "fuente": "Plus Jakarta Sans",
     "fuente_sans": "Inter",
     "orden_secciones": ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"]
   },
   "paletas_alternativas": [
     {
-      "nombre": "Stone Emerald (SkyClinics)",
+      "nombre": "Mineral Emerald (SkyClinics)",
       "fondo": "#e8e7e5",
-      "tinta": "#001e1b",
+      "tinta": "#0f172a",
       "primary": "#003934",
       "accent": "#1a9e8f"
     },

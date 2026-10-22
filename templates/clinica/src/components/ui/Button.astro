@@ -9,31 +9,40 @@ interface Props {
 
 const { href, label, variant = "primary", size = "lg", external = false } = Astro.props;
 
-const base =
-  "group inline-flex items-center justify-center gap-3 rounded-full font-semibold transition-all duration-300 ease-out";
-
-const sizes: Record<string, string> = {
-  md: "px-5 py-2.5 text-sm",
-  lg: "px-7 py-4 text-base",
-};
-
-const variants: Record<string, string> = {
-  primary:
-    "bg-(--color-primary) text-(--color-on-primary) hover:gap-4 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--color-primary)",
-  outline:
-    "border border-(--color-ink)/25 text-(--color-ink) hover:border-(--color-ink) hover:bg-(--color-ink) hover:text-(--color-paper) hover:gap-4",
-  light:
-    "bg-(--color-paper) text-(--color-ink) hover:gap-4 hover:brightness-95",
-  "ghost-light":
-    "border border-(--color-on-primary)/40 text-(--color-on-primary) hover:bg-(--color-on-primary) hover:text-(--color-primary) hover:gap-4",
-};
+// Estilo signature SkyClinics: curvatura sutil (12px), acentos menta y microinteracción refinada
+const isSignature = variant === "primary" || variant === "light";
 ---
 
 <a
   href={href}
-  class={`${base} ${sizes[size]} ${variants[variant]}`}
+  class={`group relative inline-flex items-center justify-center font-display font-semibold tracking-tight text-center transition-all duration-300 rounded-[12px] no-underline ${
+    size === "md"
+      ? "px-5 py-2.5 text-xs sm:text-sm min-h-[44px]"
+      : "px-7 py-3.5 sm:py-4 text-sm sm:text-base min-h-[52px]"
+  } ${
+    variant === "primary"
+      ? "bg-(--color-primary) text-(--color-paper) hover:bg-(--color-accent) hover:text-(--color-ink) shadow-sm hover:shadow-md"
+      : variant === "outline"
+      ? "border border-(--color-ink)/25 text-(--color-ink) hover:border-(--color-primary) hover:bg-(--color-primary) hover:text-(--color-paper)"
+      : variant === "light"
+      ? "bg-white/90 text-(--color-primary) hover:bg-(--color-accent) hover:text-(--color-ink) shadow-sm hover:shadow-md"
+      : "border border-(--color-paper)/30 text-(--color-paper) hover:bg-(--color-paper) hover:text-(--color-primary)"
+  }`}
   {...(external ? { target: "_blank", rel: "noopener" } : {})}
 >
+  {
+    isSignature && (
+      <span
+        aria-hidden="true"
+        class="inline-block h-2 w-2 rounded-full bg-(--color-accent) mr-3 flex-shrink-0 transition-transform duration-300 ease-out group-hover:scale-150"
+      />
+    )
+  }
   <span>{label}</span>
-  <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+  <span
+    aria-hidden="true"
+    class="ml-2.5 transition-transform duration-300 group-hover:translate-x-1 opacity-70 group-hover:opacity-100"
+  >
+    →
+  </span>
 </a>

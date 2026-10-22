@@ -9,26 +9,43 @@ const navItems = SECTION_NAV.filter((item) => order.includes(item.key));
 ---
 
 <header
-  class="sticky top-0 z-40 border-b border-(--color-ink)/10 bg-(--color-paper)/90 backdrop-blur-md"
+  class="sticky top-0 z-40 border-b border-(--color-ink)/10 bg-(--color-paper)/85 backdrop-blur-md transition-colors"
 >
-  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-6">
-    <a href="#inicio" class="flex items-baseline gap-2">
-      <span class="font-display text-xl font-semibold tracking-tight">
-        {prestador.nombre}
-      </span>
-      <span
-        class="hidden text-xs uppercase tracking-[0.2em] text-(--color-ink)/60 sm:inline"
+  <div class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-6 lg:px-12">
+    <!-- Logotipo Institucional Sobrio SkyClinics -->
+    <a href="#inicio" class="group flex items-center gap-3 no-underline">
+      <div
+        class="flex h-10 w-10 items-center justify-center rounded-[10px] bg-(--color-primary) text-(--color-paper) transition-all duration-300 group-hover:bg-(--color-accent) group-hover:text-(--color-ink)"
       >
-        {prestador.rol}
-      </span>
+        <svg
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 2v20M2 12h20"></path>
+        </svg>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-display text-lg font-bold tracking-tight text-(--color-ink) sm:text-xl">
+          {prestador.nombre}
+        </span>
+        <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-(--color-primary)">
+          Excelencia Quirúrgica & Médica
+        </span>
+      </div>
     </a>
 
-    <nav class="hidden items-center gap-7 lg:flex" aria-label="Secciones">
+    <!-- Navegación Institucional Espaciosa -->
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="Secciones">
       {
         navItems.map((item) => (
           <a
             href={item.href}
-            class="text-sm font-medium text-(--color-ink)/70 transition-colors hover:text-(--color-ink)"
+            class="text-xs font-semibold uppercase tracking-[0.18em] text-(--color-ink)/75 transition-colors hover:text-(--color-primary)"
           >
             {item.label}
           </a>
@@ -36,9 +53,21 @@ const navItems = SECTION_NAV.filter((item) => order.includes(item.key));
       }
     </nav>
 
+    <!-- CTAs Header: Valoración quirúrgica & WhatsApp -->
     <div class="flex items-center gap-3">
-      <Button href={links.whatsapp} label="WhatsApp" variant="outline" size="md" external={true} />
-      <Button href={links.calendly} label="Agendá" size="md" external={true} />
+      <Button
+        href={links.whatsapp}
+        label="WhatsApp"
+        variant="outline"
+        size="md"
+        external={true}
+      />
+      <Button
+        href={links.calendly}
+        label="Valoración Inicial"
+        size="md"
+        external={true}
+      />
     </div>
   </div>
 </header>
