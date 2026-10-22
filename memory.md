@@ -75,17 +75,13 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
   - Generada y auditada demo `sites/demo-abogado/` (16 tests unitarios, HTML 33.1 KB, presupuesto JS de 1.87 KB vs límite 35 KB, a11y validado). Sincronizada a `dist-previews/demo-abogado/` para `https://preview.nexobow.site/demo-abogado/`.
   - Actualizado catálogo en `web/src/config.ts` (Obsidian Authority activado en vivo).
   - Suite completa de 37 tests pasando al 100%.
-- [2026-10-21] Implementación de Template #03 REA (`https://skyclinics.al`):
-  - Creado `templates/clinica/` bajo arquetipo `architectural-prestige` (Lienzo piedra `#e8e7e5`, Deep Forest Teal `#003934`, Menta `#1a9e8f`, tipografía Plus Jakarta Sans + Inter, 4 paletas alternativas en ThemeSwitcher).
-  - Versionado con tags git `template/clinica@1.0.0` y `template/architectural-prestige@1.0.0`.
-  - Generada y auditada demo `sites/demo-clinica/` (16 tests unitarios, HTML 33.6 KB, presupuesto JS de 1.87 KB vs límite 35 KB, a11y validado). Sincronizada a `dist-previews/demo-clinica/` para `https://preview.nexobow.site/demo-clinica/`.
-  - Actualizado catálogo en `web/src/config.ts` (Template #03: Architectural Prestige para Clínicas & Salud Quirúrgica activado en vivo).
-  - Suite completa de 37 tests pasando al 100%.
-- [2026-10-21] Implementación de Template #04 REA (`https://vetter-consulting-en.webflow.io/`):
-  - Creado `templates/corporativo/` bajo arquetipo `high-ticket-consulting` (Onyx Black `#090909`, Tiza `#f4f4f4`, Tactical Orange `#ff891d`, superficies en cuadrícula ejecutiva `#151515` / `#1e1e1e`, tipografía Plus Jakarta Sans + Inter, 4 paletas alternativas en ThemeSwitcher).
-  - Versionado con tags git `template/corporativo@1.0.0` y `template/high-ticket-consulting@1.0.0`.
-  - Mapeo de resolución integrado en `build-client-site.mjs`, `generate-client-fiche.mjs` y `tests/archetype-decoupling.test.mjs`.
-  - Generada y auditada demo `sites/demo-corporativo/` (16 tests unitarios, HTML 38.3 KB, presupuesto JS de 1.87 KB vs límite 35 KB, a11y validado). Sincronizada a `dist-previews/demo-corporativo/` para `https://preview.nexobow.site/demo-corporativo/`.
-  - Actualizado catálogo en `web/src/config.ts` (Template #08: High-Ticket Consulting / Tactical Matrix activado en vivo).
-  - Suite completa de 37 tests pasando al 100%.
+- [2026-10-22] Reconstrucción y Clon Fiel de Template #03 REA (`templates/clinica/` - Ticket 21):
+  - Reemplazados todos los componentes heredados de Delta Cafés por la arquitectura visual, espacial y cromática auténtica de SkyClinics (`architectural-prestige`).
+  - Paleta 60-30-10: Lienzo mineral piedra (`#e8e7e5`), Deep Forest Teal (`#003934`), Menta quirúrgico (`#1a9e8f`) y Slate Navy (`#0f172a`).
+  - Tipografías abiertas: `Plus Jakarta Sans` + `Inter`.
+  - Componentes exclusivos: `Header.astro` institucional espacioso con cruz médica sobria, `Hero.astro` asimétrico con badges de certificación y diagnóstico 3D, tarjetas clínicas de alta gama `Problem.astro` y `Steps.astro` con esquinas 16px, `Button.astro` con curvatura 12px y dot acento menta expansivo.
+  - Sincronizada y auditada demo `sites/demo-clinica/` (1.87 KB JS propio vs presupuesto <= 35 KB, 0 scripts de terceros).
+  - Tags inmutables `template/clinica@1.0.0` y `template/architectural-prestige@1.0.0` actualizados y pusheados a GitHub.
+  - Suite completa de 37 tests unitarios y de integración 100% pasando en verde.
+
 
