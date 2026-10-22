@@ -8,7 +8,7 @@ import { spawnSync } from "node:child_process";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-test("E2E Pipeline Lead-to-Live Completo", () => {
+test("E2E Pipeline Lead-to-Live Completo", async () => {
   const testSlug = "e2e-nutri-test";
   const assetsDir = join(REPO_ROOT, "assets", testSlug);
   const fichePath = join(REPO_ROOT, "clients", `${testSlug}.md`);
@@ -34,12 +34,15 @@ test("E2E Pipeline Lead-to-Live Completo", () => {
   assert.ok(existsSync(join(siteDir, "src", "site.json")), "site.json debe existir en el sitio clonado");
   assert.ok(existsSync(join(siteDir, "dist", "index.html")), "dist/index.html debe haberse compilado");
 
-  // Verificar 0 scripts en el HTML
+  // Verificar conformidad de auditoría y presupuesto JS en sites/ (auditHtmlDocument)
   const html = readFileSync(join(siteDir, "dist", "index.html"), "utf8");
-  const scripts = (html.match(/<script\b[^>]*>([\s\S]*?)<\/script>/gi) || []).filter(
-    (t) => !/type=["']application\/ld\+json["']/i.test(t)
-  );
-  assert.equal(scripts.length, 0, "No debe haber ningún script de cliente en el HTML");
+  const { auditHtmlDocument } = await import("../scripts/audit-site.mjs");
+  const auditRes = auditHtmlDocument(html, {
+    mode: "site",
+    distDir: join(siteDir, "dist"),
+  });
+  assert.equal(auditRes.ok, true, `Auditoría falló en pipeline E2E:\n${auditRes.errors.join("\n")}`);
+  assert.ok(auditRes.jsBytes <= 35 * 1024, "El JS propio debe estar dentro del presupuesto de 35 KB");
 
   // Limpieza posterior
   rmSync(assetsDir, { recursive: true, force: true });

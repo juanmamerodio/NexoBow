@@ -20,26 +20,26 @@
 
 ---
 
-## 🏗️ Nueva Arquitectura de Templates: Desacoplamiento de Arquetipos Visuales
+## 🏗️ Nueva Arquitectura de Templates: Desacoplamiento de Arquetipos Visuales [COMPLETADO / ACTIVO]
 
 A partir de esta fase, los templates se desacoplan de la profesión:
-- **`editorial-classic`**: Diseño editorial cálido, tipografías serif + sans estructuradas, números de pasos, estética atemporal (Delta Cafés). Ideal para nutrición, psicología, escribanías, arquitectura o asesoría legal boutique.
+- **`editorial-classic`** (v1.0.0, tag git `template/editorial-classic@1.0.0` y retrocompatible con `nutricionista`): Diseño editorial cálido, tipografías serif + sans estructuradas, números de pasos, estética atemporal (Delta Cafés). Ideal para nutrición, psicología, escribanías, arquitectura o asesoría legal boutique.
 - **`obsidian-authority`**: Modo oscuro ejecutivo, tarjetas con bordes nítidos, acentos bronce/dorado o neón sobrio. Ideal para estudios jurídicos corporativos, odontología de alta gama, estética masculina o consultoría financiera.
 - **`minimalist-pure`**: Espacio negativo clínico, acentos cian/turquesa o neutros, tipografía sans limpia. Ideal para dermatología, medicina general, psicología o consultoría moderna.
 - **`kinetic-cards`**: Alto contraste dinámico, métricas destacadas y módulos visuales interactivos. Ideal para kinesiología deportiva, centros de entrenamiento, estética corporal o rehabilitación.
 
-**Matriz de Selección**: Un abogado puede usar `editorial-classic` o `obsidian-authority`; un odontólogo puede usar `minimalist-pure` u `obsidian-authority`. La IA selecciona según la reputación, estilo y formalidad detectados en el scouting.
+**Matriz de Selección**: Un abogado puede usar `editorial-classic` u `obsidian-authority`; un odontólogo puede usar `minimalist-pure` u `obsidian-authority`. La IA selecciona según la reputación, estilo y formalidad detectados en el scouting.
 
 ---
 
-## 🎨 Theme Switcher en Previews (Retención Anti-Rebote)
+## 🎨 Theme Switcher en Previews (Retención Anti-Rebote) [COMPLETADO / ACTIVO]
 
-Para evitar que un lead descarte la propuesta porque *"no le gustaron los colores"*, todas las previews en `https://preview.nexobow.site/{slug}/` incluyen:
-1. **Píldora Flotante Discreta (Bottom-Right)**: Permite alternar con un clic entre 3 y 4 paletas precalibradas (ej: *Original*, *Obsidian Gold*, *Clinical Cyan*, *Warm Terracotta*).
-2. **Reactividad Instantánea vía CSS Custom Properties**: Modifica `--color-primary`, `--color-accent`, `--color-bg`, `--color-ink` en el `:root` sin recargar la página.
-3. **Persistencia en LocalStorage**: Si el cliente vuelve a entrar al enlace días después, recuerda la paleta que eligió.
+Para evitar que un lead descarte la propuesta porque *"no le gustaron los colores"*, todas las previews en `https://preview.nexobow.site/{slug}/` incluyen el componente `ThemeSwitcher.astro`:
+1. **Píldora Flotante Discreta (Bottom-Right)**: Permite alternar con un clic entre 4 paletas precalibradas (*Original/Principal*, *Obsidian Gold*, *Clinical Cyan*, *Warm Terracotta*).
+2. **Reactividad Instantánea vía CSS Custom Properties**: Modifica `--color-primary`, `--color-accent`, `--color-paper`, `--color-ink` en el `:root` sin recargar la página (< 2 KB, JS nativo vanilla).
+3. **Persistencia en LocalStorage**: Si el cliente vuelve a entrar al enlace días después, recuerda la paleta elegida bajo la clave `nexobow_theme`.
 4. **Captura y Cierre por WhatsApp**: Incluye el botón *"Pedir esta versión"* que abre un chat directo con el mensaje:
-   > *"Hola Juanma, estuve viendo la web demo y me encantó la combinación [Nombre de Paleta]. ¿Cómo seguimos para activarla?"*
+   > *"Hola Juanma! Estuve viendo la web demo y me encantó la combinación [Nombre de Paleta]. ¿Cómo seguimos para activarla?"*
 
 ---
 

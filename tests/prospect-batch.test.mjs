@@ -37,8 +37,14 @@ test("N01 - prospect-batch genera previews en dist-previews/{slug}/ con reporte 
     assert.ok(existsSync(previewIndex), `Debe existir ${previewIndex}`);
 
     const html = readFileSync(previewIndex, "utf8");
-    // Verificar 0 scripts en cliente (SSG puro)
-    assert.ok(!html.includes("<script"), `La landing demo ${lead.slug} no debe incluir tags <script>`);
+    // Verificar cumplimiento de presupuesto JS en sites/ (auditHtmlDocument)
+    const { auditHtmlDocument } = await import("../scripts/audit-site.mjs");
+    const auditRes = auditHtmlDocument(html, {
+      mode: "site",
+      distDir: join(REPO_ROOT, "dist-previews", lead.slug),
+    });
+    assert.equal(auditRes.ok, true, `Auditoría falló en prospect-batch para ${lead.slug}:\n${auditRes.errors.join("\n")}`);
+    assert.ok(auditRes.jsBytes <= 35 * 1024, "El JS propio debe estar dentro del presupuesto de 35 KB");
     assert.ok(html.includes(lead.nombre), `La landing demo debe incluir el nombre del profesional ${lead.nombre}`);
 
     // Limpiar artefactos mock generados por el test

@@ -339,6 +339,50 @@ export const RUBRO_BRANDING_MAP = {
   estetica: [CONTEXTUAL_BRANDING_PALETTES[2], CONTEXTUAL_BRANDING_PALETTES[0], CONTEXTUAL_BRANDING_PALETTES[1], CONTEXTUAL_BRANDING_PALETTES[3]],
 };
 
+export const DEFAULT_ALTERNATIVE_PALETTES = [
+  {
+    nombre: "Obsidian Gold",
+    fondo: "#090D16",
+    tinta: "#F1F5F9",
+    primary: "#D97706",
+    accent: "#B45309",
+  },
+  {
+    nombre: "Clinical Cyan",
+    fondo: "#F8FAFC",
+    tinta: "#0F172A",
+    primary: "#0284C7",
+    accent: "#38BDF8",
+  },
+  {
+    nombre: "Warm Terracotta",
+    fondo: "#FAF6F0",
+    tinta: "#2C2523",
+    primary: "#B45309",
+    accent: "#F59E0B",
+  },
+];
+
+export function generateAlternativePalettes(mainPalette = {}) {
+  const primaryOption = {
+    nombre: mainPalette.name || mainPalette.nombre || "Original (Principal)",
+    fondo: mainPalette.fondo || "#fcf3ed",
+    tinta: mainPalette.tinta || "#35221a",
+    primary: mainPalette.primary || "#e70025",
+    accent: mainPalette.accent || "#e3c1ad",
+  };
+
+  const alternatives = DEFAULT_ALTERNATIVE_PALETTES.map((pal) => ({
+    nombre: pal.nombre,
+    fondo: pal.fondo,
+    tinta: pal.tinta,
+    primary: pal.primary,
+    accent: pal.accent,
+  }));
+
+  return [primaryOption, ...alternatives];
+}
+
 function normalizeRubroKey(raw = "") {
   const clean = String(raw || "")
     .toLowerCase()
@@ -479,6 +523,21 @@ async function main() {
     .map((f) => `- **${f.q}**: ${f.a}`)
     .join("\n");
 
+  const templateArchetype = rawData.template_archetype || "editorial-classic";
+  const alternativePalettes = generateAlternativePalettes(branding);
+
+  const formatPalettesYaml = (pals) => {
+    return pals
+      .map(
+        (p) => `  - nombre: "${p.nombre}"
+    fondo: "${p.fondo}"
+    tinta: "${p.tinta}"
+    primary: "${p.primary}"
+    accent: "${p.accent}"`
+      )
+      .join("\n");
+  };
+
   const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site";
   const clientMdContent = `---
 id: ${sheetId || Date.now().toString().slice(-4)}
@@ -488,6 +547,7 @@ created_at: "${createdAt}"
 last_activity_at: "${lastActivityAt}"
 expires_at: "${expiresAt}"
 rubro: ${vertical}
+template_archetype: "${templateArchetype}"
 template_version: "${templateVersion}"
 nombre: "${rawData.nombre}"
 slug: "${slug}"
@@ -498,6 +558,7 @@ calendly: "${calendlyUrl}"
 google_maps: "${rawData.website || "https://maps.google.com/?cid=gmp-" + (rawData.placeId || slug)}"
 instagram: "${rawData.website || ""}"
 tema:
+  nombre: "${branding.paletteName || "Editorial Delta"}"
   primary: "${branding.primary}"
   accent: "${branding.accent}"
   fondo: "${branding.fondo}"
@@ -505,6 +566,8 @@ tema:
   fuente: "${branding.fuente}"
   fuente_sans: "${branding.fuente_sans}"
   orden_secciones: ${JSON.stringify(branding.orden_secciones)}
+paletas_alternativas:
+${formatPalettesYaml(alternativePalettes)}
 consentimiento_testimonios: false
 setup_ars: 189999
 abono_ars: 12259

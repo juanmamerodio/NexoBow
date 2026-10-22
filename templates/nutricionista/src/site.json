@@ -9,6 +9,36 @@
     "fuente_sans": "Archivo",
     "orden_secciones": ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"]
   },
+  "paletas_alternativas": [
+    {
+      "nombre": "Original (Editorial Delta)",
+      "fondo": "#fcf3ed",
+      "tinta": "#35221a",
+      "primary": "#e70025",
+      "accent": "#e3c1ad"
+    },
+    {
+      "nombre": "Obsidian Gold",
+      "fondo": "#090D16",
+      "tinta": "#F1F5F9",
+      "primary": "#D97706",
+      "accent": "#B45309"
+    },
+    {
+      "nombre": "Clinical Cyan",
+      "fondo": "#F8FAFC",
+      "tinta": "#0F172A",
+      "primary": "#0284C7",
+      "accent": "#38BDF8"
+    },
+    {
+      "nombre": "Warm Terracotta",
+      "fondo": "#FAF6F0",
+      "tinta": "#2C2523",
+      "primary": "#B45309",
+      "accent": "#F59E0B"
+    }
+  ],
   "content": {
     "hero": {
       "eyebrow": "Nutrición online · Sin dietas de moda",

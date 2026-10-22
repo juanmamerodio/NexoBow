@@ -31,11 +31,61 @@ export function parseFrontmatter(raw) {
   return { data: parseYaml(m[1]) ?? {}, body: m[2] ?? "" };
 }
 
+export const RUBRO_TO_ARCHETYPE_MAP = {
+  nutricionista: "editorial-classic",
+  psicologo: "editorial-classic",
+  abogado: "editorial-classic",
+  odontologo: "editorial-classic",
+  kinesiologo: "editorial-classic",
+  estetica: "editorial-classic",
+};
+
+export const ARCHETYPE_ALIASES = {
+  "editorial-classic": ["nutricionista", "editorial-classic"],
+  "obsidian-authority": ["abogado", "obsidian-authority"],
+  "minimalist-pure": ["odontologo", "minimalist-pure"],
+  "kinetic-cards": ["kinesiologo", "kinetic-cards"],
+};
+
+export function resolveTemplateArchetype(fm = {}) {
+  if (fm.template_archetype && String(fm.template_archetype).trim()) {
+    return String(fm.template_archetype).trim();
+  }
+  const rubro = (fm.rubro || "nutricionista").toLowerCase().trim();
+  return RUBRO_TO_ARCHETYPE_MAP[rubro] || "editorial-classic";
+}
+
+export function resolveTemplateSourceDirectory(nameOrArchetype, repoRoot = REPO_ROOT) {
+  const directPath = join(repoRoot, "templates", nameOrArchetype);
+  if (existsSync(directPath)) return directPath;
+
+  // Si se pasó un arquetipo (ej: editorial-classic), buscar el template físico compatible
+  if (nameOrArchetype === "editorial-classic") {
+    const fallbackPath = join(repoRoot, "templates", "nutricionista");
+    if (existsSync(fallbackPath)) return fallbackPath;
+  }
+
+  // Si se pasó un rubro que mapea a una carpeta existente
+  for (const [archetype, aliases] of Object.entries(ARCHETYPE_ALIASES)) {
+    if (archetype === nameOrArchetype || aliases.includes(nameOrArchetype)) {
+      for (const alias of aliases) {
+        const candidate = join(repoRoot, "templates", alias);
+        if (existsSync(candidate)) return candidate;
+      }
+    }
+  }
+
+  return directPath;
+}
+
 export function resolveTemplateVersion(fm = {}, templatePkgVersion = "1.0.0") {
-  const rubro = fm.rubro || "nutricionista";
   if (fm.template_version && String(fm.template_version).trim()) {
     return String(fm.template_version).trim();
   }
+  if (fm.template_archetype && String(fm.template_archetype).trim()) {
+    return `${String(fm.template_archetype).trim()}@${templatePkgVersion}`;
+  }
+  const rubro = fm.rubro || "nutricionista";
   return `${rubro}@${templatePkgVersion}`;
 }
 
@@ -206,13 +256,14 @@ function main() {
   }
 
   const vertical = fm.rubro || "nutricionista";
+  const archetype = resolveTemplateArchetype(fm);
   const slug = fm.slug;
-  const templateDir = join(REPO_ROOT, "templates", vertical);
+  const templateDir = resolveTemplateSourceDirectory(archetype, REPO_ROOT);
   const siteDir = join(REPO_ROOT, "sites", slug);
   const lockPath = join(siteDir, ".template-lock.json");
 
   if (!existsSync(templateDir)) {
-    fail(`Template no encontrado: templates/${vertical} (en MVP solo existe 'nutricionista').`);
+    fail(`Template no encontrado para arquetipo '${archetype}' ni rubro '${vertical}'.`);
   }
 
   const templatePkgPath = join(templateDir, "package.json");
@@ -367,6 +418,7 @@ function main() {
       },
       consentimiento_testimonios: Boolean(fm.consentimiento_testimonios),
     },
+    paletas_alternativas: fm.paletas_alternativas || baseSite.paletas_alternativas || [],
   };
 
   const finalSite = deepMerge(baseSite, patch);
