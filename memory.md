@@ -69,3 +69,16 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
 - [2026-10-21] Cierre de Tickets `07`–`15` (`.scratch/nexobow-v2/issues/`): dominio unificado `https://preview.nexobow.site/{slug}/`, seam `LeadStore` (`defaultLeadStore`, `createInMemoryLeadStore`, `createSheetsAdapter`), escritura automática en Columna G sin tocar Columna L al compilar sitios, versionado por tags git (`template/nutricionista@1.0.0`), auditoría con presupuesto JS (`<= 35 KB` en `/sites/` vs `0 JS` en `web/`), índice en `tickets.md` y backlog REA de 9 templates documentado como pendiente de que el usuario elija las webs de referencia.
 - [2026-10-21] Cierre de Ticket `16` (`.scratch/nexobow-v2/issues/16-rea-inspect-extractor.md`): implementado `scripts/rea-inspect.mjs` (extracción 60-30-10, mapeo de tipografías comerciales a Google Fonts abiertas, bloque `tema` para `site.json` y fallback tolerante a fallos de red/HTML malformado) con 5 pruebas unitarias TDD (`tests/rea-inspect.test.mjs`) que elevan la suite a 32 tests 100% verdes.
 - [2026-10-21] Implementación completa de `SPEC-ARCHETYPES-SWITCHER.md` (AC-01 a AC-04): Desacoplamiento híbrido de arquetipos visuales (`template_archetype: editorial-classic` y tag git alias `template/editorial-classic@1.0.0`), inyección de `paletas_alternativas` multivariantes en la ficha (`generateAlternativePalettes`), componente flotante `ThemeSwitcher.astro` con persistencia en `localStorage` y CTA directo a WhatsApp, suite TDD (`tests/archetype-decoupling.test.mjs` y `tests/theme-switcher.test.mjs`), suite de 37 tests 100% pasando en verde.
+- [2026-10-21] Implementación de Template #02 REA (`https://www.kuemmerlein.de/`):
+  - Creado `templates/abogado/` bajo arquetipo `obsidian-authority` (Dark Executive `#090D16`/`#F1F5F9`/`#D97706` con acento Kümmerlein `#F7F788`, tipografías Archivo + Inter, 4 paletas alternativas en ThemeSwitcher).
+  - Versionado con tags git `template/abogado@1.0.0` y `template/obsidian-authority@1.0.0`.
+  - Generada y auditada demo `sites/demo-abogado/` (16 tests unitarios, HTML 33.1 KB, presupuesto JS de 1.87 KB vs límite 35 KB, a11y validado). Sincronizada a `dist-previews/demo-abogado/` para `https://preview.nexobow.site/demo-abogado/`.
+  - Actualizado catálogo en `web/src/config.ts` (Obsidian Authority activado en vivo).
+  - Suite completa de 37 tests pasando al 100%.
+- [2026-10-21] Implementación de Template #03 REA (`https://skyclinics.al`):
+  - Creado `templates/clinica/` bajo arquetipo `architectural-prestige` (Lienzo piedra `#e8e7e5`, Deep Forest Teal `#003934`, Menta `#1a9e8f`, tipografía Plus Jakarta Sans + Inter, 4 paletas alternativas en ThemeSwitcher).
+  - Versionado con tags git `template/clinica@1.0.0` y `template/architectural-prestige@1.0.0`.
+  - Generada y auditada demo `sites/demo-clinica/` (16 tests unitarios, HTML 33.6 KB, presupuesto JS de 1.87 KB vs límite 35 KB, a11y validado). Sincronizada a `dist-previews/demo-clinica/` para `https://preview.nexobow.site/demo-clinica/`.
+  - Actualizado catálogo en `web/src/config.ts` (Template #03: Architectural Prestige para Clínicas & Salud Quirúrgica activado en vivo).
+  - Suite completa de 37 tests pasando al 100%.
+
