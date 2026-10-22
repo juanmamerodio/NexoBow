@@ -202,9 +202,10 @@ flowchart TD
 | `impeccable` | Skill | ✅ Activo | Filtro anti-mediocridad visual y triage rápido de diseño (`detect`, `bolder`, `polish`). |
 | `lead-lifecycle` | Skill | ✅ Activo | Evaluación de 7 días, alertas de urgencia (<48hs) y purga de demos. |
 | `flow-advisor` | Skill | ✅ Activo | Asesor de siguientes pasos según ciclo SDD y métricas. |
-| `screenshot-qa` | Skill | ⏳ Fase 2 | Auditoría visual headless (móvil y desktop) con Playwright. |
-| `objection-handler` | Skill | ⏳ Fase 2 | Manejo de objeciones comerciales por WhatsApp en voseo argentino. |
-| `domain-provisioner` | Skill | ⏳ Fase 2 | Aprovisionamiento de DNS y SSL para dominios propios de clientes. |
+| `screenshot-qa` | Skill | ✅ Activo | Auditoría visual headless (móvil y desktop) con Playwright. |
+| `objection-handler` | Skill | ✅ Activo | Manejo de objeciones comerciales por WhatsApp en voseo argentino. |
+| `domain-provisioner` | Skill | ✅ Activo | Aprovisionamiento de DNS y SSL para dominios propios de clientes. |
+| `preview-telemetry` | Skill | ✅ Activo | Telemetría pasiva (<1 KB, 0 cookies) y tracking de eventos Ley 25.326. |
 | `Batch Hunter` | Agente Daemon | ⏳ Fase 3 | Scouting nocturno autónomo sin intervención humana. |
 | `Watchdog & Alerter` | Agente Daemon | ⏳ Fase 3 | Monitoreo 24/7 y reporte diario al Telegram de Juanma. |
 | `Business-Bow` | Agente | ⏳ Fase 3 | Estrategia de crecimiento, finanzas, márgenes y rentabilidad. |

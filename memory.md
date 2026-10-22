@@ -105,5 +105,13 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
   - Sincronizada vista previa a `dist-previews/55-gonzalo-benitez-abogado/` lista para servir en `https://preview.nexobow.site/55-gonzalo-benitez-abogado/`.
   - Tags git inmutables `template/abogado@1.0.0` y `template/obsidian-authority@1.0.0` actualizados y pusheados a GitHub.
   - Suite de pruebas completa cerrada con TDD (`npm test`): 39 tests pasando 100% en verde.
+- [2026-10-22] Cierre Integral de Frente D (Fábrica de Prospección & Conversión B2B + Claude Code Ready):
+  - **Higiene Anti-Bloat**: Deshabilitado `data-agent-kit-plugin` en el servidor de lenguaje local (eliminando 11 servidores MCPs y 37 herramientas irrelevantes de BigQuery/Spark); purgadas 5 skills no operativas en `.agents/skills/`.
+  - **Symlink Claude Code**: Creado enlace canónico `.claude/skills` -> `../.agents/skills`, unificando en tiempo real las herramientas para Antigravity y Claude Code CLI.
+  - **Ticket 34 (`objection-handler`)**: Implementado `scripts/handle-objection.mjs` y `.agents/skills/objection-handler/SKILL.md` con matriz de 5 objeciones y 3 ángulos persuasivos (Hormozi, Reversión de riesgo & 7 días, AfterBow) en estricto voseo argentino.
+  - **Ticket 35 (`screenshot-qa`)**: Implementado `scripts/screenshot-qa.mjs` y `.agents/skills/screenshot-qa/SKILL.md` para auditoría visual headless en dual-viewport (375px móvil y 1440px desktop) con detección de `overflow-x` y pre-flight check en `build-client-site.mjs` (`--run-qa`).
+  - **Ticket 36 (`domain-provisioner`)**: Implementado `scripts/domain-provisioner.mjs` y `.agents/skills/domain-provisioner/SKILL.md` para handoff de dominios propios (`.com.ar` en NIC Argentina y `.com`), generando instrucciones DNS CNAME y verificación de resolución.
+  - **Ticket 37 (`preview-telemetry`)**: Implementado `scripts/preview-telemetry.mjs` y `.agents/skills/preview-telemetry/SKILL.md` con script pasivo de 743 bytes (<1 KB, 0 cookies, Ley 25.326 compliant) para registrar aperturas, clicks de WhatsApp y cambios en el ThemeSwitcher.
+  - **Ticket 38 (Integración & TDD)**: Suite ampliada de 39 a **55 tests unitarios y de integración 100% pasando en verde**. Sistema blindado y listo para salir a prospectar.
 
 

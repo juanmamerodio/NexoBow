@@ -8,6 +8,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { spawnSync } from "node:child_process";
 import { parse as parseYaml } from "yaml";
 import { defaultLeadStore, buildPreviewUrl } from "./sheets-sync.mjs";
+import { auditVisualLanding } from "./screenshot-qa.mjs";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -223,6 +224,7 @@ function main() {
   let baseArg = null;
   let upgradeRequested = false;
   let skipBuild = false;
+  let runQa = false;
 
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--base" && args[i + 1]) {
@@ -232,6 +234,8 @@ function main() {
       upgradeRequested = true;
     } else if (args[i] === "--skip-build") {
       skipBuild = true;
+    } else if (args[i] === "--run-qa") {
+      runQa = true;
     } else if (!args[i].startsWith("--") && !ficheArg) {
       ficheArg = args[i];
     }
@@ -514,6 +518,21 @@ function main() {
 
   // Sincronizar URL de preview en Columna G de Google Sheets mediante LeadStore
   syncBuildPreviewUrlToStore({ fm, slug });
+
+  if (runQa) {
+    console.log(`\x1b[36m[build-site]\x1b[0m Ejecutando QA visual dual-viewport para ${slug}...`);
+    auditVisualLanding({ slug }).then((res) => {
+      if (res.skipped) {
+        console.log(`[build-site QA] Omitido: ${res.reason}`);
+      } else if (!res.passed) {
+        console.warn(`[build-site QA ADVERTENCIA] Se detectaron desbordes visuales en ${slug}`);
+      } else {
+        console.log(`[build-site QA] ✓ Visual QA aprobado en móvil (375px) y desktop (1440px)`);
+      }
+    }).catch((err) => {
+      console.warn(`[build-site QA Advertencia]: ${err.message}`);
+    });
+  }
 
   console.log(`
 \x1b[32m=======================================================

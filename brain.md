@@ -241,5 +241,12 @@ NexoBow se optimiza para **Costo Cero de Infraestructura**:
   - **Resolución Transparente**: Actualizado `scripts/build-client-site.mjs`, `scripts/generate-client-fiche.mjs` y `tests/archetype-decoupling.test.mjs` para resolver `corporativo`, `consultor` y `high-ticket-consulting` dinámicamente hacia `templates/corporativo/`.
   - **Versionado Git Inmutable**: Fijados tags `template/corporativo@1.0.0` y `template/high-ticket-consulting@1.0.0`.
   - **Build & Auditoría Demo**: Creada ficha demo `clients/demo-corporativo.md` (Lic. Ignacio Valenzuela - Consultoría Financiera & Escalamiento B2B), compilada en `sites/demo-corporativo/` (16 tests unitarios pasando, HTML 38.3 KB, presupuesto JS de 1.87 KB << 35 KB, a11y validado) y sincronizada a `dist-previews/demo-corporativo/` accesible en `https://preview.nexobow.site/demo-corporativo/`.
-  - **Catálogo de NexoBow**: Activado Template 08 (`High-Ticket Consulting / Tactical Matrix`) como *"En Vivo (Demo)"* en `web/src/config.ts`. Suite total de 37 tests 100% verde.
+- [2026-10-22] Cierre Integral de Frente D (Fábrica de Prospección & Conversión B2B + Claude Code Ready):
+  - **Higiene Anti-Bloat**: Deshabilitado `data-agent-kit-plugin` en el language server local (recuperando 11 servidores MCPs y 37 herramientas ajenas); eliminadas 5 skills no operativas en `.agents/skills/`.
+  - **Symlink Canónico Claude Code**: Establecido `.claude/skills` -> `../.agents/skills`, garantizando interoperabilidad nativa entre Antigravity y Claude Code sin duplicación de código.
+  - **Skill `objection-handler`**: Implementado `scripts/handle-objection.mjs` y `.agents/skills/objection-handler/SKILL.md` con 5 categorías y 3 ángulos persuasivos (Hormozi, Reversión de riesgo 7 días, AfterBow) en voseo argentino profesional.
+  - **Skill `screenshot-qa`**: Implementado `scripts/screenshot-qa.mjs` y `.agents/skills/screenshot-qa/SKILL.md` para auditoría visual headless (375px móvil / 1440px desktop) con detección automática de `overflow-x` y pre-flight check en `build-client-site.mjs` (`--run-qa`).
+  - **Skill `domain-provisioner`**: Implementado `scripts/domain-provisioner.mjs` y `.agents/skills/domain-provisioner/SKILL.md` para handoff de dominios propios (`.com.ar` en NIC Argentina y `.com` globales) hacia Cloudflare Pages con verificación de registros CNAME y SSL.
+  - **Skill `preview-telemetry`**: Implementado `scripts/preview-telemetry.mjs` y `.agents/skills/preview-telemetry/SKILL.md` con snippet de 743 bytes (<1 KB, 0 cookies, Ley 25.326 compliant) para tracking de apertura, clics de agendamiento y eventos del `ThemeSwitcher`.
+  - **TDD & Suites**: Total de pruebas ampliado de 39 a **55 tests unitarios y de integración 100% pasando en verde**. Sistema blindado para salir a prospectar.
 

@@ -21,7 +21,16 @@
 - [x] [14: Copy con 4 ángulos de dolor Hormozi y branding según rubro/reputación](./scratch/nexobow-v2/issues/14-hormozi-angles-and-branding.md) (`done`)
 - [x] [15: Limpieza de documentación y tracker](./scratch/nexobow-v2/issues/15-docs-and-tracker-cleanup.md) (`done`)
 
-## Frente C — Motor de Ingeniería Inversa de Templates (REA)
+## Frente C.0 — Prerrequisitos del Entorno REA (bloqueantes de los tickets 20–32)
+> Verificado el 2026-10-22: MCP `rea-agents@6.7.0` instalado y operativo (207 tools). Faltan acciones humanas antes de duplicar webs reales vía CDP.
+- [ ] **R-01 (humano):** Instalar Chromium/Chrome con soporte CDP: `sudo apt install chromium` (hoy solo hay Firefox) (`blocked-human`)
+- [ ] **R-02 (humano):** Ejecutar `npx rea-agents setup` para instalar la skill oficial y resolver `config_drift`; luego `rea-agents doctor` (`blocked-human`)
+- [ ] **R-03 (humano):** Reiniciar sesión/IDE para exponer el MCP `rea` como herramientas nativas del agente (`blocked-human`)
+- [ ] **R-04 (humano):** Decidir licencias tipográficas por template (comprar o autorizar fallback libre) (`blocked-human`)
+- [ ] **R-05 (humano):** Aprobar tag git `template/{rubro}@1.0.0` y push tras revisar cada demo (`blocked-human`)
+- [ ] **R-06 (agente):** Tras R-01..R-03, correr `rea-agents doctor` y una inspección piloto (`list-browser-targets` → `inspect-web-page`) sobre la URL del ticket 20 (`ready-for-agent`)
+
+## Frente C — Motor de Ingeniería Inversa de Templates (REA) — depende de R-01..R-03
 - [x] [16: Inspector REA y Extractor Estético (`scripts/rea-inspect.mjs`)](./scratch/nexobow-v2/issues/16-rea-inspect-extractor.md) (`done`)
 - [ ] [20: Template #02 REA — Kümmerlein Abogacía & Notaría (`obsidian-authority`)](./scratch/nexobow-v2/issues/20-template-abogado-kuemmerlein.md) (`ready-for-agent`)
 - [ ] [21: Template #03 REA — SkyClinics Clínicas & Salud Quirúrgica (`architectural-prestige`)](./scratch/nexobow-v2/issues/21-template-clinica-skyclinics.md) (`ready-for-agent`)
@@ -36,3 +45,11 @@
 - [ ] [30: Template #12 REA — Tahiti Numérique Profesional Independiente (`island-creative-pure`)](./scratch/nexobow-v2/issues/30-template-profesional-tahitinumerique.md) (`ready-for-agent`)
 - [ ] [31: Template #13 REA — Bluemore Yachting Viajes & Hotelería de Lujo (`oceanic-luxury`)](./scratch/nexobow-v2/issues/31-template-turismo-bluemoreyachting.md) (`ready-for-agent`)
 - [ ] [32: Template #14 REA — Ethos Music Academy Música & Clases (`harmonic-academy`)](./scratch/nexobow-v2/issues/32-template-musica-ethosacademy.md) (`ready-for-agent`)
+
+## Frente D — Fábrica de Prospección & Conversión (Fase 2 ROUTEMAP & Claude Code Ready)
+- [x] [33: Higiene Anti-Bloat, Purga de Skills Obsoletas y Symlink Claude Code](./scratch/nexobow-v2/issues/33-anti-bloat-hygiene-claude-symlink.md) (`done`)
+- [x] [34: Skill y CLI objection-handler (Persuasión & Cierre por WhatsApp)](./scratch/nexobow-v2/issues/34-objection-handler-skill-and-cli.md) (`done`)
+- [x] [35: Skill y Pre-flight Check screenshot-qa (Playwright Dual-Viewport)](./scratch/nexobow-v2/issues/35-screenshot-qa-playwright.md) (`done`)
+- [x] [36: Skill y Validador domain-provisioner (Handoff Post-Venta Cloudflare)](./scratch/nexobow-v2/issues/36-domain-provisioner-cloudflare.md) (`done`)
+- [x] [37: Skill y Snippet preview-telemetry (Telemetría Pasiva sin Cookies)](./scratch/nexobow-v2/issues/37-preview-telemetry-compliance.md) (`done`)
+- [x] [38: Suite de Integración, Verificación End-to-End y Cierre de Frente D](./scratch/nexobow-v2/issues/38-integration-verification-suite.md) (`done`)

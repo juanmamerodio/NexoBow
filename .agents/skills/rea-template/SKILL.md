@@ -17,15 +17,44 @@ Permite expandir el catálogo de NexoBow a las **+10 direcciones estéticas por 
 
 ## Requisitos Previos y Herramientas
 
-- **REA MCP Server (`morluto/rea`):** Instalado globalmente como `rea-agents` y registrado en `~/.gemini/config/mcp_config.json`. Ofrece 207 herramientas de ingeniería inversa y comandos como `rea-agents analyze-web-bundle`, `rea-agents inspect-web-page` y `rea-agents export-web-scripts`.
+- **REA MCP Server (`morluto/rea`) — Estado verificado el 2026-10-22:**
+  - ✅ Paquete oficial `rea-agents@6.7.0` (npm, `repository: github.com/morluto/rea`, MIT), instalado globalmente con binarios `rea` y `rea-agents` (nvm Node v22).
+  - ✅ Registrado en `~/.gemini/config/mcp_config.json` como `npx -y rea-agents@6.7.0 mcp`; esquemas de herramientas en `~/.gemini/antigravity/mcp/rea/`.
+  - ✅ Handshake MCP real: `serverInfo = rea@6.7.0`, `tools/list` = **207 herramientas**.
+  - ⚠️ `rea-agents doctor` → `healthy: false` por (a) motores nativos ausentes (Hopper/Ghidra/IDA/JADX/Kuna: **irrelevantes** para REA web) y (b) `skill:identity` = `config_drift` (la skill oficial de REA no está instalada: ver acción humana H2).
+  - ⚠️ **No hay Chrome/Chromium instalado** (solo Firefox) ni navegadores Playwright en caché: bloquea las herramientas web de REA hasta resolver H1.
+- **Re-verificar antes de usar:** `rea-agents --version` y `rea-agents doctor`. Si el MCP `rea` no aparece como herramienta nativa del agente, reiniciar la sesión (H3); mientras tanto usar la CLI `rea-agents ...` por terminal.
+- **Contrato REAL de la CLI web (NO aceptan `--url`):**
+  - `rea-agents list-browser-targets <endpoint>` → obtiene el `targetId` de la pestaña abierta.
+  - `rea-agents inspect-web-page <endpoint> <targetId>` → inspección pasiva (DOM, CSS, estilos).
+  - `rea-agents analyze-web-bundle <endpoint> <targetId> [--fetch-source-maps]` → bundle estático.
+  - `rea-agents export-web-scripts ...` → exporta scripts a un directorio inexistente.
+  - `rea-agents capture-web-screenshot ...` / `capture-browser-scenario <inputJson>` (Playwright).
+  - `<endpoint>` = CDP loopback, ej: `http://127.0.0.1:9222`, levantado con `chromium --remote-debugging-port=9222 --user-data-dir=/tmp/rea-profile <URL>`.
+- **Fallback si REA web no está operativo:** `read_url_content` + `node scripts/rea-inspect.mjs <url> [rubro]` (script propio basado en fetch, **no** es REA). Declarar en la entrega que se usó el fallback y que la geometría/animaciones no fueron verificadas por CDP.
 - **URL de referencia:** enlace HTTP/HTTPS público con diseño inspirador o representativo del rubro (ej: `https://www.kuemmerlein.de/`).
 - **Rubro / Vertical:** slug normalizado (ej: `abogado`, `clinica`, `corporativo`, `nutricionista`).
-- **Comando de inspección o chat directo:** `rea-agents` o `node scripts/rea-inspect.mjs <url> [rubro]`.
+
+## 🧑 Acciones Humanas Requeridas (el agente NO puede hacerlas)
+
+| ID | Acción | Comando / Detalle | Bloquea |
+| :-- | :-- | :-- | :-- |
+| **H1** | Instalar un navegador Chromium (CDP) | `sudo apt install chromium` (o Chrome estable `.deb`). Alternativa Playwright: `npx playwright install chromium` | Inspección web REA (`inspect-web-page`, `analyze-web-bundle`, capturas) |
+| **H2** | Instalar la skill oficial de REA y corregir `config_drift` | `npx rea-agents setup` (aprobar prompts interactivos; **rechazar** instalar Hopper salvo que se necesite análisis nativo). Luego `rea-agents doctor` | Warning `skill:identity`; workflows oficiales REA |
+| **H3** | Reiniciar sesión/IDE de Antigravity | Para que el MCP `rea` quede expuesto como herramientas nativas del agente | Uso nativo de las 207 herramientas |
+| **H4** | Por cada template: abrir la URL de referencia en el Chromium con puerto de depuración (si hay login/cookie wall o captcha) | `chromium --remote-debugging-port=9222 --user-data-dir=/tmp/rea-profile <URL>` | Capturas de sitios con muro de consentimiento |
+| **H5** | Licencias tipográficas (Monument Grotesk, Rhymes Display, etc.) | Decidir comprar licencia o autorizar fallback libre (Space Grotesk / Instrument Serif / Inter) | Fidelidad tipográfica de cada template |
+| **H6** | Aprobar el tag git y el push | `git tag template/{rubro}@1.0.0` + push a producción tras revisar la demo | Versionado inmutable |
+
+> Opcionales (solo si se hace análisis nativo/APK, fuera del alcance web): `GHIDRA_INSTALL_DIR`, `HOPPER_LAUNCHER_PATH`, `REA_JADX_MCP_JAR`, `REA_KUNA_COMMAND`, `REA_IDA_MCP_CONFIG`.
 
 ## Paso a Paso de Ejecución (SOP)
 
+0. **Pre-flight REA:** correr `rea-agents doctor` y confirmar que existe Chromium (H1). Si falta, **frenar y pedir la acción humana** (Gate Ask-First); no simular la inspección.
+
 1. **Extracción & Análisis Estético (Inspección REA):**
-   - Obtener el HTML y CSS de la URL objetivo (usando `read_url_content` o `scripts/rea-inspect.mjs`).
+   - Con Chromium en `--remote-debugging-port=9222` apuntando a la URL: `list-browser-targets` → `inspect-web-page` → `analyze-web-bundle` / `export-web-scripts` para obtener tokens CSS, fuentes, bundles y animaciones reales.
+   - Complementar con `read_url_content` o `scripts/rea-inspect.mjs` (HTML/CSS estático).
    - Identificar la paleta armónica **60-30-10**:
      - `fondo` (60%): color de lienzo base (claro, crema, sepia o neutro según el estilo).
      - `tinta` / secundario (30%): color de texto principal y fondos de tarjetas/secciones alternadas.
@@ -57,7 +86,7 @@ Permite expandir el catálogo de NexoBow a las **+10 direcciones estéticas por 
    - Verificar:
      - Cero errores de compilación Astro (SSG puro).
      - Cero scripts de terceros no declarados.
-     - Presupuesto de JS propio `<= 35 KB`.
+     - Sin límite artificial de JS en `/templates/` y `/sites/` (solo tope Cloudflare Pages: 25 MB por activo); `web/` mantiene 0 JS.
      - Contrastes accesibles en botones y textos.
 
 4. **Versionado Inmutable Git & Disponibilidad en Catálogo:**
@@ -78,7 +107,8 @@ Permite expandir el catálogo de NexoBow a las **+10 direcciones estéticas por 
 - **PROHIBIDO** copiar componentes o estilos de `web/` a `/templates/{rubro}/` (Violación de `ERROR-001`: la identidad Soft-Obsidian ejecutiva es exclusiva de la agencia NexoBow; cada rubro debe tener su identidad visual distintiva).
 - **PROHIBIDO** alterar o romper el esquema de datos en `site.json` (`tema` + `content`), ya que causaría fallos en `scripts/build-client-site.mjs`, `generate-client-fiche.mjs` y `LeadStore`.
 - **PROHIBIDO** ignorar la identidad tipográfica de la web de referencia: se deben utilizar las mismas fuentes originales del sitio a copiar (self-hosted o CDNs abiertas); solo si son inaccesibles o cerradas con DRM estricto se permite un fallback similar de máxima proximidad visual.
-- **PROHIBIDO** superar el presupuesto de JS propio de `35 KB` en las landings generadas ni incluir scripts de telemetría de terceros no declarados.
+- **PROHIBIDO** incluir scripts de telemetría de terceros no declarados. (No existe tope de JS en templates/sites; solo el límite de 25 MB por activo de Cloudflare Pages.)
+- **PROHIBIDO** simular o inventar una inspección REA si Chromium/CDP no está disponible: frenar y pedir la acción humana H1, o declarar explícitamente el uso del fallback `read_url_content`/`rea-inspect.mjs`.
 - **PROHIBIDO** crear o desplegar un template sin su tag git inmutable `template/{rubro}@1.0.0` y su suite de tests unitarios verde.
 
 ## Salidas
