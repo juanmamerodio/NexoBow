@@ -1,27 +1,27 @@
 {
   "_meta": "NO EDITAR A MANO. Punto de inyeccion del skill build-client-site: este archivo se regenera en cada clon a partir de la ficha de /clients/. Los valores aqui son PLACEHOLDERS del template abogado (reemplazables por la ficha). Convencion: en titulos, *texto* marca la palabra en italica.",
   "tema": {
-    "primary": "#D97706",
-    "accent": "#F7F788",
-    "fondo": "#090D16",
-    "tinta": "#F1F5F9",
-    "fuente": "Archivo",
+    "primary": "#f7f788",
+    "accent": "#686155",
+    "fondo": "#f6f6f4",
+    "tinta": "#111111",
+    "fuente": "Space Grotesk",
     "fuente_sans": "Inter",
     "orden_secciones": ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"]
   },
   "paletas_alternativas": [
     {
-      "nombre": "Obsidian Authority (Original)",
+      "nombre": "Kümmerlein Classic (Original)",
+      "fondo": "#f6f6f4",
+      "tinta": "#111111",
+      "primary": "#f7f788",
+      "accent": "#686155"
+    },
+    {
+      "nombre": "Obsidian Authority",
       "fondo": "#090D16",
       "tinta": "#F1F5F9",
       "primary": "#D97706",
-      "accent": "#F7F788"
-    },
-    {
-      "nombre": "Kümmerlein Classic",
-      "fondo": "#f6f6f4",
-      "tinta": "#000000",
-      "primary": "#003388",
       "accent": "#f7f788"
     },
     {

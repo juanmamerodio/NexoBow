@@ -8,11 +8,11 @@ export type ThemeTokens = {
 };
 
 export const DEFAULT_THEME = {
-  primary: "#D97706",
-  accent: "#F7F788",
-  fondo: "#090D16",
-  tinta: "#F1F5F9",
-  fuente: "Archivo",
+  primary: "#f7f788",
+  accent: "#686155",
+  fondo: "#f6f6f4",
+  tinta: "#111111",
+  fuente: "Space Grotesk",
   fuente_sans: "Inter",
 } as const;
 

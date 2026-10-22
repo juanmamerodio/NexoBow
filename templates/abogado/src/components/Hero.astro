@@ -43,14 +43,14 @@ const { prestador, pasos, links, hero, marquee } = CONTENT;
         </div>
       </div>
 
-      <!-- Columna Lateral: Tarjeta con esquinas redondeadas 18px y recorte curvo estilo Kümmerlein -->
+      <!-- Columna Lateral: Tarjeta asimétrica de credenciales y método con geometría Kümmerlein -->
       <div class="flex flex-col justify-center lg:col-span-5">
-        <div class="relative rounded-[18px] border border-(--color-ink)/15 bg-white/80 p-8 shadow-sm backdrop-blur-sm lg:p-10">
+        <div class="relative rounded-[15px] border border-(--color-ink)/15 bg-(--color-paper) p-8 lg:p-10 shadow-xs">
           
           <!-- Recorte visual característico Kümmerlein en la esquina superior derecha -->
           <div class="absolute -top-px -right-px hidden sm:block pointer-events-none" aria-hidden="true">
-            <svg class="h-8 w-8 text-(--color-paper)" viewBox="0 0 32 32" fill="currentColor">
-              <path d="M0 0h32v32C32 14.33 17.67 0 0 0z"/>
+            <svg class="h-8 w-8 text-(--color-ink)/15" viewBox="0 0 32 32" fill="none" stroke="currentColor">
+              <path d="M0 0h32v32C32 14.33 17.67 0 0 0z" fill="var(--color-primary)"/>
             </svg>
           </div>
 

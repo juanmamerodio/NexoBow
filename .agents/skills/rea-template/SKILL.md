@@ -1,6 +1,6 @@
 ---
 name: rea-template
-description: "Motor de Ingeniería Inversa de Templates (REA): toma una URL de referencia y un rubro en lenguaje natural, extrae la paleta 60-30-10, tipografías y arquetipos visuales, crea un nuevo template Astro inmutable en /templates/{rubro}/ con contrato site.json desacoplado, genera la demo en /sites/demo-{rubro}/, audita presupuesto JS (<= 35 KB) y fija el tag git template/{rubro}@1.0.0."
+description: "Motor de Ingeniería Inversa de Templates (REA): integra el MCP oficial de REA (morluto/rea via rea-agents) para inspección profunda de bundles web, extracción de paleta 60-30-10, tipografías y arquetipos visuales, creación de templates Astro inmutables en /templates/{rubro}/ bajo site.json, generación de demos en /sites/demo-{rubro}/ y versionado con tags git template/{rubro}@1.0.0."
 tools: ["read_file", "write_to_file", "execute_command", "read_url_content"]
 ---
 
@@ -8,17 +8,19 @@ tools: ["read_file", "write_to_file", "execute_command", "read_url_content"]
 
 ## Propósito y Contexto
 
-Permite expandir el catálogo de NexoBow a las **+10 direcciones estéticas por rubro** de forma industrializada y sin fricción manual. Cuando el usuario pasa en lenguaje natural una URL de referencia y un rubro (ej: *"Creá el template psicólogo con https://sitio-ejemplo.com"*), esta skill ejecuta el protocolo **REA (Reverse Engineering Architecture)**:
-1. Inspecciona la identidad visual de la web de referencia (colores dominantes 60-30-10, tipografías, layout, espaciados).
-2. Construye un nuevo template Astro inmutable en `/templates/{rubro}/` desacoplado bajo el contrato `site.json`.
-3. Compila y audita la demo en `/sites/demo-{rubro}/` con presupuesto de JS propio `<= 35 KB` y cero scripts de terceros.
-4. Fija el tag git `template/{rubro}@1.0.0` y actualiza el catálogo en `web/src/config.ts`.
+Permite expandir el catálogo de NexoBow a las **+10 direcciones estéticas por rubro** de forma industrializada y sin fricción manual. Esta skill ejecuta el protocolo **REA (Reverse Engineering Architecture)** potenciado por el MCP oficial de REA ([**morluto/rea**](https://github.com/morluto/rea)):
+1. **Inspección Profunda REA:** Conecta mediante `rea-agents` (o herramientas CDP/inspección de assets web) para examinar la arquitectura visual real, tokens CSS, componentes y bundles de la web de referencia.
+2. **Extracción Estética 60-30-10:** Identifica fondo de lienzo (60%), tinta/soporte (30%) y acentos de conversión (10%), más tipografías exactas de la web a duplicar o fallbacks métricos idénticos.
+3. **Duplicación Integral (Web ENTERA):** Construye un nuevo template Astro inmutable en `/templates/{rubro}/` desacoplado bajo el contrato `site.json`.
+4. **Compilación & Auditoría:** Compila la demo oficial en `/sites/demo-{rubro}/` y sincroniza la vista previa a `dist-previews/`.
+5. **Versionado Inmutable Git:** Fija el tag git inmutable `template/{rubro}@1.0.0`.
 
-## Requisitos Previos y Entradas
+## Requisitos Previos y Herramientas
 
-- **URL de referencia:** enlace HTTP/HTTPS público con diseño inspirador o representativo del rubro.
-- **Rubro / Vertical:** slug normalizado (ej: `psicologo`, `abogado`, `clinica-estetica`, `odontologo`, `kinesiologo`, `pediatra`, `arquitecto`, `contador`, `veterinario`).
-- **Comando de inspección o chat directo:** `node scripts/rea-inspect.mjs <url> [rubro]` o invocación en conversación.
+- **REA MCP Server (`morluto/rea`):** Instalado globalmente como `rea-agents` y registrado en `~/.gemini/config/mcp_config.json`. Ofrece 207 herramientas de ingeniería inversa y comandos como `rea-agents analyze-web-bundle`, `rea-agents inspect-web-page` y `rea-agents export-web-scripts`.
+- **URL de referencia:** enlace HTTP/HTTPS público con diseño inspirador o representativo del rubro (ej: `https://www.kuemmerlein.de/`).
+- **Rubro / Vertical:** slug normalizado (ej: `abogado`, `clinica`, `corporativo`, `nutricionista`).
+- **Comando de inspección o chat directo:** `rea-agents` o `node scripts/rea-inspect.mjs <url> [rubro]`.
 
 ## Paso a Paso de Ejecución (SOP)
 
