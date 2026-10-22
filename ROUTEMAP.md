@@ -13,14 +13,14 @@
 2. **Scouting & Filtrado:** El sistema consulta Google Maps / Serper Dev, extrae datos reales (nombre, rating, reseñas, fotos, teléfono, WhatsApp) y descarta automáticamente a quienes ya tienen web corporativa.
 3. **Correlatividad e Inserción:** Comprueba duplicados contra Google Sheets (`'Prospección NexoBow'!B11:S1000`). Asigna el siguiente ID correlativo atómico en **Columna B**.
 4. **Ficha & Copywriting Hormozi:** Genera `/clients/{id}-{nombre}-{apellido}-{rubro}.md` con dolores específicos del rubro, fallback a WhatsApp y cumplimiento Ley 25.326.
-5. **Preselección Inteligente de Arquetipo Visual:** La IA no ata el template al rubro. Analiza el tono, formalidad y arquetipo de marca para asignar el mejor motor de layout (`editorial-classic`, `obsidian-authority`, `minimalist-pure`, `kinetic-cards`) junto con una paleta contextual 60-30-10 y tipografías.
+5. **Preselección Inteligente de Arquetipo Visual:** La IA no ata el template al rubro. Analiza el tono, formalidad y arquetipo de marca para asignar el mejor motor de layout (`editorial-classic`, `obsidian-authority`, `architectural-prestige`, `kinetic-cards`) junto con una paleta contextual 60-30-10 y tipografías.
 6. **Compilación con Theme Switcher Interactivo:** Compila un clon Astro SSG a `dist-previews/{slug}/` (servido en `https://preview.nexobow.site/{slug}/`) incluyendo una píldora flotante para que el prospecto pruebe 3-4 paletas en vivo y confirme su preferida por WhatsApp.
 7. **Publicación y Cierre en Google Sheets:** Actualiza la **Columna G (`Web Demo URL`)** y calcula el mensaje de WhatsApp de prospección listo para enviar.
 8. **Motor TTL 7 Días:** Si el prospecto avanza, se renueva +7 días; si llega a días 5–6 se envía alerta de urgencia; a los 7 días o si es descartado, se purga el clon automáticamente protegiendo el almacenamiento.
 
 ---
 
-## 🏗️ Nueva Arquitectura de Templates: Duplicación Completa REA por Referente Internacional
+## 🏗️ Catálogo de Templates REA: Duplicación Completa por Referente Internacional
 
 > **Principio Innegociable de Templates:**
 > - **Template (`/templates/{id}/`):** Es una **web ENTERA** duplicada e inspirada en un sitio de referencia real mediante REA (estilo, geometría espacial, navegación, animaciones, componentes únicos, objetos y 3D). Cada template es un desarrollo autónomo con su propia estructura; **NO comparte los componentes ni el layout de Delta Cafés**.
@@ -30,21 +30,21 @@
 > - **Preview (`https://preview.nexobow.site/{slug}/`):** Landing generada y personalizada para un prospecto real.
 > - **Delta Cafés:** Es única y exclusivamente la web de referencia de `templates/nutricionista/`. No es el estándar ni la base estructural de los demás templates.
 
-**Catálogo de Templates REA (Webs Enteras Duplicadas por Referente):**
-- **`templates/nutricionista/`** (`editorial-classic`, v1.0.0): Web duplicada de **Delta Cafés** (`deltacafes.com`). Estética editorial cálida, Fraunces + Archivo, números ordinales y ritmo pausado.
-- **`templates/abogado/`** (`obsidian-authority`, Ticket 20): Web duplicada de **Kümmerlein Rechtsanwälte** (`https://www.kuemmerlein.de/`). Estilo ejecutivo brutalista, recortes SVG, ABC Monument Grotesk + Rhymes Display (o fallback similar Space Grotesk + Instrument Serif), botón rectangular con dot expansivo.
-- **`templates/clinica/`** (`architectural-prestige`, Ticket 21): Web duplicada de **SkyClinics** (`https://skyclinics.al/`). Prestigio médico quirúrgico, composición asimétrica mineral piedra (`#e8e7e5`), Deep Forest Teal (`#003934`), Menta quirúrgico (`#1a9e8f`), Satoshi + Inter (o fallback Plus Jakarta Sans), tarjetas clínicas y micro-interacciones.
-- **`templates/corporativo/`** (`high-ticket-consulting`, Ticket 22): Web duplicada de **Vetter Consulting** (`https://vetter-consulting-en.webflow.io/`). Cuadrícula táctica estilo ajedrez, Onyx + Tactical Orange, Neue Montreal (o fallback similar General Sans / Plus Jakarta Sans), bloques modulares de impacto financiero.
-- **`templates/tech/`** (`tech-editorial-system`, Ticket 23): Web duplicada de **Think Company** (`https://www.thinkcompany.com/`). Editorial tech moderno, Canvas Vanilla + Think Red, Bagoss + ABC Diatype + Space Mono (o fallback Syne + Inter + Space Mono), resolución de sistemas complejos.
-- **`templates/deportes/`** (`kinetic-performance`, Ticket 24): Web duplicada de **The Performance Lab** (`https://theperformancelab.ca/`). ABC Diatype + display atlética condensada (o fallback Barlow Semi Condensed / Teko + Inter), Carbon Dark + Kinetic Emerald.
-- **`templates/dermatologia/`** (`clinical-pure`, Ticket 25): Web duplicada de **Lipedema Guru** (`https://lipedemaguru.com/`). GroteskText + Poppins (o fallback Plus Jakarta Sans + Inter), espacio negativo clínico y acentos cian/turquesa.
-- **`templates/propiedades/`** (`architectural-spaces`, Ticket 26): Web duplicada de **Lufte** (`https://www.lufte.us/`). Outfit + Manrope (o fallback Plus Jakarta Sans), bronce oak y galerías arquitectónicas.
-- **`templates/producto/`** (`minimalist-hardware`, Ticket 27): Web duplicada de **Heavn One** (`https://heavn-lights.com/`). Averta + Open Sans (o fallback Space Grotesk / Plus Jakarta Sans), Deep Matte Black, precisión óptica e ingeniería de producto.
-- **`templates/construccion/`** (`industrial-authority`, Ticket 28): Web duplicada de **Reliable Paving** (`https://reliablepaving.com/`). Roboto + Tahoma (o fallback Oswald + Roboto), Asphalt Dark + Safety Amber, métricas de obra pesada.
-- **`templates/farmaceutica/`** (`biotech-clarity`, Ticket 29): Web duplicada de **Roveia** (`https://roveia.com/`). Manrope (o fallback Plus Jakarta Sans + Inter), Pure White + Deep Molecule Navy y formulaciones científicas.
-- **`templates/profesional/`** (`island-creative-pure`, Ticket 30): Web duplicada de **Tahiti Numérique** (`https://tahitinumerique.com/`). Instrument Sans + Instrument Serif (o fallback Outfit + Inter), Pacific Cyan + Lagoon Dark para marca personal ágil.
-- **`templates/turismo/`** (`oceanic-luxury`, Ticket 31): Web duplicada de **Bluemore Yachting** (`https://bluemoreyachting.com/`). Big Caslon CC + Satoshi (o fallback Playfair Display / Cinzel + Satoshi), Midnight Navy + Azure Wave y tipografía de alta costura.
-- **`templates/musica/`** (`harmonic-academy`, Ticket 32): Web duplicada de **Ethos Music Academy** (`https://ethosmusicacademy.com/`). Playfair Display + Montserrat (o fallback Syne / Clash Display + Inter), Acoustic Stage Dark + Vibrant Tone Crimson.
+**Estado Actual del Catálogo:**
+- ✅ **`templates/nutricionista/`** (`editorial-classic`, v1.0.0): Referente **Delta Cafés** (`deltacafes.com`). Estética editorial cálida, Fraunces + Archivo, números ordinales y ritmo pausado.
+- ✅ **`templates/abogado/`** (`obsidian-authority`, Ticket 20): Referente **Kümmerlein Rechtsanwälte** (`https://www.kuemmerlein.de/`). Estilo ejecutivo brutalista, recortes SVG, ABC Monument Grotesk + Rhymes Display (fallback Space Grotesk + Instrument Serif), botón rectangular con dot expansivo.
+- ✅ **`templates/clinica/`** (`architectural-prestige`, Ticket 21): Referente **SkyClinics** (`https://skyclinics.al/`). Prestigio médico quirúrgico, composición asimétrica mineral piedra (`#e8e7e5`), Deep Forest Teal (`#003934`), Menta quirúrgico (`#1a9e8f`), Plus Jakarta Sans + Inter, tarjetas clínicas y micro-interacciones.
+- ⏳ **`templates/corporativo/`** (`high-ticket-consulting`, Ticket 22): Referente **Vetter Consulting** (`https://vetter-consulting-en.webflow.io/`). Cuadrícula táctica estilo ajedrez, Onyx + Tactical Orange, Neue Montreal.
+- ⏳ **`templates/tech/`** (`tech-editorial-system`, Ticket 23): Referente **Think Company** (`https://www.thinkcompany.com/`). Editorial tech moderno, Canvas Vanilla + Think Red, Bagoss + ABC Diatype + Space Mono.
+- ⏳ **`templates/deportes/`** (`kinetic-performance`, Ticket 24): Referente **The Performance Lab** (`https://theperformancelab.ca/`). Carbon Dark + Kinetic Emerald.
+- ⏳ **`templates/dermatologia/`** (`clinical-pure`, Ticket 25): Referente **Lipedema Guru** (`https://lipedemaguru.com/`). Espacio negativo clínico y acentos cian/turquesa.
+- ⏳ **`templates/propiedades/`** (`architectural-spaces`, Ticket 26): Referente **Lufte** (`https://www.lufte.us/`). Outfit + Manrope, bronce oak y galerías arquitectónicas.
+- ⏳ **`templates/producto/`** (`minimalist-hardware`, Ticket 27): Referente **Heavn One** (`https://heavn-lights.com/`). Deep Matte Black, precisión óptica e ingeniería de producto.
+- ⏳ **`templates/construccion/`** (`industrial-authority`, Ticket 28): Referente **Reliable Paving** (`https://reliablepaving.com/`). Asphalt Dark + Safety Amber, métricas de obra pesada.
+- ⏳ **`templates/farmaceutica/`** (`biotech-clarity`, Ticket 29): Referente **Roveia** (`https://roveia.com/`). Pure White + Deep Molecule Navy y formulaciones científicas.
+- ⏳ **`templates/profesional/`** (`island-creative-pure`, Ticket 30): Referente **Tahiti Numérique** (`https://tahitinumerique.com/`). Instrument Sans + Serif, Pacific Cyan + Lagoon Dark.
+- ⏳ **`templates/turismo/`** (`oceanic-luxury`, Ticket 31): Referente **Bluemore Yachting** (`https://bluemoreyachting.com/`). Midnight Navy + Azure Wave y tipografía de alta costura.
+- ⏳ **`templates/musica/`** (`harmonic-academy`, Ticket 32): Referente **Ethos Music Academy** (`https://ethosmusicacademy.com/`). Acoustic Stage Dark + Vibrant Tone Crimson.
 
 ---
 
@@ -54,61 +54,158 @@ Para evitar que un lead descarte la propuesta porque *"no le gustaron los colore
 1. **Píldora Flotante Discreta (Bottom-Right)**: Permite alternar con un clic entre 4 paletas precalibradas (*Original/Principal*, *Obsidian Gold*, *Clinical Cyan*, *Warm Terracotta*).
 2. **Reactividad Instantánea vía CSS Custom Properties**: Modifica `--color-primary`, `--color-accent`, `--color-paper`, `--color-ink` en el `:root` sin recargar la página (< 2 KB, JS nativo vanilla).
 3. **Persistencia en LocalStorage**: Si el cliente vuelve a entrar al enlace días después, recuerda la paleta elegida bajo la clave `nexobow_theme`.
-4. **Captura y Cierre por WhatsApp**: Incluye el botón *"Pedir esta versión"* que abre un chat directo con el mensaje:
-   > *"Hola Juanma! Estuve viendo la web demo y me encantó la combinación [Nombre de Paleta]. ¿Cómo seguimos para activarla?"*
+4. **Captura y Cierre por WhatsApp**: Incluye el botón *"Pedir esta versión"* que abre un chat directo con el mensaje precargado.
 
 ---
 
-## 🔮 Roadmap de Nuevos Agentes & Fases Futuras
+## 🔬 Diagnóstico de Arquitectura e Ingeniería de Sistemas (Evaluación Externa Senior)
+
+### 1. Diagnóstico Realista
+Hoy NexoBow es un **CLI local asistido por LLM de altísima calidad técnica**, pero aún no es una plataforma autónoma distribuida.
+- **Calidad de Frontend y Rendimiento (10/10):** Astro SSG + Cloudflare Pages + 0 JS en `web/` supera por varios órdenes de magnitud a agencias WordPress/Elementor (<0.8s vs 4.5s).
+- **Desacoplamiento Arquitectónico (9/10):** Separar templates inmutables, fichas en markdown y scripts de inyección aísla las alucinaciones de la IA.
+- **Pruebas Automatizadas (9/10):** +39 tests unitarios y de integración con `node:test` garantizan estabilidad en scripts de CLI.
+
+### 2. Cuellos de Botella y Puntos Críticos a Resolver
+1. **Google Sheets como Base de Datos Transaccional:**
+   * La Columna B (`B11:S1000`) se usa como clave primaria autoincremental (`max(Col B) + 1`). 
+   * *Riesgos:* No hay ACID, latencia de red (hasta 2s por escritura), rate limits de Google Sheets API (60 req/min) y riesgo de race conditions en concurrencia.
+2. **Dependencia del Filesystem Local:**
+   * El sistema vive en la máquina local de desarrollo. Si la laptop se apaga, no hay prospección, no se computa el TTL de 7 días ni se purgan demos vencidas.
+3. **Ceguera de Telemetría (Falta de Observabilidad):**
+   * No existe tracking pasivo de eventos: no se sabe si el prospecto abrió la preview, si interactuó con el Theme Switcher o si abandonó.
+4. **Fricción en el Cierre (Embudo Humano Desconectado):**
+   * El software llega hasta la generación del texto de WhatsApp; el envío, seguimiento y cobro siguen siendo manuales.
+
+---
+
+## 🔌 Estrategia de Herramientas y MCPs (Model Context Protocol)
+
+### 🧹 Higiene de Contexto Inmediata (Protocolo Anti-Bloat)
+> **Principio de `brain.md` (Antipatrón del MCP Global Inflado):**
+> Nunca cargar herramientas no relacionadas con el dominio del proyecto. 
+- **Acción:** Desactivar o desinstalar del workspace los plugins globales irrelevantes (Bioinformática: `alphafold`, `chembl`, `pdb`; `flutter`; `bigquery`/`composer`). 
+- **Beneficio:** Recuperación inmediata de **15.000 a 30.000 tokens de contexto por mensaje**, manteniendo el modelo en la **Smart Zone (<100k tokens)** con máxima lucidez para programar.
+
+### 🛠️ Los 4 MCPs Estratégicos para NexoBow
+
+```mermaid
+flowchart LR
+    PlaywrightMCP["🎭 Playwright MCP<br/>(QA Visual & Screenshots)"]
+    DBMCP["🗄️ Database MCP<br/>(SQLite / Turso / Postgres)"]
+    CFMCP["☁️ Cloudflare MCP<br/>(Deploys & DNS API)"]
+    MsgMCP["📲 WhatsApp / Meta MCP<br/>(Mensajería & Aprobación)"]
+
+    PlaywrightMCP -->|Auditoría visual 375px/1440px| Templates["Templates & Previews"]
+    DBMCP -->|Persistencia rápida & ACID| Pipeline["Pipeline NexoBow"]
+    CFMCP -->|Deploys & subdominios| Cloudflare["Cloudflare Pages"]
+    MsgMCP -->|Envío & alertas 1-clic| WhatsApp["WhatsApp Leads"]
+```
+
+1. **🎭 Playwright / Puppeteer MCP (Prioridad Inmediata):**
+   * *Función:* Inspección y QA visual automatizado.
+   * *Caso de Uso:* Toma screenshots de la web de referencia antes de clonarla por REA; levanta un servidor efímero de la preview generada y saca capturas en móvil (`375px`) y desktop (`1440px`) para validar que no haya textos desbordados ni bugs antes de publicar.
+2. **🗄️ SQLite / Turso / PostgreSQL MCP:**
+   * *Función:* Persistencia relacional de alta velocidad y consistencia ACID.
+   * *Caso de Uso:* Almacenar prospectos, métricas y estados en una base de datos real (<5ms de latencia). Google Sheets pasa a ser un visor o dashboard secundario sincronizado.
+3. **☁️ Cloudflare MCP (o Workers/Pages API):**
+   * *Función:* Gestión de infraestructura sin depender de comandos de bash con Wrangler CLI.
+   * *Caso de Uso:* Consultar estado de builds en vivo, purgar caché instantáneamente y aprovisionar subdominios o dominios personalizados de clientes.
+4. **📲 WhatsApp / Messaging MCP (vía Evolution API o Meta Cloud API):**
+   * *Función:* Cierre del pipeline comercial.
+   * *Caso de Uso:* El agente prepara el mensaje y envía una notificación con botón de aprobación al WhatsApp del operador: *"¿Aprobar envío a Dra. Gómez? [Sí / Editar]"*.
+
+---
+
+## 🚀 Plan Pragmático de Maduración: "Primero Funcional para 2-3 Clientes, Luego Escala"
+
+Para no caer en parálisis por análisis ni sobre-ingeniería antes de facturar, el roadmap se divide en 3 fases de evolución orgánica:
+
+```
+[ FASE 1: Primeros 2-3 Clientes ] ──► [ FASE 2: Golden Flow & Robustez ] ──► [ FASE 3: Fábrica 24/7 en VPS ]
+   (Usar lo que funciona hoy)            (DB Real + Playwright + Webhooks)          (Daemons, Telegram, Multi-agente)
+```
+
+### 🟢 FASE 1: Motor Operativo Inmediato (Cerrar los primeros 2-3 clientes YA)
+*Objetivo: Utilizar la base existente (que ya tiene 39 tests en verde) para prospectar, generar valor tangible y cobrar.*
+
+- [x] Web flagship NexoBow lista con 12 secciones y estándar 0 JS (`web/`).
+- [x] Motor de Scouting con Google Maps y Serper Dev (`scout-lead.mjs`).
+- [x] Motor de Fichas con dolores Hormozi y rotación determinista (`generate-client-fiche.mjs`).
+- [x] Templates de alta gama activos: Nutricionista (`editorial-classic`), Abogado (`obsidian-authority`), Clínica (`architectural-prestige`).
+- [x] Theme Switcher anti-rebote activo en todas las previews (`preview.nexobow.site/{slug}`).
+- [x] TTL de 7 días y sincronización con Google Sheets (`LeadStore`).
+- [ ] **Acción Inmediata 1:** Limpieza de plugins irrelevantes para reducir quema de tokens.
+- [ ] **Acción Inmediata 2:** Ejecutar tandas reales de prospección (`prospect-in-conversation` / `prospect-batch`) en Belgrano/Palermo/Recoleta para Nutricionistas, Abogados y Clínicas.
+- [ ] **Acción Inmediata 3:** Probar el flujo de cierre por WhatsApp asistido con respuestas de alivio y captar los primeros 2-3 clientes pagos.
+
+### 🟡 FASE 2: Robustecimiento & Golden Flow Automatizado (Post-primeros clientes)
+*Objetivo: Eliminar los cuellos de botella manuales y blindar la persistencia una vez validada la oferta comercial.*
+
+- [ ] **Spec & Tickets de Persistencia Real (SQLite / Turso):**
+  - Implementar adaptador `SqliteLeadStore` en `scripts/sheets-sync.mjs`.
+  - SQLite/Turso como fuente primaria transaccional (ACID, IDs autoincrementales sin colisiones).
+  - Sync asíncrono hacia Google Sheets `'Prospección NexoBow'!B11:S1000` (Sheets queda solo como visualizador para el humano).
+- [ ] **Integración de Playwright MCP para QA Visual:**
+  - Skill `screenshot-qa` que valida automáticamente la preview en 375px y 1440px antes de sincronizar a `dist-previews/`.
+- [ ] **Telemetría Pasiva en Previews:**
+  - Script ultraliviano (1 KB) en las previews que envía un ping anónimo cuando el lead abre la web o cambia de paleta en el Theme Switcher.
+- [ ] **Skill `objection-handler` (WhatsApp):**
+  - Matriz de respuestas en voseo argentino para rebatir objeciones de precio, tiempo o manejo de redes sociales.
+- [ ] **Skill `domain-provisioner` (Handoff Post-Venta):**
+  - Automatización del paso de `preview.nexobow.site/{slug}` a dominio propio del cliente (`.com.ar`) en Cloudflare.
+
+### 🟣 FASE 3: Fábrica Autónoma 24/7 en VPS (Escala y Cero Intervención)
+*Objetivo: Migrar el sistema a un servidor virtual privado (VPS Linux) con ejecución continua y supervisión ejecutiva.*
 
 ```mermaid
 flowchart TD
-    subgraph NucleoOperativo ["🏢 Central NexoBow (VPS 24/7)"]
-        LeadToLive["⚡ Lead-to-Live Engine<br/>(Scout -> Fiche -> Build -> ThemeSwitcher -> Deploy)"]
-        CRM["📂 NexoBow Client CRM<br/>(Pagos, Recibos, Renovaciones, Backups)"]
-        Watchdog["📡 Watchdog & Reporter<br/>(Métricas semanales, Uptime, Alertas Telegram/Email)"]
+    subgraph VPS247 ["🏢 VPS Centralizado (PM2 / Docker)"]
+        BatchHunter["🌙 Batch Hunter Daemon<br/>(Scouting nocturno automático)"]
+        LifecycleCron["⏰ Lifecycle Daemon<br/>(TTL 7 días + alertas de urgencia)"]
+        Watchdog["📡 Watchdog & Reporter<br/>(Health check + bot Telegram)"]
     end
 
-    subgraph AgentesEspecializados ["🤖 Agentes Especializados"]
-        BizAgent["📈 Business-Bow Agent<br/>(Métricas, Tasa de Cierre, Monotributo, Meta Ads, Escalado)"]
-        LegalAgent["⚖️ Legal-Bow Agent<br/>(Contratos, T&C, Privacidad Ley 25.326, Facturación)"]
-        AutoAgent["📲 Automation-Bow Agent<br/>(WhatsApp API / HighLevel + Chips temporales + /ask-matt)"]
+    subgraph CanalesExternos ["📱 Canales de Salida"]
+        Telegram["📲 Bot Telegram de Juanma<br/>(Resumen diario & botones de aprobación)"]
+        Cloudflare["☁️ Cloudflare Pages<br/>(preview.nexobow.site)"]
+        WhatsAppLead["💬 WhatsApp del Prospecto<br/>(Follow-up de urgencia <48hs)"]
     end
 
-    BizAgent <--> LegalAgent
-    BizAgent <--> CRM
-    AutoAgent <--> LeadToLive
-    Watchdog --> LeadToLive
-    Watchdog --> CRM
+    BatchHunter --> Cloudflare
+    LifecycleCron --> WhatsAppLead
+    LifecycleCron --> Watchdog
+    Watchdog --> Telegram
 ```
 
-### 1. 📈 Agente Business-Bow (CFO & Growth Strategist)
-- **Función**: Administrar números duros, costo por lead (CPL), valor de vida del cliente (LTV), tasa de conversión de cada arquetipo visual por nicho e inversiones (Meta Ads, dominios `.com.ar`, infraestructura).
-- **Decisiones Ejecutivas**: Evaluador de régimen fiscal (análisis costo-beneficio de Monotributo vs cobro simplificado, pasarelas de pago automáticas, retenciones vs formalidad y confianza de marca).
-- **Salida**: Genera propuestas estratégicas concretas listas para que Juanma decida con un clic o feedback.
+- [ ] **Infraestructura VPS (Hetzner / DigitalOcean $4-6 USD/mes):**
+  - Migración del repositorio y entorno Node.js a un contenedor Docker / PM2.
+- [ ] **Agente "Batch Hunter" Nocturno:**
+  - Corre a las 02:00 AM, busca 10 profesionales según backlog de nichos, compila previews y deja los mensajes listos en una bandeja.
+- [ ] **Agente "Watchdog & Alerter" (Telegram Bot):**
+  - Notificación matutina con el estado del sistema, alertas de demos por vencer y métricas de clics.
+- [ ] **Agentes Especializados Avanzados:**
+  - `Business-Bow` (CFO: costos de infraestructura, CPL, LTV, retornos de pauta).
+  - `Legal-Bow` (Contratos de prestación según Ley 25.326 y términos de servicio).
+  - `Automation-Bow` (Integración directa con WhatsApp Cloud API / Evolution API).
 
-### 2. ⚖️ Agente Legal-Bow (Compliance & Legal Operations)
-- **Función**: Respaldo legal total y mitigación de riesgos.
-- **Entregables**: Redacción automática de Contratos de Servicios de Agendamiento, Políticas de Privacidad y Términos y Condiciones adaptados a la Ley Argentina 25.326 (Protección de Datos Personales).
-- **Conexión**: Se enlaza con Business-Bow para validar términos contractuales según el plan de pago acordado y gestionar el envío digital para firma.
+---
 
-### 3. 📲 Agente Automation-Bow (Outreach & Messaging Engine)
-- **Función**: Conectar el pipeline de prospección con la mensajería fría y seguimiento.
-- **Estrategia de Conexión**: Integración con API de WhatsApp Cloud o GoHighLevel con rotación de números/chips temporales anti-bloqueo.
-- **Workflow SDD**: Utilizar el loop de `/ask-matt` para calibrar el tono, objeciones y disparar mensajes en el timing psicológico óptimo (<48hs antes del vencimiento del demo).
+## 📋 Matriz de Roles y Agentes del Sistema
 
-### 4. 📂 NexoBow Client CRM (Post-Venta & Retención)
-- **Función**: Panel central para clientes que compraron un sistema Bow.
-- **Módulos**: Emisión de recibos de pago / facturas, alertas de renovación mensual (`$12.259 ARS`), changelog de actualizaciones del sitio y canal de reclamaciones/soporte rápido.
-
-### 5. 📡 Weekly Reporter & System Watchdog (Health & KPIs)
-- **Función**: Monitoreo 24/7 y resumen semanal consolidado.
-- **Canal de Entrega**: Mensaje ejecutivo vía Bot de Telegram o Email (HTML limpio).
-- **Contenido**:
-  - Estado del Uptime de `preview.nexobow.site` y sitios en Cloudflare Pages.
-  - Alerta inmediata si un número de WhatsApp o chip se cae o recibe reporte de spam.
-  - Métricas de negocio: Leads prospectados, webs generadas, contactos realizados, clientes en mora.
-
-### 6. 🖥️ Infraestructura 24/7 (VPS Centralizado)
-- **Objetivo**: Migrar el repositorio y los daemons programados desde el entorno local de desarrollo a un servidor virtual privado (VPS Linux) con Docker/PM2.
-- **Autonomía**: Monitoreo continuo vía cron jobs de `lead-lifecycle.mjs`, prospección agendada y reporte automático sin necesidad de tener la PC encendida.
+| Agente / Skill | Tipo | Estado | Rol Principal |
+| :--- | :---: | :---: | :--- |
+| `scout-lead` | Skill | ✅ Activo | Búsqueda y filtrado de profesionales sin web vía Google Maps. |
+| `generate-client-fiche` | Skill | ✅ Activo | Redacción de dolores Hormozi y metadata TTL en Markdown. |
+| `build-client-site` | Skill | ✅ Activo | Compilación Astro SSG con inyección de contenido y bloqueo de versión. |
+| `audit-code` | Skill | ✅ Activo | Verificación de 0-JS en `web/` y presupuesto de JS en templates. |
+| `impeccable` | Skill | ✅ Activo | Filtro anti-mediocridad visual y triage rápido de diseño (`detect`, `bolder`, `polish`). |
+| `lead-lifecycle` | Skill | ✅ Activo | Evaluación de 7 días, alertas de urgencia (<48hs) y purga de demos. |
+| `flow-advisor` | Skill | ✅ Activo | Asesor de siguientes pasos según ciclo SDD y métricas. |
+| `screenshot-qa` | Skill | ⏳ Fase 2 | Auditoría visual headless (móvil y desktop) con Playwright. |
+| `objection-handler` | Skill | ⏳ Fase 2 | Manejo de objeciones comerciales por WhatsApp en voseo argentino. |
+| `domain-provisioner` | Skill | ⏳ Fase 2 | Aprovisionamiento de DNS y SSL para dominios propios de clientes. |
+| `Batch Hunter` | Agente Daemon | ⏳ Fase 3 | Scouting nocturno autónomo sin intervención humana. |
+| `Watchdog & Alerter` | Agente Daemon | ⏳ Fase 3 | Monitoreo 24/7 y reporte diario al Telegram de Juanma. |
+| `Business-Bow` | Agente | ⏳ Fase 3 | Estrategia de crecimiento, finanzas, márgenes y rentabilidad. |
+| `Legal-Bow` | Agente | ⏳ Fase 3 | Contratos de adhesión, cumplimiento Ley 25.326 y términos legales. |
