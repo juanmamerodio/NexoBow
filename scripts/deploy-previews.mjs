@@ -35,13 +35,15 @@ async function main() {
   const isDryRun = Boolean(flags["dry-run"]);
   const distPreviewsDir = join(REPO_ROOT, "dist-previews");
 
-  if (!existsSync(distPreviewsDir)) {
-    console.error(`\x1b[31m[deploy-previews ERROR]\x1b[0m No existe el directorio: ${distPreviewsDir}`);
-    process.exit(1);
+  // Sincronizar automáticamente el build de web/ a la raíz de dist-previews para nexobow.site/
+  const webDistDir = join(REPO_ROOT, "web", "dist");
+  if (existsSync(webDistDir)) {
+    const { cpSync } = await import("node:fs");
+    cpSync(webDistDir, distPreviewsDir, { recursive: true });
   }
 
   const entries = readdirSync(distPreviewsDir).filter((f) => {
-    return statSync(join(distPreviewsDir, f)).isDirectory();
+    return statSync(join(distPreviewsDir, f)).isDirectory() && f !== "_astro";
   });
 
   const projectName = "nexobow-previews";

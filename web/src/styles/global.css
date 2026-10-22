@@ -50,6 +50,14 @@ body {
   background-color: var(--color-ink);
   color: var(--color-cream);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Safari / WebKit backdrop-filter support */
+.backdrop-blur-xl {
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
 }
 
 /* 3D Scene Perspective Utility (0-JS CSS Hover) */
