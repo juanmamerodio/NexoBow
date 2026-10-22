@@ -11,26 +11,31 @@ const visibles = consent
 
 {
   visibles.length > 0 && (
-    <section id="opiniones" class="border-b border-(--color-ink)/10">
-      <div class="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+    <section id="opiniones" class="border-b border-(--color-ink)/10 bg-(--color-paper)">
+      <div class="mx-auto max-w-7xl px-6 py-20 lg:px-12 lg:py-28">
         <SectionHead tag={reviews.tag} title={reviews.titulo} />
 
-        <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div class="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {
             visibles.map((review) => (
-              <figure class="flex flex-col border border-(--color-ink)/15 bg-white/60 p-8">
-                <p
-                  class="text-sm tracking-[0.3em] text-(--color-primary)"
-                  aria-label="5 de 5 estrellas"
-                >
-                  ★★★★★
-                </p>
-                <blockquote class="mt-5 flex-1 font-display text-xl italic leading-snug">
-                  “{review.texto}”
-                </blockquote>
-                <figcaption class="mt-6 border-t border-(--color-ink)/10 pt-4">
-                  <p class="text-sm font-semibold">{review.nombre}</p>
-                  <p class="text-xs uppercase tracking-[0.2em] text-(--color-ink)/60">
+              <figure class="flex flex-col justify-between rounded-[18px] border border-(--color-ink)/15 bg-white/80 p-8 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-(--color-ink)/40">
+                <div>
+                  <div class="flex items-center justify-between border-b border-(--color-ink)/10 pb-4">
+                    <span class="flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-(--color-ink)">
+                      <span class="h-2 w-2 rounded-full bg-(--color-primary)" />
+                      Valoración 5.0
+                    </span>
+                    <span class="text-xs text-(--color-ink)/40">Verificada</span>
+                  </div>
+                  
+                  <blockquote class="mt-6 font-display text-lg sm:text-xl font-medium leading-snug text-(--color-ink)">
+                    “{review.texto}”
+                  </blockquote>
+                </div>
+
+                <figcaption class="mt-8 border-t border-(--color-ink)/10 pt-4">
+                  <p class="font-display text-sm font-bold text-(--color-ink)">{review.nombre}</p>
+                  <p class="text-xs uppercase tracking-[0.2em] text-(--color-ink)/50">
                     {review.fuente}
                   </p>
                 </figcaption>
@@ -41,8 +46,8 @@ const visibles = consent
 
         {
           !consent && (
-            <p class="mt-8 text-sm text-(--color-ink)/50">
-              Reseñas públicas de Google Maps, citadas con su fuente.
+            <p class="mt-8 text-xs text-(--color-ink)/50">
+              Reseñas públicas de Google Maps, citadas con su fuente de origen.
             </p>
           )
         }

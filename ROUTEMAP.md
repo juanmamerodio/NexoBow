@@ -20,15 +20,25 @@
 
 ---
 
-## 🏗️ Nueva Arquitectura de Templates: Desacoplamiento de Arquetipos Visuales [COMPLETADO / ACTIVO]
+## 🏗️ Nueva Arquitectura de Templates: Desacoplamiento de Arquetipos Visuales [EN PROGRESO / CATÁLOGO REA +13]
 
-A partir de esta fase, los templates se desacoplan de la profesión:
-- **`editorial-classic`** (v1.0.0, tag git `template/editorial-classic@1.0.0` y retrocompatible con `nutricionista`): Diseño editorial cálido, tipografías serif + sans estructuradas, números de pasos, estética atemporal (Delta Cafés). Ideal para nutrición, psicología, escribanías, arquitectura o asesoría legal boutique.
-- **`obsidian-authority`**: Modo oscuro ejecutivo, tarjetas con bordes nítidos, acentos bronce/dorado o neón sobrio. Ideal para estudios jurídicos corporativos, odontología de alta gama, estética masculina o consultoría financiera.
-- **`minimalist-pure`**: Espacio negativo clínico, acentos cian/turquesa o neutros, tipografía sans limpia. Ideal para dermatología, medicina general, psicología o consultoría moderna.
-- **`kinetic-cards`**: Alto contraste dinámico, métricas destacadas y módulos visuales interactivos. Ideal para kinesiología deportiva, centros de entrenamiento, estética corporal o rehabilitación.
+A partir de esta fase, los templates se desacoplan de la profesión y clonan la arquitectura visual auténtica de sus referentes internacionales:
+- **`editorial-classic`** (`nutricionista`, v1.0.0): Diseño editorial cálido, tipografías Fraunces + Archivo, números de pasos, estética atemporal (Delta Cafés). Ideal para nutrición, psicología, escribanías o asesoría boutique.
+- **`obsidian-authority`** (`abogado`, Ticket 20): Modo oscuro/ejecutivo asimétrico, recortes SVG, tipografía Space Grotesk + Inter, botón con dot expansivo (Kümmerlein Rechtsanwälte). Ideal para estudios jurídicos, derecho corporativo y notaría.
+- **`architectural-prestige`** (`clinica`, Ticket 21): Lienzo mineral piedra, Deep Forest Teal, acento menta quirúrgico y prestigio médico (SkyClinics). Ideal para clínicas de alta complejidad y medicina quirúrgica.
+- **`high-ticket-consulting`** (`corporativo`, Ticket 22): Cuadrícula táctica estilo ajedrez, Onyx + Tactical Orange, bloques de impacto (Vetter Consulting). Ideal para consultorías B2B, finanzas y M&A.
+- **`tech-editorial-system`** (`tech`, Ticket 23): Editorial tech moderno, Canvas Vanilla + Think Red, resolución de sistemas complejos (Think Company). Ideal para agencias de software, IT y productos digitales.
+- **`kinetic-performance`** (`deportes`, Ticket 24): Tipografía atlética masiva, Carbon Dark + Kinetic Emerald (The Performance Lab). Ideal para gimnasios, kinesiología y preparación física.
+- **`clinical-pure`** (`dermatologia`, Ticket 25): Espacio negativo clínico, acentos cian/turquesa y enfoque empático (Lipedema Guru). Ideal para dermatología y especialistas médicos.
+- **`architectural-spaces`** (`propiedades`, Ticket 26): Tipografía editorial refinada, bronce oak y galerías arquitectónicas (Lufte). Ideal para desarrollos inmobiliarios y real estate boutique.
+- **`minimalist-hardware`** (`producto`, Ticket 27): Deep Matte Black, precisión óptica e ingeniería de producto (Heavn One). Ideal para hardware específico, dispositivos y productos de autor.
+- **`industrial-authority`** (`construccion`, Ticket 28): Asphalt Dark + Safety Amber, métricas de obra pesada (Reliable Paving). Ideal para constructoras y servicios industriales.
+- **`biotech-clarity`** (`farmaceutica`, Ticket 29): Pure White + Deep Molecule Navy y formulaciones científicas (Roveia). Ideal para biotecnología y laboratorios.
+- **`island-creative-pure`** (`profesional`, Ticket 30): Pacific Cyan + Lagoon Dark para marca personal ágil (Tahiti Numérique). Ideal para consultores y creadores independientes.
+- **`oceanic-luxury`** (`turismo`, Ticket 31): Midnight Navy + Azure Wave y tipografía de alta costura (Bluemore Yachting). Ideal para chárters náuticos y hotelería de lujo.
+- **`harmonic-academy`** (`musica`, Ticket 32): Acoustic Stage Dark + Vibrant Tone Crimson (Ethos Music Academy). Ideal para academias de música y clases artísticas.
 
-**Matriz de Selección**: Un abogado puede usar `editorial-classic` u `obsidian-authority`; un odontólogo puede usar `minimalist-pure` u `obsidian-authority`. La IA selecciona según la reputación, estilo y formalidad detectados en el scouting.
+**Matriz de Selección**: Cada rubro dispone de su propio arquetipo visual optimizado para vender el servicio del prestador en menos de 0.8s, manteniendo el contrato desacoplado `site.json` y el Theme Switcher anti-rebote.
 
 ---
 

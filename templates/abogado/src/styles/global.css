@@ -1,12 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Fraunces", Georgia, serif;
-  --font-sans: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --color-paper: #fcf3ed;
-  --color-ink: #35221a;
-  --color-primary: #e70025;
-  --color-accent: #e3c1ad;
+  --font-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --color-paper: #f6f6f4;
+  --color-ink: #111111;
+  --color-primary: #f7f788;
+  --color-accent: #686155;
+}
+
+:root {
+  --yellow: #f7f788;
+  --soft-grey0: #f6f6f4;
+  --soft-grey1: #e2e4d7;
+  --soft-grey2: #d7d7cc;
+  --dark-shade: #686155;
+  --big_button_hover_color: #111111;
+  --small_round_corners: 8px;
+  --big_round_corners: 18px;
+  --dot_w: 12px;
 }
 
 @keyframes marquee {
@@ -27,6 +39,7 @@ body {
   background-color: var(--color-paper);
   color: var(--color-ink);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 .marquee-track {

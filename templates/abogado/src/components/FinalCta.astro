@@ -6,29 +6,31 @@ import { CONTENT } from "../site";
 const { pricing, links, final_cta } = CONTENT;
 ---
 
-<section class="bg-(--color-primary) text-(--color-on-primary)">
-  <div class="mx-auto max-w-4xl px-6 py-24 text-center lg:py-32">
-    <p
-      class="flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-(--color-on-primary)/70"
-    >
-      <span aria-hidden="true" class="h-px w-8 bg-(--color-on-primary)/60"></span>
+<section class="relative overflow-hidden bg-(--color-ink) text-(--color-paper) py-24 lg:py-32">
+  <!-- Acento sutil en background -->
+  <div class="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-(--color-primary)/10 blur-3xl pointer-events-none" aria-hidden="true" />
+  
+  <div class="relative mx-auto max-w-5xl px-6 text-center lg:px-12">
+    <div class="inline-flex items-center gap-2.5 rounded-[6px] bg-white/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-(--color-primary)">
+      <span class="h-1.5 w-1.5 rounded-full bg-(--color-primary)" />
       {pricing.garantia}
-      <span aria-hidden="true" class="h-px w-8 bg-(--color-on-primary)/60"></span>
-    </p>
+    </div>
 
-    <h2
-      class="mt-6 font-display text-4xl leading-[1.05] tracking-tight text-balance sm:text-5xl lg:text-6xl"
-    >
-      <Lead text={final_cta.titulo} emClass="text-(--color-on-primary) underline decoration-(--color-accent) decoration-2 underline-offset-8" />
+    <h2 class="mt-8 font-display text-3xl sm:text-5xl lg:text-6xl font-bold leading-[1.06] tracking-tight text-balance text-white">
+      <Lead text={final_cta.titulo} emClass="text-(--color-primary) italic" />
     </h2>
 
-    <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-(--color-on-primary)/80">
+    <p class="mx-auto mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-white/70">
       {final_cta.bajada}
     </p>
 
     <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
-      <Button href={links.calendly} label={pricing.cta} variant="light" external={true} />
-      <Button href={links.whatsapp} label="WhatsApp" variant="ghost-light" external={true} />
+      <Button href={links.calendly} label={pricing.cta} variant="primary" external={true} />
+      <Button href={links.whatsapp} label="Consultar por WhatsApp" variant="outline" external={true} />
     </div>
+
+    <p class="mt-8 text-xs uppercase tracking-widest text-white/40">
+      Atención presencial en oficinas centrales y vía teleconferencia segura
+    </p>
   </div>
 </section>
