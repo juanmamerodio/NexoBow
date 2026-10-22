@@ -97,5 +97,10 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
   - Orquestado en `AGENTS.md` como filtro anti-mediocridad y protocolo de triage rápido para resolución inmediata de errores estéticos o de generación visual (`detect`, `bolder`, `polish`, `distill`, `clarify`).
   - Integrado en Fase 5 del Main Flow y en el árbol de decisión de generación de sitios y templates.
   - Verificado con test suite de 37 pruebas en verde.
+- [2026-10-22] Actualización Estratégica en ROUTEMAP.md:
+  - Integrado diagnóstico senior de arquitectura de sistemas (evaluación cruda de fortalezas y riesgos).
+  - Definida estrategia de MCPs (limpieza inmediata anti-bloat y selección de 4 MCPs clave: Playwright, SQLite/Turso, Cloudflare, WhatsApp).
+  - Estructurado plan pragmático de 3 fases: "Fase 1: Primero Funcional para captar 2-3 clientes YA", "Fase 2: Robustecimiento & Golden Flow Automatizado (post-primeros clientes)" y "Fase 3: Fábrica Autónoma 24/7 en VPS".
+  - Verificada suite completa de 39 tests unitarios e integrados pasando 100% en verde.
 
 
