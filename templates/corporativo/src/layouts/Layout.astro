@@ -1,0 +1,43 @@
+---
+import "../styles/global.css";
+import { CONTENT, fontUrl, themeVars, THEME } from "../site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+const rootStyle = themeVars(THEME);
+const fontsHref = fontUrl(THEME);
+
+const pageTitle =
+  title ?? `${CONTENT.prestador.nombre} | ${CONTENT.prestador.rol || "Asesoramiento Profesional"}`;
+const pageDescription =
+  description ??
+  (CONTENT.prestador.bajada || CONTENT.prestador.enfoque || "").slice(0, 160);
+---
+
+<!doctype html>
+<html lang="es-AR" style={rootStyle}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href={fontsHref} rel="stylesheet" />
+  </head>
+  <body
+    class="relative min-h-screen bg-(--color-paper) font-sans text-(--color-ink) antialiased selection:bg-(--color-primary) selection:text-(--color-on-primary)"
+  >
+    <div class="relative z-10">
+      <slot />
+    </div>
+  </body>
+</html>

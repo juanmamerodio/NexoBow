@@ -1,0 +1,65 @@
+---
+import Button from "./ui/Button.astro";
+import SectionHead from "./ui/SectionHead.astro";
+import { ars, CONTENT } from "../site";
+
+const { pricing, links } = CONTENT;
+---
+
+<section id="precios" class="border-b border-(--color-ink)/10 bg-(--color-paper)">
+  <div class="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+    <SectionHead tag={pricing.tag} title={pricing.titulo} align="center" />
+
+    <div class="mx-auto mt-14 max-w-2xl bg-[#151515] border border-white/10 p-10 text-white lg:p-14 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <p
+          class="text-xs font-semibold uppercase tracking-[0.25em] text-(--color-primary)"
+        >
+          {pricing.plan}
+        </p>
+        <span class="text-xs font-mono px-2 py-0.5 border border-(--color-primary)/30 text-(--color-primary) rounded">
+          Cupos Limitados
+        </span>
+      </div>
+
+      <p class="mt-6 font-display text-5xl lg:text-6xl tracking-tight text-white font-bold">
+        {ars(pricing.precio_ars)}
+      </p>
+      <p class="mt-2 text-sm text-white/70">{pricing.precio_label}</p>
+      <p class="mt-2 font-display italic text-white/90">
+        {pricing.precio_sub}
+      </p>
+
+      <hr class="my-10 border-white/10" />
+
+      <p
+        class="text-xs font-semibold uppercase tracking-[0.25em] text-white/60"
+      >
+        {pricing.detalle_titulo}
+      </p>
+      <ul class="mt-6 space-y-4">
+        {
+          pricing.incluido.map((item) => (
+            <li class="flex items-start gap-3 leading-6 text-white/90">
+              <span aria-hidden="true" class="font-bold text-(--color-primary)">
+                ✓
+              </span>
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-10">
+        <Button
+          href={links.calendly}
+          label={pricing.cta}
+          variant="primary"
+          size="lg"
+          external={true}
+        />
+      </div>
+      <p class="mt-6 text-sm text-white/50">{pricing.garantia}</p>
+    </div>
+  </div>
+</section>

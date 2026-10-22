@@ -1,0 +1,36 @@
+---
+import SectionHead from "./ui/SectionHead.astro";
+import { CONTENT } from "../site";
+
+const { faq } = CONTENT;
+---
+
+<section id="faq" class="border-b border-(--color-ink)/10 bg-(--soft-grey1)/20">
+  <div class="mx-auto max-w-4xl px-6 py-20 lg:px-12 lg:py-28">
+    <SectionHead tag={faq.tag} title={faq.titulo} align="center" />
+
+    <div class="mt-14 space-y-4">
+      {
+        faq.items.map((item) => (
+          <details class="group rounded-[8px] border border-(--color-ink)/15 bg-white/80 p-6 transition-all duration-200 hover:border-(--color-ink)/40 open:bg-white open:shadow-sm">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-lg sm:text-xl font-bold tracking-tight text-(--color-ink) [&::-webkit-details-marker]:hidden">
+              <span class="flex items-center gap-3">
+                <span class="h-1.5 w-1.5 rounded-full bg-(--color-primary) flex-shrink-0" />
+                {item.q}
+              </span>
+              <span
+                aria-hidden="true"
+                class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-[6px] bg-(--color-ink)/5 text-base font-bold text-(--color-ink) transition-transform duration-300 group-open:rotate-45"
+              >
+                +
+              </span>
+            </summary>
+            <p class="mt-4 pt-4 border-t border-(--color-ink)/5 text-sm sm:text-base leading-relaxed text-(--color-ink)/75 pl-4">
+              {item.a}
+            </p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

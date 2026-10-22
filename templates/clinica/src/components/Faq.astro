@@ -1,0 +1,35 @@
+---
+import SectionHead from "./ui/SectionHead.astro";
+import { CONTENT } from "../site";
+
+const { faq } = CONTENT;
+---
+
+<section id="faq" class="border-b border-(--color-ink)/10">
+  <div class="mx-auto max-w-4xl px-6 py-20 lg:py-28">
+    <SectionHead tag={faq.tag} title={faq.titulo} align="center" />
+
+    <div class="mt-14 space-y-4">
+      {
+        faq.items.map((item) => (
+          <details class="group rounded-[14px] border border-(--color-ink)/12 bg-white/70 p-6 transition-all duration-300 open:border-(--color-primary) open:bg-white/95 open:shadow-sm">
+            <summary
+              class="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-lg sm:text-xl font-bold tracking-tight text-(--color-ink) [&::-webkit-details-marker]:hidden"
+            >
+              <span>{item.q}</span>
+              <span
+                aria-hidden="true"
+                class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-(--color-primary)/10 text-(--color-primary) font-display text-xl transition-transform duration-300 group-open:rotate-45 group-open:bg-(--color-primary) group-open:text-(--color-paper)"
+              >
+                +
+              </span>
+            </summary>
+            <p class="mt-4 text-sm sm:text-base leading-relaxed text-(--color-ink)/75 font-sans border-t border-(--color-ink)/10 pt-4">
+              {item.a}
+            </p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

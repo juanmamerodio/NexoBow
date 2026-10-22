@@ -1,0 +1,38 @@
+---
+import Lead from "./Lead.astro";
+
+interface Props {
+  tag?: string;
+  title: string;
+  description?: string;
+  align?: "left" | "center";
+}
+
+const { tag, title, description, align = "left" } = Astro.props;
+const centered = align === "center";
+---
+
+<header class={centered ? "mx-auto max-w-3xl text-center" : "max-w-2xl"}>
+  {
+    tag && (
+      <div
+        class={`inline-flex items-center gap-2.5 rounded-[12px] bg-(--color-primary)/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-(--color-primary) ${
+          centered ? "justify-center" : ""
+        }`}
+      >
+        <span class="h-2 w-2 rounded-full bg-(--color-accent)" aria-hidden="true"></span>
+        <span>{tag}</span>
+      </div>
+    )
+  }
+  <h2
+    class="mt-6 font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight text-balance text-(--color-ink)"
+  >
+    <Lead text={title} emClass="text-(--color-primary) italic font-medium" />
+  </h2>
+  {
+    description && (
+      <p class="mt-5 text-base sm:text-lg leading-relaxed text-(--color-ink)/75 font-sans">{description}</p>
+    )
+  }
+</header>
