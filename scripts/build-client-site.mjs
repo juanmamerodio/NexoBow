@@ -34,15 +34,17 @@ export function parseFrontmatter(raw) {
 export const RUBRO_TO_ARCHETYPE_MAP = {
   nutricionista: "editorial-classic",
   psicologo: "editorial-classic",
-  abogado: "editorial-classic",
+  abogado: "obsidian-authority",
   odontologo: "editorial-classic",
   kinesiologo: "editorial-classic",
   estetica: "editorial-classic",
+  clinica: "architectural-prestige",
 };
 
 export const ARCHETYPE_ALIASES = {
   "editorial-classic": ["nutricionista", "editorial-classic"],
   "obsidian-authority": ["abogado", "obsidian-authority"],
+  "architectural-prestige": ["clinica", "architectural-prestige"],
   "minimalist-pure": ["odontologo", "minimalist-pure"],
   "kinetic-cards": ["kinesiologo", "kinetic-cards"],
 };

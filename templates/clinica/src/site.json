@@ -1,0 +1,137 @@
+{
+  "_meta": "NO EDITAR A MANO. Punto de inyeccion del skill build-client-site: este archivo se regenera en cada clon a partir de la ficha de /clients/. Los valores aqui son PLACEHOLDERS del template clinica (reemplazables por la ficha). Convencion: en titulos, *texto* marca la palabra en italica.",
+  "tema": {
+    "primary": "#003934",
+    "accent": "#1a9e8f",
+    "fondo": "#e8e7e5",
+    "tinta": "#001e1b",
+    "fuente": "Plus Jakarta Sans",
+    "fuente_sans": "Inter",
+    "orden_secciones": ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"]
+  },
+  "paletas_alternativas": [
+    {
+      "nombre": "Stone Emerald (SkyClinics)",
+      "fondo": "#e8e7e5",
+      "tinta": "#001e1b",
+      "primary": "#003934",
+      "accent": "#1a9e8f"
+    },
+    {
+      "nombre": "Dark Aesthetics",
+      "fondo": "#003934",
+      "tinta": "#e8e7e5",
+      "primary": "#1a9e8f",
+      "accent": "#4db6ac"
+    },
+    {
+      "nombre": "Clinical Pure",
+      "fondo": "#f8fafc",
+      "tinta": "#0f172a",
+      "primary": "#0284c7",
+      "accent": "#38bdf8"
+    },
+    {
+      "nombre": "Prestige Navy",
+      "fondo": "#0b132b",
+      "tinta": "#f8fafc",
+      "primary": "#3a86ff",
+      "accent": "#60a5fa"
+    }
+  ],
+  "content": {
+    "hero": {
+      "eyebrow": "Centro Quirúrgico & Especialidades Médicas · Excelencia Clínica",
+      "card_caption": "Diagnóstico por imágenes 3D y tratamientos guiados por especialistas",
+      "card_footer": "Protocolos de recuperación rápida, equipamiento certificado y máxima seguridad clínica."
+    },
+    "marquee": {
+      "items": ["Diagnóstico 3D de Precisión", "Quirófanos de Alta Complejidad", "Recuperación Acelerada", "Especialistas Certificados", "Atención Personalizada"]
+    },
+    "prestador": {
+      "nombre": "SkyClinics Argentina",
+      "rol": "Centro Médico de Especialidades Quirúrgicas & Rehabilitación Integral · M.N. 142.890",
+      "titulo": "Recuperá tu calidad de vida con *medicina de vanguardia y precisión digital*",
+      "bajada": "Valoración inicial de 30 minutos con estudios diagnósticos en el acto: plan de tratamiento cerrado, tiempos exactos de recuperación y sin demoras de guardia.",
+      "bio": "Equipo médico multidisciplinario con más de 18 años de trayectoria en cirugía mínimamente invasiva, estética reparadora y salud integral. Certificación de excelencia en bioseguridad.",
+      "enfoque": "Combinamos tecnología de precisión digital con un trato humano y cercano: sabés exactamente cada paso de tu intervención, el arancel final y el seguimiento postoperatorio."
+    },
+    "problema": {
+      "tag": "El laberinto médico actual",
+      "titulo": "Postergar tu salud o caer en diagnósticos a las apuradas *cuesta años de bienestar*",
+      "descripcion": "Entre turnos a 3 meses, salas de espera atestadas y presupuestos que cambian a último momento, resolver un problema de salud se convirtió en una carga agotadora.",
+      "pains": [
+        { "tag": "Demoras eternas", "t": "Meses de espera para una consulta", "d": "Te atienden en 7 minutos de reloj, sin mirarte a los ojos ni explicarte la causa real de tu síntoma." },
+        { "tag": "Falta de claridad", "t": "Estudios dispersos y sin plan unificado", "d": "Te mandan de un centro a otro perdiendo semanas, sin que nadie coordine tu historia clínica de forma integral." },
+        { "tag": "Incertidumbre", "t": "Costos imprevistos e intervenciones traumáticas", "d": "Sorpresas de último momento en insumos, internación o técnicas obsoletas con postoperatorios dolorosos." }
+      ]
+    },
+    "pasos": {
+      "tag": "El camino del paciente",
+      "titulo": "Tu protocolo de atención: *de la valoración al alta definitiva*",
+      "footer": "Tecnología mínimamente invasiva para que retomes tu rutina en tiempo récord.",
+      "steps": [
+        { "n": "01", "k": "Valoración & Escaneo 3D", "d": "Agendás tu turno online. Evaluamos antecedentes y realizamos estudios de alta resolución en la misma visita." },
+        { "n": "02", "k": "Plan Clínico Personalizado", "d": "Diseñamos digitalmente tu tratamiento, con presupuesto cerrado y cronograma exacto de recuperación." },
+        { "n": "03", "k": "Procedimiento & Suite Privada", "d": "Intervención con anestesia controlada, suite privada y seguimiento médico 24/7 por WhatsApp." }
+      ]
+    },
+    "reviews": {
+      "tag": "Experiencia de nuestros pacientes",
+      "titulo": "Historias reales de recuperación y bienestar",
+      "items": [
+        { "nombre": "Dra. Mariana Benítez · Cirujana Pediátrica", "texto": "La precisión en el diagnóstico y la calidez del equipo me dieron una tranquilidad absoluta. La recuperación fue exactamente en los días que me indicaron.", "fuente": "Paciente Tratamiento Quirúrgico" },
+        { "nombre": "Esteban Ramos · Empresario Tecnológico", "texto": "Increíble nivel de instalaciones y tecnología. Cero dolor y al día siguiente ya estaba trabajando de forma remota. Un antes y un después.", "fuente": "Paciente Rehabilitación Integral" }
+      ]
+    },
+    "casos": {
+      "tag": "Resultados Clínicos",
+      "titulo": "Casos de éxito y recuperación funcional",
+      "items": [
+        { "titulo": "Rehabilitación estructural y funcional de alta complejidad", "descripcion": "Paciente con dolor crónico y limitación motriz tras múltiples intervenciones fallidas.", "resultado": "Recuperación del 100% de movilidad y alta definitiva a las 6 semanas con protocolo mínimamente invasivo." },
+        { "titulo": "Procedimiento estético reparador ambulatorio", "descripcion": "Intervención guiada por simulación tridimensional y sutura intradérmica invisible.", "resultado": "Reincorporación laboral en 72 horas sin apósitos visibles ni marcas residuales." }
+      ]
+    },
+    "pricing": {
+      "tag": "Consulta de Valoración",
+      "titulo": "Iniciá tu camino con una *evaluación clínica integral*",
+      "plan": "Consulta Diagnóstica de Alta Resolución",
+      "precio_ars": 0,
+      "precio_label": "Primera consulta de valoración · 30 minutos · Presencial u Online",
+      "precio_sub": "Evaluación completa de antecedentes, escaneo diagnóstico y propuesta de tratamiento sin compromiso.",
+      "detalle_titulo": "Qué incluye tu consulta de valoración",
+      "incluido": [
+        "Evaluación médica personalizada con especialista acreditado",
+        "Revisión integral de estudios previos e imágenes diagnósticas",
+        "Plan de tratamiento digitalizado con cronograma de recuperación",
+        "Presupuesto cerrado por escrito (válido para reintegro en prepagas)",
+        "Asesoramiento para cobertura médica y opciones de financiación"
+      ],
+      "garantia": "Calidad médica certificada y acompañamiento post-consulta",
+      "cta": "Agendá tu turno de valoración"
+    },
+    "faq": {
+      "tag": "Preguntas frecuentes",
+      "titulo": "Todo lo que necesitás saber antes de tu visita",
+      "items": [
+        { "q": "¿Atienden con prepagas u obras sociales?", "a": "Trabajamos de forma particular y por sistema de reintegro médico para prepagas (OSDE, Swiss Medical, Galeno, Medicus, entre otras). Te entregamos la factura oficial y el resumen de historia clínica para gestionar el reintegro de inmediato." },
+        { "q": "¿Cómo se agenda el turno de valoración inicial?", "a": "Podés seleccionar el horario que mejor te convenga en el calendario digital o coordinar directamente por WhatsApp con nuestro equipo de secretaría médica." },
+        { "q": "¿Las intervenciones requieren internación prolongada?", "a": "La gran mayoría de nuestros protocolos son ambulatorios o de corta estancia (day hospital), lo que permite que regreses a descansar a tu hogar el mismo día con seguimiento monitoreado." },
+        { "q": "¿Cómo protegen mis datos de salud e historia clínica?", "a": "Cumplimos estrictamente con la Ley 25.326 de Protección de Datos Personales y secreto médico profesional. Tu historia clínica digital está encriptada y resguardada bajo estándares internacionales." }
+      ]
+    },
+    "links": {
+      "calendly": "https://calendly.com/skyclinics-ar/valoracion-medica",
+      "whatsapp": "https://wa.me/5491155550000"
+    },
+    "footer": {
+      "blurb": "SkyClinics · Centro Médico Quirúrgico de Alta Complejidad. Diagnóstico de precisión, tecnología de vanguardia y cuidado centrado en la persona.",
+      "credit": "Landing por NexoBow"
+    },
+    "final_cta": {
+      "titulo": "Tu salud en manos de *especialistas de vanguardia*",
+      "bajada": "Agendá hoy tu consulta diagnóstica de valoración y descubrí una nueva experiencia en atención médica."
+    },
+    "consentimiento_testimonios": true
+  }
+}

@@ -1,0 +1,39 @@
+---
+import SectionHead from "./ui/SectionHead.astro";
+import { CONTENT } from "../site";
+
+const { problema } = CONTENT;
+---
+
+<section id="problema" class="border-b border-(--color-ink)/10">
+  <div class="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+    <div class="grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <SectionHead
+          tag={problema.tag}
+          title={problema.titulo}
+          description={problema.descripcion}
+        />
+      </div>
+      <div class="lg:col-span-7">
+        <ul>
+          {
+            problema.pains.map((pain) => (
+              <li class="border-t border-(--color-ink)/10 py-8">
+                <p
+                  class="font-display text-sm italic text-(--color-primary)"
+                >
+                  {pain.tag}
+                </p>
+                <h3 class="mt-2 font-display text-2xl font-semibold tracking-tight">
+                  {pain.t}
+                </h3>
+                <p class="mt-2 max-w-lg text-(--color-ink)/70">{pain.d}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

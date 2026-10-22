@@ -31,7 +31,11 @@ test("T-ARC-01: resolveTemplateArchetype infiere arquetipo desde template_archet
   );
   assert.equal(
     resolveTemplateArchetype({ rubro: "abogado" }),
-    "editorial-classic"
+    "obsidian-authority"
+  );
+  assert.equal(
+    resolveTemplateArchetype({ rubro: "clinica" }),
+    "architectural-prestige"
   );
 
   // 3. Fallback seguro si no hay datos
@@ -45,6 +49,22 @@ test("T-ARC-02: resolveTemplateSourceDirectory mapea nombres de arquetipo y rubr
   // 'editorial-classic' mapea físicamente al template 'nutricionista' (o 'editorial-classic' si existiera la carpeta)
   const dirFromArchetype = resolveTemplateSourceDirectory("editorial-classic");
   assert.ok(dirFromArchetype.endsWith("templates/nutricionista") || dirFromArchetype.endsWith("templates/editorial-classic"));
+
+  // 'obsidian-authority' mapea físicamente al template 'abogado'
+  const dirFromObsidian = resolveTemplateSourceDirectory("obsidian-authority");
+  assert.ok(dirFromObsidian.endsWith("templates/abogado"));
+
+  // 'abogado' mapea físicamente a templates/abogado
+  const dirFromRubroAbogado = resolveTemplateSourceDirectory("abogado");
+  assert.ok(dirFromRubroAbogado.endsWith("templates/abogado"));
+
+  // 'architectural-prestige' mapea físicamente al template 'clinica'
+  const dirFromArchitectural = resolveTemplateSourceDirectory("architectural-prestige");
+  assert.ok(dirFromArchitectural.endsWith("templates/clinica"));
+
+  // 'clinica' mapea físicamente a templates/clinica
+  const dirFromRubroClinica = resolveTemplateSourceDirectory("clinica");
+  assert.ok(dirFromRubroClinica.endsWith("templates/clinica"));
 
   // 'nutricionista' mapea físicamente a templates/nutricionista
   const dirFromRubro = resolveTemplateSourceDirectory("nutricionista");
