@@ -14,11 +14,10 @@ sites/
 .env.*
 !.env.example
 
-# OS / Editor / Scratch
+# OS / Editor
 .DS_Store
 Thumbs.db
 *.log
 .idea/
 .vscode/
-.scratch/
 
