@@ -1,0 +1,136 @@
+{
+  "_meta": "NO EDITAR A MANO. Punto de inyeccion del skill build-client-site: este archivo se regenera en cada clon a partir de la ficha de /clients/. Los valores aqui son PLACEHOLDERS del template abogado (reemplazables por la ficha). Convencion: en titulos, *texto* marca la palabra en italica.",
+  "tema": {
+    "primary": "#D97706",
+    "accent": "#F7F788",
+    "fondo": "#090D16",
+    "tinta": "#F1F5F9",
+    "fuente": "Archivo",
+    "fuente_sans": "Inter",
+    "orden_secciones": ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"]
+  },
+  "paletas_alternativas": [
+    {
+      "nombre": "Obsidian Authority (Original)",
+      "fondo": "#090D16",
+      "tinta": "#F1F5F9",
+      "primary": "#D97706",
+      "accent": "#F7F788"
+    },
+    {
+      "nombre": "Kümmerlein Classic",
+      "fondo": "#f6f6f4",
+      "tinta": "#000000",
+      "primary": "#003388",
+      "accent": "#f7f788"
+    },
+    {
+      "nombre": "Editorial Navy",
+      "fondo": "#0B132B",
+      "tinta": "#F8FAFC",
+      "primary": "#3A86FF",
+      "accent": "#60A5FA"
+    },
+    {
+      "nombre": "Minimalist Carbon",
+      "fondo": "#18181B",
+      "tinta": "#FFFFFF",
+      "primary": "#71717A",
+      "accent": "#E4E4E7"
+    }
+  ],
+  "content": {
+    "hero": {
+      "eyebrow": "Estudio Jurídico · Asesoramiento Corporativo & Estratégico",
+      "card_caption": "Así protegés tu patrimonio y agilizás tus resoluciones",
+      "card_footer": "Atención personalizada, confidencial y sin rodeos burocráticos."
+    },
+    "marquee": {
+      "items": ["Derecho Corporativo", "Litigios Complejos", "Contratos Estratégicos", "Defensa Patrimonial", "Resolución Ágil"]
+    },
+    "prestador": {
+      "nombre": "Dr. Martín Albarracín",
+      "rol": "Abogado & Consultor Legal · T° XLII F° 815 CPACF",
+      "titulo": "Protegé tu empresa y resolvé tus conflictos con *estrategia jurídica real*",
+      "bajada": "Diagnóstico inicial de 25 minutos para analizar tu caso en profundidad, fijar contingencias y trazar un plan de acción concreto.",
+      "bio": "Especialista en derecho societario, contractual y litigios patrimoniales. Más de 14 años de trayectoria acompañando a directores, PYMEs y particulares.",
+      "enfoque": "Transformamos la complejidad legal en decisiones ejecutivas claras, blindando intereses y evitando costos innecesarios."
+    },
+    "problema": {
+      "tag": "El riesgo real",
+      "titulo": "Un problema legal mal encarado se convierte en un *drenaje de recursos*",
+      "descripcion": "En el ámbito empresarial y personal, dilatar decisiones legales o improvisar contratos suele costar hasta diez veces más que una estrategia preventiva.",
+      "pains": [
+        { "tag": "Incertidumbre", "t": "Contratos con zonas grises", "d": "Firmás acuerdos estándar de internet o modelos desactualizados que te dejan desprotegido ante un incumplimiento o litigio." },
+        { "tag": "Fricción", "t": "Procesos estancados y demoras", "d": "Abogados que no atienden el teléfono, no reportan avances y dejan que los expedientes duerman mientras crecen los riesgos." },
+        { "tag": "Costos ocultos", "t": "Honorarios y contingencias opacas", "d": "Falta de claridad desde el inicio sobre costos, aranceles y probabilidad real de éxito en cada instancia." }
+      ]
+    },
+    "pasos": {
+      "tag": "Cómo trabajamos",
+      "titulo": "Tu hoja de ruta: de la *consulta al blindaje legal*",
+      "footer": "Confidencialidad absoluta y rigor técnico desde el primer minuto.",
+      "steps": [
+        { "n": "01", "k": "Evaluación", "d": "Agendás tu llamada o reunión. Analizamos antecedentes, documentación y contexto comercial o personal." },
+        { "n": "02", "k": "Estrategia", "d": "Diseñamos un plan de contingencia con opciones claras, plazos estimados y estructura de honorarios transparente." },
+        { "n": "03", "k": "Ejecución", "d": "Llevamos adelante la negociación, redacción o representación judicial con reportes de avance periódicos." }
+      ]
+    },
+    "reviews": {
+      "tag": "Confianza de nuestros clientes",
+      "titulo": "Respaldados por quienes confían en nuestra firma",
+      "items": [
+        { "nombre": "Dr. Fernando Morales · Director de Operaciones", "texto": "Nos resolvieron una reestructuración societaria compleja en tiempo récord. Claridad técnica y trato impecable.", "fuente": "Recomendación Profesional" },
+        { "nombre": "Luciana G. · Titular de Logística B2B", "texto": "Excelente acompañamiento en negociaciones comerciales. Blindaron nuestros contratos y evitamos litigios costosos.", "fuente": "Cliente Corporativo" }
+      ]
+    },
+    "casos": {
+      "tag": "Resultados y Casos",
+      "titulo": "Casos reales con resolución favorable",
+      "items": [
+        { "titulo": "Resolución prejudicial de conflicto societario", "descripcion": "Acuerdo extrajudicial estratégico entre socios mayoritarios y minoritarios.", "resultado": "Cierre en 45 días sin llegar a juicio y protegiendo el flujo de caja." },
+        { "titulo": "Auditoría preventiva de contratos comerciales", "descripcion": "Revisión integral de más de 30 convenios de distribución y franquicias.", "resultado": "Mitigación del 100% de cláusulas abusivas identificadas." }
+      ]
+    },
+    "pricing": {
+      "tag": "Consulta Diagnóstica",
+      "titulo": "Iniciá con una sesión de *diagnóstico legal estratégico*",
+      "plan": "Consulta Diagnóstica Integral",
+      "precio_ars": 0,
+      "precio_label": "Primera sesión · 25 minutos · Online o Presencial",
+      "precio_sub": "Sin compromiso: evaluamos viabilidad, contingencias y hoja de ruta.",
+      "detalle_titulo": "Qué incluye la consulta diagnóstica",
+      "incluido": [
+        "Revisión preliminar de documentación y antecedentes",
+        "Identificación de riesgos y alternativas legales viables",
+        "Hoja de ruta con próximos pasos y tiempos estimados",
+        "Presupuesto cerrado sin costos imprevistos",
+        "Secreto profesional y estricta confidencialidad"
+      ],
+      "garantia": "Claridad total y rigor jurídico",
+      "cta": "Agendá tu diagnóstico legal"
+    },
+    "faq": {
+      "tag": "Preguntas frecuentes",
+      "titulo": "Claridad y transparencia en cada etapa",
+      "items": [
+        { "q": "¿Cómo se coordina la primera consulta?", "a": "Elegís día y horario en el calendario interactivo. Recibís confirmación inmediata con el link de la reunión por Google Meet o la dirección del estudio." },
+        { "q": "¿Qué documentación necesito presentar?", "a": "Para aprovechar al máximo los 25 minutos, podés enviar por WhatsApp o adjuntar contratos, intimaciones o documentación relevante antes de la sesión." },
+        { "q": "¿Cómo se presupuestan los honorarios posteriores?", "a": "Trabajamos con presupuestos cerrados o abonos corporativos mensuales según la complejidad, sin sorpresas ni aranceles ocultos." }
+      ]
+    },
+    "links": {
+      "calendly": "https://calendly.com/estudio-albarracin/consulta-diagnostica",
+      "whatsapp": "https://wa.me/5491155550000"
+    },
+    "footer": {
+      "blurb": "Asesoramiento legal corporativo y litigios patrimoniales con enfoque de resultados.",
+      "credit": "Landing por NexoBow"
+    },
+    "final_cta": {
+      "titulo": "Protegé tus intereses con *respaldo legal de primer nivel*",
+      "bajada": "Agendá tu diagnóstico inicial en 2 clics y empezá a resolver tu situación hoy mismo."
+    },
+    "consentimiento_testimonios": false
+  }
+}
