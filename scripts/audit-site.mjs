@@ -11,7 +11,7 @@ import { spawnSync } from "node:child_process";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-export const DEFAULT_SITE_JS_BUDGET_BYTES = 35 * 1024; // 35 KB para micro-interacciones propias en templates PREMIUM
+export const DEFAULT_SITE_JS_BUDGET_BYTES = 25 * 1024 * 1024; // Sin límite artificial de JS: rige únicamente la restricción de Cloudflare Pages (25 MB por archivo)
 
 export function auditHtmlDocument(
   html,
