@@ -351,6 +351,34 @@ export const RUBRO_BRANDING_MAP = {
     CONTEXTUAL_BRANDING_PALETTES[1],
     CONTEXTUAL_BRANDING_PALETTES[0],
   ],
+  corporativo: [
+    {
+      name: "Tactical Onyx",
+      primary: "#ff891d",
+      accent: "#888888",
+      fondo: "#090909",
+      tinta: "#f4f4f4",
+      fuente: "Plus Jakarta Sans",
+      fuente_sans: "Inter",
+    },
+    CONTEXTUAL_BRANDING_PALETTES[3],
+    CONTEXTUAL_BRANDING_PALETTES[0],
+    CONTEXTUAL_BRANDING_PALETTES[1],
+  ],
+  consultor: [
+    {
+      name: "Tactical Onyx",
+      primary: "#ff891d",
+      accent: "#888888",
+      fondo: "#090909",
+      tinta: "#f4f4f4",
+      fuente: "Plus Jakarta Sans",
+      fuente_sans: "Inter",
+    },
+    CONTEXTUAL_BRANDING_PALETTES[3],
+    CONTEXTUAL_BRANDING_PALETTES[0],
+    CONTEXTUAL_BRANDING_PALETTES[1],
+  ],
 };
 
 export const DEFAULT_ALTERNATIVE_PALETTES = [

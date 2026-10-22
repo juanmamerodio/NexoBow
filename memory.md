@@ -81,4 +81,11 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
   - Generada y auditada demo `sites/demo-clinica/` (16 tests unitarios, HTML 33.6 KB, presupuesto JS de 1.87 KB vs límite 35 KB, a11y validado). Sincronizada a `dist-previews/demo-clinica/` para `https://preview.nexobow.site/demo-clinica/`.
   - Actualizado catálogo en `web/src/config.ts` (Template #03: Architectural Prestige para Clínicas & Salud Quirúrgica activado en vivo).
   - Suite completa de 37 tests pasando al 100%.
+- [2026-10-21] Implementación de Template #04 REA (`https://vetter-consulting-en.webflow.io/`):
+  - Creado `templates/corporativo/` bajo arquetipo `high-ticket-consulting` (Onyx Black `#090909`, Tiza `#f4f4f4`, Tactical Orange `#ff891d`, superficies en cuadrícula ejecutiva `#151515` / `#1e1e1e`, tipografía Plus Jakarta Sans + Inter, 4 paletas alternativas en ThemeSwitcher).
+  - Versionado con tags git `template/corporativo@1.0.0` y `template/high-ticket-consulting@1.0.0`.
+  - Mapeo de resolución integrado en `build-client-site.mjs`, `generate-client-fiche.mjs` y `tests/archetype-decoupling.test.mjs`.
+  - Generada y auditada demo `sites/demo-corporativo/` (16 tests unitarios, HTML 38.3 KB, presupuesto JS de 1.87 KB vs límite 35 KB, a11y validado). Sincronizada a `dist-previews/demo-corporativo/` para `https://preview.nexobow.site/demo-corporativo/`.
+  - Actualizado catálogo en `web/src/config.ts` (Template #08: High-Ticket Consulting / Tactical Matrix activado en vivo).
+  - Suite completa de 37 tests pasando al 100%.
 

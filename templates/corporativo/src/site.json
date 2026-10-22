@@ -1,0 +1,222 @@
+{
+  "_meta": "NO EDITAR A MANO. Punto de inyeccion del skill build-client-site: este archivo se regenera en cada clon a partir de la ficha de /clients/. Los valores aqui son PLACEHOLDERS del template corporativo (reemplazables por la ficha).",
+  "tema": {
+    "primary": "#ff891d",
+    "accent": "#888888",
+    "fondo": "#090909",
+    "tinta": "#f4f4f4",
+    "fuente": "Plus Jakarta Sans",
+    "fuente_sans": "Inter",
+    "orden_secciones": ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"]
+  },
+  "paletas_alternativas": [
+    {
+      "nombre": "Original (Onyx & Orange)",
+      "fondo": "#090909",
+      "tinta": "#f4f4f4",
+      "primary": "#ff891d",
+      "accent": "#888888"
+    },
+    {
+      "nombre": "Obsidian Gold",
+      "fondo": "#0a0a0c",
+      "tinta": "#f4f4f4",
+      "primary": "#eab308",
+      "accent": "#ca8a04"
+    },
+    {
+      "nombre": "Emerald Capital",
+      "fondo": "#06140e",
+      "tinta": "#f4f4f4",
+      "primary": "#10b981",
+      "accent": "#059669"
+    },
+    {
+      "nombre": "Royal Navy",
+      "fondo": "#080e1a",
+      "tinta": "#f4f4f4",
+      "primary": "#3b82f6",
+      "accent": "#2563eb"
+    }
+  ],
+  "content": {
+    "hero": {
+      "eyebrow": "Consultoría Estratégica & Finanzas Corporativas B2B",
+      "card_caption": "Metodología de Escalamiento Financiero & Operativo",
+      "card_footer": "Atención directa con consultor senior · Acuerdos de confidencialidad estrictos (NDA)."
+    },
+    "marquee": {
+      "items": [
+        "Estrategia Corporativa",
+        "Optimización de Cash Flow",
+        "Fusiones & Adquisiciones (M&A)",
+        "Gobierno Corporativo",
+        "Escalamiento Rentable",
+        "Auditoría Operativa"
+      ]
+    },
+    "prestador": {
+      "nombre": "Valenzuela & Asociados",
+      "rol": "Consultoría Estratégica & Finanzas Corporativas para Empresas en Crecimiento",
+      "titulo": "Multiplicá la rentabilidad de tu empresa con *estrategia corporativa de alto impacto*",
+      "bajada": "Diagnóstico financiero y operativo en 48 horas: detectamos fugas de capital, reestructuramos márgenes y diseñamos el plan de escalamiento sin rodeos.",
+      "bio": "Firma de asesoramiento estratégico para compañías medianas y líderes de negocios. Más de 15 años de experiencia liderando procesos de reestructuración financiera, expansión regional y gobierno corporativo.",
+      "enfoque": "Trabajamos como socios estratégicos de tu directorio: alineamos números, procesos y equipo para que el crecimiento de la facturación se traduzca en caja libre real y valor patrimonial."
+    },
+    "problema": {
+      "tag": "El cuello de botella de escalar",
+      "titulo": "Crecer sin estructura financiera es el camino más rápido al *estrés operativo y la falta de caja*",
+      "descripcion": "Muchas empresas aumentan sus ventas mes a mes pero sus dueños siguen atrapados en el día a día sin ver liquidez real.",
+      "pains": [
+        {
+          "tag": "Fugas de Caja",
+          "t": "Crecimiento desordenado sin flujo de fondos proyectado",
+          "d": "Las ventas suben pero el saldo en cuenta a fin de mes no acompaña: costos fijos inflados, plazos de cobro desfasados y falta de previsión impositiva."
+        },
+        {
+          "tag": "Operaciones",
+          "t": "El director sigue siendo el bombero del negocio",
+          "d": "Cada decisión crítica depende de vos. Sin cuadros de mando ni mandos medios empoderados, el negocio no puede escalar sin absorberte la vida."
+        },
+        {
+          "tag": "Rentabilidad",
+          "t": "Márgenes diluidos por falta de costeo estratégico",
+          "d": "Productos o servicios que parecen rentables en los papeles pero consumen tiempo y estructura operativa que destruyen el margen neto."
+        },
+        {
+          "tag": "Decisiones",
+          "t": "Falta de información financiera en tiempo real",
+          "d": "Tomar decisiones de inversión o contratación mirando el balance contable con 3 meses de atraso es manejar mirando el espejo retrovisor."
+        },
+        {
+          "tag": "Expansión",
+          "t": "Inseguridad al buscar financiamiento o socios",
+          "d": "Sin estados financieros prolijos y métricas claras de unit economics, conseguir financiamiento o valuar la compañía resulta imposible."
+        },
+        {
+          "tag": "Gobierno",
+          "t": "Conflictos societarios y desalineación de objetivos",
+          "d": "Socios con visiones desarticuladas sobre dividendos versus reinversión, generando fricciones que frenan la toma de decisiones."
+        }
+      ]
+    },
+    "pasos": {
+      "tag": "Metodología Probada",
+      "titulo": "Cómo trabajamos para *ordenar y escalar tu compañía*",
+      "bajada": "Un proceso de 3 fases diseñado para directores que no tienen tiempo para consultorías teóricas ni informes de 200 páginas que nadie lee.",
+      "steps": [
+        {
+          "n": "01",
+          "k": "Diagnóstico de Fugas & Cash Flow (Semana 1)",
+          "d": "Auditamos tus estados financieros, costos ocultos y flujo de caja diario. En 7 días te entregamos el mapa exacto de dónde está perdiendo dinero tu empresa."
+        },
+        {
+          "n": "02",
+          "k": "Plan de Reestructuración & Metas (Semana 2)",
+          "d": "Definimos los 3 frentes de acción inmediata: recorte de ineficiencias, renegociación de condiciones comerciales y tablero de control en tiempo real."
+        },
+        {
+          "n": "03",
+          "k": "Acompañamiento en Directorio (Mes 1 a 6)",
+          "d": "Sesiones quincenales de seguimiento con el equipo de liderazgo para asegurar la ejecución del plan, medir desvíos y consolidar el crecimiento."
+        }
+      ]
+    },
+    "reviews": {
+      "tag": "Resultados Comprobados",
+      "titulo": "Lo que dicen los *directores y fundadores* que confiaron en nosotros",
+      "bajada": "Empresas que pasaron de la incertidumbre operativa al control absoluto de sus números.",
+      "items": [
+        {
+          "nombre": "Esteban Morales",
+          "rol": "CEO en Logística del Sur S.A.",
+          "texto": "Veníamos creciendo 40% anual en facturación pero siempre corriendo atrás de los cheques. Ignacio y su equipo nos ordenaron el capital de trabajo en 60 días. Hoy tenemos 4 meses de caja de reserva."
+        },
+        {
+          "nombre": "Mariana Gómez Castro",
+          "rol": "Socia Gerente en PharmaTech B2B",
+          "texto": "La claridad que te dan desde la primera reunión es total. Nos ayudaron a renegociar plazos de cobro y eliminar líneas deficitarias. El retorno sobre la inversión de la consultoría fue de 7x en el primer año."
+        },
+        {
+          "nombre": "Rodrigo Pellegrini",
+          "rol": "Director en AgroServicios Delta",
+          "texto": "Estábamos trabados en una discusión societaria sobre cómo financiar la nueva planta. Su intervención profesional y neutral destrabó el acuerdo y logramos estructurar el crédito bancario en tiempo récord."
+        }
+      ]
+    },
+    "casos": {
+      "tag": "Casos de Escalamiento",
+      "titulo": "Transformaciones financieras reales en *compañías medianas*",
+      "bajada": "Resultados medibles alcanzados con nuestra metodología de intervención directa.",
+      "items": [
+        {
+          "titulo": "Empresa de Software B2B (55 colaboradores)",
+          "descripcion": "Problemas de retención de margen tras duplicar nómina: costo por hora descalibrado y facturación a 90 días.",
+          "resultado": "+32% de margen operativo y reducción del ciclo de conversión de caja de 85 a 38 días."
+        },
+        {
+          "titulo": "Cadena de Distribución Mayorista (Facturación > $4M USD)",
+          "descripcion": "Descontrol de inventario inmovilizado y endeudamiento de corto plazo con tasas elevadas.",
+          "resultado": "Liberación de $450.000 USD en capital de trabajo y refinanciación de pasivos al 40% de costo financiero."
+        }
+      ]
+    },
+    "pricing": {
+      "tag": "Inversión Estratégica",
+      "titulo": "Honorarios transparentes diseñados para generar *retorno inmediato*",
+      "plan": "Diagnóstico Financiero & Plan de Escalamiento",
+      "precio_ars": 850000,
+      "precio_label": "Inversión única · Informe ejecutivo en 10 días hábiles",
+      "precio_sub": "Garantía de retorno: si no identificamos ahorros u oportunidades por el doble del honorario, te reintegramos el 100%.",
+      "detalle_titulo": "Qué incluye la intervención:",
+      "incluido": [
+        "Auditoría profunda de flujo de caja y rentabilidad por unidad de negocio",
+        "Tablero de control financiero en tiempo real para directorio",
+        "Reunión ejecutiva presencial o virtual de 3 horas con informe de acción",
+        "Guía de renegociación de pasivos y optimización de capital de trabajo",
+        "30 días de soporte directo por WhatsApp y videollamada para implementación"
+      ],
+      "cta": "Agendá tu llamada de diagnóstico",
+      "garantia": "Garantía estricta de confidencialidad protegida bajo acuerdo legal NDA previo a cualquier intercambio de datos."
+    },
+    "faq": {
+      "tag": "Preguntas Frecuentes",
+      "titulo": "Todo lo que necesitás saber antes de *iniciar la consultoría*",
+      "bajada": "Respuestas directas para directores y accionistas.",
+      "items": [
+        {
+          "q": "¿Cómo se garantiza la confidencialidad de la información financiera de mi empresa?",
+          "a": "Antes de que nos compartas cualquier dato, balance o estado de cuenta, firmamos un Acuerdo de Confidencialidad (NDA) vinculante con validez legal. Tu información no sale de nuestro equipo directo."
+        },
+        {
+          "q": "¿Qué tiempo de dedicación requiere de mi parte como director?",
+          "a": "Sabemos que tu tiempo vale oro. Necesitamos una reunión inicial de 60 minutos y acceso a tu responsable administrativo/contable para la recopilación de datos. Nosotros hacemos el trabajo pesado de análisis."
+        },
+        {
+          "q": "¿En cuánto tiempo empezamos a ver resultados concretos en caja?",
+          "a": "Las primeras medidas de optimización de compras y plazos de cobro suelen generar impacto visible en el flujo de caja en los primeros 15 a 30 días de implementación."
+        },
+        {
+          "q": "¿Trabajan de forma presencial o remota?",
+          "a": "Ambas modalidades. Para empresas en Buenos Aires coordinamos reuniones de directorio presenciales; para el resto del país y la región operamos 100% online con reuniones ejecutivas por Zoom o Google Meet."
+        }
+      ]
+    },
+    "footer": {
+      "blurb": "Valenzuela & Asociados · Consultoría Estratégica & Finanzas Corporativas B2B. Asesoramiento fiduciario, reestructuración y gobierno corporativo.",
+      "credit": "Landing por NexoBow"
+    },
+    "final_cta": {
+      "tag": "El Próximo Paso",
+      "titulo": "Tomá el control definitivo de las *finanzas y el futuro de tu empresa*",
+      "bajada": "Coordiná una llamada estratégica de 20 minutos sin cargo. Evaluamos la situación de tu negocio y te decimos exactamente si podemos ayudarte.",
+      "cta_primary": "Agendar llamada estratégica",
+      "cta_secondary": "Escribinos por WhatsApp"
+    },
+    "links": {
+      "calendly": "#agendar",
+      "whatsapp": "https://wa.me/5491100000000?text=Hola!%20Quiero%20coordinar%20una%20llamada%20de%20diagn%C3%B3stico%20estrat%C3%A9gico%20para%20mi%20empresa."
+    },
+    "consentimiento_testimonios": true
+  }
+}

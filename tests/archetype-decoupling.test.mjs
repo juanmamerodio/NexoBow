@@ -37,6 +37,14 @@ test("T-ARC-01: resolveTemplateArchetype infiere arquetipo desde template_archet
     resolveTemplateArchetype({ rubro: "clinica" }),
     "architectural-prestige"
   );
+  assert.equal(
+    resolveTemplateArchetype({ rubro: "corporativo" }),
+    "high-ticket-consulting"
+  );
+  assert.equal(
+    resolveTemplateArchetype({ rubro: "consultor" }),
+    "high-ticket-consulting"
+  );
 
   // 3. Fallback seguro si no hay datos
   assert.equal(
@@ -65,6 +73,14 @@ test("T-ARC-02: resolveTemplateSourceDirectory mapea nombres de arquetipo y rubr
   // 'clinica' mapea físicamente a templates/clinica
   const dirFromRubroClinica = resolveTemplateSourceDirectory("clinica");
   assert.ok(dirFromRubroClinica.endsWith("templates/clinica"));
+
+  // 'high-ticket-consulting' mapea físicamente al template 'corporativo'
+  const dirFromHighTicket = resolveTemplateSourceDirectory("high-ticket-consulting");
+  assert.ok(dirFromHighTicket.endsWith("templates/corporativo"));
+
+  // 'corporativo' mapea físicamente a templates/corporativo
+  const dirFromRubroCorporativo = resolveTemplateSourceDirectory("corporativo");
+  assert.ok(dirFromRubroCorporativo.endsWith("templates/corporativo"));
 
   // 'nutricionista' mapea físicamente a templates/nutricionista
   const dirFromRubro = resolveTemplateSourceDirectory("nutricionista");

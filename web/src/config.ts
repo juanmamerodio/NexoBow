@@ -97,11 +97,12 @@ export const SITE = {
     },
     {
       id: "08",
-      name: "Swiss Advisory",
-      niche: "Contadores & Consultores",
-      palette: ["#F9FAFB", "#111827", "#2563EB"],
-      status: "Catálogo REA",
-      description: "Grilla suiza de precisión matemática para estudios contables, financieros y consultoría B2B.",
+      name: "High-Ticket Consulting (Tactical Matrix)",
+      niche: "Consultoría Corporativa & Servicios B2B",
+      palette: ["#090909", "#F4F4F4", "#FF891D"],
+      status: "En Vivo (Demo)",
+      description: "Cuadrícula ejecutiva estilo ajedrez táctico inspirada en Vetter Consulting para consultores B2B, estudios y servicios de alto valor.",
+      demoUrl: "https://preview.nexobow.site/demo-corporativo/",
     },
     {
       id: "09",

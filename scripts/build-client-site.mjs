@@ -39,12 +39,15 @@ export const RUBRO_TO_ARCHETYPE_MAP = {
   kinesiologo: "editorial-classic",
   estetica: "editorial-classic",
   clinica: "architectural-prestige",
+  corporativo: "high-ticket-consulting",
+  consultor: "high-ticket-consulting",
 };
 
 export const ARCHETYPE_ALIASES = {
   "editorial-classic": ["nutricionista", "editorial-classic"],
   "obsidian-authority": ["abogado", "obsidian-authority"],
   "architectural-prestige": ["clinica", "architectural-prestige"],
+  "high-ticket-consulting": ["corporativo", "consultor", "high-ticket-consulting"],
   "minimalist-pure": ["odontologo", "minimalist-pure"],
   "kinetic-cards": ["kinesiologo", "kinetic-cards"],
 };
@@ -386,7 +389,7 @@ function main() {
     content: {
       prestador: {
         nombre: fm.nombre,
-        rol: fm.rol || `Nutricionista · ${fm.subtitulo || "Atención Online"}`,
+        rol: fm.rol || baseSite.content?.prestador?.rol || `Especialista · ${fm.subtitulo || "Atención Personalizada"}`,
         titulo: fm.titulo || baseSite.content.prestador.titulo,
         bajada: fm.bajada || baseSite.content.prestador.bajada,
         bio: sectionText(body, "Bio") || baseSite.content.prestador.bio,
@@ -396,13 +399,15 @@ function main() {
         ...baseSite.content.problema,
         descripcion:
           sectionText(body, "Problema") ||
-          "La mayoría de las personas no fallan por falta de voluntad, sino por seguir planes restrictivos imposibles de sostener. Aprender a comer tiene que sumar a tu vida, no complicarla.",
+          baseSite.content?.problema?.descripcion ||
+          "Atención personalizada y tratamientos de alta calidad para resolver tu situación desde el primer día.",
       },
       footer: {
         blurb:
           fm.tagline ||
           sectionText(body, "Footer") ||
-          `${fm.nombre} · Consultorías online y hábitos sostenibles para el mundo real.`,
+          baseSite.content?.footer?.blurb ||
+          `${fm.nombre} · Atención profesional y consultorías de alta calidad.`,
         credit: "Landing por NexoBow",
       },
       reviews: {
