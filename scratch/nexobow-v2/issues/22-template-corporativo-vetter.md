@@ -20,15 +20,15 @@ Duplicar la web **ENTERA** de **Vetter Consulting** (`https://vetter-consulting-
 - Desacoplamiento estricto con `site.json` (`content` + `tema` + `paletas_alternativas`).
 - Integrar `ThemeSwitcher.astro` con 4 esquemas en vivo.
 - Compilar la demo oficial en `sites/demo-corporativo/` y sincronizar a `https://preview.nexobow.site/demo-corporativo/`.
-- Fijar tags git inmutables `template/corporativo@1.0.0` y `template/high-ticket-consulting@1.0.0`.
+- Fijar tags git inmutables `template/corporativo@2.0.0` y `template/high-ticket-consulting@2.0.0`.
 
 **Blocked by:**
 None.
 
-**Status:** ready-for-agent
+**Status:** closed
 
-- [ ] `templates/corporativo/` contiene la web ENTERA duplicada de Vetter Consulting mediante REA
-- [ ] Tipografía: utiliza la fuente exacta de la web a copiar (`Neue Montreal`) o fallback visualmente similar verificado (`General Sans` / `Plus Jakarta Sans` + `Inter`).
-- [ ] Tests unitarios en `templates/corporativo/tests/` 100% pasando
-- [ ] Demo compilada en `sites/demo-corporativo/` con código 0 y JS sin límite artificial
-- [ ] Tags git inmutables creados
+- [x] `templates/corporativo/` contiene la web ENTERA duplicada de Vetter Consulting mediante REA
+- [x] Tipografía: utiliza la fuente exacta de la web a copiar (`Neue Montreal`) o fallback visualmente similar verificado (`General Sans` / `Plus Jakarta Sans` + `Inter`).
+- [x] Tests unitarios en `templates/corporativo/tests/` 100% pasando (17 tests)
+- [x] Demo compilada en `sites/demo-corporativo/` con código 0 y JS sin límite artificial
+- [x] Tags git inmutables creados (`template/corporativo@2.0.0` y `template/high-ticket-consulting@2.0.0`)

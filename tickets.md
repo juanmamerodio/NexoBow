@@ -34,7 +34,7 @@
 - [x] [16: Inspector REA y Extractor Estético (`scripts/rea-inspect.mjs`)](./scratch/nexobow-v2/issues/16-rea-inspect-extractor.md) (`done`)
 - [x] [20: Template #02 REA — Kümmerlein Abogacía & Notaría (`obsidian-authority` v2.0.0)](./scratch/nexobow-v2/issues/20-template-abogado-kuemmerlein.md) (`done`)
 - [x] [21: Template #03 REA — SkyClinics Clínicas & Salud Quirúrgica (`architectural-prestige` v2.0.0)](./scratch/nexobow-v2/issues/21-template-clinica-skyclinics.md) (`done`)
-- [ ] [22: Template #04 REA — Vetter Consulting Negocios B2B (`high-ticket-consulting`)](./scratch/nexobow-v2/issues/22-template-corporativo-vetter.md) (`ready-for-agent`)
+- [x] [22: Template #04 REA — Vetter Consulting Negocios B2B (`high-ticket-consulting`)](./scratch/nexobow-v2/issues/22-template-corporativo-vetter.md) (`done`)
 - [ ] [23: Template #05 REA — Think Company Tech & Digital Systems (`tech-editorial-system`)](./scratch/nexobow-v2/issues/23-template-tech-thinkcompany.md) (`ready-for-agent`)
 - [ ] [24: Template #06 REA — The Performance Lab Deporte & Gym (`kinetic-performance`)](./scratch/nexobow-v2/issues/24-template-deportes-performancelab.md) (`ready-for-agent`)
 - [ ] [25: Template #07 REA — Lipedema Guru Dermatología & Médicos (`clinical-pure`)](./scratch/nexobow-v2/issues/25-template-dermatologia-lipedemaguru.md) (`ready-for-agent`)
