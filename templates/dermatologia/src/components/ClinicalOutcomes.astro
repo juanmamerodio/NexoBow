@@ -6,8 +6,12 @@ const outcomes = CONTENT.clinical_outcomes || {
   title: "Por qué confiar tu salud en nuestro equipo",
   subtitle: "La combinación de rigor científico, tecnología de diagnóstico no invasivo y comprensión empática profunda.",
   advantages: [],
-  testimonials: []
+  testimonials: [],
 };
+
+const rawReviews = CONTENT.reviews;
+const reviewsList = Array.isArray(rawReviews) ? rawReviews : (rawReviews?.items || []);
+const testimonials = (outcomes.testimonials && outcomes.testimonials.length > 0) ? outcomes.testimonials : reviewsList;
 ---
 
 <section id="ventajas" class="py-16 sm:py-24 px-4 sm:px-8 bg-[var(--color-paper)]">
@@ -73,19 +77,19 @@ const outcomes = CONTENT.clinical_outcomes || {
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
         {
-          outcomes.testimonials.map((t: any) => (
+          testimonials.map((t: any) => (
             <div class="clinical-card p-6 sm:p-7 flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-4">
                   <div class="flex text-amber-400 text-sm">
-                    {"★".repeat(t.rating || 5)}
+                    {"★".repeat(t.rating || t.estrellas || 5)}
                   </div>
                   <span class="text-xs font-mono bg-slate-100 text-slate-700 px-2 py-0.5 rounded">
-                    {t.estadio}
+                    {t.estadio || t.ocupacion || "Paciente Verificada"}
                   </span>
                 </div>
                 <blockquote class="text-sm sm:text-base text-[var(--color-ink)]/80 font-sans leading-relaxed italic mb-6">
-                  "{t.texto}"
+                  "{t.texto || t.comentario || t.bajada}"
                 </blockquote>
               </div>
 
@@ -95,7 +99,7 @@ const outcomes = CONTENT.clinical_outcomes || {
                     {t.nombre}
                   </h4>
                   <span class="text-xs text-[var(--color-ink)]/50 font-sans">
-                    {t.edad}
+                    {t.edad || t.resultado || ""}
                   </span>
                 </div>
                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>

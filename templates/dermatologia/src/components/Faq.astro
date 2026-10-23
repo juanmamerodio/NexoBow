@@ -1,26 +1,30 @@
 ---
 import { CONTENT } from "../site.ts";
 
-const faqs = CONTENT.faq || [];
+const faq = CONTENT.faq || {};
+const items = Array.isArray(faq) ? faq : (faq.items || []);
+const tag = faq.tag || "PREGUNTAS FRECUENTES";
+const titulo = faq.titulo || "Popular Questions";
+const bajada = faq.bajada || "Respuestas claras y fundadas sobre diagnóstico, compresión y tratamiento del lipedema.";
 ---
 
 <section id="faq" class="py-16 sm:py-24 px-4 sm:px-8 bg-[var(--color-paper)]">
   <div class="max-w-4xl mx-auto">
     <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
       <span class="inline-block text-xs font-semibold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-accent)]/80 px-3.5 py-1 rounded-full mb-3.5">
-        PREGUNTAS FRECUENTES
+        {tag}
       </span>
       <h2 class="type-h2 font-display text-[var(--color-ink)] mb-4">
-        Popular Questions
+        {titulo}
       </h2>
       <p class="text-base text-[var(--color-ink)]/70 font-sans">
-        Respuestas claras y fundadas sobre diagnóstico, compresión y tratamiento del lipedema.
+        {bajada}
       </p>
     </div>
 
     <div class="space-y-4">
       {
-        faqs.map((item: any, i: number) => (
+        items.map((item: any) => (
           <details class="group clinical-card overflow-hidden transition-all duration-200">
             <summary class="flex items-center justify-between p-6 cursor-pointer list-none select-none font-display text-base sm:text-lg font-bold text-[var(--color-ink)] group-open:text-[var(--color-primary)]">
               <span class="pr-4">{item.q}</span>

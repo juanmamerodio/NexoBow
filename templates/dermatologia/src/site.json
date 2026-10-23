@@ -277,28 +277,33 @@
       "direct_whatsapp": "Consultar Turnos por WhatsApp",
       "direct_calendar": "Reservar Consulta Online"
     },
-    "faq": [
-      {
-        "q": "¿Cómo me ayuda esta consulta a comprender y tratar mi lipedema?",
-        "a": "Realizamos una evaluación clínica exhaustiva para determinar si tus síntomas corresponden a lipedema, en qué estadio te encontrás y qué combinación de terapias (nutrición antiinflamatoria, compresión de tejido plano, drenaje y ejercicio de bajo impacto) frenará su progresión."
-      },
-      {
-        "q": "¿Las consultas se realizan en forma presencial o virtual?",
-        "a": "Ofrecemos ambas modalidades. La consulta presencial en nuestro consultorio de Recoleta incluye ecografía diagnóstica in-situ. Para pacientes del interior o exterior del país, disponemos de consulta médica virtual de alta resolución con guía fotográfica y análisis de estudios previos."
-      },
-      {
-        "q": "¿Qué incluye el informe médico que recibo tras la valoración?",
-        "a": "Recibís un informe clínico completo con estadiaje formal, orden médica para prendas de compresión de tejido plano con medidas exactas, pautas nutricionales antiinflamatorias y el plan de seguimiento sugerido para presentar ante obras sociales y prepagas."
-      },
-      {
-        "q": "¿Cómo sé si el acompañamiento pre y post quirúrgico es para mí?",
-        "a": "Si estás planificando una liposucción para lipedema (WAL o PAL), este protocolo prepara tus tejidos desinflamando el área antes de la intervención y previene complicaciones comunes como fibrosis, hematomas persistentes y seromas tras la cirugía."
-      },
-      {
-        "q": "¿La consulta me permite obtener una orden para prendas de compresión?",
-        "a": "Sí. Emitimos la receta médica y ficha de prescripción técnica de compresión de tejido plano (flat-knit), indispensable para que ortopedias especializadas confeccionen las medias adecuadas y para la cobertura ante prepagas."
-      }
-    ],
+    "faq": {
+      "tag": "PREGUNTAS FRECUENTES",
+      "titulo": "Popular Questions",
+      "bajada": "Respuestas claras y fundadas sobre diagnóstico, compresión y tratamiento del lipedema.",
+      "items": [
+        {
+          "q": "¿Cómo me ayuda esta consulta a comprender y tratar mi lipedema?",
+          "a": "Realizamos una evaluación clínica exhaustiva para determinar si tus síntomas corresponden a lipedema, en qué estadio te encontrás y qué combinación de terapias (nutrición antiinflamatoria, compresión de tejido plano, drenaje y ejercicio de bajo impacto) frenará su progresión."
+        },
+        {
+          "q": "¿Las consultas se realizan en forma presencial o virtual?",
+          "a": "Ofrecemos ambas modalidades. La consulta presencial en nuestro consultorio de Recoleta incluye ecografía diagnóstica in-situ. Para pacientes del interior o exterior del país, disponemos de consulta médica virtual de alta resolución con guía fotográfica y análisis de estudios previos."
+        },
+        {
+          "q": "¿Qué incluye el informe médico que recibo tras la valoración?",
+          "a": "Recibís un informe clínico completo con estadiaje formal, orden médica para prendas de compresión de tejido plano con medidas exactas, pautas nutricionales antiinflamatorias y el plan de seguimiento sugerido para presentar ante obras sociales y prepagas."
+        },
+        {
+          "q": "¿Cómo sé si el acompañamiento pre y post quirúrgico es para mí?",
+          "a": "Si estás planificando una liposucción para lipedema (WAL o PAL), este protocolo prepara tus tejidos desinflamando el área antes de la intervención y previene complicaciones comunes como fibrosis, hematomas persistentes y seromas tras la cirugía."
+        },
+        {
+          "q": "¿La consulta me permite obtener una orden para prendas de compresión?",
+          "a": "Sí. Emitimos la receta médica y ficha de prescripción técnica de compresión de tejido plano (flat-knit), indispensable para que ortopedias especializadas confeccionen las medias adecuadas y para la cobertura ante prepagas."
+        }
+      ]
+    },
     "final_cta": {
       "badge": "TU SALUD ES HOY",
       "title": "¿Lista para ponerle nombre y solución al dolor?",
