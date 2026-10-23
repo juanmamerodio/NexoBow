@@ -29,11 +29,24 @@ export const SECTION_NAV = [
   { key: "Faq", href: "#faq", label: "Preguntas" },
 ];
 
+const ALIAS_MAP: Record<string, SectionKey> = {
+  Problem: "AthleticAssessment",
+  Steps: "TrainingPeriodization",
+  Reviews: "AthleteTransformations",
+  CaseStudy: "AthleteTransformations",
+  Pricing: "TrialBooking",
+  BookingSection: "TrialBooking",
+};
+
 export function resolveOrder(order: string[]): SectionKey[] {
   const known = SECTION_KEYS as readonly string[];
-  const out: string[] = [];
-  for (const key of [...order, "Faq", "FinalCta"]) {
-    if (known.includes(key) && !out.includes(key)) out.push(key);
+  const out: SectionKey[] = [];
+  for (const rawKey of [...order, "Faq", "FinalCta"]) {
+    if (!known.includes(rawKey)) continue;
+    const canonicalKey = ALIAS_MAP[rawKey] || (rawKey as SectionKey);
+    if (!out.includes(canonicalKey)) {
+      out.push(canonicalKey);
+    }
   }
-  return out as SectionKey[];
+  return out;
 }

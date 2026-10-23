@@ -1,6 +1,6 @@
 ---
 // ThemeSwitcher.astro — NexoBow: Selector de paletas interactivo anti-rebote para previews
-import { PALETAS_ALTERNATIVAS, THEME } from "../site";
+import { PALETAS_ALTERNATIVAS, THEME, CONTENT } from "../site";
 
 interface Palette {
   nombre: string;
@@ -22,7 +22,8 @@ const palettes: Palette[] = (PALETAS_ALTERNATIVAS && PALETAS_ALTERNATIVAS.length
   ? (PALETAS_ALTERNATIVAS as Palette[])
   : [defaultOriginal];
 
-const juanmaWaPhone = "5491100000000"; // fallback Juanma Merodio NexoBow
+const parsedPhone = CONTENT.links?.whatsapp?.match(/wa\.me\/(\d+)/)?.[1];
+const juanmaWaPhone = parsedPhone || "5491100000000";
 ---
 
 <aside

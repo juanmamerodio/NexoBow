@@ -2,9 +2,17 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { resolveOrder, SECTION_KEYS } from "../src/order.ts";
 
-test("resolveOrder respeta el orden del tema y agrega Faq + FinalCta al final", () => {
+test("resolveOrder normaliza aliases heredados a secciones canónicas sin duplicar", () => {
   const order = ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"];
-  assert.deepEqual(resolveOrder(order), [...order, "Faq", "FinalCta"]);
+  assert.deepEqual(resolveOrder(order), [
+    "Hero",
+    "AthleticAssessment",
+    "TrainingPeriodization",
+    "AthleteTransformations",
+    "TrialBooking",
+    "Faq",
+    "FinalCta",
+  ]);
 });
 
 test("resolveOrder soporta las secciones auténticas de The Performance Lab", () => {

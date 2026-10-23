@@ -24,10 +24,10 @@ Duplicar la web **ENTERA** de **The Performance Lab** (`https://theperformancela
 **Blocked by:**
 None.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] `templates/deportes/` contiene la web ENTERA duplicada de The Performance Lab mediante REA
-- [ ] Tipografía: utiliza las fuentes exactas de la web a copiar (`Diatype` + display original) o fallback visualmente similar verificado (`Barlow Semi Condensed` / `Teko` + `Inter`).
-- [ ] Tests unitarios en `templates/deportes/tests/` 100% pasando
-- [ ] Demo compilada en `sites/demo-deportes/` con código 0 y JS sin límite artificial
-- [ ] Tags git inmutables creados
+- [x] `templates/deportes/` contiene la web ENTERA duplicada de The Performance Lab mediante REA
+- [x] Tipografía: utiliza las fuentes exactas de la web a copiar (`Diatype` + display original) o fallback visualmente similar verificado (`Barlow Semi Condensed` / `Teko` + `Chivo`).
+- [x] Tests unitarios en `templates/deportes/tests/` 100% pasando
+- [x] Demo compilada en `sites/demo-deportes/` con código 0 y JS sin límite artificial
+- [x] Tags git inmutables creados (`template/deportes@1.0.0` y `template/kinetic-performance@1.0.0`)
