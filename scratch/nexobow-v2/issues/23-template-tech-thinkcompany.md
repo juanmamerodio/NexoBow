@@ -24,10 +24,10 @@ Duplicar la web **ENTERA** de **Think Company** (`https://www.thinkcompany.com/`
 **Blocked by:**
 None.
 
-**Status:** ready-for-agent
+**Status:** closed
 
-- [ ] `templates/tech/` contiene la web ENTERA duplicada de Think Company mediante REA
-- [ ] Tipografía: utiliza las fuentes exactas de la web a copiar (`Bagoss` + `ABC Diatype` + `Space Mono`) o fallback visualmente similar verificado (`Syne` / `Familjen Grotesk` + `Inter` + `Space Mono`).
-- [ ] Tests unitarios en `templates/tech/tests/` 100% pasando
-- [ ] Demo compilada en `sites/demo-tech/` con código 0 y JS sin límite artificial
-- [ ] Tags git inmutables creados
+- [x] `templates/tech/` contiene la web ENTERA duplicada de Think Company mediante REA
+- [x] Tipografía: utiliza las fuentes exactas de la web a copiar (`Bagoss` + `ABC Diatype` + `Space Mono`) o fallback visualmente similar verificado (`Syne` / `Familjen Grotesk` + `Inter` + `Space Mono`).
+- [x] Tests unitarios en `templates/tech/tests/` 100% pasando (17 tests)
+- [x] Demo compilada en `sites/demo-tech/` con código 0 y JS sin límite artificial
+- [x] Tags git inmutables creados (`template/tech@1.0.0` y `template/tech-editorial-system@1.0.0`)
