@@ -5,13 +5,13 @@
     "accent": "#888888",
     "fondo": "#090909",
     "tinta": "#f4f4f4",
-    "fuente": "Plus Jakarta Sans",
+    "fuente": "Neue Montreal",
     "fuente_sans": "Inter",
-    "orden_secciones": ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"]
+    "orden_secciones": ["Hero", "StrategicGrid", "ConsultingRoadmap", "RoiMetrics", "BookingSection"]
   },
   "paletas_alternativas": [
     {
-      "nombre": "Original (Onyx & Orange)",
+      "nombre": "Tactical Onyx (Vetter)",
       "fondo": "#090909",
       "tinta": "#f4f4f4",
       "primary": "#ff891d",
@@ -42,8 +42,8 @@
   "content": {
     "hero": {
       "eyebrow": "Consultoría Estratégica & Finanzas Corporativas B2B",
-      "card_caption": "Metodología de Escalamiento Financiero & Operativo",
-      "card_footer": "Atención directa con consultor senior · Acuerdos de confidencialidad estrictos (NDA)."
+      "card_caption": "Metodología Speed Chess & Escalamiento Financiero",
+      "card_footer": "Atención directa de socio a director · Acuerdos de confidencialidad estrictos (NDA)."
     },
     "marquee": {
       "items": [
@@ -57,10 +57,10 @@
     },
     "prestador": {
       "nombre": "Valenzuela & Asociados",
-      "rol": "Consultoría Estratégica & Finanzas Corporativas para Empresas en Crecimiento",
-      "titulo": "Multiplicá la rentabilidad de tu empresa con *estrategia corporativa de alto impacto*",
-      "bajada": "Diagnóstico financiero y operativo en 48 horas: detectamos fugas de capital, reestructuramos márgenes y diseñamos el plan de escalamiento sin rodeos.",
-      "bio": "Firma de asesoramiento estratégico para compañías medianas y líderes de negocios. Más de 15 años de experiencia liderando procesos de reestructuración financiera, expansión regional y gobierno corporativo.",
+      "rol": "Consultoría Estratégica & Finanzas Corporativas B2B",
+      "titulo": "Los negocios son como el ajedrez rápido. *La estrategia es la clave. El tiempo es crítico.*",
+      "bajada": "Más de 700 directores y accionistas satisfechos no son casualidad: somos la firma de consultoría y blindaje financiero para empresas que exigen control absoluto de su caja.",
+      "bio": "Firma de asesoramiento estratégico para compañías medianas y líderes de negocios. Más de 16 años de experiencia liderando procesos de reestructuración financiera, expansión regional y gobierno corporativo.",
       "enfoque": "Trabajamos como socios estratégicos de tu directorio: alineamos números, procesos y equipo para que el crecimiento de la facturación se traduzca en caja libre real y valor patrimonial."
     },
     "problema": {
@@ -103,20 +103,25 @@
     "pasos": {
       "tag": "Metodología Probada",
       "titulo": "Cómo trabajamos para *ordenar y escalar tu compañía*",
-      "bajada": "Un proceso de 3 fases diseñado para directores que no tienen tiempo para consultorías teóricas ni informes de 200 páginas que nadie lee.",
+      "bajada": "Un proceso de 4 fases diseñado para directores que no tienen tiempo para consultorías teóricas ni informes de 200 páginas que nadie lee.",
       "steps": [
         {
           "n": "01",
-          "k": "Diagnóstico de Fugas & Cash Flow (Semana 1)",
+          "k": "Diagnóstico Quirúrgico de Fugas & Cash Flow (Semana 1)",
           "d": "Auditamos tus estados financieros, costos ocultos y flujo de caja diario. En 7 días te entregamos el mapa exacto de dónde está perdiendo dinero tu empresa."
         },
         {
           "n": "02",
-          "k": "Plan de Reestructuración & Metas (Semana 2)",
+          "k": "Plan de Reestructuración & Metas de Capital (Semana 2)",
           "d": "Definimos los 3 frentes de acción inmediata: recorte de ineficiencias, renegociación de condiciones comerciales y tablero de control en tiempo real."
         },
         {
           "n": "03",
+          "k": "Ejecución 100% Digital y Sin Fricciones (Semana 3 a 4)",
+          "d": "Implementamos los cuadros de mando, automatizaciones y reportes ejecutivos en plataformas en la nube sin papeleo."
+        },
+        {
+          "n": "04",
           "k": "Acompañamiento en Directorio (Mes 1 a 6)",
           "d": "Sesiones quincenales de seguimiento con el equipo de liderazgo para asegurar la ejecución del plan, medir desvíos y consolidar el crecimiento."
         }
@@ -128,19 +133,19 @@
       "bajada": "Empresas que pasaron de la incertidumbre operativa al control absoluto de sus números.",
       "items": [
         {
-          "nombre": "Esteban Morales",
-          "rol": "CEO en Logística del Sur S.A.",
-          "texto": "Veníamos creciendo 40% anual en facturación pero siempre corriendo atrás de los cheques. Ignacio y su equipo nos ordenaron el capital de trabajo en 60 días. Hoy tenemos 4 meses de caja de reserva."
+          "nombre": "Patrick Khatrao",
+          "rol": "CEO en Khatrao Consulting GmbH",
+          "texto": "Antes de trabajar con ellos, las decisiones financieras se tomaban por intuición. Nos estructuraron un sistema de compensación y beneficios ejecutivos que redujo la rotación a cero y aumentó la rentabilidad un 32%."
         },
         {
-          "nombre": "Mariana Gómez Castro",
-          "rol": "Socia Gerente en PharmaTech B2B",
-          "texto": "La claridad que te dan desde la primera reunión es total. Nos ayudaron a renegociar plazos de cobro y eliminar líneas deficitarias. El retorno sobre la inversión de la consultoría fue de 7x en el primer año."
+          "nombre": "Julius Kemnitzer",
+          "rol": "CEO en Julius Kemnitzer GmbH",
+          "texto": "Detectaron errores en pólizas y contratos que nos ahorraron más de €43.000 EUR en un solo ejercicio fiscal. La velocidad de respuesta es menor a 1 hora. Son socios estratégicos indispensables."
         },
         {
-          "nombre": "Rodrigo Pellegrini",
-          "rol": "Director en AgroServicios Delta",
-          "texto": "Estábamos trabados en una discusión societaria sobre cómo financiar la nueva planta. Su intervención profesional y neutral destrabó el acuerdo y logramos estructurar el crédito bancario en tiempo récord."
+          "nombre": "Sebastian Szalinski",
+          "rol": "CEO en IRON Media GmbH",
+          "texto": "Teníamos múltiples asesores que no hablaban entre sí. Unificaron todo en un interlocutor único y redujeron la carga administrativa del equipo directivo en un 44%. Hoy tenemos control total."
         }
       ]
     },
@@ -209,7 +214,7 @@
     "final_cta": {
       "tag": "El Próximo Paso",
       "titulo": "Tomá el control definitivo de las *finanzas y el futuro de tu empresa*",
-      "bajada": "Coordiná una llamada estratégica de 20 minutos sin cargo. Evaluamos la situación de tu negocio y te decimos exactamente si podemos ayudarte.",
+      "bajada": "Coordiná una llamada estratégica de 30 minutos sin cargo. Evaluamos la situación de tu negocio y te decimos exactamente si podemos ayudarte.",
       "cta_primary": "Agendar llamada estratégica",
       "cta_secondary": "Escribinos por WhatsApp"
     },

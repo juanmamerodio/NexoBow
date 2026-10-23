@@ -1,65 +1,77 @@
 ---
 import Button from "./ui/Button.astro";
-import SectionHead from "./ui/SectionHead.astro";
 import { ars, CONTENT } from "../site";
 
-const { pricing, links } = CONTENT;
+const pricing = CONTENT.pricing || {};
+const links = CONTENT.links || {};
+const bookingUrl = links.calendly || "#agendar";
 ---
 
-<section id="precios" class="border-b border-(--color-ink)/10 bg-(--color-paper)">
-  <div class="mx-auto max-w-6xl px-6 py-20 lg:py-28">
-    <SectionHead tag={pricing.tag} title={pricing.titulo} align="center" />
-
-    <div class="mx-auto mt-14 max-w-2xl bg-[#151515] border border-white/10 p-10 text-white lg:p-14 shadow-2xl">
-      <div class="flex items-center justify-between">
-        <p
-          class="text-xs font-semibold uppercase tracking-[0.25em] text-(--color-primary)"
-        >
-          {pricing.plan}
-        </p>
-        <span class="text-xs font-mono px-2 py-0.5 border border-(--color-primary)/30 text-(--color-primary) rounded">
-          Cupos Limitados
+<section id="precios" class="py-24 bg-[#090909] text-[#f4f4f4] border-b border-[#222222]">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 mb-3">
+        <span class="w-1.5 h-1.5 bg-(--color-primary)"></span>
+        <span class="text-xs uppercase tracking-widest text-[#888888] font-mono">
+          {pricing.tag || "Inversión Estratégica"}
         </span>
       </div>
+      <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#f4f4f4]">
+        {pricing.titulo?.split("*").map((part, index) =>
+          index % 2 === 1 ? (
+            <span class="text-(--color-primary)">{part}</span>
+          ) : (
+            <span>{part}</span>
+          )
+        )}
+      </h2>
+    </div>
 
-      <p class="mt-6 font-display text-5xl lg:text-6xl tracking-tight text-white font-bold">
-        {ars(pricing.precio_ars)}
-      </p>
-      <p class="mt-2 text-sm text-white/70">{pricing.precio_label}</p>
-      <p class="mt-2 font-display italic text-white/90">
+    <div class="bg-[#111111] border border-[#262626] rounded-xs p-8 sm:p-12 hover:border-[#3a3a3a] transition-colors relative">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#1f1f1f]">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-widest text-(--color-primary) block">
+            {pricing.plan || "Diagnóstico Financiero & Plan de Escalamiento"}
+          </span>
+          <span class="text-xs text-[#777777] font-sans mt-1 block">
+            {pricing.precio_label || "Inversión única · Informe ejecutivo en 10 días hábiles"}
+          </span>
+        </div>
+        <div class="text-left sm:text-right">
+          <span class="font-display text-3xl sm:text-4xl font-bold text-[#f4f4f4]">
+            {pricing.precio_ars ? ars(pricing.precio_ars) : "$850.000 ARS"}
+          </span>
+        </div>
+      </div>
+
+      <p class="text-xs sm:text-sm text-[#a0a0a0] font-sans italic my-6">
         {pricing.precio_sub}
       </p>
 
-      <hr class="my-10 border-white/10" />
-
-      <p
-        class="text-xs font-semibold uppercase tracking-[0.25em] text-white/60"
-      >
-        {pricing.detalle_titulo}
-      </p>
-      <ul class="mt-6 space-y-4">
-        {
-          pricing.incluido.map((item) => (
-            <li class="flex items-start gap-3 leading-6 text-white/90">
-              <span aria-hidden="true" class="font-bold text-(--color-primary)">
-                ✓
-              </span>
+      <div class="border-t border-[#1f1f1f] pt-6 mb-8">
+        <span class="text-xs font-mono uppercase tracking-widest text-[#888888] block mb-4">
+          {pricing.detalle_titulo || "Qué incluye la intervención:"}
+        </span>
+        <ul class="space-y-3">
+          {pricing.incluido?.map((item) => (
+            <li class="flex items-start gap-3 text-xs sm:text-sm text-[#cccccc]">
+              <span class="text-(--color-primary) font-bold">✓</span>
               <span>{item}</span>
             </li>
-          ))
-        }
-      </ul>
-
-      <div class="mt-10">
-        <Button
-          href={links.calendly}
-          label={pricing.cta}
-          variant="primary"
-          size="lg"
-          external={true}
-        />
+          ))}
+        </ul>
       </div>
-      <p class="mt-6 text-sm text-white/50">{pricing.garantia}</p>
+
+      <div class="pt-6 border-t border-[#1f1f1f] flex flex-col sm:flex-row items-center justify-between gap-6">
+        <Button href={bookingUrl} variant="primary" size="lg">
+          {pricing.cta || "Agendá tu llamada de diagnóstico"}
+        </Button>
+        <span class="text-[11px] text-[#666666] font-mono uppercase">
+          {pricing.garantia}
+        </span>
+      </div>
     </div>
+
   </div>
 </section>

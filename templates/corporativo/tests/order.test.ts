@@ -7,6 +7,17 @@ test("resolveOrder respeta el orden del tema y agrega Faq + FinalCta al final", 
   assert.deepEqual(resolveOrder(order), [...order, "Faq", "FinalCta"]);
 });
 
+test("resolveOrder soporta las secciones auténticas de Vetter Consulting", () => {
+  const vetterOrder = [
+    "Hero",
+    "StrategicGrid",
+    "ConsultingRoadmap",
+    "RoiMetrics",
+    "BookingSection",
+  ];
+  assert.deepEqual(resolveOrder(vetterOrder), [...vetterOrder, "Faq", "FinalCta"]);
+});
+
 test("resolveOrder no duplica secciones repetidas", () => {
   assert.deepEqual(resolveOrder(["Hero", "Hero", "Pricing"]), ["Hero", "Pricing", "Faq", "FinalCta"]);
 });
@@ -24,7 +35,11 @@ test("resolveOrder con orden vacío devuelve solo el cierre del embudo", () => {
   assert.deepEqual(resolveOrder([]), ["Faq", "FinalCta"]);
 });
 
-test("todas las secciones del orden son conocidas", () => {
+test("todas las secciones auténticas de Vetter Consulting son conocidas", () => {
   assert.ok(SECTION_KEYS.includes("Hero"));
+  assert.ok(SECTION_KEYS.includes("StrategicGrid"));
+  assert.ok(SECTION_KEYS.includes("ConsultingRoadmap"));
+  assert.ok(SECTION_KEYS.includes("RoiMetrics"));
+  assert.ok(SECTION_KEYS.includes("BookingSection"));
   assert.ok(SECTION_KEYS.includes("FinalCta"));
 });

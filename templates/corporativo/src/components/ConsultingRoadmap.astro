@@ -1,0 +1,115 @@
+---
+import { CONTENT } from "../site";
+
+const steps = [
+  {
+    step: "Paso 01",
+    tag: "Diagnóstico Quirúrgico",
+    title: "Auditamos tu status quo financiero y operativo",
+    desc: "Para que la intervención sea 100% certera, nuestro equipo analiza tus números reales, descalces de cobranza, estructura de costos fijos y pasivos comerciales en 7 días hábiles.",
+    icon: "/assets/king.svg",
+    badge: "Día 1 al 7",
+  },
+  {
+    step: "Paso 02",
+    tag: "Concepto Estratégico",
+    title: "Diseñamos un plan de capital optimizado a tu medida",
+    desc: "Estructuramos la solución concreta para vos como director y para tu empresa: renegociación de compras, tableros de liquidez y desgravación tributaria legal.",
+    icon: "/assets/pferd.svg",
+    badge: "Semana 2",
+  },
+  {
+    step: "Paso 03",
+    tag: "Ejecución 100% Digital",
+    title: "Implementación ágil sin fricciones ni burocracia de papel",
+    desc: "Nuestra promesa es ejecutiva: no sumamos peso muerto a tu día a día. Procesos 100% en la nube, firmas digitales y tableros en tiempo real para directorio.",
+    icon: "/assets/springer.svg",
+    badge: "Semana 3 a 4",
+  },
+  {
+    step: "Paso 04",
+    tag: "Monitoreo & Blindaje",
+    title: "Acompañamiento a largo plazo y actualización continua",
+    desc: "Una vez ejecutado el plan, vigilamos la evolución del negocio quincenalmente, protegiendo tus márgenes ante inflación o cambios macroeconómicos.",
+    icon: "/assets/circle-check.svg",
+    badge: "Continuo",
+  },
+];
+---
+
+<section id="metodologia" class="py-24 bg-[#0c0c0c] text-[#f4f4f4] border-b border-[#222222] relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-20">
+      <div class="inline-flex items-center gap-2 mb-3">
+        <span class="w-1.5 h-1.5 bg-(--color-primary)"></span>
+        <span class="text-xs uppercase tracking-widest text-[#888888] font-mono">
+          Hoja de Ruta de 4 Etapas
+        </span>
+      </div>
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#f4f4f4] mb-4">
+        Así funciona nuestra <span class="text-(--color-primary)">intervención estratégica</span>
+      </h2>
+      <p class="text-sm sm:text-base text-[#888888] font-sans max-w-xl mx-auto">
+        Un proceso estructurado para directores que no tienen tiempo para consultorías teóricas ni informes de 200 páginas que nadie lee.
+      </p>
+    </div>
+
+    <!-- Timeline Grid with Central Line -->
+    <div class="relative">
+      <!-- Center vertical line for desktop -->
+      <div class="hidden lg:block absolute left-1/2 top-8 bottom-8 w-px bg-[#262626] transform -translate-x-1/2"></div>
+
+      <div class="space-y-12 lg:space-y-16">
+        {steps.map((item, idx) => {
+          const isEven = idx % 2 === 1;
+          return (
+            <div class="relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+              
+              <!-- Content Block (alternates left/right on desktop) -->
+              <div class:list={[isEven ? "lg:order-2" : "lg:order-1", "space-y-4"]}>
+                <div class="p-8 bg-[#111111] border border-[#222222] rounded-xs hover:border-[#383838] transition-colors relative group">
+                  <div class="flex items-center justify-between mb-4">
+                    <span class="px-2.5 py-0.5 bg-[#1c1c1c] border border-[#2e2e2e] text-[11px] font-mono uppercase tracking-widest text-(--color-primary) rounded-xs">
+                      {item.step} · {item.tag}
+                    </span>
+                    <span class="text-xs font-mono text-[#666666]">{item.badge}</span>
+                  </div>
+
+                  <h3 class="font-display text-xl sm:text-2xl font-bold text-[#f4f4f4] mb-3 group-hover:text-(--color-primary) transition-colors">
+                    {item.title}
+                  </h3>
+
+                  <p class="text-xs sm:text-sm text-[#999999] font-sans leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Center Dot on desktop -->
+              <div class="hidden lg:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#111111] border border-[#2e2e2e] items-center justify-center z-10">
+                <div class="w-2.5 h-2.5 rounded-full bg-(--color-primary)"></div>
+              </div>
+
+              <!-- Graphic / Complementary Column -->
+              <div class:list={[isEven ? "lg:order-1 lg:text-right" : "lg:order-2 lg:text-left", "hidden lg:flex items-center justify-center p-6"]}>
+                <div class="p-6 bg-[#0a0a0a] border border-[#1e1e1e] rounded-xs flex items-center gap-4">
+                  <div class="w-12 h-12 bg-[#161616] border border-[#262626] rounded-xs flex items-center justify-center">
+                    <img src={item.icon} alt="" class="w-6 h-6 filter invert opacity-70" />
+                  </div>
+                  <div class="text-left">
+                    <span class="text-[10px] uppercase font-mono tracking-wider text-[#666666] block">Entregable Concreto</span>
+                    <span class="text-xs font-medium text-[#f4f4f4]">{item.tag}</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,39 +1,105 @@
 ---
 interface Props {
-  href: string;
-  label: string;
-  variant?: "primary" | "outline" | "light" | "ghost-light";
-  size?: "md" | "lg";
-  external?: boolean;
+  href?: string;
+  variant?: "primary" | "secondary" | "outline";
+  size?: "sm" | "md" | "lg";
+  class?: string;
+  target?: string;
+  rel?: string;
+  type?: "button" | "submit" | "reset";
+  id?: string;
 }
 
-const { href, label, variant = "primary", size = "lg", external = false } = Astro.props;
+const {
+  href,
+  variant = "primary",
+  size = "md",
+  class: className = "",
+  target,
+  rel,
+  type = "button",
+  id,
+} = Astro.props;
 
-const base =
-  "group inline-flex items-center justify-center gap-3 rounded-full font-semibold transition-all duration-300 ease-out";
+const baseStyles =
+  "group relative inline-flex items-center justify-center font-medium tracking-tight uppercase overflow-hidden transition-all duration-300 select-none cursor-pointer";
 
-const sizes: Record<string, string> = {
-  md: "px-5 py-2.5 text-sm",
-  lg: "px-7 py-4 text-base",
+const sizeStyles = {
+  sm: "px-4 py-2 text-xs",
+  md: "px-6 py-3.5 text-xs tracking-wider",
+  lg: "px-8 py-4.5 text-sm tracking-widest",
 };
 
-const variants: Record<string, string> = {
+const variantStyles = {
   primary:
-    "bg-(--color-primary) text-(--color-on-primary) hover:gap-4 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--color-primary)",
+    "bg-(--color-primary) text-[#090909] font-bold hover:brightness-110 border border-(--color-primary)",
+  secondary:
+    "bg-[#151515] text-[#f4f4f4] border border-[#2a2a2a] hover:border-[#444444] hover:bg-[#1c1c1c]",
   outline:
-    "border border-(--color-ink)/25 text-(--color-ink) hover:border-(--color-ink) hover:bg-(--color-ink) hover:text-(--color-paper) hover:gap-4",
-  light:
-    "bg-(--color-paper) text-(--color-ink) hover:gap-4 hover:brightness-95",
-  "ghost-light":
-    "border border-(--color-on-primary)/40 text-(--color-on-primary) hover:bg-(--color-on-primary) hover:text-(--color-primary) hover:gap-4",
+    "bg-transparent text-[#f4f4f4] border border-[#333333] hover:border-(--color-primary) hover:text-(--color-primary)",
 };
 ---
 
-<a
-  href={href}
-  class={`${base} ${sizes[size]} ${variants[variant]}`}
-  {...(external ? { target: "_blank", rel: "noopener" } : {})}
->
-  <span>{label}</span>
-  <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">→</span>
-</a>
+{
+  href ? (
+    <a
+      href={href}
+      target={target}
+      rel={rel}
+      id={id}
+      class:list={[baseStyles, sizeStyles[size], variantStyles[variant], className]}
+    >
+      <div class="btn-txt-container h-[1.3em]">
+        <span class="btn-txt btn-txt-first block transform translate-y-0 leading-tight">
+          <slot />
+        </span>
+        <span class="btn-txt btn-txt-second block transform translate-y-0 leading-tight">
+          <slot />
+        </span>
+      </div>
+      <svg
+        class="ml-2 w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M4.5 11.5L11.5 4.5M11.5 4.5H6.5M11.5 4.5V9.5"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </a>
+  ) : (
+    <button
+      type={type}
+      id={id}
+      class:list={[baseStyles, sizeStyles[size], variantStyles[variant], className]}
+    >
+      <div class="btn-txt-container h-[1.3em]">
+        <span class="btn-txt btn-txt-first block transform translate-y-0 leading-tight">
+          <slot />
+        </span>
+        <span class="btn-txt btn-txt-second block transform translate-y-0 leading-tight">
+          <slot />
+        </span>
+      </div>
+      <svg
+        class="ml-2 w-3.5 h-3.5 transform transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M4.5 11.5L11.5 4.5M11.5 4.5H6.5M11.5 4.5V9.5"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+  )
+}

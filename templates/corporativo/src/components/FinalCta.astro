@@ -1,34 +1,50 @@
 ---
 import Button from "./ui/Button.astro";
-import Lead from "./ui/Lead.astro";
 import { CONTENT } from "../site";
 
-const { pricing, links, final_cta } = CONTENT;
+const finalCta = CONTENT.final_cta || {
+  tag: "El Próximo Paso",
+  titulo: "Tomá el control definitivo de las *finanzas y el futuro de tu empresa*",
+  bajada: "Coordiná una llamada estratégica de 30 minutos sin cargo. Evaluamos la situación de tu negocio y te decimos exactamente cómo multiplicar tu rentabilidad.",
+};
+
+const links = CONTENT.links || {};
+const bookingUrl = links.calendly || "#agendar";
+const whatsappUrl = links.whatsapp || "#";
 ---
 
-<section class="bg-(--color-primary) text-(--color-on-primary)">
-  <div class="mx-auto max-w-4xl px-6 py-24 text-center lg:py-32">
-    <p
-      class="flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-(--color-on-primary)/70"
-    >
-      <span aria-hidden="true" class="h-px w-8 bg-(--color-on-primary)/60"></span>
-      {pricing.garantia}
-      <span aria-hidden="true" class="h-px w-8 bg-(--color-on-primary)/60"></span>
-    </p>
+<section class="py-24 bg-[#0a0a0a] text-[#f4f4f4] border-b border-[#222222] relative overflow-hidden">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+    
+    <div class="inline-flex items-center gap-2 mb-4">
+      <span class="w-1.5 h-1.5 bg-(--color-primary)"></span>
+      <span class="text-xs uppercase tracking-widest text-[#888888] font-mono">
+        {finalCta.tag || "El Próximo Paso"}
+      </span>
+    </div>
 
-    <h2
-      class="mt-6 font-display text-4xl leading-[1.05] tracking-tight text-balance sm:text-5xl lg:text-6xl"
-    >
-      <Lead text={final_cta.titulo} emClass="text-(--color-on-primary) underline decoration-(--color-accent) decoration-2 underline-offset-8" />
+    <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#f4f4f4] max-w-3xl mx-auto leading-tight mb-6">
+      {finalCta.titulo?.split("*").map((part, index) =>
+        index % 2 === 1 ? (
+          <span class="text-(--color-primary)">{part}</span>
+        ) : (
+          <span>{part}</span>
+        )
+      )}
     </h2>
 
-    <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-(--color-on-primary)/80">
-      {final_cta.bajada}
+    <p class="text-sm sm:text-base text-[#999999] max-w-2xl mx-auto font-sans leading-relaxed mb-10">
+      {finalCta.bajada}
     </p>
 
-    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
-      <Button href={links.calendly} label={pricing.cta} variant="light" external={true} />
-      <Button href={links.whatsapp} label="WhatsApp" variant="ghost-light" external={true} />
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <Button href={bookingUrl} variant="primary" size="lg">
+        Agendar Llamada Estratégica
+      </Button>
+      <Button href={whatsappUrl} variant="secondary" size="lg" target="_blank" rel="noopener noreferrer">
+        Consultar por WhatsApp
+      </Button>
     </div>
+
   </div>
 </section>

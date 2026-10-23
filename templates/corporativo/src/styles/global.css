@@ -1,25 +1,50 @@
 @import "tailwindcss";
 
-@theme {
-  --font-display: "Fraunces", Georgia, serif;
-  --font-sans: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --color-paper: #fcf3ed;
-  --color-ink: #35221a;
-  --color-primary: #e70025;
-  --color-accent: #e3c1ad;
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/PPNeueMontreal-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/PPNeueMontreal-SemiBold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/PPNeueMontreal-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/PPNeueMontreal-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-display: "Neue Montreal", "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --color-paper: #090909;
+  --color-ink: #f4f4f4;
+  --color-primary: #ff891d;
+  --color-accent: #888888;
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
 }
 
 body {
@@ -27,22 +52,56 @@ body {
   background-color: var(--color-paper);
   color: var(--color-ink);
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
-.marquee-track {
-  animation: marquee 32s linear infinite;
-  will-change: transform;
+/* Chessboard pattern utilities */
+.chess-grid-cell {
+  background: #111111;
+  border: 1px solid #222222;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
+.chess-grid-cell:hover {
+  border-color: #383838;
+}
+
+.chess-cell-dark {
+  background: #0d0d0d;
+}
+
+.chess-cell-light {
+  background: #161616;
+}
+
+/* Tactile button double slide */
+.btn-txt-container {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.btn-txt {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.group:hover .btn-txt-first {
+  transform: translateY(-100%);
+}
+
+.group:hover .btn-txt-second {
+  transform: translateY(-100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .marquee-track {
-    animation: none;
+  .btn-txt {
+    transition: none;
   }
 }

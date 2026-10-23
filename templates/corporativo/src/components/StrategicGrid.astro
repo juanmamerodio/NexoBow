@@ -1,0 +1,114 @@
+---
+import { CONTENT } from "../site";
+
+const services = [
+  {
+    icon: "/assets/user-tie.svg",
+    number: "01",
+    title: "Blindaje de Patrimonio Directivo",
+    desc: "Todo lo que necesitás para dormir con absoluta tranquilidad como accionista o director general. Separación nítida de contingencias personales y corporativas ante cualquier imprevisto.",
+    tag: "Protección Directiva",
+  },
+  {
+    icon: "/assets/money-bill.svg",
+    number: "02",
+    title: "Estrategias de Inversión y Capital de Trabajo",
+    desc: "Multiplicá tu caja de manera sistemática mediante conceptos de inversión inteligentes. Calibramos el ciclo de conversión de efectivo y la liquidez que exige tu escalamiento.",
+    tag: "Rentabilidad & Caja",
+  },
+  {
+    icon: "/assets/right-left.svg",
+    number: "03",
+    title: "Conversión de Activos Empresa a Privado",
+    desc: "Extracción eficiente de dividendos y valor patrimonial para los fundadores respetando estrictamente el marco societario y tributario nacional e internacional.",
+    tag: "Gobierno Corporativo",
+  },
+  {
+    icon: "/assets/person-shelter.svg",
+    number: "04",
+    title: "Retención de Talento & Planes de Incentivos",
+    desc: "Aumentá el atractivo de tu compañía para retener a los líderes clave que mueven el negocio: planes de beneficios, bonos de retención y seguros directivos de fidelización.",
+    tag: "Capital Humano",
+  },
+  {
+    icon: "/assets/building-shield.svg",
+    number: "05",
+    title: "Blindaje Operativo y Gestión de Riesgos",
+    desc: "Construimos una fortaleza alrededor de tu empresa que hace rebotar los peligros: prevención de contingencias comerciales, laborales y descalces de cobranza a 90 días.",
+    tag: "Gestión de Riesgo",
+  },
+  {
+    icon: "/assets/circle-check.svg",
+    number: "06",
+    title: "Modelos de Acompañamiento Fractional CFO",
+    desc: "Desde la auditoría de compras hasta la dirección financiera quincenal: todo resuelto para tu directorio sin añadir burocracia ni costos fijos desmedidos a tu nómina.",
+    tag: "Dirección Financiera",
+  },
+];
+---
+
+<section id="servicios" class="py-24 bg-[#090909] text-[#f4f4f4] border-b border-[#222222] relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+      <div>
+        <div class="inline-flex items-center gap-2 mb-3">
+          <span class="w-1.5 h-1.5 bg-(--color-primary)"></span>
+          <span class="text-xs uppercase tracking-widest text-[#888888] font-mono">
+            6 Frentes de Intervención Estratégica
+          </span>
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#f4f4f4]">
+          Te respaldamos en <span class="text-(--color-primary)">seis áreas críticas</span>
+        </h2>
+      </div>
+      <p class="text-sm sm:text-base text-[#888888] font-sans max-w-md leading-relaxed">
+        Intervenciones directas para directores que buscan erradicar cuellos de botella de liquidez y consolidar su rentabilidad operativa.
+      </p>
+    </div>
+
+    <!-- Chessboard 3x2 Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#262626] border border-[#262626] rounded-xs overflow-hidden">
+      {services.map((item, idx) => (
+        <div
+          class:list={[
+            "p-8 sm:p-10 flex flex-col justify-between transition-colors duration-300 group relative",
+            idx % 2 === 0 ? "bg-[#0b0b0b] hover:bg-[#121212]" : "bg-[#111111] hover:bg-[#161616]",
+          ]}
+        >
+          <!-- Top Row: Icon + Number -->
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <div class="w-12 h-12 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xs flex items-center justify-center transition-colors group-hover:border-(--color-primary)/50">
+                <img src={item.icon} alt="" class="w-5 h-5 filter invert opacity-80 group-hover:opacity-100 transition-opacity" />
+              </div>
+              <span class="font-mono text-xs text-[#555555] group-hover:text-(--color-primary) transition-colors">
+                {item.number}
+              </span>
+            </div>
+
+            <!-- Tag -->
+            <span class="text-[10px] uppercase font-mono tracking-widest text-[#777777] mb-2 block">
+              {item.tag}
+            </span>
+
+            <!-- Title -->
+            <h3 class="font-display text-xl font-bold text-[#f4f4f4] mb-4 leading-snug group-hover:text-[#ffffff] transition-colors">
+              {item.title}
+            </h3>
+
+            <!-- Description -->
+            <p class="text-xs sm:text-sm text-[#999999] leading-relaxed font-sans">
+              {item.desc}
+            </p>
+          </div>
+
+          <!-- Bottom Accent Line -->
+          <div class="w-full h-0.5 bg-transparent group-hover:bg-(--color-primary) transition-colors duration-300 mt-8"></div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

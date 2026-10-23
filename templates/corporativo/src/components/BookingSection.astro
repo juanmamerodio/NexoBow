@@ -1,0 +1,87 @@
+---
+import { CONTENT } from "../site";
+import Button from "./ui/Button.astro";
+
+const links = CONTENT.links || {};
+const bookingUrl = links.calendly || "#agendar";
+const whatsappUrl = links.whatsapp || "#";
+
+const contactSteps = [
+  {
+    num: "1",
+    title: "Agendá tu llamada",
+    desc: "Seleccioná día y horario en el calendario para una primera llamada de diagnóstico de 30 minutos sin cargo.",
+  },
+  {
+    num: "2",
+    title: "Sesión estratégica",
+    desc: "Nos conectamos de forma virtual para analizar tus estados financieros, cuellos de botella y metas de caja.",
+  },
+  {
+    num: "3",
+    title: "Dictamen y plan de acción",
+    desc: "Te entregamos una propuesta ejecutiva con métricas concretas, frentes de intervención y retorno garantizado.",
+  },
+];
+---
+
+<section id="agendar" class="py-24 bg-[#0a0a0a] text-[#f4f4f4] border-b border-[#222222] relative overflow-hidden">
+  <!-- Subtle Gradient Glow -->
+  <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-96 h-96 bg-(--color-primary)/5 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    
+    <!-- Outer Card Container -->
+    <div class="p-8 sm:p-12 lg:p-16 bg-[#111111] border border-[#262626] rounded-xs relative overflow-hidden">
+      
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <div class="inline-flex items-center gap-2 mb-4">
+          <span class="w-1.5 h-1.5 bg-(--color-primary)"></span>
+          <span class="text-xs uppercase tracking-widest text-[#888888] font-mono">
+            Tu Camino Hacia Nosotros
+          </span>
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#f4f4f4] mb-4">
+          El tiempo se agota. <span class="text-(--color-primary)">Es tu jugada.</span>
+        </h2>
+        <p class="text-sm sm:text-base text-[#999999] font-sans leading-relaxed">
+          Coordiná una llamada estratégica de 30 minutos sin cargo ni compromiso. Evaluamos tus números y te decimos con total franqueza si podemos ayudarte a multiplicar tu rentabilidad.
+        </p>
+      </div>
+
+      <!-- 3 Steps Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        {contactSteps.map((step) => (
+          <div class="p-6 bg-[#0c0c0c] border border-[#222222] rounded-xs hover:border-[#333333] transition-colors relative">
+            <div class="w-10 h-10 bg-[#161616] border border-[#262626] rounded-xs flex items-center justify-center font-mono font-bold text-(--color-primary) text-sm mb-4">
+              {step.num}
+            </div>
+            <h3 class="font-display text-lg font-bold text-[#f4f4f4] mb-2">
+              {step.title}
+            </h3>
+            <p class="text-xs sm:text-sm text-[#888888] leading-relaxed font-sans">
+              {step.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Centered Action CTAs -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Button href={bookingUrl} variant="primary" size="lg">
+          Agendar Sesión en Calendly
+        </Button>
+        <Button href={whatsappUrl} variant="secondary" size="lg" target="_blank" rel="noopener noreferrer">
+          Escribinos por WhatsApp
+        </Button>
+      </div>
+
+      <!-- Reassurance -->
+      <p class="text-[11px] text-[#666666] text-center font-mono uppercase tracking-wider mt-8">
+        Atención directa con consultor senior · Acuerdo NDA de confidencialidad garantizado
+      </p>
+
+    </div>
+
+  </div>
+</section>

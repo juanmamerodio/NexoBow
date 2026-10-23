@@ -11,11 +11,11 @@ interface Palette {
 }
 
 const defaultOriginal: Palette = {
-  nombre: "Original",
-  fondo: THEME.fondo || "#fcf3ed",
-  tinta: THEME.tinta || "#35221a",
-  primary: THEME.primary || "#e70025",
-  accent: THEME.accent || "#e3c1ad",
+  nombre: "Tactical Onyx (Vetter)",
+  fondo: THEME.fondo || "#090909",
+  tinta: THEME.tinta || "#f4f4f4",
+  primary: THEME.primary || "#ff891d",
+  accent: THEME.accent || "#888888",
 };
 
 const palettes: Palette[] = (PALETAS_ALTERNATIVAS && PALETAS_ALTERNATIVAS.length > 0)
@@ -32,24 +32,24 @@ const juanmaWaPhone = "5491100000000"; // fallback Juanma Merodio NexoBow
 >
   <div
     id="theme-panel"
-    class="flex flex-col gap-2 rounded-2xl bg-[#090D16]/95 p-3 text-slate-100 shadow-2xl backdrop-blur-md border border-slate-700/60 transition-all duration-300"
+    class="flex flex-col gap-2 rounded-2xl bg-[#121212]/95 p-3 text-slate-100 shadow-2xl backdrop-blur-md border border-(--color-primary)/40 transition-all duration-300"
   >
-    <div class="flex items-center justify-between gap-3 border-b border-slate-700/50 pb-2">
+    <div class="flex items-center justify-between gap-3 border-b border-white/10 pb-2">
       <span class="font-semibold text-slate-200 flex items-center gap-1.5">
-        <span class="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="inline-block h-2 w-2 rounded-full bg-(--color-primary)"></span>
         Paleta en vivo
       </span>
-      <span id="active-theme-name" class="text-[11px] font-medium text-slate-400">
-        {palettes[0]?.nombre || "Original"}
+      <span id="active-theme-name" class="text-[11px] font-medium text-slate-300">
+        {palettes[0]?.nombre || "Tactical Onyx"}
       </span>
     </div>
 
     <!-- Swatches -->
     <div class="flex items-center gap-2 pt-1">
-      {palettes.map((pal, idx) => (
+      {palettes.map((pal) => (
         <button
           type="button"
-          class="theme-swatch-btn group relative flex h-7 w-7 items-center justify-center rounded-full p-0.5 border border-slate-600 transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-slate-400"
+          class="theme-swatch-btn group relative flex h-7 w-7 items-center justify-center rounded-full p-0.5 border border-white/20 transition-transform hover:scale-110 focus:outline-hidden focus:ring-2 focus:ring-offset-1 focus:ring-white/40"
           style={`background: linear-gradient(135deg, ${pal.fondo} 50%, ${pal.primary} 50%);`}
           data-theme={JSON.stringify(pal)}
           data-name={pal.nombre}
@@ -64,13 +64,13 @@ const juanmaWaPhone = "5491100000000"; // fallback Juanma Merodio NexoBow
     <!-- Botón CTA WhatsApp -->
     <a
       id="theme-wa-btn"
-      href={`https://wa.me/${juanmaWaPhone}?text=${encodeURIComponent(`Hola Juanma! Estuve viendo la web demo y me encantó la combinación ${palettes[0]?.nombre || "Original"}. ¿Cómo seguimos para activarla?`)}`}
+      href={`https://wa.me/${juanmaWaPhone}?text=${encodeURIComponent(`Hola Juanma! Estuve viendo la web demo y me encantó la combinación ${palettes[0]?.nombre || "Tactical Onyx"}. ¿Cómo seguimos para activarla?`)}`}
       target="_blank"
       rel="noopener noreferrer"
-      class="mt-1 flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 font-semibold text-white transition-all hover:bg-emerald-500 hover:shadow-lg active:scale-95"
+      class="mt-1 flex items-center justify-center gap-1.5 rounded-lg bg-(--color-primary) px-3 py-1.5 font-bold text-[#090909] transition-all hover:brightness-110 hover:shadow-lg active:scale-95"
     >
       <span>Pedir esta versión</span>
-      <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+      <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
         <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.838.814 2.796.814 3.183 0 5.769-2.588 5.77-5.767 0-3.18-2.587-5.769-5.77-5.769zm0-2.172c4.381 0 7.937 3.556 7.938 7.938 0 4.382-3.556 7.939-7.938 7.939-1.332 0-2.593-.338-3.714-.949l-4.317 1.132 1.152-4.208c-.708-1.189-1.059-2.529-1.059-3.914 0-4.382 3.556-7.938 7.938-7.938z"/>
       </svg>
     </a>

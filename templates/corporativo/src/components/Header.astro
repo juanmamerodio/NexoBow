@@ -1,44 +1,52 @@
 ---
+import { CONTENT } from "../site";
 import Button from "./ui/Button.astro";
-import { CONTENT, THEME } from "../site";
-import { resolveOrder, SECTION_NAV } from "../sections";
 
-const { links, prestador } = CONTENT;
-const order = resolveOrder(THEME.orden_secciones);
-const navItems = SECTION_NAV.filter((item) => order.includes(item.key));
+const nombre = CONTENT.prestador?.nombre || "Vetter Consulting";
+const rol = CONTENT.prestador?.rol || "Finanzas & Estrategia Corporativa B2B";
+const bookingUrl = CONTENT.links?.calendly || "#agendar";
 ---
 
-<header
-  class="sticky top-0 z-40 border-b border-(--color-ink)/10 bg-(--color-paper)/90 backdrop-blur-md"
->
-  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-6">
-    <a href="#inicio" class="flex items-baseline gap-2">
-      <span class="font-display text-xl font-semibold tracking-tight">
-        {prestador.nombre}
-      </span>
-      <span
-        class="hidden text-xs uppercase tracking-[0.2em] text-(--color-ink)/60 sm:inline"
-      >
-        {prestador.rol}
-      </span>
-    </a>
+<header class="sticky top-0 z-50 w-full bg-[#090909]/95 backdrop-blur-md border-b border-[#222222] transition-colors">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo & Tactical Badge -->
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 bg-[#161616] border border-[#2a2a2a] flex items-center justify-center rounded-xs transition-colors group-hover:border-(--color-primary)">
+            <img src="/assets/king.svg" alt="Chess King" class="w-5 h-5 filter invert opacity-90 transition-transform group-hover:scale-110" />
+          </div>
+          <div>
+            <span class="block font-display font-bold text-lg text-[#f4f4f4] tracking-tight leading-none group-hover:text-(--color-primary) transition-colors">
+              {nombre}
+            </span>
+            <span class="block text-[10px] uppercase font-sans tracking-widest text-[#888888] mt-1 leading-none">
+              {rol}
+            </span>
+          </div>
+        </a>
 
-    <nav class="hidden items-center gap-7 lg:flex" aria-label="Secciones">
-      {
-        navItems.map((item) => (
-          <a
-            href={item.href}
-            class="text-sm font-medium text-(--color-ink)/70 transition-colors hover:text-(--color-ink)"
-          >
-            {item.label}
-          </a>
-        ))
-      }
-    </nav>
+        <!-- Live Status Pill -->
+        <div class="hidden xl:inline-flex items-center gap-2 px-3 py-1 bg-[#141414] border border-[#262626] rounded-xs text-[11px] font-sans text-[#a0a0a0]">
+          <span class="w-2 h-2 rounded-full bg-(--color-primary) animate-pulse"></span>
+          <span>DISPONIBILIDAD DIRECTA Q4</span>
+        </div>
+      </div>
 
-    <div class="flex items-center gap-3">
-      <Button href={links.whatsapp} label="WhatsApp" variant="outline" size="md" external={true} />
-      <Button href={links.calendly} label="Agendá" size="md" external={true} />
+      <!-- Navigation Desktop -->
+      <nav class="hidden md:flex items-center gap-8 text-xs uppercase tracking-wider font-medium text-[#a0a0a0]">
+        <a href="#servicios" class="hover:text-[#ffffff] transition-colors">Áreas</a>
+        <a href="#metodologia" class="hover:text-[#ffffff] transition-colors">Metodología</a>
+        <a href="#casos" class="hover:text-[#ffffff] transition-colors">Casos & ROI</a>
+        <a href="#faq" class="hover:text-[#ffffff] transition-colors">FAQ</a>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="flex items-center gap-4">
+        <Button href={bookingUrl} variant="primary" size="sm" class="hidden sm:inline-flex">
+          Agendar Llamada
+        </Button>
+      </div>
     </div>
   </div>
 </header>

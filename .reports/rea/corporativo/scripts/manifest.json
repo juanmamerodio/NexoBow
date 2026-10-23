@@ -1,0 +1,147 @@
+{
+  "capture_path": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/corporativo/page.json",
+  "capture_sha256": "a84a53c393c617bef19a4691dc95c36c59b0af59c5429a7abf7726b2ddf2f443",
+  "capture_kind": "page-inspection",
+  "source_evidence_id": "ev_973464626457bc2200dd81346ff3c631692249d81d6dc82791fe2e9d47e063ac",
+  "capture_completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "accessibility",
+      "console_text",
+      "json_body_shapes",
+      "metadata",
+      "resources",
+      "scripts",
+      "storage_keys",
+      "websocket_shapes"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "accessibility",
+        "reason": "not_approved",
+        "count": 1582
+      },
+      {
+        "section": "console_text",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "metadata",
+        "reason": "disallowed_origin",
+        "count": 96
+      },
+      {
+        "section": "resources",
+        "reason": "disallowed_origin",
+        "count": 18
+      },
+      {
+        "section": "scripts",
+        "reason": "disallowed_origin",
+        "count": 5
+      },
+      {
+        "section": "storage_keys",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "output_directory": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/corporativo/scripts",
+  "analysis_input": {
+    "input_path": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/corporativo/scripts/files",
+    "format": "directory"
+  },
+  "scripts": [
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_1e0320515cb06599001c8e5040e33bcba99558c091a2b8e9f4d6084945729112",
+        "frame_id": "029760F57BA5E23EB77129712A4C8E16",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://vetter-consulting-en.webflow.io/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-1-ab0e9b4b2746db2953dd14e02e2b70fa577807f56e2f890061a7d95b47a0aa2d.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "9a37601d1f5a5f2fba3b000694d4bf5e035c606d5485dd94e2997cbe2efe5c26",
+        "bytes": 181,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_f519d947e626e5ae470b1c11bb9008c4cad772f0f4c115cd34224625067a9cb3",
+        "frame_id": "029760F57BA5E23EB77129712A4C8E16",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://vetter-consulting-en.webflow.io/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-2-2c8550478cbd57b9c560804ab739cfb9e21a067efa9f4329edf1d1a711496971.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "e51c49b52ed0d1ecd015f1c162da3b7438c904166f1cacdef2cccc09f2090fe9",
+        "bytes": 176,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    }
+  ],
+  "limitations": [
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+    "Only script bytes retained in this capture are exported. Sources are not refetched or executed, and a response or Debugger source does not prove execution.",
+    "Ordinary unambiguous URL paths preserve relative module layouts by origin, including case-distinct spellings. Query variants, exact path collisions, file/directory prefixes, inline sources, and unrepresentable paths are isolated. A case-distinct pair is isolated only when the destination filesystem cannot store both spellings; the record names that pair. Browser module relationships of isolated paths remain unknown.",
+    "Local JavaScript analysis does not implement browser import maps, root-relative URL resolution, remote URL loading, or browser runtime behavior. It may strip import queries and fragments; isolated variants are not canonical targets.",
+    "Source-map declarations are retained as metadata. No source maps or missing dependencies are fetched or reconstructed.",
+    "Scenario response bytes preserve the output of Playwright's Response.body() API; any source-body provenance caveat from the capture is retained in this manifest. Debugger sources are the exposed text encoded as UTF-8. Redacted bytes are exported exactly as retained, and may no longer parse as JavaScript."
+  ]
+}

@@ -3,8 +3,8 @@ id: 0
 sheet_id: 0
 lead_status: "1. Prospecto Identificado"
 created_at: "2026-10-21"
-last_activity_at: "2026-10-21"
-expires_at: "2026-10-28"
+last_activity_at: "2026-10-22"
+expires_at: "2026-10-29"
 rubro: corporativo
 template_archetype: "high-ticket-consulting"
 nombre: "Lic. Ignacio Valenzuela"
@@ -15,18 +15,18 @@ whatsapp: "5491155550000"
 calendly: "https://calendly.com/valenzuela-asociados/diagnostico-estrategico"
 google_maps: "https://maps.google.com/?cid=123456789"
 instagram: "valenzuela.consultoria"
-template_version: "corporativo@1.0.0"
+template_version: "corporativo@2.0.0"
 tema:
-  nombre: "Tactical Onyx"
+  nombre: "Tactical Onyx (Vetter)"
   primary: "#ff891d"
   accent: "#888888"
   fondo: "#090909"
   tinta: "#f4f4f4"
-  fuente: "Plus Jakarta Sans"
+  fuente: "Neue Montreal"
   fuente_sans: "Inter"
-  orden_secciones: [Hero, Problem, Steps, Reviews, CaseStudy, Pricing]
+  orden_secciones: [Hero, StrategicGrid, ConsultingRoadmap, RoiMetrics, BookingSection]
 paletas_alternativas:
-  - nombre: "Tactical Onyx (Original)"
+  - nombre: "Tactical Onyx (Vetter)"
     fondo: "#090909"
     tinta: "#f4f4f4"
     primary: "#ff891d"
@@ -59,7 +59,7 @@ metricas:
 Licenciado en Administración y Finanzas (UBA), MBA con especialización en Finanzas Corporativas y Escalamiento B2B. Más de 16 años asesorando a directores, accionistas y empresas medianas en reestructuración de caja, expansión regional y gobierno corporativo.
 
 ## Enfoque
-Transformamos la complejidad financiera en planes de acción ejecutables en 48 horas. Eliminamos los cuellos de botella de liquidez, renegociamos pasivos comerciales y estructuramos tableros de control para que cada peso facturado genere caja libre real.
+Los negocios son como el ajedrez rápido: la estrategia es la clave, el tiempo es crítico. Transformamos la complejidad financiera en planes de acción ejecutables en 48 horas. Eliminamos los cuellos de botella de liquidez, renegociamos pasivos comerciales y estructuramos tableros de control para que cada peso facturado genere caja libre real.
 
 ## Problema
 Crecer en ventas sin control financiero es la receta más rápida para la asfixia operativa. Muchas compañías duplican su facturación pero sus dueños siguen sin ver dividendos líquidos, apagando incendios diarios y asumiendo riesgos innecesarios.
@@ -67,6 +67,7 @@ Crecer en ventas sin control financiero es la receta más rápida para la asfixi
 ## Reseñas
 - "En 60 días identificamos $180.000 USD en costos ocultos y mejoramos el ciclo de cobro de 80 a 35 días. Ignacio tiene una visión quirúrgica de los números." — Esteban Morales, CEO en Logística del Sur S.A.
 - "La claridad para alinear al directorio fue total. Nos estructuraron el financiamiento para la nueva planta sin diluir capital." — Mariana Gómez Castro, Socia Gerente en PharmaTech B2B.
+- "Detectaron errores en pólizas y contratos que nos ahorraron más de €43.000 EUR en un solo ejercicio fiscal. La velocidad de respuesta es menor a 1 hora." — Julius Kemnitzer, CEO en Julius Kemnitzer GmbH.
 
 ## Casos de éxito
 - **Reestructuración de Capital de Trabajo en Retail B2B:** Liberación de $320.000 USD inmovilizados en inventario y refinanciación de pasivos al 40% de costo financiero.
@@ -78,4 +79,4 @@ Crecer en ventas sin control financiero es la receta más rápida para la asfixi
 - **¿En cuánto tiempo vemos impacto en la caja?** Las primeras medidas de saneamiento de compras y aceleración de cobranzas impactan en el flujo de fondos entre los primeros 15 y 30 días.
 
 ## Notas internas
-Ficha demo oficial del Template #04 (Consultoría Corporativa & High-Ticket B2B / Arquetipo high-ticket-consulting inspirado en Vetter Consulting).
+Ficha demo oficial del Template #04 (Consultoría Corporativa & High-Ticket B2B / Arquetipo high-ticket-consulting duplicado de Vetter Consulting mediante REA).

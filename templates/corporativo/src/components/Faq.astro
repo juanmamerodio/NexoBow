@@ -1,35 +1,49 @@
 ---
-import SectionHead from "./ui/SectionHead.astro";
 import { CONTENT } from "../site";
 
-const { faq } = CONTENT;
+const faq = CONTENT.faq || {
+  tag: "Preguntas Frecuentes",
+  titulo: "Todo lo que necesitás saber antes de *iniciar la consultoría*",
+  items: [],
+};
 ---
 
-<section id="faq" class="border-b border-(--color-ink)/10">
-  <div class="mx-auto max-w-3xl px-6 py-20 lg:py-28">
-    <SectionHead tag={faq.tag} title={faq.titulo} align="center" />
-
-    <div class="mt-12">
-      {
-        faq.items.map((item) => (
-          <details class="group border-t border-(--color-ink)/10 py-6 last:border-b">
-            <summary
-              class="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-xl font-semibold tracking-tight [&::-webkit-details-marker]:hidden"
-            >
-              <span>{item.q}</span>
-              <span
-                aria-hidden="true"
-                class="font-display text-2xl text-(--color-primary) transition-transform duration-300 group-open:rotate-45"
-              >
-                +
-              </span>
-            </summary>
-            <p class="mt-4 max-w-2xl leading-7 text-(--color-ink)/70">
-              {item.a}
-            </p>
-          </details>
-        ))
-      }
+<section id="faq" class="py-24 bg-[#090909] text-[#f4f4f4] border-b border-[#222222]">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 mb-3">
+        <span class="w-1.5 h-1.5 bg-(--color-primary)"></span>
+        <span class="text-xs uppercase tracking-widest text-[#888888] font-mono">
+          {faq.tag || "Preguntas Frecuentes"}
+        </span>
+      </div>
+      <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#f4f4f4]">
+        {faq.titulo?.split("*").map((part, index) =>
+          index % 2 === 1 ? (
+            <span class="text-(--color-primary)">{part}</span>
+          ) : (
+            <span>{part}</span>
+          )
+        )}
+      </h2>
     </div>
+
+    <div class="space-y-4">
+      {faq.items?.map((item) => (
+        <details class="group bg-[#111111] border border-[#222222] rounded-xs p-6 hover:border-[#383838] transition-colors [&_summary::-webkit-details-marker]:hidden">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-lg font-bold text-[#f4f4f4] group-hover:text-(--color-primary) transition-colors">
+            <span>{item.q}</span>
+            <span class="font-mono text-xl text-(--color-primary) transition-transform duration-300 group-open:rotate-45 shrink-0">
+              +
+            </span>
+          </summary>
+          <p class="mt-4 text-xs sm:text-sm text-[#999999] leading-relaxed font-sans border-t border-[#1a1a1a] pt-4">
+            {item.a}
+          </p>
+        </details>
+      ))}
+    </div>
+
   </div>
 </section>

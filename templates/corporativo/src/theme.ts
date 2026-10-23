@@ -12,7 +12,7 @@ export const DEFAULT_THEME = {
   accent: "#888888",
   fondo: "#090909",
   tinta: "#f4f4f4",
-  fuente: "Plus Jakarta Sans",
+  fuente: "Neue Montreal",
   fuente_sans: "Inter",
 } as const;
 
@@ -44,14 +44,17 @@ export function themeVars(tema: ThemeTokens): string {
     `--color-paper:${t.fondo}`,
     `--color-ink:${t.tinta}`,
     `--color-on-primary:${onColor(t.primary, t.tinta, t.fondo)}`,
-    `--font-display:"${t.fuente}",Georgia,serif`,
-    `--font-sans:"${t.fuente_sans}",system-ui,sans-serif`,
+    `--font-display:"${t.fuente}",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif`,
+    `--font-sans:"${t.fuente_sans}",system-ui,-apple-system,sans-serif`,
   ].join(";");
 }
 
 export function fontUrl(tema: ThemeTokens): string {
   const t = { ...DEFAULT_THEME, ...tema };
-  const display = t.fuente.trim().replace(/ /g, "+");
   const sans = t.fuente_sans.trim().replace(/ /g, "+");
+  if (t.fuente.toLowerCase().includes("neue montreal")) {
+    return `https://fonts.googleapis.com/css2?family=${sans}:ital,wght@0,300..900;1,300..900&display=swap`;
+  }
+  const display = t.fuente.trim().replace(/ /g, "+");
   return `https://fonts.googleapis.com/css2?family=${display}:ital,wght@0,300..900;1,300..900&family=${sans}:ital,wght@0,300..900;1,300..900&display=swap`;
 }

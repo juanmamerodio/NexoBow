@@ -1,0 +1,136 @@
+---
+import { CONTENT } from "../site";
+
+const cases = [
+  {
+    client: "Patrick Khatrao",
+    role: "CEO en Khatrao Consulting GmbH",
+    badge: "Escalamiento B2B",
+    before: [
+      "Sin implementación estratégica de beneficios para directores y mandos medios",
+      "Costos operativos e impositivos descalibrados para el modelo de negocio",
+      "Riesgo patrimonial latente por falta de separación de contingencias",
+    ],
+    results: [
+      "Implementación de arquitectura financiera y beneficios de retención de talento",
+      "+17.9% de incremento en satisfacción y productividad de equipo clave",
+      "Incorporación de dos ejecutivos senior cerrados gracias al paquete de fidelización",
+    ],
+    metric: "+32% Margen Neto",
+  },
+  {
+    client: "Julius Kemnitzer",
+    role: "CEO en Julius Kemnitzer GmbH",
+    badge: "Optimización de Pasivos",
+    before: [
+      "Malas experiencias previas con asesores tradicionales de banco",
+      "Tarifas y contratos de intermediación sobredimensionados mes a mes",
+      "Errores fiscales acumulados con contingencias financieras latentes",
+    ],
+    results: [
+      "Detección y subsanación de errores: prevención de daño de más de €43.000 EUR",
+      "Contratos innecesarios cancelados con ahorro directo de €647 EUR/mes",
+      "Blindaje patrimonial 100% estructurado ante contingencias comerciales",
+    ],
+    metric: "+€43.000 Ahorro Verificado",
+  },
+  {
+    client: "Sebastian Szalinski",
+    role: "CEO en IRON Media GmbH",
+    badge: "Gobierno Corporativo",
+    before: [
+      "Crecimiento acelerado con múltiples asesores inconexos y desorden de caja",
+      "Cero tiempo del director para auditar pólizas y costos fijos de compras",
+      "Falta de un interlocutor único con visión integral del negocio",
+    ],
+    results: [
+      "Unificación de toda la arquitectura financiera en un solo interlocutor estratégico",
+      "Reducción del 44% en tiempo y carga administrativa para el fundador",
+      "Control en tiempo real y reuniones mensuales de directorio con datos consolidados",
+    ],
+    metric: "44% Menos Carga",
+  },
+];
+---
+
+<section id="casos" class="py-24 bg-[#090909] text-[#f4f4f4] border-b border-[#222222] relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+      <div>
+        <div class="inline-flex items-center gap-2 mb-3">
+          <span class="w-1.5 h-1.5 bg-(--color-primary)"></span>
+          <span class="text-xs uppercase tracking-widest text-[#888888] font-mono">
+            Evidencia & Retorno sobre Inversión
+          </span>
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#f4f4f4]">
+          Casos de estudio y <span class="text-(--color-primary)">retorno comprobado</span>
+        </h2>
+      </div>
+      <p class="text-sm sm:text-base text-[#888888] font-sans max-w-md leading-relaxed">
+        Situación inicial auditada versus resultados financieros concretos obtenidos por directores y fundadores.
+      </p>
+    </div>
+
+    <!-- Case Studies Cards Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {cases.map((c) => (
+        <div class="bg-[#111111] border border-[#222222] rounded-xs p-8 flex flex-col justify-between hover:border-[#383838] transition-colors relative group">
+          <div>
+            <!-- Client Info -->
+            <div class="flex items-center justify-between pb-6 border-b border-[#1e1e1e] mb-6">
+              <div>
+                <h3 class="font-display font-bold text-lg text-[#f4f4f4] leading-snug group-hover:text-(--color-primary) transition-colors">
+                  {c.client}
+                </h3>
+                <span class="text-xs text-[#888888] font-sans block mt-0.5">{c.role}</span>
+              </div>
+              <span class="px-2 py-1 bg-[#1a1a1a] border border-[#2c2c2c] text-[10px] font-mono uppercase tracking-widest text-(--color-primary) rounded-xs">
+                {c.badge}
+              </span>
+            </div>
+
+            <!-- Before (Situation) -->
+            <div class="mb-6">
+              <span class="text-[10px] font-mono uppercase tracking-wider text-[#777777] block mb-3">
+                Situación Inicial:
+              </span>
+              <ul class="space-y-2.5">
+                {c.before.map((b) => (
+                  <li class="flex items-start gap-2.5 text-xs text-[#999999] leading-relaxed">
+                    <img src="/assets/cross.svg" alt="" class="w-3.5 h-3.5 mt-0.5 shrink-0 opacity-60" />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- After (Result) -->
+            <div class="mb-8">
+              <span class="text-[10px] font-mono uppercase tracking-wider text-(--color-primary) block mb-3">
+                Resultado Obtenido:
+              </span>
+              <ul class="space-y-2.5">
+                {c.results.map((r) => (
+                  <li class="flex items-start gap-2.5 text-xs text-[#e0e0e0] leading-relaxed font-medium">
+                    <img src="/assets/check.svg" alt="" class="w-3.5 h-3.5 mt-0.5 shrink-0" />
+                    <span>{r}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <!-- Bottom Metric Strip -->
+          <div class="pt-4 border-t border-[#1e1e1e] flex items-center justify-between">
+            <span class="text-[11px] font-mono uppercase tracking-wider text-[#666666]">Impacto Auditado</span>
+            <span class="font-display text-sm font-bold text-(--color-primary)">{c.metric}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

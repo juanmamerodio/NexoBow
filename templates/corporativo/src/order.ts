@@ -1,5 +1,9 @@
 export const SECTION_KEYS = [
   "Hero",
+  "StrategicGrid",
+  "ConsultingRoadmap",
+  "RoiMetrics",
+  "BookingSection",
   "Problem",
   "Steps",
   "Reviews",
@@ -12,11 +16,15 @@ export const SECTION_KEYS = [
 export type SectionKey = (typeof SECTION_KEYS)[number];
 
 export const SECTION_NAV = [
-  { key: "Problem", href: "#problema", label: "El problema" },
-  { key: "Steps", href: "#metodo", label: "Método" },
-  { key: "Reviews", href: "#opiniones", label: "Opiniones" },
+  { key: "StrategicGrid", href: "#servicios", label: "Áreas de Servicio" },
+  { key: "ConsultingRoadmap", href: "#metodologia", label: "Metodología" },
+  { key: "RoiMetrics", href: "#casos", label: "Casos & ROI" },
+  { key: "BookingSection", href: "#agendar", label: "Diagnóstico" },
+  { key: "Problem", href: "#servicios", label: "Áreas" },
+  { key: "Steps", href: "#metodologia", label: "Método" },
+  { key: "Reviews", href: "#casos", label: "Opiniones" },
   { key: "CaseStudy", href: "#casos", label: "Casos" },
-  { key: "Pricing", href: "#precios", label: "Precios" },
+  { key: "Pricing", href: "#precios", label: "Inversión" },
   { key: "Faq", href: "#faq", label: "Preguntas" },
 ];
 
