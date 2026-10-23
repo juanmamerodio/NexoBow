@@ -1,0 +1,619 @@
+{
+  "capture_path": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/deportes/page.json",
+  "capture_sha256": "882cd58e9e1b546480dd55c8a4bf78fe3787479751a0d12cb06a4a3a063d27c9",
+  "capture_kind": "page-inspection",
+  "source_evidence_id": "ev_6b82f01b043ba1805af08c177cba81f69a3d4eb8b540ad34b3a38d58cc70601c",
+  "capture_completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "accessibility",
+      "console_text",
+      "json_body_shapes",
+      "metadata",
+      "resources",
+      "scripts",
+      "storage_keys",
+      "websocket_shapes"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "accessibility",
+        "reason": "not_approved",
+        "count": 792
+      },
+      {
+        "section": "console_text",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "metadata",
+        "reason": "disallowed_origin",
+        "count": 22
+      },
+      {
+        "section": "metadata",
+        "reason": "unsupported_url",
+        "count": 8
+      },
+      {
+        "section": "resources",
+        "reason": "disallowed_origin",
+        "count": 1
+      },
+      {
+        "section": "resources",
+        "reason": "unsupported_url",
+        "count": 1
+      },
+      {
+        "section": "scripts",
+        "reason": "disallowed_origin",
+        "count": 1
+      },
+      {
+        "section": "storage_keys",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "output_directory": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/deportes/scripts",
+  "analysis_input": {
+    "input_path": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/deportes/scripts/files",
+    "format": "directory"
+  },
+  "scripts": [
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_0f5686db5f6814f845ea9f5b415e8f5ac8f5b04ff47d55aac75e5a2955efd333",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-1-acd702bc54ad87f65d83743d914b3d332561e9520673bcfb53629e11a38dd047.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "5e82a48b24ee47184596c34fdb488ef48bf23b20d3c95d7aa69495088aa52549",
+        "bytes": 491,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_0f661d2a4a5687abdc7fd5f01da990549523d515ba6d9fd7ab38449b42dfde05",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-2-30fd9eb7f9c2aa623234f3de79b866285264563352e8a306d2efe3ed3a37664c.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "c927fc2cfa4b0d63ce72d15b2abcf97bd52bcd4b15e85cfb6c262ef65d417aa4",
+        "bytes": 3408,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_17dfe09db437e867b1e4c8ef3efaa6c9e0af45a30de130c8f96b73bf1e63ab7d",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/_next/static/chunks/590-804380209ba52a17.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/3ab3b8baa0809cde60600251aebdc327c800b8e1552ed1144fba576b5752262b/_next/static/chunks/590-804380209ba52a17.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "84b5bcce28d17cfeec04dbb0f6824a84107894ec7563d459f52352db3ef83d71",
+        "bytes": 50887,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_2db3878d99d74367138737b7f1220026358e2d22e8dbb51f095926c39a7f0fba",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-4-e78e09e371af90c1afa55171be6dcea26b6c88e15a4752811c68e306761b1adf.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "4e0bcff1701e2ebd396a810aa778ad366742711a8182f9e40e625cb17e7902e7",
+        "bytes": 4562,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_4b17ca6913055d9d86d0651d701b6c4a2c6d9e246b07dea35a13b092fffc74fc",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/_next/static/chunks/app/layout-9acec825ebc1a1b7.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/3ab3b8baa0809cde60600251aebdc327c800b8e1552ed1144fba576b5752262b/_next/static/chunks/app/layout-9acec825ebc1a1b7.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "2529d26fbf5e4d6c594f95cab7d9dafd8e1aa89869ce174a170fe24d4c99cc58",
+        "bytes": 15816,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_5c70e59d8fb4d1979fd479fd1da5ce251d72f33a0ffcbb3d8a6db03e7e90d93b",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-6-ad3f4eb39febb30dbd2fc80a2028e6b5d68ac51faecaf2e8f1184eabc64f301c.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "3814cddd18b2095e01abb745a99e5ada90178e709c09879324c3b623f2d829ea",
+        "bytes": 43,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_7399553bbe24f333e7b44177e33c0eed6442913f280b2dc2a5b89adcb0365f5e",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-7-3f40905739de9df5e6785234191a9aed7101497c674f55ab42620b3de11fc1bd.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "cf8e46a16c9504dbdbf7b3fa59424931c6b6f2283d5681c90d642cf419b6fe9d",
+        "bytes": 2447,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_74fc051d580c43f208c8eec5ecd25f5b42c8dba429d96a72db84b78013d1ed69",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/_next/static/chunks/705-3eb6066be959771a.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/3ab3b8baa0809cde60600251aebdc327c800b8e1552ed1144fba576b5752262b/_next/static/chunks/705-3eb6066be959771a.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "ff408b52ae034d5722e09110f78db12b1677597324a585d2b4e465453ef0a319",
+        "bytes": 9430,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_7b0bd499d013954ca0664fb0c4ef0f0ad3c65ff07db20c29726b4247cb4fd79d",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-9-b83ea41eab1f197b26b06a57c9e9628e69c620c5bce4b3ab47e65af5dd278fb9.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "a871f0105d8419805f50b0b1af2227e7f9ac431b3078135ae6870364a2b1a2ad",
+        "bytes": 4748,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_828a42dce364e132c773949f2a091613ee0fca7deceeb4ccd55c6f59cb095822",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-10-f8db678d79308180c5f591e41a96c0033db177b045dbd3562d1d708000b29b1f.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "dc1957837d4fb72b570e476a4e06a94a1fdc015de303015b5ab77b423f9c54a3",
+        "bytes": 4582,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_8d4df86f83cd5967592b779c1fbb7f22f5e90dd8209d90de2c553d7e3b064e68",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-11-c893428f10b8013d174d76cb64f9f5c2a7222175e5ed07ff77f77a594df95a14.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "a1b3c9c7334900380fd9c03b72786aedd0e273d3e9dd2441bfbacb037f4db921",
+        "bytes": 4680,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_9d4e764c9f6aeb6053d3dff530776ad3bceb292268d914891ab425294e6c897e",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/_next/static/chunks/4bd1b696-215e5051988c3dde.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/3ab3b8baa0809cde60600251aebdc327c800b8e1552ed1144fba576b5752262b/_next/static/chunks/4bd1b696-215e5051988c3dde.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "f768811066891848dc107ada37148d3af9d37db69ed00ef12aae26c1017ad72d",
+        "bytes": 199864,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_a2f70c979be1efd2f18afa1d68fcca4be808da92ebfa11e919bf661c4804793c",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/_next/static/chunks/main-app-efe0c668e7bc4a19.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/3ab3b8baa0809cde60600251aebdc327c800b8e1552ed1144fba576b5752262b/_next/static/chunks/main-app-efe0c668e7bc4a19.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "ba834a5e184ea22b69ae2e00ab9cd9d3aca1ad65c96587231779862c06fef410",
+        "bytes": 511,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_ac79ffe4b540200b51bea204e7ecea75a33a85c3dee4588c44b521e8d371d1be",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-14-93a43f752b971b5f50a35154b9f20eaa868453454bb1957466daaed5417bef91.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "563568e29d5578241a0d22aa2d4459d4b951541d36daff936f59db1b48955fb2",
+        "bytes": 4737,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_b0f6678ccc155723877f3f4348b258ba7eacaaf7c0471f2b0595d692cf8d1470",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-15-bb20020ec804b9d249215cda9dcdd9d0a941b09dc6c382ec8465db1b426611c4.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "a8955d00540c83a5f287b2d89a58e1736d44bba5d9d780a548645fdbe45a1916",
+        "bytes": 3552,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_b2fbdb8d55a87346bce42c384418ba8c581322483553bd0232992245d5ff8045",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/_next/static/chunks/701-6cf46fb44e966254.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/3ab3b8baa0809cde60600251aebdc327c800b8e1552ed1144fba576b5752262b/_next/static/chunks/701-6cf46fb44e966254.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "93bbd6f0f3e807e9dac3df83eef2c8ef502138e8ea020c496e1f5d03a189296d",
+        "bytes": 33192,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_b8202b06fa2c31f7404f4a700804f902bd19d49f4012867d6899a7e96540b085",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-17-16d08f5c44f2451807fa9ca62ab35a29813600700ffbc3b666834057a20b2215.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "d1cb82b0795b96b40b8ac92381c9950389fd4071f3a1634a6c27c10d36b71ed3",
+        "bytes": 4605,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_bbe015b5612e44d14e82d8ca761e0694db411a2e77a43615a32fdbe342aaf120",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/_next/static/chunks/794-307f158afcf5cb52.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/3ab3b8baa0809cde60600251aebdc327c800b8e1552ed1144fba576b5752262b/_next/static/chunks/794-307f158afcf5cb52.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "6634d2b4a39003b1ec54e44c57b5acf153c082dc9c1074551b79d64f8b0f897b",
+        "bytes": 222190,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_c4ba5cab7b4ae98556140176faa9c9b99c7c720094b71b52ccb027cb2a8fca76",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/_next/static/chunks/webpack-d6c9567045496b30.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/3ab3b8baa0809cde60600251aebdc327c800b8e1552ed1144fba576b5752262b/_next/static/chunks/webpack-d6c9567045496b30.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "5d2b0602a1af2bd86b74cf4230f3c0f832b3f502093cead1f3595da0fb5bf195",
+        "bytes": 3403,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_f1a2affd9484a9eaa850b4a599eac1736a2ff72134f7761b9135721cf7fc74f6",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-20-fcb29d3aceb662c0e14324685f117018aa3843af08784cc34260be0ab57abc45.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "90777a79bbb835dec86ba5bee52e02b9a38b3fae2d6da9eeebf336dc2f051c6a",
+        "bytes": 54,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_f56e25acf6978c9819af246fa5d7d83cc8301f4d233c029acf5dde82b4b60bca",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/_next/static/chunks/500-e9eb3df545e56136.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/3ab3b8baa0809cde60600251aebdc327c800b8e1552ed1144fba576b5752262b/_next/static/chunks/500-e9eb3df545e56136.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "9d7911092fe228a811506ff9c52260377ef24504c64a367733decce2fbf1d1ad",
+        "bytes": 7948,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_f7b66bce6ad53bcef51b38d7f8df972b545eb01d7907934a401d51c904a19cf6",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/_next/static/chunks/app/page-b4c1fd7540723db0.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/3ab3b8baa0809cde60600251aebdc327c800b8e1552ed1144fba576b5752262b/_next/static/chunks/app/page-b4c1fd7540723db0.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "3e4ebf2abf4c23c1ef613030f5a216eb3becf5c649d90deab54ef73d3b400113",
+        "bytes": 43255,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_fb4eaf8e858677c5cc8bd2456bad25f047a508ebeb8955bd483582ad10d0df6a",
+        "frame_id": "642B2550EA354730AFF92D476445B628",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://theperformancelab.ca/_next/static/chunks/933-19acea9f7d7925ff.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/3ab3b8baa0809cde60600251aebdc327c800b8e1552ed1144fba576b5752262b/_next/static/chunks/933-19acea9f7d7925ff.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "b32c262d40968d6a1ea32dea51b7f1a97f4e3e8f1c507c8c5580cd3e3bacc583",
+        "bytes": 29983,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    }
+  ],
+  "limitations": [
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+    "Only script bytes retained in this capture are exported. Sources are not refetched or executed, and a response or Debugger source does not prove execution.",
+    "Ordinary unambiguous URL paths preserve relative module layouts by origin, including case-distinct spellings. Query variants, exact path collisions, file/directory prefixes, inline sources, and unrepresentable paths are isolated. A case-distinct pair is isolated only when the destination filesystem cannot store both spellings; the record names that pair. Browser module relationships of isolated paths remain unknown.",
+    "Local JavaScript analysis does not implement browser import maps, root-relative URL resolution, remote URL loading, or browser runtime behavior. It may strip import queries and fragments; isolated variants are not canonical targets.",
+    "Source-map declarations are retained as metadata. No source maps or missing dependencies are fetched or reconstructed.",
+    "Scenario response bytes preserve the output of Playwright's Response.body() API; any source-body provenance caveat from the capture is retained in this manifest. Debugger sources are the exposed text encoded as UTF-8. Redacted bytes are exported exactly as retained, and may no longer parse as JavaScript."
+  ]
+}

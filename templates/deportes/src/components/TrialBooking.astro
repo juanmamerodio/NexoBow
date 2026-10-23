@@ -1,0 +1,131 @@
+---
+import { CONTENT, ars } from "../site";
+import Button from "./ui/Button.astro";
+
+const pricing = CONTENT.pricing;
+const included = pricing.incluido || [];
+---
+
+<section id="agendar" class="py-20 md:py-32 bg-[#12181f] border-b border-[var(--color-carbon-border)] relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <!-- Left Column: Context & Steps -->
+      <div class="lg:col-span-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#171d24] border border-[#2a3642] mb-4">
+          <span class="w-2 h-2 bg-[var(--color-primary)]"></span>
+          <span class="font-mono text-xs font-semibold text-gray-300 uppercase tracking-wider">
+            {pricing.tag}
+          </span>
+        </div>
+
+        <h2 class="type-h2 text-white mb-6">
+          {pricing.titulo.split("*").map((part, i) => (
+            i % 2 === 1 ? <span class="text-[var(--color-primary)]">{part}</span> : part
+          ))}
+        </h2>
+
+        <p class="text-base text-gray-400 font-sans leading-relaxed mb-8">
+          Tu diagnóstico atlético no es una charla informal: es una evaluación objetiva de 90 minutos en laboratorio con especialistas en ciencias del ejercicio.
+        </p>
+
+        <!-- 3-Step Flow -->
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start gap-4 p-4 bg-[#171d24] border border-[#2a3642]">
+            <span class="font-mono text-sm font-bold text-[var(--color-primary)] bg-[#0f1419] w-8 h-8 flex items-center justify-center border border-[#2a3642] flex-shrink-0">
+              01
+            </span>
+            <div>
+              <h3 class="font-mono text-sm font-bold text-white uppercase">Elegí tu fecha y turno</h3>
+              <p class="text-xs text-gray-400 font-sans mt-0.5">Seleccioná el día para tu evaluación presencial en el box biomecánico.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 p-4 bg-[#171d24] border border-[#2a3642]">
+            <span class="font-mono text-sm font-bold text-[var(--color-primary)] bg-[#0f1419] w-8 h-8 flex items-center justify-center border border-[#2a3642] flex-shrink-0">
+              02
+            </span>
+            <div>
+              <h3 class="font-mono text-sm font-bold text-white uppercase">Cuestionario deportivo inicial</h3>
+              <p class="text-xs text-gray-400 font-sans mt-0.5">Completás en 3 minutos tu historial de cargas, molestias previas y metas.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 p-4 bg-[#171d24] border border-[#2a3642]">
+            <span class="font-mono text-sm font-bold text-[var(--color-primary)] bg-[#0f1419] w-8 h-8 flex items-center justify-center border border-[#2a3642] flex-shrink-0">
+              03
+            </span>
+            <div>
+              <h3 class="font-mono text-sm font-bold text-white uppercase">Testeo presencial & Plan de acción</h3>
+              <p class="text-xs text-gray-400 font-sans mt-0.5">Medición en plataformas de fuerza, entrega de informe y prescripción de entrenamiento.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 bg-[#10b981]/5 border border-[#10b981]/30">
+          <div class="flex items-center gap-2 text-[var(--color-primary)] font-mono text-xs font-bold uppercase mb-1">
+            <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            REVERSIÓN DE RIESGO TOTAL (GARANTÍA HORMOZI)
+          </div>
+          <p class="text-xs text-gray-300 font-sans">
+            {pricing.precio_sub}
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Column: Booking Card -->
+      <div class="lg:col-span-6">
+        <div class="carbon-card p-8 sm:p-10 relative overflow-hidden border-2 border-[var(--color-primary)]/50">
+          <div class="inline-block px-3 py-1 bg-[var(--color-primary)] text-[#0f1419] font-mono text-xs font-bold uppercase tracking-wider mb-6">
+            PROGRAMA RECOMENDADO
+          </div>
+
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-white font-mono uppercase tracking-tight mb-2">
+            {pricing.plan}
+          </h3>
+
+          <div class="flex items-baseline gap-2 my-6 pb-6 border-b border-[#2a3642]">
+            <span class="text-4xl sm:text-5xl font-black text-white font-mono">
+              {ars(pricing.precio_ars)}
+            </span>
+          </div>
+
+          <p class="text-xs text-gray-400 font-mono uppercase tracking-wider mb-6">
+            {pricing.precio_label}
+          </p>
+
+          <h4 class="text-xs font-mono font-bold text-gray-300 uppercase tracking-wider mb-4">
+            {pricing.detalle_titulo}
+          </h4>
+
+          <ul class="space-y-3 mb-8">
+            {
+              included.map((item) => (
+                <li class="flex items-start gap-3 text-sm text-gray-300 font-sans">
+                  <span class="w-4 h-4 rounded-none bg-[var(--color-primary)]/20 text-[var(--color-primary)] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    ✓
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          <div class="space-y-3">
+            <Button href={CONTENT.links.calendly || "#agendar"} variant="primary" size="lg" class="w-full">
+              {pricing.cta}
+            </Button>
+            <Button href={CONTENT.links.whatsapp} variant="outline" size="md" class="w-full" target="_blank" rel="noopener noreferrer">
+              CONSULTAR DISPONIBILIDAD POR WHATSAPP
+            </Button>
+          </div>
+
+          <p class="text-[11px] text-gray-400 text-center font-mono mt-4">
+            {pricing.garantia}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -407,6 +407,28 @@ export const RUBRO_BRANDING_MAP = {
     CONTEXTUAL_BRANDING_PALETTES[0],
     CONTEXTUAL_BRANDING_PALETTES[3],
   ],
+  deportes: [
+    {
+      name: "Kinetic Emerald",
+      primary: "#10b981",
+      accent: "#ffffff",
+      fondo: "#0f1419",
+      tinta: "#ffffff",
+      fuente: "display",
+      fuente_sans: "diatype",
+    },
+    {
+      name: "Performance Red",
+      primary: "#ff350d",
+      accent: "#ffffff",
+      fondo: "#171717",
+      tinta: "#f2f2f2",
+      fuente: "display",
+      fuente_sans: "diatype",
+    },
+    CONTEXTUAL_BRANDING_PALETTES[1],
+    CONTEXTUAL_BRANDING_PALETTES[3],
+  ],
 };
 
 export const DEFAULT_ALTERNATIVE_PALETTES = [
@@ -463,6 +485,7 @@ function normalizeRubroKey(raw = "") {
   if (clean.includes("odont") || clean.includes("dent")) return "odontologo";
   if (clean.includes("kines") || clean.includes("fisio")) return "kinesiologo";
   if (clean.includes("estet") || clean.includes("derma")) return "estetica";
+  if (clean.includes("deport") || clean.includes("gym") || clean.includes("entrena") || clean.includes("fit")) return "deportes";
   if (clean.includes("nutri")) return "nutricionista";
   const slugified = clean.replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
   return slugified || "nutricionista";

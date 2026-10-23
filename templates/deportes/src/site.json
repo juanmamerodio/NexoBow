@@ -1,0 +1,230 @@
+{
+  "_meta": "NO EDITAR A MANO. Punto de inyeccion del skill build-client-site: este archivo se regenera en cada clon a partir de la ficha de /clients/. Los valores aqui son PLACEHOLDERS del template deportes (reemplazables por la ficha).",
+  "tema": {
+    "primary": "#10b981",
+    "accent": "#ffffff",
+    "fondo": "#0f1419",
+    "tinta": "#ffffff",
+    "fuente": "display",
+    "fuente_sans": "diatype",
+    "fuente_mono": "mono",
+    "orden_secciones": [
+      "Hero",
+      "AthleticAssessment",
+      "TrainingPeriodization",
+      "AthleteTransformations",
+      "TrialBooking"
+    ]
+  },
+  "paletas_alternativas": [
+    {
+      "nombre": "Kinetic Emerald (Original)",
+      "fondo": "#0f1419",
+      "tinta": "#ffffff",
+      "primary": "#10b981",
+      "accent": "#ffffff"
+    },
+    {
+      "nombre": "Performance Red (The Lab)",
+      "fondo": "#171717",
+      "tinta": "#f2f2f2",
+      "primary": "#ff350d",
+      "accent": "#ffffff"
+    },
+    {
+      "nombre": "Olympic Gold",
+      "fondo": "#0b0e14",
+      "tinta": "#f8fafc",
+      "primary": "#f59e0b",
+      "accent": "#ffffff"
+    },
+    {
+      "nombre": "Cyber Athletic Cyan",
+      "fondo": "#0d1117",
+      "tinta": "#ffffff",
+      "primary": "#06b6d4",
+      "accent": "#ffffff"
+    }
+  ],
+  "content": {
+    "hero": {
+      "eyebrow": "CENTRO DE CIENCIAS DEL DEPORTE & ALTO RENDIMIENTO",
+      "tagline": "DESBLOQUEÁ TU PRÓXIMO NIVEL DE RENDIMIENTO FÍSICO",
+      "card_caption": "Evaluación Biomecánica · Fuerza Reactiva · VO2 Max",
+      "card_footer": "Protocolos de ciencia deportiva aplicada · Testeo de grado olímpico"
+    },
+    "marquee": {
+      "items": [
+        "Evaluación en Plataformas de Fuerza",
+        "Entrenamiento Basado en Velocidad (VBT)",
+        "Test de Consumo de Oxígeno (VO2 Max)",
+        "Biomecánica & Prevención de Lesiones",
+        "Periodización para Deportistas & Atletas",
+        "Readaptación Físico-Deportiva Avanzada"
+      ]
+    },
+    "prestador": {
+      "nombre": "The Performance Lab Argentina",
+      "rol": "Laboratorio de Ciencias del Deporte & Acondicionamiento Físico",
+      "titulo": "Movéte mejor, recuperate más rápido y *rendí a tu máximo potencial*",
+      "bajada": "Diagnóstico biomecánico, periodización avanzada y entrenamiento de fuerza basado en datos para atletas y personas comprometidas con su rendimiento físico.",
+      "bio": "Centro pionero en ciencias del deporte que combina tecnología de evaluación de grado olímpico con prescripción de entrenamiento individualizada para eliminar dolores, maximizar potencia y superar estancamientos.",
+      "enfoque": "No adivinamos: medimos. Cada repetición, cada vector de fuerza y cada intervalo de potencia se diseñan a partir de tus biomarcadores y patrones neuromusculares reales."
+    },
+    "problema": {
+      "tag": "Evaluación Atlética & Estancamiento",
+      "titulo": "¿Entrenás duro pero tu rendimiento *se quedó estancado*?",
+      "descripcion": "El 85% de los deportistas entrenan sobre fatiga acumulada, asimetrías lesivas o zonas de esfuerzo equivocadas:",
+      "pains": [
+        {
+          "tag": "Estancamiento de Fuerza & Potencia",
+          "t": "“Metés horas en el gimnasio pero tus marcas no suben y tu salto o aceleración siguen iguales.”",
+          "d": "Evaluamos con plataformas de fuerza y encoders de velocidad (VBT) para detectar exactamente en qué fase de la curva fuerza-velocidad estás perdiendo potencia."
+        },
+        {
+          "tag": "Molestias Recurrentes & Sobrecarga",
+          "t": "“Terminás cada semana con dolor lumbar, rodillas cargadas o pinchazos en los hombros.”",
+          "d": "Mapeamos asimetrías de carga bilateral y compensaciones motrices antes de que se transformen en desgarros o tendinopatías crónicas."
+        },
+        {
+          "tag": "Falta de Periodización Científica",
+          "t": "“Cambiás de rutina cada 3 semanas por intuición o seguís planes genéricos de internet.”",
+          "d": "Diseñamos un mesociclo estructurado con ondulación de volumen, picos de descarga y especificidad metabólica para tu disciplina."
+        },
+        {
+          "tag": "Resistencia y Recuperación Lenta",
+          "t": "“Te fundís en el segundo tiempo o tardás 3 días en recuperarte de una sesión exigente.”",
+          "d": "Medimos tus umbrales de lactato y capacidad de consumo de oxígeno (VO2 Max) para que entrenes tus zonas energéticas reales sin quemarte."
+        }
+      ]
+    },
+    "pasos": {
+      "tag": "Metodología de Alto Rendimiento",
+      "titulo": "Cómo se construye el *rendimiento físico de élite*",
+      "bajada": "Un proceso riguroso en 4 etapas basado en ciencias del ejercicio, biomecánica y monitoreo de carga:",
+      "steps": [
+        {
+          "n": "01",
+          "k": "Batería de Testeo & Diagnóstico Neuromuscular (Día 1)",
+          "d": "Evaluación en plataformas de fuerza (CMJ, SJ, DSI), dinamometría isométrica, movilidad articular y perfiles metabólicos para establecer tu línea de base objetiva."
+        },
+        {
+          "n": "02",
+          "k": "Diseño de Periodización Personalizada (Semana 1)",
+          "d": "Armado del plan individual: selección de ejercicios por vector biomecánico, asignación de zonas de velocidad (m/s) y calendario de recuperación activa."
+        },
+        {
+          "n": "03",
+          "k": "Entrenamiento Basado en Velocidad (VBT) & Carga Guiada (Semanas 2 a 12)",
+          "d": "Ejecución técnica con feedback instantáneo por repetición, asegurando la adaptación neuromuscular exacta sin fatiga basura ni riesgo de lesión."
+        },
+        {
+          "n": "04",
+          "k": "Re-Testeo Trimestral & Ajuste de Cargas (Semana 12+)",
+          "d": "Comparamos tus métricas contra el baseline: analizamos ganancias de potencia pico, tasa de desarrollo de fuerza (RFD) y calibración de nuevos objetivos."
+        }
+      ]
+    },
+    "casos": {
+      "tag": "Resultados de Atletas & Alumnos",
+      "titulo": "Récords personales y *transformaciones atléticas comprobadas*",
+      "bajada": "Atletas profesionales, competidores y personas que decidieron entrenar con rigor científico.",
+      "items": [
+        {
+          "titulo": "Atleta de Salto & Rugby Competitivo",
+          "descripcion": "Estancado en salto vertical y con sobrecarga crónica de tendón rotuliano tras cirugía de cruzados.",
+          "resultado": "+14 cm de salto vertical reactivo (RSI) y retorno a competencia oficial 100% libre de dolor."
+        },
+        {
+          "titulo": "Corredor de Fondo & Maratón",
+          "descripcion": "Pared en los 30 km y caídas pronunciadas de ritmo por acumulación prematura de lactato.",
+          "resultado": "Mejora de 28 segundos/km en ritmo de umbral y nuevo récord personal en 42K (-14 minutos)."
+        },
+        {
+          "titulo": "Entrenamiento de Fuerza & Acondicionamiento Físico",
+          "descripcion": "Alumno con dolor lumbar persistente y dificultad para progresar en sentadilla y tracciones pesadas.",
+          "resultado": "+42 kg en sentadilla trasera con técnica perfecta y corrección total de asimetría pélvica de 18%."
+        }
+      ]
+    },
+    "reviews": {
+      "tag": "Testimonios de Atletas",
+      "titulo": "Lo que dicen quienes ya *entrenan con ciencia*",
+      "bajada": "Historias reales de deportistas que llevaron su rendimiento al siguiente escalón.",
+      "items": [
+        {
+          "nombre": "Franco Benítez",
+          "rol": "Jugador de Rugby (Primera División)",
+          "texto": "El nivel de detalle del testeo me cambió la cabeza. Entendí por qué me fatigaba en los últimos minutos y en 8 semanas subí mi potencia de aceleración como nunca antes."
+        },
+        {
+          "nombre": "Valeria Soria",
+          "rol": "Triatleta de Media y Larga Distancia",
+          "texto": "Dejé de adivinar los ritmos de pasadas. El test de lactato me dio las zonas exactas y los entrenamientos de fuerza complementarios evitaron que vuelva a lesionarme el sóleo."
+        },
+        {
+          "nombre": "Esteban Carrizo",
+          "rol": "Deportista Amateur & Cross-Training",
+          "texto": "Es el primer lugar donde me explicaron con números qué pasaba con mi cadera. El dolor de espalda desapareció en un mes y volví a levantar pesado sin miedo."
+        }
+      ]
+    },
+    "pricing": {
+      "tag": "Valoración Inicial & Batería de Testeo",
+      "titulo": "Reservá tu sesión de diagnóstico atlético *con nuestros especialistas*",
+      "plan": "Evaluación Completa de Rendimiento & Prescripción",
+      "precio_ars": 89000,
+      "precio_label": "Inversión única · Sesión de testeo biomecánico de 90 minutos con informe completo",
+      "precio_sub": "Garantía de rendimiento: si en tu evaluación no identificamos con precisión al menos 3 desbalances o puntos clave de mejora para tu rendimiento, te devolvemos el 100% de la seña.",
+      "detalle_titulo": "Qué incluye tu valoración atlética:",
+      "incluido": [
+        "Batería de testeo en plataformas de fuerza y dinamometría isométrica",
+        "Análisis de movilidad articular y patrones de movimiento funcional",
+        "Informe biomecánico digital con métricas cuantitativas y asimetrías bilaterales",
+        "Sesión 1 a 1 de 90 minutos con especialista en ciencias del deporte",
+        "Recomendaciones inmediatas de corrección y diseño de mesociclo individual"
+      ],
+      "cta": "Agendá tu valoración atlética",
+      "garantia": "Garantía de rigor científico: protocolos validados internacionalmente por la NSCA y ACSM."
+    },
+    "faq": {
+      "tag": "Preguntas Frecuentes",
+      "titulo": "Todo lo que necesitás saber antes de *empezar a entrenar*",
+      "bajada": "Respuestas claras sobre niveles, evaluaciones y equipamiento.",
+      "items": [
+        {
+          "q": "¿Tengo que ser atleta profesional para evaluarme o entrenar acá?",
+          "a": "No. Atendemos tanto a deportistas de élite como a personas que buscan ganar masa muscular, mejorar su salud metabólica o entrenar sin dolor. La ciencia del deporte se adapta al nivel de cada uno."
+        },
+        {
+          "q": "¿Qué ropa o calzado tengo que llevar a la sesión de prueba?",
+          "a": "Ropa deportiva cómoda y el calzado que usás habitualmente para entrenar o competir. Si tenés estudios médicos o biomecánicos previos, traelos para integrarlos a tu historia."
+        },
+        {
+          "q": "¿Cómo se coordina el entrenamiento si ya tengo un entrenador o club?",
+          "a": "Trabajamos de forma complementaria: te entregamos los datos y la dosificación de fuerza para que la integres con la preparación física de tu club o con tu entrenador de cabecera."
+        },
+        {
+          "q": "¿Qué pasa si tengo una molestia o lesión previa?",
+          "a": "Es exactamente para lo que estamos preparados: el testeo detecta déficits bilaterales y diseñamos protocolos de readaptación físico-deportiva para que vuelvas a rendir sin recaídas."
+        }
+      ]
+    },
+    "footer": {
+      "blurb": "The Performance Lab · Centro de Ciencias del Deporte, Evaluación Biomecánica y Acondicionamiento Físico de Alto Rendimiento.",
+      "credit": "Landing por NexoBow"
+    },
+    "final_cta": {
+      "tag": "Comenzá Hoy",
+      "titulo": "No dejes tu rendimiento *al azar de la intuición*",
+      "bajada": "Coordiná tu valoración atlética de 90 minutos con nuestro equipo. Medí tu fuerza, identificá tus limitantes y empezá a entrenar con ciencia aplicada.",
+      "cta_primary": "Agendar valoración atlética",
+      "cta_secondary": "Consultar por WhatsApp"
+    },
+    "links": {
+      "calendly": "#agendar",
+      "whatsapp": "https://wa.me/5491100000000?text=Hola!%20Quiero%20agendar%20mi%20valoraci%C3%B3n%20atl%C3%A9tica%20en%20The%20Performance%20Lab."
+    },
+    "consentimiento_testimonios": true
+  }
+}

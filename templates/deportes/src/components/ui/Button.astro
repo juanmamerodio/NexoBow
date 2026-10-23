@@ -1,0 +1,54 @@
+---
+interface Props {
+  href?: string;
+  variant?: "primary" | "outline" | "secondary" | "accent";
+  size?: "sm" | "md" | "lg";
+  class?: string;
+  target?: string;
+  rel?: string;
+  type?: "button" | "submit";
+}
+
+const {
+  href,
+  variant = "primary",
+  size = "md",
+  class: className = "",
+  target,
+  rel,
+  type = "button",
+} = Astro.props;
+
+const sizeClasses = {
+  sm: "h-10 px-4 text-xs",
+  md: "h-12 px-6 text-xs",
+  lg: "h-14 px-8 text-sm",
+}[size];
+
+const variantClasses = {
+  primary: "btn-athletic-primary",
+  outline: "btn-athletic-outline",
+  secondary: "bg-[#171d24] text-white border-[#2a3642] hover:border-[#10b981] hover:text-[#10b981]",
+  accent: "bg-white text-[#0f1419] border-white hover:bg-[#10b981] hover:text-[#0f1419] hover:border-[#10b981]",
+}[variant];
+
+const classes = `btn-athletic ${sizeClasses} ${variantClasses} ${className}`;
+---
+
+{
+  href ? (
+    <a href={href} class={classes} target={target} rel={rel}>
+      <slot />
+      <svg class="w-3.5 h-3.5 ml-1 transition-transform duration-300 ease-out group-hover:translate-x-1" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 9L9 1M9 1H3M9 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/>
+      </svg>
+    </a>
+  ) : (
+    <button type={type} class={classes}>
+      <slot />
+      <svg class="w-3.5 h-3.5 ml-1 transition-transform duration-300 ease-out group-hover:translate-x-1" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 9L9 1M9 1H3M9 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/>
+      </svg>
+    </button>
+  )
+}

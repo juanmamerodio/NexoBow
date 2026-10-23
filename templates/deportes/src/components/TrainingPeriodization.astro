@@ -1,0 +1,60 @@
+---
+import { CONTENT } from "../site";
+
+const steps = CONTENT.pasos.steps || [];
+---
+
+<section id="metodologia" class="py-20 md:py-32 bg-[#12181f] border-b border-[var(--color-carbon-border)] relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="max-w-3xl mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#171d24] border border-[#2a3642] mb-4">
+        <span class="w-2 h-2 bg-[var(--color-primary)]"></span>
+        <span class="font-mono text-xs font-semibold text-gray-300 uppercase tracking-wider">
+          {CONTENT.pasos.tag}
+        </span>
+      </div>
+
+      <h2 class="type-h2 text-white">
+        {CONTENT.pasos.titulo.split("*").map((part, i) => (
+          i % 2 === 1 ? <span class="text-[var(--color-primary)]">{part}</span> : part
+        ))}
+      </h2>
+
+      <p class="mt-4 text-base sm:text-lg text-gray-400 font-sans leading-relaxed">
+        {CONTENT.pasos.bajada}
+      </p>
+    </div>
+
+    <!-- 4 Phases Grid / Flow -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {
+        steps.map((s, idx) => (
+          <div class="bg-[#171d24] border border-[#2a3642] p-6 flex flex-col justify-between relative group hover:border-[var(--color-primary)] transition-all duration-300">
+            <!-- Phase Number -->
+            <div class="flex items-center justify-between mb-6">
+              <span class="font-mono text-3xl font-extrabold text-[var(--color-primary)]">
+                {s.n}
+              </span>
+              <div class="w-2 h-2 bg-[#2a3642] group-hover:bg-[var(--color-primary)] transition-colors"></div>
+            </div>
+
+            <div class="flex-1">
+              <h3 class="text-base sm:text-lg font-bold text-white font-mono uppercase tracking-tight mb-3">
+                {s.k}
+              </h3>
+              <p class="text-sm text-gray-400 font-sans leading-relaxed">
+                {s.d}
+              </p>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-[#242b35] flex items-center justify-between text-[11px] font-mono text-gray-400">
+              <span>FASE {idx + 1} DE 4</span>
+              <span class="text-[var(--color-primary)] group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

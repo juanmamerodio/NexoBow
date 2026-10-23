@@ -1,0 +1,42 @@
+---
+import { CONTENT } from "../site";
+import Button from "./ui/Button.astro";
+
+const finalCta = CONTENT.final_cta;
+---
+
+<section class="py-20 md:py-32 bg-[#171d24] border-b border-[var(--color-carbon-border)] relative overflow-hidden text-center">
+  <!-- Athletic corner crosshairs -->
+  <div class="absolute top-6 left-6 w-4 h-4 border-t-2 border-l-2 border-[var(--color-primary)]"></div>
+  <div class="absolute top-6 right-6 w-4 h-4 border-t-2 border-r-2 border-[var(--color-primary)]"></div>
+  <div class="absolute bottom-6 left-6 w-4 h-4 border-b-2 border-l-2 border-[var(--color-primary)]"></div>
+  <div class="absolute bottom-6 right-6 w-4 h-4 border-b-2 border-r-2 border-[var(--color-primary)]"></div>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#0f1419] border border-[#2a3642] mb-6">
+      <span class="w-2 h-2 bg-[var(--color-primary)]"></span>
+      <span class="font-mono text-xs font-semibold text-gray-300 uppercase tracking-wider">
+        {finalCta.tag}
+      </span>
+    </div>
+
+    <h2 class="type-h2 text-white mb-6">
+      {finalCta.titulo.split("*").map((part, i) => (
+        i % 2 === 1 ? <span class="text-[var(--color-primary)]">{part}</span> : part
+      ))}
+    </h2>
+
+    <p class="text-base sm:text-lg text-gray-300 font-sans max-w-2xl mx-auto leading-relaxed mb-10">
+      {finalCta.bajada}
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <Button href={CONTENT.links.calendly || "#agendar"} variant="primary" size="lg">
+        {finalCta.cta_primary}
+      </Button>
+      <Button href={CONTENT.links.whatsapp} variant="outline" size="lg" target="_blank" rel="noopener noreferrer">
+        {finalCta.cta_secondary}
+      </Button>
+    </div>
+  </div>
+</section>

@@ -45,6 +45,10 @@ export const RUBRO_TO_ARCHETYPE_MAP = {
   tech: "tech-editorial-system",
   software: "tech-editorial-system",
   sistemas: "tech-editorial-system",
+  deportes: "kinetic-performance",
+  gym: "kinetic-performance",
+  entrenador: "kinetic-performance",
+  fitness: "kinetic-performance",
 };
 
 export const ARCHETYPE_ALIASES = {
@@ -53,6 +57,7 @@ export const ARCHETYPE_ALIASES = {
   "architectural-prestige": ["clinica", "architectural-prestige"],
   "high-ticket-consulting": ["corporativo", "consultor", "high-ticket-consulting"],
   "tech-editorial-system": ["tech", "software", "sistemas", "tech-editorial-system"],
+  "kinetic-performance": ["deportes", "gym", "entrenador", "fitness", "kinetic-performance"],
   "minimalist-pure": ["odontologo", "minimalist-pure"],
   "kinetic-cards": ["kinesiologo", "kinetic-cards"],
 };

@@ -1,0 +1,34 @@
+[ {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b510e9d7cd3a2fbd78d0ddc42234103206c5f78d/inspector.html?ws=127.0.0.1:9222/devtools/page/D55B6B37D9BDE1CECC815037E20B2657",
+   "id": "D55B6B37D9BDE1CECC815037E20B2657",
+   "title": "Google Hangouts",
+   "type": "background_page",
+   "url": "chrome-extension://nkeimhogjdpnpccoofpliimaahmaaome/background.html",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/D55B6B37D9BDE1CECC815037E20B2657"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b510e9d7cd3a2fbd78d0ddc42234103206c5f78d/inspector.html?ws=127.0.0.1:9222/devtools/page/642B2550EA354730AFF92D476445B628",
+   "faviconUrl": "https://theperformancelab.ca/favicons/favicon-32.svg",
+   "id": "642B2550EA354730AFF92D476445B628",
+   "title": "The Performance Lab — Sports Science &amp; Athletic Testing in Toronto",
+   "type": "page",
+   "url": "https://theperformancelab.ca/",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/642B2550EA354730AFF92D476445B628"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b510e9d7cd3a2fbd78d0ddc42234103206c5f78d/inspector.html?ws=127.0.0.1:9222/devtools/page/C4C5ADA00FC981EB65607FBDA20C8EF8",
+   "id": "C4C5ADA00FC981EB65607FBDA20C8EF8",
+   "title": "Omnibox Popup",
+   "type": "browser_ui",
+   "url": "chrome://omnibox-popup.top-chrome/",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/C4C5ADA00FC981EB65607FBDA20C8EF8"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b510e9d7cd3a2fbd78d0ddc42234103206c5f78d/inspector.html?ws=127.0.0.1:9222/devtools/page/BE9956B93A145EEB8D66E191BF2F6561",
+   "id": "BE9956B93A145EEB8D66E191BF2F6561",
+   "title": "Omnibox Popup",
+   "type": "browser_ui",
+   "url": "chrome://omnibox-popup.top-chrome/omnibox_popup_aim.html",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/BE9956B93A145EEB8D66E191BF2F6561"
+} ]

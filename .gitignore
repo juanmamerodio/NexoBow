@@ -8,6 +8,7 @@ dist/
 dist-previews/
 sites/
 .astro/
+.vite/
 
 # Environment
 .env
