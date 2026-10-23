@@ -24,10 +24,10 @@ Duplicar la web **ENTERA** de **Lipedema Guru** (`https://lipedemaguru.com/`) de
 **Blocked by:**
 None.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] `templates/dermatologia/` contiene la web ENTERA duplicada de Lipedema Guru mediante REA
-- [ ] Tipografía: utiliza las fuentes exactas de la web a copiar (`GroteskText` / `Poppins`) o fallback visualmente similar verificado (`Poppins` / `Plus Jakarta Sans` + `Inter`).
-- [ ] Tests unitarios en `templates/dermatologia/tests/` 100% pasando
-- [ ] Demo compilada en `sites/demo-dermatologia/` con código 0 y JS sin límite artificial
-- [ ] Tags git inmutables creados
+- [x] `templates/dermatologia/` contiene la web ENTERA duplicada de Lipedema Guru mediante REA
+- [x] Tipografía: utiliza las fuentes exactas de la web a copiar (`GroteskText` / `GroteskMedium` / `GothicCompact` / `GroteskCompact` / `Poppins`) y fallback visualmente similar verificado (`Poppins`, `Figtree`, `DM Sans`).
+- [x] Tests unitarios en `templates/dermatologia/tests/` 100% pasando (17 tests)
+- [x] Demo compilada en `sites/demo-dermatologia/` con código 0 y JS sin límite artificial (2.06 KB)
+- [x] Tags git inmutables creados (`template/dermatologia@1.0.0` y `template/clinical-pure@1.0.0`)

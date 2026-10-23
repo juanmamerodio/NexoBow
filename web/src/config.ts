@@ -50,8 +50,9 @@ export const SITE = {
       name: "Clinical Pure",
       niche: "Medicina & Dermatología",
       palette: ["#F8FAFC", "#0F172A", "#0284C7"],
-      status: "Catálogo REA",
-      description: "Blanco quirúrgico, acentos cian clínico y máxima pulcritud para especialistas médicos.",
+      status: "En Vivo (Demo)",
+      description: "Estética Lipedema Guru: Blanco quirúrgico, Slate Navy profundo, tipografía condensada de alta gama y acentos cian clínico para especialistas médicos y dermatología.",
+      demoUrl: "https://preview.nexobow.site/demo-dermatologia/",
     },
     {
       id: "03",

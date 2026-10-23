@@ -37,7 +37,7 @@
 - [x] [22: Template #04 REA — Vetter Consulting Negocios B2B (`high-ticket-consulting`)](./scratch/nexobow-v2/issues/22-template-corporativo-vetter.md) (`done`)
 - [x] [23: Template #05 REA — Think Company Tech & Digital Systems (`tech-editorial-system`)](./scratch/nexobow-v2/issues/23-template-tech-thinkcompany.md) (`done`)
 - [x] [24: Template #06 REA — The Performance Lab Deporte & Gym (`kinetic-performance`)](./scratch/nexobow-v2/issues/24-template-deportes-performancelab.md) (`done`)
-- [ ] [25: Template #07 REA — Lipedema Guru Dermatología & Médicos (`clinical-pure`)](./scratch/nexobow-v2/issues/25-template-dermatologia-lipedemaguru.md) (`ready-for-agent`)
+- [x] [25: Template #07 REA — Lipedema Guru Dermatología & Médicos (`clinical-pure`)](./scratch/nexobow-v2/issues/25-template-dermatologia-lipedemaguru.md) (`done`)
 - [ ] [26: Template #08 REA — Lufte Propiedades & Bienes Raíces (`architectural-spaces`)](./scratch/nexobow-v2/issues/26-template-propiedades-lufte.md) (`ready-for-agent`)
 - [ ] [27: Template #09 REA — Heavn One Hardware & Producto Específico (`minimalist-hardware`)](./scratch/nexobow-v2/issues/27-template-producto-heavn.md) (`ready-for-agent`)
 - [ ] [28: Template #10 REA — Reliable Paving Construcción & Pavimentación (`industrial-authority`)](./scratch/nexobow-v2/issues/28-template-construccion-reliablepaving.md) (`ready-for-agent`)
