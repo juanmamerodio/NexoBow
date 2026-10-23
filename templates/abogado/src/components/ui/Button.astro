@@ -2,45 +2,78 @@
 interface Props {
   href: string;
   label: string;
-  variant?: "primary" | "outline" | "light" | "ghost-light";
+  variant?: "primary" | "outline" | "light" | "ghost-light" | "round" | "fat";
   size?: "md" | "lg";
   external?: boolean;
 }
 
 const { href, label, variant = "primary", size = "lg", external = false } = Astro.props;
-
-// Estilo signature Kümmerlein: botón rectangular con bordes de 8px, dot expansivo y hover invertido
-const isSignature = variant === "primary" || variant === "light";
+const targetProps = external ? { target: "_blank", rel: "noopener" } : {};
 ---
 
-<a
-  href={href}
-  class={`group relative inline-flex items-center justify-center font-display font-medium tracking-tight text-center transition-all duration-300 rounded-[8px] no-underline ${
-    size === "md" ? "px-5 py-2.5 text-xs sm:text-sm min-h-[44px]" : "px-7 py-3.5 sm:py-4 text-sm sm:text-base min-h-[52px]"
-  } ${
-    variant === "primary"
-      ? "bg-(--color-primary) text-(--color-ink) hover:bg-(--color-ink) hover:text-(--color-primary) shadow-sm"
-      : variant === "outline"
-      ? "border border-(--color-ink)/25 text-(--color-ink) hover:bg-(--color-ink) hover:text-(--color-paper)"
-      : variant === "light"
-      ? "bg-(--color-paper) text-(--color-ink) hover:bg-(--color-ink) hover:text-(--color-paper)"
-      : "border border-(--color-ink)/30 text-(--color-ink) hover:bg-(--color-ink) hover:text-(--color-primary)"
-  }`}
-  {...(external ? { target: "_blank", rel: "noopener" } : {})}
->
-  {
-    isSignature && (
+{
+  variant === "round" ? (
+    <div class="group/round inline-flex w-full sm:w-auto items-center justify-center">
+      <a
+        href={href}
+        {...targetProps}
+        class="inline-flex h-[68px] sm:h-[84px] flex-1 sm:flex-initial items-center justify-between gap-6 rounded-full bg-(--color-primary) px-8 sm:px-12 font-display text-lg sm:text-2xl font-medium tracking-tight text-[#111111] no-underline transition-colors duration-300 hover:bg-[#3c3c3c] hover:text-(--color-primary)"
+      >
+        <span class="inline-flex items-center gap-4">
+          <span
+            aria-hidden="true"
+            class="h-3.5 w-3.5 rounded-full bg-current transition-transform duration-500 ease-out group-hover/round:scale-150"
+          />
+          <span>{label}</span>
+        </span>
+      </a>
       <span
         aria-hidden="true"
-        class="inline-block h-2 w-2 rounded-full bg-current mr-3 flex-shrink-0 transition-transform duration-300 ease-out group-hover:scale-150"
+        class="hidden sm:flex h-0 w-0 overflow-hidden items-center justify-center rounded-full bg-(--color-primary) text-[#111111] transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover/round:ml-2 group-hover/round:h-[84px] group-hover/round:w-[84px]"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 12 12" fill="currentColor">
+          <path d="M11.02,1.48c0-.28-.22-.5-.5-.5h-4.5c-.28,0-.5.22-.5.5s.22.5.5.5h4v4c0,.28.22.5.5.5s.5-.22.5-.5V1.48Z" />
+          <rect x="-.57" y="5.57" width="13" height="1" transform="translate(-2.56 5.97) rotate(-45)" />
+        </svg>
+      </span>
+    </div>
+  ) : variant === "fat" ? (
+    <a
+      href={href}
+      {...targetProps}
+      class="big_fat_button group relative inline-flex h-[64px] sm:h-[76px] w-full items-center justify-center rounded-[12px] sm:rounded-[15px] bg-(--color-primary)/90 backdrop-blur-md px-6 sm:px-10 font-display text-base sm:text-xl font-medium tracking-tight text-[#111111] no-underline transition-all duration-300 hover:bg-[#111111]/90 hover:text-(--color-primary)"
+    >
+      <span class="relative inline-flex items-center gap-3.5">
+        <span
+          aria-hidden="true"
+          class="h-3 w-3 rounded-full bg-current transition-transform duration-300 group-hover:scale-150"
+        />
+        <span>{label}</span>
+      </span>
+    </a>
+  ) : (
+    <a
+      href={href}
+      {...targetProps}
+      class={`button_wrap square_style group relative inline-flex items-center justify-center font-display font-medium tracking-tight text-center transition-all duration-300 rounded-[8px] sm:rounded-[12px] no-underline ${
+        size === "md"
+          ? "px-5 py-2.5 text-xs sm:text-sm min-h-[44px]"
+          : "px-8 py-4 text-sm sm:text-lg min-h-[58px] sm:min-h-[68px]"
+      } ${
+        variant === "primary"
+          ? "bg-(--color-primary) text-[#111111] hover:bg-[#3c3c3c] hover:text-(--color-primary)"
+          : variant === "outline"
+          ? "border border-(--color-ink)/25 bg-transparent text-(--color-ink) hover:bg-(--color-ink) hover:text-(--color-paper)"
+          : variant === "light"
+          ? "bg-(--color-paper) text-(--color-ink) hover:bg-[#3c3c3c] hover:text-(--color-primary)"
+          : "border border-(--color-ink)/30 text-(--color-ink) hover:bg-(--color-ink) hover:text-(--color-primary)"
+      }`}
+    >
+      <span
+        aria-hidden="true"
+        class="dot inline-block h-3 w-3 rounded-full bg-current mr-3.5 flex-shrink-0 transition-transform duration-500 ease-out group-hover:scale-150"
       />
-    )
-  }
-  <span>{label}</span>
-  <span
-    aria-hidden="true"
-    class="ml-2.5 transition-transform duration-300 group-hover:translate-x-1 opacity-70 group-hover:opacity-100"
-  >
-    →
-  </span>
-</a>
+      <span>{label}</span>
+    </a>
+  )
+}

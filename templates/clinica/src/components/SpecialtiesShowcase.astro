@@ -1,0 +1,105 @@
+---
+import { CONTENT } from "../site";
+
+const specialties = CONTENT.specialties || {};
+const items = specialties.items || [];
+const bookingUrl = CONTENT.links.calendly || "#agendar";
+
+function formatEmphasis(text: string) {
+  if (!text) return "";
+  return text.replace(
+    /\*([^*]+)\*/g,
+    '<span class="italic font-normal text-(--color-accent)">$1</span>'
+  );
+}
+
+const formattedTitle = formatEmphasis(
+  specialties.titulo ||
+    "Odontología y Cirugía de Alta Gama, *construida sobre estándares internacionales*"
+);
+---
+
+<section
+  id="especialidades"
+  class="relative border-b border-(--color-primary)/10 bg-(--color-paper) py-16 sm:py-24"
+  data-section="showcase"
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    {/* Cabecera de Sección */}
+    <div class="mx-auto max-w-3xl text-center">
+      <p
+        class="font-mono text-xs font-semibold tracking-[0.3em] uppercase text-(--color-primary)/80"
+      >
+        {specialties.tag || "01 · NUESTRO ENFOQUE"}
+      </p>
+
+      <h2
+        class="mt-3 font-display text-2xl font-bold tracking-tight text-(--color-ink) sm:text-3xl md:text-4xl"
+        set:html={formattedTitle}
+      />
+
+      <p class="mt-4 text-base leading-relaxed text-(--color-ink)/75 sm:text-lg">
+        {
+          specialties.bajada ||
+            "Protocolos unificados de mínima invasión diseñados para una restauración funcional definitiva y una estética armónica sin dolor."
+        }
+      </p>
+    </div>
+
+    {/* Grid de 4 Tarjetas Arquitectónicas Numeradas */}
+    <div class="mt-12 grid grid-cols-1 gap-6 sm:mt-16 md:grid-cols-2 lg:gap-8">
+      {
+        items.map((item) => (
+          <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-(--color-primary)/15 bg-(--color-primary)/5 p-6 sm:p-8 transition-all duration-300 hover:border-(--color-accent) hover:bg-(--color-primary)/10 hover:shadow-lg">
+            {/* Header de Tarjeta: Número y Badges */}
+            <div>
+              <div class="flex items-center justify-between border-b border-(--color-primary)/10 pb-4">
+                <span class="font-mono text-2xl font-extrabold tracking-widest text-(--color-accent) sm:text-3xl">
+                  {item.numero}
+                </span>
+                <div class="flex flex-wrap gap-1.5">
+                  {item.badges?.map((badge: string) => (
+                    <span class="rounded-full bg-(--color-primary)/10 px-2.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase text-(--color-primary)">
+                      {badge}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Título de la Especialidad */}
+              <h3 class="mt-5 font-display text-xl font-bold text-(--color-ink) group-hover:text-(--color-primary) sm:text-2xl transition-colors">
+                {item.nombre}
+              </h3>
+
+              {/* Descripción Clínica */}
+              <p class="mt-3 text-sm leading-relaxed text-(--color-ink)/75 sm:text-base">
+                {item.descripcion}
+              </p>
+            </div>
+
+            {/* Footer con Enlace a Consulta */}
+            <div class="mt-6 border-t border-(--color-primary)/10 pt-4">
+              <a
+                href={bookingUrl}
+                class="inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-(--color-primary) transition-transform duration-300 group-hover:translate-x-1 hover:text-(--color-accent)"
+              >
+                <span>{item.link_text || "Consultar por este tratamiento"}</span>
+                <svg
+                  class="h-3.5 w-3.5"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M3 8h10M9 4l4 4-4 4" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

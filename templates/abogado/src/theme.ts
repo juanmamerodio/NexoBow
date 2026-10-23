@@ -5,6 +5,7 @@ export type ThemeTokens = {
   tinta?: string;
   fuente?: string;
   fuente_sans?: string;
+  fuente_serif?: string;
 };
 
 export const DEFAULT_THEME = {
@@ -14,6 +15,7 @@ export const DEFAULT_THEME = {
   tinta: "#111111",
   fuente: "Space Grotesk",
   fuente_sans: "Inter",
+  fuente_serif: "Instrument Serif",
 } as const;
 
 export const ars = (n: number): string =>
@@ -46,6 +48,7 @@ export function themeVars(tema: ThemeTokens): string {
     `--color-on-primary:${onColor(t.primary, t.tinta, t.fondo)}`,
     `--font-display:"${t.fuente}",Georgia,serif`,
     `--font-sans:"${t.fuente_sans}",system-ui,sans-serif`,
+    `--font-serif:"${t.fuente_serif}",Georgia,serif`,
   ].join(";");
 }
 
@@ -53,5 +56,6 @@ export function fontUrl(tema: ThemeTokens): string {
   const t = { ...DEFAULT_THEME, ...tema };
   const display = t.fuente.trim().replace(/ /g, "+");
   const sans = t.fuente_sans.trim().replace(/ /g, "+");
-  return `https://fonts.googleapis.com/css2?family=${display}:ital,wght@0,300..900;1,300..900&family=${sans}:ital,wght@0,300..900;1,300..900&display=swap`;
+  const serif = t.fuente_serif.trim().replace(/ /g, "+");
+  return `https://fonts.googleapis.com/css2?family=${display}:ital,wght@0,300..900;1,300..900&family=${sans}:ital,wght@0,300..900;1,300..900&family=${serif}:ital@0;1&display=swap`;
 }

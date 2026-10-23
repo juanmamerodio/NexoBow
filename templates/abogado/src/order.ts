@@ -1,5 +1,10 @@
 export const SECTION_KEYS = [
   "Hero",
+  "ValueProposition",
+  "PracticeAreas",
+  "Attorneys",
+  "CaseResults",
+  "ConsultationCta",
   "Problem",
   "Steps",
   "Reviews",
@@ -12,11 +17,16 @@ export const SECTION_KEYS = [
 export type SectionKey = (typeof SECTION_KEYS)[number];
 
 export const SECTION_NAV = [
-  { key: "Problem", href: "#problema", label: "El problema" },
-  { key: "Steps", href: "#metodo", label: "Método" },
-  { key: "Reviews", href: "#opiniones", label: "Opiniones" },
+  { key: "ValueProposition", href: "#enfoque", label: "Enfoque" },
+  { key: "PracticeAreas", href: "#practicas", label: "Áreas de Práctica" },
+  { key: "Attorneys", href: "#socios", label: "Socios & Equipo" },
+  { key: "CaseResults", href: "#casos", label: "Casos & Insights" },
+  { key: "ConsultationCta", href: "#consulta", label: "Honorarios" },
+  { key: "Problem", href: "#enfoque", label: "El problema" },
+  { key: "Steps", href: "#practicas", label: "Método" },
+  { key: "Reviews", href: "#socios", label: "Opiniones" },
   { key: "CaseStudy", href: "#casos", label: "Casos" },
-  { key: "Pricing", href: "#precios", label: "Precios" },
+  { key: "Pricing", href: "#consulta", label: "Consulta" },
   { key: "Faq", href: "#faq", label: "Preguntas" },
 ];
 

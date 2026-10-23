@@ -3,6 +3,7 @@
 @theme {
   --font-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
   --color-paper: #f6f6f4;
   --color-ink: #111111;
   --color-primary: #f7f788;
@@ -15,10 +16,47 @@
   --soft-grey1: #e2e4d7;
   --soft-grey2: #d7d7cc;
   --dark-shade: #686155;
-  --big_button_hover_color: #111111;
-  --small_round_corners: 8px;
-  --big_round_corners: 18px;
-  --dot_w: 12px;
+  --page_bg_color: var(--color-paper);
+  --big_button_hover_color: #3c3c3c;
+  --type__body_copy: 18px;
+  --type__body_copy_lh: 23px;
+  --type__smaller_copy: 16px;
+  --type__smaller_copy_lh: 22px;
+  --type__tiny_text_regular: 14px;
+  --type__tiny_text_regular_lh: 18px;
+  --type__header_big: clamp(42px, 5.2vw, 74px);
+  --type__header_big_lh: clamp(46px, 5.6vw, 80px);
+  --type__headline: clamp(32px, 3.6vw, 50px);
+  --type__headline_lh: clamp(36px, 4vw, 56px);
+  --type__headline_smaller: clamp(22px, 2.2vw, 30px);
+  --type__headline_smaller_lh: clamp(26px, 2.5vw, 33px);
+  --type__headline_tiles: clamp(20px, 1.8vw, 25px);
+  --type__headline_tiles_lh: clamp(24px, 2.1vw, 30px);
+  --type__tags: 14px;
+  --type__tags_lh: 16px;
+  --type__tiny_text_uc: 12px;
+  --type__tiny_text_uc_lh: 14px;
+  --big_round_corners: 30px;
+  --small_round_corners: 15px;
+  --cta_round_h: 88px;
+  --cta_square_h: 76px;
+  --badge__name_h: 86px;
+  --badge__name_w: 350px;
+  --dot_w: 14px;
+  --grid_gap: 20px;
+  --content_max_w: 1520px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --big_round_corners: 18px;
+    --small_round_corners: 8px;
+    --dot_w: 12px;
+    --cta_round_h: 72px;
+    --cta_square_h: 64px;
+    --badge__name_h: 76px;
+    --badge__name_w: 290px;
+  }
 }
 
 @keyframes marquee {
@@ -27,6 +65,15 @@
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
   }
 }
 
@@ -42,12 +89,90 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.type__header_big {
+  font-family: var(--font-serif);
+  font-size: var(--type__header_big);
+  line-height: var(--type__header_big_lh);
+  font-weight: 400;
+}
+
+.type__headline {
+  font-family: var(--font-display);
+  font-size: var(--type__headline);
+  line-height: var(--type__headline_lh);
+  letter-spacing: -0.025em;
+}
+
+.type__headline_smaller {
+  font-family: var(--font-display);
+  font-size: var(--type__headline_smaller);
+  line-height: var(--type__headline_smaller_lh);
+  letter-spacing: -0.02em;
+}
+
+.type__headline_tiles {
+  font-family: var(--font-display);
+  font-size: var(--type__headline_tiles);
+  line-height: var(--type__headline_tiles_lh);
+  letter-spacing: -0.015em;
+}
+
+.type_hero_before_headline,
+.type__tiny_text_uc {
+  font-family: var(--font-display);
+  font-size: var(--type__tiny_text_uc);
+  line-height: var(--type__tiny_text_uc_lh);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.link_dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: var(--type__tags);
+  line-height: var(--type__tags_lh);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.link_dot::before {
+  content: "";
+  width: var(--dot_w);
+  height: var(--dot_w);
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  border: 1.5px solid var(--color-ink);
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s ease;
+}
+
+.link_dot:hover {
+  color: var(--color-accent);
+}
+
+.link_dot:hover::before {
+  transform: scale(1.35);
+  background-color: var(--color-ink);
+}
+
 .marquee-track {
-  animation: marquee 32s linear infinite;
+  animation: marquee 34s linear infinite;
   will-change: transform;
 }
 
-.marquee:hover .marquee-track {
+.marquee-track-reverse {
+  animation: marquee-reverse 38s linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee-track,
+.marquee:hover .marquee-track-reverse {
   animation-play-state: paused;
 }
 
@@ -55,7 +180,8 @@ body {
   html {
     scroll-behavior: auto;
   }
-  .marquee-track {
+  .marquee-track,
+  .marquee-track-reverse {
     animation: none;
   }
 }

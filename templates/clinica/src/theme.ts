@@ -44,8 +44,8 @@ export function themeVars(tema: ThemeTokens): string {
     `--color-paper:${t.fondo}`,
     `--color-ink:${t.tinta}`,
     `--color-on-primary:${onColor(t.primary, t.tinta, t.fondo)}`,
-    `--font-display:"${t.fuente}",Georgia,serif`,
-    `--font-sans:"${t.fuente_sans}",system-ui,sans-serif`,
+    `--font-display:"${t.fuente}",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif`,
+    `--font-sans:"${t.fuente_sans}",system-ui,-apple-system,sans-serif`,
   ].join(";");
 }
 

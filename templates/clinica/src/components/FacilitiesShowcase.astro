@@ -1,0 +1,80 @@
+---
+import { CONTENT } from "../site";
+
+const facilities = CONTENT.facilities || {};
+const items = facilities.items || [];
+
+function formatEmphasis(text: string) {
+  if (!text) return "";
+  return text.replace(
+    /\*([^*]+)\*/g,
+    '<span class="italic font-normal text-(--color-accent)">$1</span>'
+  );
+}
+
+const formattedTitle = formatEmphasis(
+  facilities.titulo ||
+    "Ambiente arquitectónico pensado para *la calma y la bioseguridad absoluta*"
+);
+---
+
+<section
+  id="instalaciones"
+  class="relative border-b border-(--color-primary)/10 bg-(--color-paper) py-16 sm:py-24"
+  data-section="facilities"
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <p
+        class="font-mono text-xs font-semibold tracking-[0.3em] uppercase text-(--color-primary)/80"
+      >
+        {facilities.tag || "05 · INSTALACIONES & BIOSEGURIDAD"}
+      </p>
+
+      <h2
+        class="mt-3 font-display text-2xl font-bold tracking-tight text-(--color-ink) sm:text-3xl md:text-4xl"
+        set:html={formattedTitle}
+      />
+
+      <p class="mt-4 text-base leading-relaxed text-(--color-ink)/75 sm:text-lg">
+        {
+          facilities.bajada ||
+            "Espacios diseñados según normativas sanitarias internacionales para transformar una visita médica en una experiencia serena y de primer nivel."
+        }
+      </p>
+    </div>
+
+    {/* Grid de Instalaciones de Alta Complejidad */}
+    <div class="mt-12 grid grid-cols-1 gap-6 sm:mt-16 md:grid-cols-2 lg:gap-8">
+      {
+        items.map((facility) => (
+          <div class="flex flex-col justify-between rounded-2xl border border-(--color-primary)/15 bg-(--color-primary)/5 p-6 sm:p-8 transition-all duration-300 hover:border-(--color-accent) hover:bg-(--color-primary)/10 hover:shadow-md">
+            <div>
+              <div class="flex items-center justify-between border-b border-(--color-primary)/10 pb-3">
+                <span class="font-mono text-xs font-bold uppercase tracking-wider text-(--color-primary)">
+                  Área Certificada
+                </span>
+                <span class="h-2 w-2 rounded-full bg-(--color-accent) pulse-mint"></span>
+              </div>
+
+              <h3 class="mt-4 font-display text-xl font-bold text-(--color-ink) sm:text-2xl">
+                {facility.nombre}
+              </h3>
+
+              <p class="mt-2.5 text-sm leading-relaxed text-(--color-ink)/75 sm:text-base">
+                {facility.descripcion}
+              </p>
+            </div>
+
+            <div class="mt-6 flex items-center gap-2 border-t border-(--color-primary)/10 pt-3 text-xs text-(--color-ink)/60">
+              <svg class="h-4 w-4 text-(--color-accent)" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+              <span>Normativa Sanitaria Hospitalaria Clase A</span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

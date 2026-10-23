@@ -1,105 +1,130 @@
 ---
 import { CONTENT } from "../site";
-import { SECTION_NAV } from "../sections";
 
-const { prestador, links, footer } = CONTENT;
-const year = new Date().getFullYear();
+const prestador = CONTENT.prestador || {};
+const footer = CONTENT.footer || {};
+const prestadorNombre = prestador.nombre || "SkyClinics Argentina";
 ---
 
-<footer class="border-t border-(--color-ink)/10 bg-white/60">
-  <div class="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:px-12 md:grid-cols-3">
-    <!-- Identidad Institucional SkyClinics -->
-    <div>
-      <div class="flex items-center gap-3">
-        <div
-          class="flex h-8 w-8 items-center justify-center rounded-[8px] bg-(--color-primary) text-(--color-paper)"
-        >
-          <svg
-            class="h-4 w-4"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M12 2v20M2 12h20"></path>
-          </svg>
-        </div>
-        <p class="font-display text-xl font-bold tracking-tight text-(--color-ink)">
-          {prestador.nombre}
-        </p>
-      </div>
-      <p class="mt-2 text-xs font-semibold uppercase tracking-wider text-(--color-primary)">
-        {prestador.rol}
-      </p>
-      <p class="mt-4 max-w-sm text-xs leading-relaxed text-(--color-ink)/75 font-sans">
-        {footer.blurb}
-      </p>
-    </div>
-
-    <!-- Navegación Institucional -->
-    <nav aria-label="Secciones">
-      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-(--color-primary)">
-        Protocolos & Especialidades
-      </p>
-      <ul class="mt-4 space-y-2.5">
-        {
-          SECTION_NAV.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                class="text-xs font-medium uppercase tracking-wider text-(--color-ink)/70 transition-colors hover:text-(--color-primary)"
+<footer
+  class="relative border-t border-(--color-primary)/20 bg-(--color-primary) text-(--color-paper) pt-16 pb-12"
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+      {/* Columna Marca & Identidad */}
+      <div class="lg:col-span-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-9 w-9 items-center justify-center rounded-lg bg-(--color-accent) text-(--color-primary) shadow-sm"
+            >
+              <svg
+                class="h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               >
-                {item.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
+                <path d="M12 4v16M4 12h16" />
+              </svg>
+            </div>
+            <span
+              class="font-display text-xl font-bold tracking-[0.14em] uppercase text-(--color-paper)"
+            >
+              {prestadorNombre}
+            </span>
+          </div>
 
-    <!-- Canales Directos de Atención Médica -->
-    <div>
-      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-(--color-primary)">
-        Contacto Clínico
-      </p>
-      <ul class="mt-4 space-y-3">
-        <li>
-          <a
-            href={links.calendly}
-            target="_blank"
-            rel="noopener"
-            class="inline-flex items-center gap-2 text-sm font-semibold text-(--color-primary) hover:underline"
-          >
-            <span class="h-1.5 w-1.5 rounded-full bg-(--color-accent)"></span>
-            Agendá tu valoración inicial online
-          </a>
-        </li>
-        <li>
-          <a
-            href={links.whatsapp}
-            target="_blank"
-            rel="noopener"
-            class="inline-flex items-center gap-2 text-sm font-semibold text-(--color-primary) hover:underline"
-          >
-            <span class="h-1.5 w-1.5 rounded-full bg-(--color-accent)"></span>
-            Secretaría Médica por WhatsApp
-          </a>
-        </li>
-      </ul>
-      <p class="mt-6 text-[11px] leading-relaxed text-(--color-ink)/60">
-        Cumplimiento estricto de la Ley 25.326 de Protección de Datos Personales y Secreto Médico.
-      </p>
+          <p class="mt-4 max-w-sm text-xs sm:text-sm leading-relaxed text-(--color-paper)/75">
+            {
+              footer.blurb ||
+                "Centro Médico y Odontológico de Cirugía Guiada y Rehabilitación de Alta Complejidad. Diagnóstico de precisión, tecnología de vanguardia y cuidado centrado en la persona."
+            }
+          </p>
+        </div>
+
+        <div class="mt-6 text-xs text-(--color-accent) font-mono">
+          Habilitación Sanitaria Ministerial Nº 48.291
+        </div>
+      </div>
+
+      {/* Columna Navegación Rápida */}
+      <div class="lg:col-span-3">
+        <p class="text-xs font-bold tracking-[0.14em] uppercase text-(--color-accent)">
+          Especialidades & Servicios
+        </p>
+        <ul class="mt-4 space-y-2.5 text-xs text-(--color-paper)/80">
+          <li>
+            <a href="#especialidades" class="transition-colors hover:text-(--color-paper)">
+              Implantología Digital 3D
+            </a>
+          </li>
+          <li>
+            <a href="#especialidades" class="transition-colors hover:text-(--color-paper)">
+              Rehabilitación Oral Completa
+            </a>
+          </li>
+          <li>
+            <a href="#especialidades" class="transition-colors hover:text-(--color-paper)">
+              Arquitectura de la Sonrisa DSD
+            </a>
+          </li>
+          <li>
+            <a href="#tecnologia" class="transition-colors hover:text-(--color-paper)">
+              Tomografía CBCT & Laboratorio In-House
+            </a>
+          </li>
+          <li>
+            <a href="#instalaciones" class="transition-colors hover:text-(--color-paper)">
+              Quirófanos con Flujo Laminar
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      {/* Columna Contacto & Guardia */}
+      <div class="lg:col-span-4">
+        <p class="text-xs font-bold tracking-[0.14em] uppercase text-(--color-accent)">
+          Contacto & Guardia Médica
+        </p>
+        <div class="mt-4 space-y-3 text-xs text-(--color-paper)/80">
+          <p class="flex items-start gap-2">
+            <span class="text-(--color-accent)">📍</span>
+            <span>{footer.direccion || "Av. del Libertador 4980, CABA"}</span>
+          </p>
+          <p class="flex items-center gap-2">
+            <span class="text-(--color-accent)">📞</span>
+            <span>{footer.telefono || "+54 11 5555-0000"}</span>
+          </p>
+          <div class="mt-4 rounded-lg bg-black/20 p-3 border border-(--color-accent)/20">
+            <p class="font-semibold text-(--color-accent) text-[11px] uppercase tracking-wider">
+              {footer.guardia || "Guardia Médica Postoperatoria 24/7"}
+            </p>
+            <p class="text-[11px] text-(--color-paper)/70 mt-1">
+              Atención prioritaria y soporte continuo para pacientes en recuperación.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="border-t border-(--color-ink)/10 bg-white/40">
-    <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-6 text-xs text-(--color-ink)/60 lg:px-12">
+    {/* Barra Inferior Legal & Ley 25.326 */}
+    <div
+      class="mt-12 border-t border-(--color-paper)/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-(--color-paper)/60"
+    >
       <p>
-        © {year} {prestador.nombre} · {prestador.rol}
+        © {new Date().getFullYear()} {prestadorNombre}. Todos los derechos reservados.
       </p>
-      <p class="font-medium text-(--color-primary)">{footer.credit}</p>
+
+      <p class="text-center sm:text-right max-w-md">
+        Cumplimiento estricto con la Ley 25.326 de Protección de Datos Personales y normas de bioética del Colegio Médico.
+      </p>
+
+      <p>
+        {footer.credit || "Landing desarrollada con NexoBow"}
+      </p>
     </div>
   </div>
 </footer>

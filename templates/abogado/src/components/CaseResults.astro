@@ -1,0 +1,126 @@
+---
+import { CONTENT } from "../site";
+
+const { casos, prestador, links } = CONTENT;
+const consent = CONTENT.consentimiento_testimonios;
+---
+
+{
+  consent && casos.items.length > 0 && (
+    <section id="casos" class="cm_insights_teaser relative px-3 py-14 sm:px-6 lg:py-22">
+      <div class="mx-auto max-w-[1520px]">
+        <!-- Cabecera 2 columnas estilo Kümmerlein Insights (.text_top.grid__outer_10) -->
+        <div class="grid gap-6 lg:grid-cols-10 items-end mb-12">
+          <div class="lg:col-span-5 lg:col-start-2">
+            <p class="type__tiny_text_uc text-(--color-accent) mb-2">
+              {casos.tag}
+            </p>
+            <h2 class="type__headline font-semibold text-(--color-ink)">
+              {casos.titulo}
+            </h2>
+          </div>
+          <div class="lg:col-span-3 lg:col-start-8 lg:text-right">
+            <a href={links.calendly} target="_blank" rel="noopener" class="link_dot">
+              <span>Solicitar evaluación de caso</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Tarjetas Amarillas Kümmerlein (.tiles__item) con recorte cóncavo SVG en esquina inferior derecha -->
+        <div class="grid gap-6 md:grid-cols-2 lg:px-[8.33%]">
+          {
+            casos.items.map((caso, idx) => (
+              <article class="tiles__item group relative flex min-h-[380px] flex-col justify-between overflow-hidden rounded-[24px] sm:rounded-[30px] bg-(--color-primary) text-[#111111] transition-transform duration-300 hover:-translate-y-1">
+                <div class="item_top p-7 sm:p-10">
+                  <!-- Metadatos fecha + autor estilo Kümmerlein (.date_author) -->
+                  <div class="flex flex-wrap items-center justify-between gap-2 border-b border-black/15 pb-4">
+                    <span class="type__tiny_text_uc font-bold text-[#111111]">
+                      Precedente · 0{idx + 1}
+                    </span>
+                    <span class="text-xs font-medium text-[#111111]/75">
+                      {prestador.nombre}
+                    </span>
+                  </div>
+
+                  <!-- Píldora de categoría (.insights__tags_outer .tag) -->
+                  <div class="mt-4">
+                    <span class="inline-block rounded-full border border-black/25 bg-white/60 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#111111]">
+                      Resolución Estratégica
+                    </span>
+                  </div>
+
+                  <h3 class="type__headline_tiles mt-5 font-bold text-[#111111]">
+                    {caso.titulo}
+                  </h3>
+
+                  <p class="mt-3 text-sm sm:text-base leading-relaxed text-[#111111]/85">
+                    {caso.descripcion}
+                  </p>
+
+                  {
+                    caso.resultado && (
+                      <div class="mt-6 rounded-[12px] bg-black/8 p-4">
+                        <span class="type__tiny_text_uc block text-[10px] text-[#111111]/70 mb-1">
+                          Impacto & Resultado
+                        </span>
+                        <p class="font-display text-sm sm:text-base font-semibold text-[#111111]">
+                          {caso.resultado}
+                        </p>
+                      </div>
+                    )
+                  }
+                </div>
+
+                <!-- Esquina inferior derecha con recorte cóncavo SVG auténtico de Kümmerlein (.item_bottom .cutout) -->
+                <div class="item_bottom relative flex h-[92px] w-full items-center pl-7 sm:pl-10">
+                  <span class="type__tiny_text_uc text-[#111111]/70">
+                    Confidencial · Secreto Profesional
+                  </span>
+
+                  <div class="cutout absolute bottom-0 right-0 h-[92px] w-[92px] rounded-tl-[28px] bg-(--color-paper) flex items-end justify-end">
+                    <!-- Curva cóncava izquierda -->
+                    <svg
+                      class="pointer-events-none absolute bottom-0 -left-[28px] h-[28px] w-[28px]"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 31 31"
+                      aria-hidden="true"
+                    >
+                      <path style="fill:var(--color-paper)" d="M0,30v1h31V0h-1c0,16.57-13.43,30-30,30Z" />
+                    </svg>
+                    <!-- Curva cóncava superior -->
+                    <svg
+                      class="pointer-events-none absolute -top-[28px] right-0 h-[28px] w-[28px]"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 31 31"
+                      aria-hidden="true"
+                    >
+                      <path style="fill:var(--color-paper)" d="M0,30v1h31V0h-1c0,16.57-13.43,30-30,30Z" />
+                    </svg>
+
+                    <a
+                      href={links.calendly}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label={`Consultar por caso: ${caso.titulo}`}
+                      class="circle_inner flex h-[78px] w-[78px] items-center justify-center rounded-full bg-(--color-primary) text-[#111111] transition-transform duration-300 group-hover:scale-105"
+                    >
+                      <svg
+                        class="arrow h-3.5 w-3.5 transition-transform duration-300 group-hover:scale-125"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 12 12"
+                        fill="currentColor"
+                      >
+                        <path d="M11.02,1.48c0-.28-.22-.5-.5-.5h-4.5c-.28,0-.5.22-.5.5s.22.5.5.5h4v4c0,.28.22.5.5.5s.5-.22.5-.5V1.48Z" />
+                        <rect x="-.57" y="5.57" width="13" height="1" transform="translate(-2.56 5.97) rotate(-45)" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  )
+}

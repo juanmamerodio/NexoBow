@@ -1,0 +1,249 @@
+---
+import { CONTENT, ars } from "../site";
+
+const booking = CONTENT.booking || CONTENT.pricing || {};
+const prestador = CONTENT.prestador || {};
+const whatsappUrl = CONTENT.links.whatsapp || "https://wa.me/5491155550000";
+const calendlyUrl = CONTENT.links.calendly || "#";
+
+const waMessage = encodeURIComponent(
+  `Hola! Me comunico desde la web de ${prestador.nombre || "SkyClinics"} para agendar mi primera consulta diagnóstica con escaneo 3D.`
+);
+const waLink = `${whatsappUrl}?text=${waMessage}`;
+
+const beneficios = booking.beneficios || booking.incluido || [
+  "Evaluación médica presencial u online con especialista director",
+  "Escaneo óptico intraoral 3D de cortesía durante la consulta",
+  "Plan de tratamiento digitalizado con fechas de intervención cerradas",
+  "Presupuesto cerrado con garantía escrita (apto reintegro en prepagas)",
+  "Opciones de financiación y plan de pagos por etapa clínica",
+];
+
+function formatEmphasis(text: string) {
+  if (!text) return "";
+  return text.replace(
+    /\*([^*]+)\*/g,
+    '<span class="italic font-normal text-(--color-accent)">$1</span>'
+  );
+}
+
+const formattedTitle = formatEmphasis(
+  booking.titulo ||
+    "Iniciá tu camino hacia una *salud bucal definitiva y sin dolor*"
+);
+
+const precioStr = booking.precio_ars !== undefined ? ars(booking.precio_ars) : "$0 ARS";
+---
+
+<section
+  id="agendar"
+  class="relative border-b border-(--color-primary)/10 bg-(--color-paper) py-16 sm:py-24"
+  data-section="booking"
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <p
+        class="font-mono text-xs font-semibold tracking-[0.3em] uppercase text-(--color-primary)/80"
+      >
+        {booking.tag || "07 · VALORACIÓN INICIAL"}
+      </p>
+
+      <h2
+        class="mt-3 font-display text-2xl font-bold tracking-tight text-(--color-ink) sm:text-3xl md:text-4xl"
+        set:html={formattedTitle}
+      />
+
+      <p class="mt-4 text-base leading-relaxed text-(--color-ink)/75 sm:text-lg">
+        {
+          booking.bajada ||
+            booking.precio_sub ||
+            "Coordiná tu turno de diagnóstico con escaneo 3D de alta resolución. Recibí tu presupuesto cerrado por escrito en la primera sesión."
+        }
+      </p>
+    </div>
+
+    {/* Composición 2 Columnas: Desglose Clínico / Formulario & WhatsApp */}
+    <div class="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10 sm:mt-16 items-start">
+      {/* Tarjeta Izquierda: Propuesta de Valor & Aranceles Transparentes */}
+      <div
+        class="rounded-2xl border border-(--color-primary)/20 bg-(--color-primary)/5 p-6 sm:p-8 lg:col-span-6 flex flex-col justify-between"
+      >
+        <div>
+          <div class="flex items-center justify-between border-b border-(--color-primary)/10 pb-4">
+            <span class="rounded bg-(--color-primary) px-3 py-1 text-xs font-semibold uppercase tracking-wider text-(--color-on-primary)">
+              {booking.plan || "Valoración Diagnóstica 3D"}
+            </span>
+            <span class="font-mono text-xs font-semibold text-(--color-accent)">
+              Presupuesto Cerrado
+            </span>
+          </div>
+
+          <div class="mt-6 flex items-baseline gap-2">
+            <span class="font-display text-4xl font-extrabold text-(--color-primary) sm:text-5xl">
+              {precioStr}
+            </span>
+            <span class="text-xs font-medium uppercase text-(--color-ink)/60">
+              Primera sesión clínica
+            </span>
+          </div>
+
+          <p class="mt-2 text-xs text-(--color-ink)/70">
+            {booking.precio_label || "Evaluación con especialista · 45 minutos presencial u online"}
+          </p>
+
+          <div class="mt-6 border-t border-(--color-primary)/10 pt-6">
+            <p class="text-xs font-bold tracking-wider uppercase text-(--color-primary)">
+              Lo que incluye tu valoración inicial:
+            </p>
+            <ul class="mt-4 space-y-3">
+              {
+                beneficios.map((b: string) => (
+                  <li class="flex items-start gap-2.5 text-sm text-(--color-ink)/85">
+                    <svg
+                      class="h-4 w-4 shrink-0 text-(--color-accent) mt-0.5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <span>{b}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-8 rounded-xl bg-(--color-paper) p-4 border border-(--color-primary)/10 text-xs text-(--color-ink)/75">
+          <p class="font-semibold text-(--color-primary)">Reintegro en Prepagas:</p>
+          <p class="mt-1">
+            Emitimos factura médica oficial apta para reintegro inmediato en OSDE, Swiss Medical, Galeno, Medicus, Omint y más.
+          </p>
+        </div>
+      </div>
+
+      {/* Tarjeta Derecha: Formulario de Triage & Fallback WhatsApp Directo */}
+      <div
+        class="rounded-2xl border border-(--color-primary)/20 bg-(--color-paper) p-6 sm:p-8 shadow-md lg:col-span-6"
+      >
+        <h3 class="font-display text-xl font-bold text-(--color-ink)">
+          Coordiná tu valoración en 30 segundos
+        </h3>
+        <p class="mt-1.5 text-xs text-(--color-ink)/70">
+          Completá tus datos para agendar tu horario o comunicate de inmediato por WhatsApp con secretaría médica.
+        </p>
+
+        {/* Botón WhatsApp de Alta Conversión */}
+        <div class="mt-6 border-b border-(--color-primary)/10 pb-6">
+          <a
+            href={waLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#1FAF38] px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-[#1A9630] hover:shadow-md"
+          >
+            <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824z" />
+            </svg>
+            <span>Continuar por WhatsApp Directo</span>
+            <svg
+              class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M3 8h10M9 4l4 4-4 4" />
+            </svg>
+          </a>
+        </div>
+
+        {/* Formulario de Consulta */}
+        <form
+          action={calendlyUrl}
+          method="GET"
+          class="mt-6 space-y-4"
+        >
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-(--color-ink)/80">
+              Nombre y Apellido
+            </label>
+            <input
+              type="text"
+              name="name"
+              required
+              placeholder="Ej: Sofía Gómez"
+              class="mt-1.5 w-full rounded-lg border border-(--color-primary)/20 bg-(--color-primary)/5 px-3.5 py-2.5 text-sm text-(--color-ink) placeholder:text-(--color-ink)/40 focus:border-(--color-accent) focus:outline-hidden"
+            />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-(--color-ink)/80">
+                WhatsApp / Teléfono
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                required
+                placeholder="+54 9 11 ..."
+                class="mt-1.5 w-full rounded-lg border border-(--color-primary)/20 bg-(--color-primary)/5 px-3.5 py-2.5 text-sm text-(--color-ink) placeholder:text-(--color-ink)/40 focus:border-(--color-accent) focus:outline-hidden"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-(--color-ink)/80">
+                Correo Electrónico
+              </label>
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="sofia@ejemplo.com"
+                class="mt-1.5 w-full rounded-lg border border-(--color-primary)/20 bg-(--color-primary)/5 px-3.5 py-2.5 text-sm text-(--color-ink) placeholder:text-(--color-ink)/40 focus:border-(--color-accent) focus:outline-hidden"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-(--color-ink)/80">
+              Especialidad o Tratamiento de Interés
+            </label>
+            <select
+              name="treatment"
+              class="mt-1.5 w-full rounded-lg border border-(--color-primary)/20 bg-(--color-primary)/5 px-3.5 py-2.5 text-sm text-(--color-ink) focus:border-(--color-accent) focus:outline-hidden"
+            >
+              <option value="implantes">Implantología Digital & Carga Inmediata</option>
+              <option value="full-arch">Rehabilitación Oral Completa (Full-Arch)</option>
+              <option value="estetica">Arquitectura de la Sonrisa & Carillas DSD</option>
+              <option value="diagnostico">Diagnóstico 3D & Valoración Inicial</option>
+              <option value="otro">Otra consulta clínica o quirúrgica</option>
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            class="group mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-(--color-primary) px-6 py-3.5 text-sm font-semibold tracking-wide text-(--color-on-primary) shadow-sm transition-all duration-300 hover:shadow-md hover:brightness-110"
+          >
+            <span>Solicitar Turno de Valoración</span>
+            <svg
+              class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M3 8h10M9 4l4 4-4 4" />
+            </svg>
+          </button>
+        </form>
+
+        <p class="mt-4 text-center text-[11px] text-(--color-ink)/50">
+          Protección de datos garantizada según Ley 25.326. Sin spam ni llamadas molestas.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

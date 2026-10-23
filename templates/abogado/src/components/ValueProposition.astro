@@ -1,0 +1,95 @@
+---
+import Lead from "./ui/Lead.astro";
+import { CONTENT } from "../site";
+
+const { problema, prestador, links } = CONTENT;
+---
+
+<section id="enfoque" class="cm_text two_col relative px-3 py-16 sm:px-6 lg:py-24">
+  <div class="mx-auto max-w-[1520px]">
+    <!-- Bloque 2 columnas asimétrico de Kümmerlein (.grid__outer_10 / .text_left + .text_right) -->
+    <div class="grid gap-10 lg:grid-cols-10 lg:gap-8 items-start">
+      <div class="lg:col-span-4 lg:col-start-2">
+        <p class="type__tiny_text_uc text-(--color-accent) mb-3">
+          {problema.tag}
+        </p>
+        <h2 class="type__headline font-semibold text-(--color-ink) text-balance">
+          <Lead text={problema.titulo} emClass="font-serif italic font-normal" />
+        </h2>
+      </div>
+
+      <div class="lg:col-span-4 lg:col-start-6 space-y-5 pt-2">
+        <p class="text-lg sm:text-xl leading-relaxed text-(--color-ink) font-medium">
+          {prestador.enfoque}
+        </p>
+        <p class="text-base leading-relaxed text-(--color-ink)/75">
+          {problema.descripcion}
+        </p>
+        <div class="pt-2">
+          <a href={links.calendly} target="_blank" rel="noopener" class="link_dot">
+            <span>Descubrí cómo blindar tu posición</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grilla de 3 diagnósticos críticos con recorte cóncavo SVG de Kümmerlein (.tiles__item) -->
+    <div class="mt-16 grid gap-5 md:grid-cols-3 lg:px-[8.33%]">
+      {
+        problema.pains.map((pain) => (
+          <article class="tiles__item group relative flex min-h-[320px] flex-col justify-between overflow-hidden rounded-[24px] sm:rounded-[30px] bg-[#e2e4d7] text-[#111111] transition-colors duration-300 hover:bg-(--color-primary)">
+            <div class="p-7 sm:p-9">
+              <span class="type__tiny_text_uc inline-block rounded-full bg-black/5 px-3 py-1 text-[#686155]">
+                {pain.tag}
+              </span>
+              <h3 class="type__headline_tiles mt-5 font-semibold text-[#111111]">
+                {pain.t}
+              </h3>
+              <p class="mt-3 text-sm sm:text-base leading-relaxed text-[#111111]/80">
+                {pain.d}
+              </p>
+            </div>
+
+            <!-- Pie de tarjeta con recorte SVG cóncavo estilo Kümmerlein -->
+            <div class="relative flex h-[76px] w-full items-end justify-between pl-7 pb-5">
+              <span class="type__tiny_text_uc text-[#686155]">Riesgo evitable</span>
+
+              <div class="relative h-[76px] w-[76px] flex-shrink-0">
+                <!-- Curva cóncava izquierda -->
+                <svg
+                  class="pointer-events-none absolute bottom-0 -left-[24px] h-[24px] w-[24px]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 31 31"
+                  aria-hidden="true"
+                >
+                  <path style="fill:var(--color-paper)" d="M0,30v1h31V0h-1c0,16.57-13.43,30-30,30Z" />
+                </svg>
+                <!-- Curva cóncava superior -->
+                <svg
+                  class="pointer-events-none absolute -top-[24px] right-0 h-[24px] w-[24px]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 31 31"
+                  aria-hidden="true"
+                >
+                  <path style="fill:var(--color-paper)" d="M0,30v1h31V0h-1c0,16.57-13.43,30-30,30Z" />
+                </svg>
+                <div class="flex h-full w-full items-end justify-end rounded-tl-[24px] bg-(--color-paper)">
+                  <a
+                    href="#consulta"
+                    aria-label={`Resolver ${pain.t}`}
+                    class="flex h-[62px] w-[62px] items-center justify-center rounded-full bg-(--color-primary) text-[#111111] transition-transform duration-300 group-hover:scale-105"
+                  >
+                    <svg class="h-3.5 w-3.5 transition-transform duration-300 group-hover:scale-125" viewBox="0 0 12 12" fill="currentColor">
+                      <path d="M11.02,1.48c0-.28-.22-.5-.5-.5h-4.5c-.28,0-.5.22-.5.5s.22.5.5.5h4v4c0,.28.22.5.5.5s.5-.22.5-.5V1.48Z" />
+                      <rect x="-.57" y="5.57" width="13" height="1" transform="translate(-2.56 5.97) rotate(-45)" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

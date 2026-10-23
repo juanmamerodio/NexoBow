@@ -1,120 +1,248 @@
 ---
-import Button from "./ui/Button.astro";
-import Lead from "./ui/Lead.astro";
 import { CONTENT } from "../site";
 
-const { prestador, pasos, links, hero, marquee } = CONTENT;
+const hero = CONTENT.hero || {};
+const prestador = CONTENT.prestador || {};
+const bookingUrl = CONTENT.links.calendly || "#agendar";
+const stats = hero.stats || [
+  { val: "+20 Países", lbl: "Pacientes internacionales" },
+  { val: "99.4%", lbl: "Tasa de éxito quirúrgico" },
+  { val: "18 Años", lbl: "Trayectoria hospitalaria" },
+  { val: "ISO 9001", lbl: "Bioseguridad certificada" },
+];
+
+function formatEmphasis(text: string) {
+  if (!text) return "";
+  return text.replace(
+    /\*([^*]+)\*/g,
+    '<span class="italic font-normal text-(--color-accent)">$1</span>'
+  );
+}
+
+const formattedTitle = formatEmphasis(
+  prestador.titulo ||
+    "Innovación quirúrgica y medicina de alta complejidad donde cada tratamiento se diseña con *precisión milimétrica*"
+);
 ---
 
-<section id="inicio" class="relative overflow-hidden border-b border-(--color-ink)/10">
-  <div class="mx-auto max-w-7xl px-6 pt-12 pb-16 lg:px-12 lg:pt-20 lg:pb-24">
-    <!-- Asymmetric Grid Layout de Prestigio Médico Quirúrgico (7/5 split) -->
-    <div class="grid items-stretch gap-12 lg:grid-cols-12 lg:gap-14">
-      
-      <!-- Columna Principal: Copy de autoridad clínica, badges y CTAs -->
-      <div class="flex flex-col justify-between lg:col-span-7">
-        <div>
-          <!-- Badge de certificación y prestigio con acento menta quirúrgico -->
-          <div class="inline-flex items-center gap-2.5 rounded-[12px] bg-(--color-primary)/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-(--color-primary)">
-            <span class="h-2 w-2 rounded-full bg-(--color-accent) animate-pulse" aria-hidden="true"></span>
-            <span>{hero.eyebrow}</span>
-          </div>
+<section
+  class="relative overflow-hidden border-b border-(--color-primary)/10 pt-10 pb-16 lg:pt-16 lg:pb-24"
+  data-section="hero"
+>
+  {/* Fondo con grilla arquitectónica sutil */}
+  <div
+    class="pointer-events-none absolute inset-0 opacity-[0.035]"
+    style="background-image: linear-gradient(var(--color-primary) 1px, transparent 1px), linear-gradient(90deg, var(--color-primary) 1px, transparent 1px); background-size: 48px 48px;"
+    aria-hidden="true"
+  ></div>
 
-          <!-- Titular de Prestigio Médico (Plus Jakarta Sans) -->
-          <h1 class="mt-6 font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.08] tracking-tight text-balance text-(--color-ink)">
-            <Lead text={prestador.titulo} emClass="text-(--color-primary) italic font-medium" />
-          </h1>
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    {/* Announcement Ticker Pill (Fiel a SkyClinics) */}
+    <div class="flex justify-center mb-6 sm:mb-8">
+      <a
+        href="#especialidades"
+        class="group inline-flex items-center gap-2 rounded-full border border-(--color-primary)/15 bg-(--color-paper)/80 px-4 py-1.5 text-xs font-medium text-(--color-ink) shadow-xs backdrop-blur-xs transition-all duration-300 hover:border-(--color-accent) hover:bg-(--color-paper)"
+      >
+        <span class="flex h-2 w-2 rounded-full bg-(--color-accent) pulse-mint"></span>
+        <span class="text-(--color-ink)/90">
+          {hero.tagline || "Explorá medicina estética y regenerativa — precisión, bioseguridad, confianza →"}
+        </span>
+      </a>
+    </div>
 
-          <!-- Bajada de alivio y claridad clínica -->
-          <p class="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-(--color-ink)/75 font-sans">
-            {prestador.bajada}
-          </p>
+    {/* Composición Principal 2 Columnas */}
+    <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
+      {/* Columna Izquierda: Copy de Prestigio & CTAs */}
+      <div class="flex flex-col items-center text-center lg:col-span-7 lg:items-start lg:text-left">
+        <p
+          class="mb-3 text-xs font-bold tracking-[0.2em] uppercase text-(--color-primary)/80 sm:text-sm"
+        >
+          {hero.eyebrow || "Centro Quirúrgico & Odontología de Alta Complejidad"}
+        </p>
 
-          <!-- Badges de Certificación Quirúrgica -->
-          <div class="mt-8 flex flex-wrap items-center gap-6 text-xs text-(--color-ink)/70">
-            <div class="flex items-center gap-2">
-              <div class="flex h-6 w-6 items-center justify-center rounded-full bg-(--color-accent)/20 text-(--color-primary)">
-                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <path d="M20 6L9 17l-5-5"></path>
-                </svg>
-              </div>
-              <span class="font-medium">Certificación Internacional de Bioseguridad</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <div class="flex h-6 w-6 items-center justify-center rounded-full bg-(--color-accent)/20 text-(--color-primary)">
-                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <path d="M20 6L9 17l-5-5"></path>
-                </svg>
-              </div>
-              <span class="font-medium">Diagnóstico 3D en el acto</span>
-            </div>
-          </div>
+        <h1
+          class="font-display text-3xl font-extrabold tracking-tight text-(--color-ink) sm:text-4xl md:text-5xl lg:text-[2.85rem] lg:leading-[1.12]"
+          set:html={formattedTitle}
+        />
+
+        <p class="mt-5 max-w-2xl text-base leading-relaxed text-(--color-ink)/75 sm:text-lg">
+          {
+            prestador.bajada ||
+              "Valoración diagnóstica con tomografía digital 3D y simulación en el acto. Presupuesto cerrado garantizado, quirófanos con flujo laminar y sin dolor."
+          }
+        </p>
+
+        {/* Acciones de Conversión */}
+        <div class="mt-8 flex flex-col w-full sm:w-auto sm:flex-row items-center gap-4">
+          <a
+            href={bookingUrl}
+            class="group inline-flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-full bg-(--color-primary) px-7 py-3.5 text-sm font-semibold tracking-wide text-(--color-on-primary) shadow-md transition-all duration-300 hover:shadow-lg hover:brightness-110"
+          >
+            <span>Agendar Valoración Diagnóstica</span>
+            <svg
+              class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 8h10M9 4l4 4-4 4" />
+            </svg>
+          </a>
+
+          <a
+            href="#especialidades"
+            class="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-(--color-primary)/20 bg-(--color-paper)/60 px-6 py-3.5 text-sm font-medium text-(--color-ink) transition-colors hover:border-(--color-primary) hover:bg-(--color-paper)"
+          >
+            <span>Ver Protocolos Clínicos</span>
+            <svg
+              class="h-4 w-4 text-(--color-primary)"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M8 3v10M4 9l4 4 4-4" />
+            </svg>
+          </a>
         </div>
 
-        <!-- Botones y Garantía -->
-        <div class="mt-10 pt-6 border-t border-(--color-ink)/10">
-          <div class="flex flex-wrap items-center gap-4">
-            <Button href={links.calendly} label="Agendá tu valoración inicial" external={true} />
-            <Button href={links.whatsapp} label="Consultá por WhatsApp" variant="outline" external={true} />
-          </div>
-          <p class="mt-4 text-xs tracking-wider uppercase text-(--color-ink)/60">
-            Valoración clínica sin compromiso · 30 minutos · Presencial u Online
-          </p>
+        {/* Bio y matrícula médica */}
+        <div class="mt-6 flex items-center gap-3 text-xs text-(--color-ink)/70">
+          <div class="h-1.5 w-1.5 rounded-full bg-(--color-accent)"></div>
+          <span>{prestador.rol || "M.N. 142.890 · Especialistas Quirúrgicos Acreditados"}</span>
         </div>
       </div>
 
-      <!-- Columna Lateral: Tarjeta Clínica de Alta Complejidad con curvatura 12px y acentos menta -->
-      <div class="flex flex-col justify-center lg:col-span-5">
-        <div class="relative rounded-[16px] border border-(--color-ink)/15 bg-white/80 p-8 shadow-sm backdrop-blur-sm lg:p-10">
-          
-          <div class="flex items-center justify-between border-b border-(--color-ink)/10 pb-4">
-            <p class="text-[11px] font-bold uppercase tracking-[0.25em] text-(--color-primary)">
-              {hero.card_caption}
-            </p>
-            <span class="flex h-2.5 w-2.5 rounded-full bg-(--color-accent)"></span>
+      {/* Columna Derecha: Simulación Quirúrgica 3D Interactiva (Viewport SkyClinics) */}
+      <div class="relative flex justify-center lg:col-span-5">
+        <div
+          class="relative w-full max-w-md rounded-2xl border border-(--color-primary)/15 bg-(--color-primary)/5 p-4 shadow-xl backdrop-blur-xs sm:p-6"
+        >
+          {/* Header del Visor Clínico 3D */}
+          <div class="flex items-center justify-between border-b border-(--color-primary)/10 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="h-2.5 w-2.5 rounded-full bg-(--color-accent) pulse-mint"></span>
+              <span class="font-mono text-xs font-semibold tracking-wider uppercase text-(--color-primary)">
+                Tomografía 3D · CBCT
+              </span>
+            </div>
+            <span class="rounded bg-(--color-primary)/10 px-2 py-0.5 font-mono text-[10px] text-(--color-primary)">
+              Calibración 0.02 mm
+            </span>
           </div>
 
-          <ol class="mt-8 space-y-7">
-            {
-              pasos.steps.map((step) => (
-                <li class="flex items-start gap-4">
-                  <div class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px] bg-(--color-primary) text-xs font-bold text-(--color-paper)">
-                    {step.n}
-                  </div>
-                  <div>
-                    <h3 class="font-display text-base font-bold text-(--color-ink)">
-                      {step.k}
-                    </h3>
-                    <p class="mt-1 text-xs leading-5 text-(--color-ink)/75 font-sans">
-                      {step.d}
-                    </p>
-                  </div>
-                </li>
-              ))
-            }
-          </ol>
+          {/* Canvas de Simulación Quirúrgica y Anatómica */}
+          <div
+            class="relative my-4 flex h-64 sm:h-72 w-full items-center justify-center overflow-hidden rounded-xl bg-(--color-primary) text-(--color-paper) shadow-inner"
+          >
+            {/* Grilla digital de fondo */}
+            <div
+              class="pointer-events-none absolute inset-0 opacity-15"
+              style="background-image: radial-gradient(var(--color-accent) 1px, transparent 1px); background-size: 20px 20px;"
+            ></div>
 
-          <div class="mt-8 rounded-[10px] bg-(--color-paper)/70 p-4 border border-(--color-ink)/10">
-            <p class="text-xs leading-5 text-(--color-ink)/80">
-              <span class="font-bold text-(--color-primary)">Garantía de Cuidado:</span> {hero.card_footer}
-            </p>
+            {/* Rayo láser de escaneo animado */}
+            <div
+              class="scanner-ray pointer-events-none absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-(--color-accent) to-transparent shadow-[0_0_12px_var(--color-accent)]"
+            ></div>
+
+            {/* Modelo 3D SVG Anatómico & Nodos Quirúrgicos */}
+            <div class="relative z-10 flex flex-col items-center justify-center">
+              <svg
+                class="h-36 w-36 sm:h-44 sm:w-44 text-(--color-accent)"
+                viewBox="0 0 160 160"
+                fill="none"
+              >
+                {/* Órbitas concéntricas */}
+                <circle
+                  cx="80"
+                  cy="80"
+                  r="70"
+                  stroke="currentColor"
+                  stroke-width="1"
+                  stroke-dasharray="4 4"
+                  opacity="0.3"
+                  class="orbit-badge"
+                />
+                <circle
+                  cx="80"
+                  cy="80"
+                  r="52"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  opacity="0.4"
+                />
+
+                {/* Wireframe anatómico de maxilar/arco dental */}
+                <path
+                  d="M40 95 C 40 50, 120 50, 120 95 C 115 105, 100 115, 80 115 C 60 115, 45 105, 40 95 Z"
+                  stroke="#e8e7e5"
+                  stroke-width="1.8"
+                  fill="rgba(0, 57, 52, 0.4)"
+                  opacity="0.85"
+                />
+
+                {/* Nodos de diagnóstico guiado */}
+                <circle cx="55" cy="85" r="4.5" fill="#1a9e8f" />
+                <circle cx="80" cy="62" r="5" fill="#1a9e8f" />
+                <circle cx="105" cy="85" r="4.5" fill="#1a9e8f" />
+
+                {/* Líneas guía vectoriales */}
+                <line x1="55" y1="85" x2="80" y2="62" stroke="#1a9e8f" stroke-width="1" opacity="0.6" />
+                <line x1="80" y1="62" x2="105" y2="85" stroke="#1a9e8f" stroke-width="1" opacity="0.6" />
+
+                {/* Coordenadas centrales */}
+                <circle cx="80" cy="80" r="2" fill="#e8e7e5" />
+              </svg>
+
+              <div class="mt-2 flex items-center gap-3 text-[11px] font-mono text-(--color-accent)">
+                <span>X: +14.28</span>
+                <span>·</span>
+                <span>Y: -08.12</span>
+                <span>·</span>
+                <span>Z: 0.00</span>
+              </div>
+            </div>
+
+            {/* Píldora de Telemetría Flotante */}
+            <div
+              class="absolute bottom-3 left-3 right-3 flex items-center justify-between rounded-lg bg-black/40 px-3 py-1.5 text-[10px] font-mono text-(--color-paper)/85 backdrop-blur-md"
+            >
+              <span class="flex items-center gap-1.5">
+                <span class="h-1.5 w-1.5 rounded-full bg-(--color-accent)"></span>
+                Implantología Guiada
+              </span>
+              <span class="text-(--color-accent)">Estabilidad 45 N·cm</span>
+            </div>
+          </div>
+
+          {/* Footer de la tarjeta con especificaciones */}
+          <div class="flex items-center justify-between text-xs text-(--color-ink)/75">
+            <span class="font-medium">Planificación Robótica In-House</span>
+            <span class="font-mono text-[11px] text-(--color-primary)">0% Invasión Innecesaria</span>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Marquee Quirúrgico & Hospitalario -->
-  <div class="marquee overflow-hidden border-y border-(--color-ink)/10 bg-(--color-primary) py-3 text-(--color-paper)" aria-hidden="true">
-    <div class="marquee-track flex w-max whitespace-nowrap">
+    {/* Fila de Métricas Clínicas & Acreditaciones */}
+    <div
+      class="mt-14 grid grid-cols-2 gap-4 border-t border-(--color-primary)/10 pt-10 sm:grid-cols-4 sm:gap-6 lg:mt-20"
+    >
       {
-        [0, 1].map(() => (
-          <div class="flex items-center">
-            {marquee.items.map((item) => (
-              <span class="px-6 text-xs font-semibold uppercase tracking-[0.2em] text-(--color-paper)/90">
-                {item} <span class="text-(--color-accent) mx-1">✦</span>
-              </span>
-            ))}
+        stats.map((stat) => (
+          <div class="flex flex-col items-center rounded-xl bg-(--color-primary)/5 p-4 text-center transition-colors hover:bg-(--color-primary)/10">
+            <span class="font-display text-2xl font-bold tracking-tight text-(--color-primary) sm:text-3xl">
+              {stat.val}
+            </span>
+            <span class="mt-1 text-xs font-medium text-(--color-ink)/75 sm:text-sm">
+              {stat.lbl}
+            </span>
           </div>
         ))
       }

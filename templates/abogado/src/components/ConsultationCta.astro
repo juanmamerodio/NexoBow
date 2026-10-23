@@ -1,0 +1,111 @@
+---
+import Button from "./ui/Button.astro";
+import Lead from "./ui/Lead.astro";
+import { ars, CONTENT } from "../site";
+
+const { pricing, links } = CONTENT;
+---
+
+<section id="consulta" class="cm_text_ticker relative px-3 py-14 sm:px-6 lg:py-22">
+  <div class="mx-auto max-w-[1520px] space-y-12">
+    <!-- Bloque 1: Principios ejecutivos de Kümmerlein (.cm_text_ticker) + Tarjeta de Consulta Diagnóstica -->
+    <div class="rounded-[24px] sm:rounded-[30px] bg-[#161615] p-6 sm:p-12 lg:p-16 text-white">
+      <div class="grid gap-12 lg:grid-cols-12 items-center">
+        <!-- Columna izquierda: Principios de la firma -->
+        <div class="lg:col-span-5 space-y-6">
+          <p class="type__tiny_text_uc text-(--color-primary)">
+            {pricing.tag}
+          </p>
+          <h2 class="type__headline font-semibold text-white text-balance">
+            <Lead text={pricing.titulo} emClass="font-serif italic text-(--color-primary) font-normal" />
+          </h2>
+
+          <ul class="space-y-3 pt-2 border-t border-white/10">
+            <li class="flex items-center gap-3 font-display text-lg sm:text-xl font-medium text-(--color-primary)">
+              <span class="h-2.5 w-2.5 rounded-full bg-(--color-primary)" />
+              <span>Simplicidad como principio rector</span>
+            </li>
+            <li class="flex items-center gap-3 font-display text-lg sm:text-xl font-medium text-white/65">
+              <span class="h-2 w-2 rounded-full bg-white/30" />
+              <span>Altos estándares, trato directo de socios</span>
+            </li>
+            <li class="flex items-center gap-3 font-display text-lg sm:text-xl font-medium text-white/65">
+              <span class="h-2 w-2 rounded-full bg-white/30" />
+              <span>Agilidad ejecutiva en lugar de burocracia</span>
+            </li>
+            <li class="flex items-center gap-3 font-display text-lg sm:text-xl font-medium text-white/65">
+              <span class="h-2 w-2 rounded-full bg-white/30" />
+              <span>Honorarios transparentes por escrito</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Columna derecha: Desglose de la Consulta Diagnóstica con formato ARS explícito -->
+        <div class="lg:col-span-7">
+          <div class="rounded-[22px] border border-white/15 bg-[#222220] p-7 sm:p-10">
+            <div class="flex flex-wrap items-start justify-between gap-4 border-b border-white/10 pb-6">
+              <div>
+                <span class="type__tiny_text_uc inline-block rounded-[6px] bg-(--color-primary) px-3 py-1 font-bold text-[#111111]">
+                  {pricing.plan}
+                </span>
+                <p class="mt-4 font-display text-3xl sm:text-5xl font-bold tracking-tight text-white">
+                  {ars(pricing.precio_ars)}
+                </p>
+              </div>
+              <div class="sm:text-right">
+                <p class="text-xs font-semibold uppercase tracking-wider text-white/70">
+                  {pricing.precio_label}
+                </p>
+                <p class="mt-1 text-xs text-(--color-primary)">
+                  {pricing.precio_sub}
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <p class="type__tiny_text_uc text-white/55">
+                {pricing.detalle_titulo}
+              </p>
+              <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+                {
+                  pricing.incluido.map((item) => (
+                    <li class="flex items-start gap-2.5 text-sm leading-relaxed text-white/85">
+                      <span class="mt-1 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-(--color-primary) text-[10px] font-bold text-[#111111]">
+                        ✓
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+              <p class="text-xs text-white/60">
+                🔒 {pricing.garantia}
+              </p>
+              <a
+                href={links.whatsapp}
+                target="_blank"
+                rel="noopener"
+                class="text-xs font-bold uppercase tracking-wider text-(--color-primary) underline-offset-4 hover:underline"
+              >
+                ¿Dudas previas? Escribinos por WhatsApp →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bloque 2: Botón Píldora Expansivo de Kümmerlein (.cm_cta_button .button_wrap.round_style) -->
+    <div class="cm_cta_button flex justify-center lg:px-[8.33%]">
+      <Button
+        href={links.calendly}
+        label={pricing.cta}
+        variant="round"
+        external={true}
+      />
+    </div>
+  </div>
+</section>

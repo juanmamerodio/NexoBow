@@ -1,0 +1,77 @@
+---
+import { CONTENT } from "../site";
+
+const diagnostics = CONTENT.diagnostics || {};
+const features = diagnostics.features || [];
+
+function formatEmphasis(text: string) {
+  if (!text) return "";
+  return text.replace(
+    /\*([^*]+)\*/g,
+    '<span class="italic font-normal text-(--color-accent)">$1</span>'
+  );
+}
+
+const formattedTitle = formatEmphasis(
+  diagnostics.titulo ||
+    "Quirófanos Inteligentes y *flujo digital de extremo a extremo*"
+);
+---
+
+<section
+  id="tecnologia"
+  class="relative border-b border-(--color-primary)/10 bg-(--color-primary)/5 py-16 sm:py-24"
+  data-section="diagnostics"
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <p
+        class="font-mono text-xs font-semibold tracking-[0.3em] uppercase text-(--color-primary)/80"
+      >
+        {diagnostics.tag || "02 · TECNOLOGÍA QUIRÚRGICA"}
+      </p>
+
+      <h2
+        class="mt-3 font-display text-2xl font-bold tracking-tight text-(--color-ink) sm:text-3xl md:text-4xl"
+        set:html={formattedTitle}
+      />
+
+      <p class="mt-4 text-base leading-relaxed text-(--color-ink)/75 sm:text-lg">
+        {
+          diagnostics.bajada ||
+            "Eliminamos las pastas de impresión analógicas, las radiografías imprecisas y las semanas de espera de laboratorio."
+        }
+      </p>
+    </div>
+
+    {/* Grid de 6 Bloques Tecnológicos */}
+    <div class="mt-12 grid grid-cols-1 gap-6 sm:mt-16 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+      {
+        features.map((feat) => (
+          <div class="flex flex-col justify-between rounded-xl border border-(--color-primary)/15 bg-(--color-paper) p-6 shadow-xs transition-all duration-300 hover:border-(--color-accent) hover:shadow-md">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="rounded bg-(--color-primary)/10 px-2 py-0.5 font-mono text-[11px] font-semibold tracking-wider text-(--color-primary)">
+                  {feat.badge}
+                </span>
+                <span class="h-2 w-2 rounded-full bg-(--color-accent) pulse-mint"></span>
+              </div>
+
+              <h3 class="mt-4 font-display text-lg font-bold text-(--color-ink)">
+                {feat.titulo}
+              </h3>
+
+              <p class="mt-2 text-sm leading-relaxed text-(--color-ink)/75">
+                {feat.descripcion}
+              </p>
+            </div>
+
+            <div class="mt-5 border-t border-(--color-primary)/10 pt-3 text-[11px] font-mono text-(--color-primary)/70">
+              Protocolo Estéril Certificado
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

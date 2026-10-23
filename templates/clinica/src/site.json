@@ -7,7 +7,16 @@
     "tinta": "#0f172a",
     "fuente": "Plus Jakarta Sans",
     "fuente_sans": "Inter",
-    "orden_secciones": ["Hero", "Problem", "Steps", "Reviews", "CaseStudy", "Pricing"]
+    "orden_secciones": [
+      "Hero",
+      "SpecialtiesShowcase",
+      "TechnologyDiagnostics",
+      "MedicalTeam",
+      "PatientJourney",
+      "FacilitiesShowcase",
+      "ClinicalReviews",
+      "BookingScheduler"
+    ]
   },
   "paletas_alternativas": [
     {
@@ -18,47 +27,261 @@
       "accent": "#1a9e8f"
     },
     {
-      "nombre": "Dark Aesthetics",
+      "nombre": "Dark Obsidian Teal",
       "fondo": "#003934",
       "tinta": "#e8e7e5",
       "primary": "#1a9e8f",
       "accent": "#4db6ac"
     },
     {
-      "nombre": "Clinical Pure",
-      "fondo": "#f8fafc",
-      "tinta": "#0f172a",
-      "primary": "#0284c7",
+      "nombre": "Quirófano Slate Navy",
+      "fondo": "#0f172a",
+      "tinta": "#f8fafc",
+      "primary": "#06b6d4",
       "accent": "#38bdf8"
     },
     {
-      "nombre": "Prestige Navy",
-      "fondo": "#0b132b",
-      "tinta": "#f8fafc",
-      "primary": "#3a86ff",
-      "accent": "#60a5fa"
+      "nombre": "Marfil & Menta Pura",
+      "fondo": "#fcfbfa",
+      "tinta": "#0a0a0a",
+      "primary": "#005a52",
+      "accent": "#10b981"
     }
   ],
   "content": {
     "hero": {
-      "eyebrow": "Centro Quirúrgico & Especialidades Médicas · Excelencia Clínica",
-      "card_caption": "Diagnóstico por imágenes 3D y tratamientos guiados por especialistas",
-      "card_footer": "Protocolos de recuperación rápida, equipamiento certificado y máxima seguridad clínica."
+      "eyebrow": "Centro Quirúrgico & Odontología de Alta Complejidad · Excelencia Internacional",
+      "tagline": "Explorá medicina estética y regenerativa — precisión, bioseguridad, confianza →",
+      "card_caption": "Diagnóstico tomográfico 3D y tratamientos guiados por especialistas de guardia",
+      "card_footer": "Protocolos de recuperación rápida, quirófanos con flujo laminar y bioseguridad certificada.",
+      "stats": [
+        { "val": "+20 Países", "lbl": "Pacientes internacionales" },
+        { "val": "99.4%", "lbl": "Tasa de éxito quirúrgico" },
+        { "val": "18 Años", "lbl": "Trayectoria hospitalaria" },
+        { "val": "ISO 9001", "lbl": "Bioseguridad certificada" }
+      ]
     },
     "marquee": {
-      "items": ["Diagnóstico 3D de Precisión", "Quirófanos de Alta Complejidad", "Recuperación Acelerada", "Especialistas Certificados", "Atención Personalizada"]
+      "items": [
+        "Diagnóstico 3D de Precisión Sub-Milimétrica",
+        "Quirófanos Inteligentes con Flujo Laminar",
+        "Sedación Consciente Monitoreada",
+        "Laboratorio CAD/CAM In-House",
+        "Cirujanos Certificados M.N. / M.P.",
+        "Garantía Quirúrgica Escrita",
+        "Atención Médica 24/7"
+      ]
     },
     "prestador": {
       "nombre": "SkyClinics Argentina",
+      "subtitulo": "Excelencia Quirúrgica & Odontología Digital",
       "rol": "Centro Médico de Especialidades Quirúrgicas & Rehabilitación Integral · M.N. 142.890",
-      "titulo": "Recuperá tu calidad de vida con *medicina de vanguardia y precisión digital*",
-      "bajada": "Valoración inicial de 30 minutos con estudios diagnósticos en el acto: plan de tratamiento cerrado, tiempos exactos de recuperación y sin demoras de guardia.",
-      "bio": "Equipo médico multidisciplinario con más de 18 años de trayectoria en cirugía mínimamente invasiva, estética reparadora y salud integral. Certificación de excelencia en bioseguridad.",
-      "enfoque": "Combinamos tecnología de precisión digital con un trato humano y cercano: sabés exactamente cada paso de tu intervención, el arancel final y el seguimiento postoperatorio."
+      "titulo": "Innovación quirúrgica y medicina de alta complejidad donde cada tratamiento se diseña con *precisión milimétrica*",
+      "bajada": "Valoración diagnóstica inicial con tomografía 3D y simulación en el acto. Presupuesto cerrado garantizado, tiempos exactos de recuperación y sin demoras de guardia.",
+      "bio": "Equipo médico multidisciplinario con más de 18 años de trayectoria en cirugía mínimamente invasiva, implantología guiada y estética regenerativa. Protocolos de bioseguridad hospitalaria de rango internacional.",
+      "enfoque": "Combinamos tecnología de simulación tridimensional con un trato médico cercano: conocés de antemano cada etapa del procedimiento, el arancel final y el seguimiento postoperatorio continuo."
+    },
+    "specialties": {
+      "tag": "01 · NUESTRO ENFOQUE",
+      "titulo": "Odontología y Cirugía de Alta Gama, *construida sobre estándares internacionales*",
+      "bajada": "Protocolos unificados de mínima invasión diseñados para una restauración funcional definitiva y una estética armónica sin dolor.",
+      "items": [
+        {
+          "numero": "01",
+          "nombre": "Implantología Digital & Carga Inmediata",
+          "descripcion": "Planificación guiada por tomografía CBCT 3D y micro-fresado robótico. Colocación de implantes de titanio grado 5 en una sola intervención con carga provisional en 24 horas.",
+          "badges": ["Titanio Grado 5", "Guía Quirúrgica 3D", "Carga en 24h"],
+          "link_text": "Explorar protocolo de implantes"
+        },
+        {
+          "numero": "02",
+          "nombre": "Rehabilitación Oral Completa (Full-Arch)",
+          "descripcion": "Reconstrucción anatómica integral superior e inferior. Recuperación total de la función masticatoria, fonética y soporte facial con estructuras fijas de zirconio monolítico.",
+          "badges": ["Biomecánica Guiada", "Zirconio Monolítico", "Garantía Quirúrgica"],
+          "link_text": "Explorar rehabilitación completa"
+        },
+        {
+          "numero": "03",
+          "nombre": "Arquitectura de la Sonrisa & Estética Facial",
+          "descripcion": "Diseño estético personalizado basado en proporciones áureas faciales, dinámica labial y análisis fotográfico volumétrico. Micro-carillas cerámicas de mínima preparación.",
+          "badges": ["Diseño Digital DSD", "Cerámica E-Max", "Mínima Invasión"],
+          "link_text": "Explorar estética y armonización"
+        },
+        {
+          "numero": "04",
+          "nombre": "Diagnóstico 3D & Laboratorio Digital In-House",
+          "descripcion": "Flujo de trabajo 100% digitalizado dentro de nuestras instalaciones: escaneo óptico intraoral, tomógrafo Cone Beam y fresado robótico en tiempo real sin demoras externas.",
+          "badges": ["CBCT Tomography", "Fresado 5 Ejes", "Entrega en el Día"],
+          "link_text": "Explorar tecnología digital"
+        }
+      ]
+    },
+    "diagnostics": {
+      "tag": "02 · TECNOLOGÍA QUIRÚRGICA",
+      "titulo": "Quirófanos Inteligentes y *flujo digital de extremo a extremo*",
+      "bajada": "Eliminamos las pastas de impresión analógicas, las radiografías imprecisas y las semanas de espera de laboratorio. Todo el procedimiento ocurre en nuestra clínica bajo bioseguridad certificada.",
+      "features": [
+        {
+          "titulo": "Tomografía Computada Cone Beam (CBCT)",
+          "descripcion": "Imágenes tridimensionales con resolución de 0.075 mm y 80% menos radiación que una tomografía hospitalaria convencional.",
+          "badge": "Precisión 0.075 mm"
+        },
+        {
+          "titulo": "Escaneo Óptico Intraoral HD",
+          "descripcion": "Mapeo fotogramétrico digital en color real en menos de 90 segundos, eliminando las náuseas y moldes de silicona tradicionales.",
+          "badge": "0 Moldes Físicos"
+        },
+        {
+          "titulo": "Robótica & Fresado CAD/CAM In-House",
+          "descripcion": "Unidades de fresado robótico de 5 ejes que tallan bloques de zirconio y disilicato de litio en la misma jornada clínica.",
+          "badge": "Molienda Robótica"
+        },
+        {
+          "titulo": "Sedación Consciente con Anestesiólogo Dedicado",
+          "descripcion": "Confort absoluto durante toda la cirugía. Te relajás profundamente mientras el equipo trabaja y te despertás sin molestias ni recuerdos dolorosos.",
+          "badge": "Monitoreo Continuo"
+        },
+        {
+          "titulo": "Quirófano con Flujo de Aire HEPA Laminar",
+          "descripcion": "Aire con presión positiva estéril que previene cualquier micropartícula ambiental, garantizando tasas de infección cercanas a cero.",
+          "badge": "Ambiente Grado A"
+        },
+        {
+          "titulo": "Telemetría & Soporte Clínico 24/7",
+          "descripcion": "Seguimiento médico personalizado y línea de guardia prioritaria por WhatsApp para tranquilidad total en tu postoperatorio.",
+          "badge": "Guardia Activa"
+        }
+      ]
+    },
+    "team": {
+      "tag": "03 · CUADRO MÉDICO",
+      "titulo": "Cirujanos especialistas con *trayectoria hospitalaria y matrícula verificada*",
+      "bajada": "Nuestros directores y cirujanos cuentan con más de 15 años de residencia y docencia en cirugía reconstructiva e implantología de alta complejidad.",
+      "members": [
+        {
+          "nombre": "Dr. Federico Rossi",
+          "cargo": "Director Quirúrgico & Especialista en Implantología Guiada",
+          "matricula": "M.N. 128.450 · M.P. 44.920",
+          "especialidad": "Cirugía Reconstructiva Maxilofacial · Fellow International Congress of Oral Implantologists (ICOI)",
+          "resumen": "Más de 4.500 implantes guiados colocados con éxito. Ex-jefe de residentes de cirugía maxilofacial en Hospital Británico."
+        },
+        {
+          "nombre": "Dra. Lucía Santillán",
+          "cargo": "Jefa de Rehabilitación Oral & Estética Biomimética",
+          "matricula": "M.N. 139.812 · M.P. 47.108",
+          "especialidad": "Prótesis de Alta Complejidad & Diseño Digital de Sonrisa (DSD)",
+          "resumen": "Especializada en biomateriales cerámicos y restauraciones mínimamente invasivas en Universidad de Ginebra."
+        },
+        {
+          "nombre": "Dr. Martín Albarracín",
+          "cargo": "Coordinador de Cirugía Ambulatoria & Sedación Consciente",
+          "matricula": "M.N. 115.340 · M.P. 39.804",
+          "especialidad": "Anestesiología Quirúrgica & Terapia del Dolor Postoperatorio",
+          "resumen": "Especialista en técnicas anestésicas ambulatorias para procedimientos quirúrgicos de corta estancia sin internación."
+        }
+      ]
+    },
+    "journey": {
+      "tag": "04 · EL PROCESO CLÍNICO",
+      "titulo": "De la valoración inicial al alta definitiva: *un protocolo sin fricciones*",
+      "bajada": "+20 Países · Un Solo Destino. Diseñamos un camino estructurado para pacientes locales e internacionales.",
+      "steps": [
+        {
+          "fase": "01",
+          "nombre": "Valoración Online & Diagnóstico 3D",
+          "detalle": "Agendás tu turno digital. Analizamos antecedentes clínicos, radiografías previas o coordinamos tu primer escaneo tomográfico en nuestras salas.",
+          "tiempo": "Día 1 · 45 min"
+        },
+        {
+          "fase": "02",
+          "nombre": "Plan Quirúrgico & Simulación",
+          "detalle": "Visualizás en pantalla 3D el resultado final antes de iniciar. Presupuesto cerrado, tiempos de cicatrización exactos y sin sorpresas económicas.",
+          "tiempo": "Día 2 · Planificación"
+        },
+        {
+          "fase": "03",
+          "nombre": "Intervención Quirúrgica Guiada",
+          "detalle": "Cirugía ambulatoria bajo sedación consciente en quirófano inteligente. Procedimiento rápido, sin dolor y con suite privada para descanso inmediato.",
+          "tiempo": "Día 3 · 2 a 3 horas"
+        },
+        {
+          "fase": "04",
+          "nombre": "Alta Médica, Garantía & Telemetría",
+          "detalle": "Instalación de piezas definitivas, entrega de certificado de garantía clínica por escrito y monitoreo médico postoperatorio directo por WhatsApp.",
+          "tiempo": "Seguimiento 12 meses"
+        }
+      ]
+    },
+    "facilities": {
+      "tag": "05 · INSTALACIONES & BIOSEGURIDAD",
+      "titulo": "Ambiente arquitectónico pensado para *la calma y la bioseguridad absoluta*",
+      "bajada": "Espacios diseñados según normativas sanitarias internacionales para transformar una visita médica en una experiencia serena y de primer nivel.",
+      "items": [
+        {
+          "nombre": "Quirófanos con Presión Positiva",
+          "descripcion": "Salas quirúrgicas exclusivas con filtros absolutos HEPA que renuevan el aire 25 veces por hora, libres de bacterias y contaminantes.",
+          "icon": "cross"
+        },
+        {
+          "nombre": "Suites Privadas de Recuperación",
+          "descripcion": "Habitaciones individuales insonorizadas para descanso pre y postoperatorio, con luz cálida regulable y refrigerio clínico.",
+          "icon": "shield"
+        },
+        {
+          "nombre": "Laboratorio Robótico CAD/CAM",
+          "descripcion": "Centro de fresado asistido por computadora donde nuestros técnicos biomédicos fabrican tus piezas dentales a la vista.",
+          "icon": "chip"
+        },
+        {
+          "nombre": "Centro de Tomografía Digital 3D",
+          "descripcion": "Equipamiento radiológico alemán de última generación con tecnología de dosis ultrabaja para niños y adultos.",
+          "icon": "scan"
+        }
+      ]
+    },
+    "reviews": {
+      "tag": "06 · CASOS DOCUMENTADOS",
+      "titulo": "Historias reales de pacientes que *recuperaron su bienestar y sonrisa*",
+      "items": [
+        {
+          "nombre": "Dra. Mariana Benítez",
+          "rol": "Médica Pediátrica · Tratamiento de Rehabilitación y Carga Inmediata",
+          "texto": "Como profesional de la salud soy sumamente exigente con la bioseguridad. La precisión del escaneo 3D y la rapidez del procedimiento me asombraron. Me colocaron los implantes a la mañana y a la tarde ya estaba en casa sin ningún tipo de dolor.",
+          "fuente": "Paciente Verificado · Google Reviews 5.0 ★"
+        },
+        {
+          "nombre": "Ing. Esteban Ramos",
+          "rol": "Empresario de Software · Full-Arch Superior con Zirconio",
+          "texto": "Había consultado en tres clínicas que me proponían injertos óseos dolorosos y más de un año de tratamiento. En SkyClinics planificaron todo en computadora y en 48 horas recuperé el 100% de mi capacidad masticatoria. Calidad de nivel internacional.",
+          "fuente": "Paciente Verificado · Google Reviews 5.0 ★"
+        },
+        {
+          "nombre": "Valeria Cárdenas",
+          "rol": "Diseñadora Gráfica · Arquitectura de la Sonrisa DSD",
+          "texto": "Tenía miedo de que las carillas quedaran falsas o demasiado blancas. Me hicieron una simulación en pantalla y el resultado final superó todas mis expectativas: se ven completamente naturales y respetaron mi anatomía facial al detalle.",
+          "fuente": "Paciente Verificado · Google Reviews 5.0 ★"
+        }
+      ]
+    },
+    "booking": {
+      "tag": "07 · VALORACIÓN INICIAL",
+      "titulo": "Iniciá tu camino hacia una *salud bucal definitiva y sin dolor*",
+      "bajada": "Coordiná tu turno de diagnóstico con escaneo 3D de alta resolución. Recibí tu presupuesto cerrado por escrito y tu cronograma médico en la primera sesión.",
+      "plan": "Consulta Diagnóstica de Alta Resolución 3D",
+      "precio_ars": 0,
+      "precio_label": "Primera Valoración Diagnóstica Integral · 45 minutos · Presencial u Online",
+      "precio_sub": "Evaluación con especialista quirúrgico, revisión tomográfica CBCT y diseño del plan clínico personalizado sin compromiso.",
+      "beneficios": [
+        "Evaluación médica presencial u online con especialista director",
+        "Escaneo óptico intraoral 3D de cortesía durante la consulta",
+        "Plan de tratamiento digitalizado con fechas de intervención cerradas",
+        "Presupuesto cerrado con garantía escrita (apto reintegro en prepagas)",
+        "Opciones de financiación y plan de pagos por etapa clínica"
+      ]
     },
     "problema": {
       "tag": "El laberinto médico actual",
-      "titulo": "Postergar tu salud o caer en diagnósticos a las apuradas *cuesta años de bienestar*",
+      "titulo": "Postergar tu salud o caer en diagnósticos improvisados *cuesta años de bienestar*",
       "descripcion": "Entre turnos a 3 meses, salas de espera atestadas y presupuestos que cambian a último momento, resolver un problema de salud se convirtió en una carga agotadora.",
       "pains": [
         { "tag": "Demoras eternas", "t": "Meses de espera para una consulta", "d": "Te atienden en 7 minutos de reloj, sin mirarte a los ojos ni explicarte la causa real de tu síntoma." },
@@ -74,14 +297,6 @@
         { "n": "01", "k": "Valoración & Escaneo 3D", "d": "Agendás tu turno online. Evaluamos antecedentes y realizamos estudios de alta resolución en la misma visita." },
         { "n": "02", "k": "Plan Clínico Personalizado", "d": "Diseñamos digitalmente tu tratamiento, con presupuesto cerrado y cronograma exacto de recuperación." },
         { "n": "03", "k": "Procedimiento & Suite Privada", "d": "Intervención con anestesia controlada, suite privada y seguimiento médico 24/7 por WhatsApp." }
-      ]
-    },
-    "reviews": {
-      "tag": "Experiencia de nuestros pacientes",
-      "titulo": "Historias reales de recuperación y bienestar",
-      "items": [
-        { "nombre": "Dra. Mariana Benítez · Cirujana Pediátrica", "texto": "La precisión en el diagnóstico y la calidez del equipo me dieron una tranquilidad absoluta. La recuperación fue exactamente en los días que me indicaron.", "fuente": "Paciente Tratamiento Quirúrgico" },
-        { "nombre": "Esteban Ramos · Empresario Tecnológico", "texto": "Increíble nivel de instalaciones y tecnología. Cero dolor y al día siguiente ya estaba trabajando de forma remota. Un antes y un después.", "fuente": "Paciente Rehabilitación Integral" }
       ]
     },
     "casos": {
@@ -111,13 +326,33 @@
       "cta": "Agendá tu turno de valoración"
     },
     "faq": {
-      "tag": "Preguntas frecuentes",
-      "titulo": "Todo lo que necesitás saber antes de tu visita",
+      "tag": "08 · DUDAS FRECUENTES",
+      "titulo": "Preguntas frecuentes sobre *tratamientos, bioseguridad y aranceles*",
       "items": [
-        { "q": "¿Atienden con prepagas u obras sociales?", "a": "Trabajamos de forma particular y por sistema de reintegro médico para prepagas (OSDE, Swiss Medical, Galeno, Medicus, entre otras). Te entregamos la factura oficial y el resumen de historia clínica para gestionar el reintegro de inmediato." },
-        { "q": "¿Cómo se agenda el turno de valoración inicial?", "a": "Podés seleccionar el horario que mejor te convenga en el calendario digital o coordinar directamente por WhatsApp con nuestro equipo de secretaría médica." },
-        { "q": "¿Las intervenciones requieren internación prolongada?", "a": "La gran mayoría de nuestros protocolos son ambulatorios o de corta estancia (day hospital), lo que permite que regreses a descansar a tu hogar el mismo día con seguimiento monitoreado." },
-        { "q": "¿Cómo protegen mis datos de salud e historia clínica?", "a": "Cumplimos estrictamente con la Ley 25.326 de Protección de Datos Personales y secreto médico profesional. Tu historia clínica digital está encriptada y resguardada bajo estándares internacionales." }
+        {
+          "q": "¿Atienden con prepagas u obras sociales?",
+          "a": "Atendemos de forma particular y emitimos factura electrónica oficial con código de prestación médica para gestionar el reintegro en todas las prepagas del país (OSDE, Swiss Medical, Galeno, Medicus, Omint, entre otras). Te entregamos además el informe quirúrgico detallado para acelerar el trámite."
+        },
+        {
+          "q": "¿Cómo se agenda la primera consulta de diagnóstico?",
+          "a": "Podés elegir el horario que mejor te convenga a través de nuestro calendario digital de agendamiento o bien escribir directamente a nuestra secretaría médica por WhatsApp para coordinar turnos de guardia o valoración prioritaria."
+        },
+        {
+          "q": "¿Las cirugías o colocación de implantes son dolorosas?",
+          "a": "No. Todos los procedimientos invasivos se realizan bajo anestesia local de última generación complementada con sedación consciente monitoreada por un anestesiólogo. Sentís una relajación absoluta y no experimentás molestia alguna durante la intervención."
+        },
+        {
+          "q": "¿Qué tecnología utilizan para asegurar que los dientes queden naturales?",
+          "a": "Utilizamos el protocolo Digital Smile Design (DSD) y escaneo intraoral 3D en color real. Esto nos permite diseñar digitalmente tus piezas dentales respetando las proporciones de tu rostro y que puedas ver la simulación exacta en pantalla antes de tocar una sola pieza."
+        },
+        {
+          "q": "¿Qué garantía tienen los implantes y rehabilitaciones?",
+          "a": "Todos nuestros implantes de titanio y estructuras de zirconio cuentan con garantía escrita del fabricante y respaldo de nuestra clínica por 10 años, sujeta a los controles periódicos preventivos pautados en tu protocolo de alta."
+        },
+        {
+          "q": "¿Cómo resguardan mis datos clínicos y de salud?",
+          "a": "Cumplimos estrictamente con la Ley 25.326 de Protección de Datos Personales de la República Argentina y las normas éticas de secreto médico profesional. Tu historia clínica digital está encriptada bajo estándares internacionales y solo es accesible por el equipo médico tratante."
+        }
       ]
     },
     "links": {
@@ -125,12 +360,15 @@
       "whatsapp": "https://wa.me/5491155550000"
     },
     "footer": {
-      "blurb": "SkyClinics · Centro Médico Quirúrgico de Alta Complejidad. Diagnóstico de precisión, tecnología de vanguardia y cuidado centrado en la persona.",
-      "credit": "Landing por NexoBow"
+      "blurb": "SkyClinics Argentina · Centro Médico y Odontológico de Cirugía Guiada y Rehabilitación de Alta Complejidad. Habilitación Sanitaria Ministerial Nº 48.291. Diagnóstico de precisión, tecnología de vanguardia y cuidado centrado en la persona.",
+      "direccion": "Av. del Libertador 4980, Piso 12, Ciudad Autónoma de Buenos Aires",
+      "telefono": "+54 11 5555-0000",
+      "guardia": "Línea de Guardia Médica Postoperatoria 24/7",
+      "credit": "Landing desarrollada con NexoBow"
     },
     "final_cta": {
-      "titulo": "Tu salud en manos de *especialistas de vanguardia*",
-      "bajada": "Agendá hoy tu consulta diagnóstica de valoración y descubrí una nueva experiencia en atención médica."
+      "titulo": "Tu salud y tu sonrisa en manos de *especialistas de vanguardia*",
+      "bajada": "Agendá hoy tu consulta diagnóstica con escaneo 3D y experimentá una nueva forma de acceder a la medicina de alta complejidad."
     },
     "consentimiento_testimonios": true
   }

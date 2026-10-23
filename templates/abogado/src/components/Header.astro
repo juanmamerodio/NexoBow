@@ -1,50 +1,83 @@
 ---
-import Button from "./ui/Button.astro";
 import { CONTENT, THEME } from "../site";
 import { resolveOrder, SECTION_NAV } from "../sections";
 
 const { links, prestador } = CONTENT;
 const order = resolveOrder(THEME.orden_secciones);
-const navItems = SECTION_NAV.filter((item) => order.includes(item.key));
+const seenHrefs = new Set<string>();
+const navItems = SECTION_NAV.filter((item) => {
+  if (!order.includes(item.key) || seenHrefs.has(item.href)) return false;
+  seenHrefs.add(item.href);
+  return true;
+});
 ---
 
-<header
-  class="sticky top-0 z-40 border-b border-(--color-ink)/10 bg-(--color-paper)/95 backdrop-blur-md transition-colors"
->
-  <div class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-6 lg:px-12">
-    <!-- Logotipo sobrio y tipográfico con geometría Kümmerlein -->
-    <a href="#inicio" class="group flex items-baseline gap-3 focus:outline-none">
-      <span class="flex h-7 w-7 items-center justify-center rounded-[4px] bg-(--color-ink) text-(--color-primary) font-display text-sm font-bold transition-transform group-hover:scale-105">
-        K.
-      </span>
-      <div class="flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
-        <span class="font-display text-lg font-bold tracking-tight text-(--color-ink)">
+<header class="sticky top-0 z-40 px-3 pt-2 sm:px-6 sm:pt-3">
+  <div class="mx-auto flex max-w-[1520px] items-center justify-between gap-4">
+    <!-- Isotipo Kümmerlein SVG (#header_nav__logo) -->
+    <a
+      href="#inicio"
+      aria-label={`Inicio - ${prestador.nombre}`}
+      class="group flex items-center gap-3 rounded-[12px] bg-(--color-ink) px-3.5 py-2.5 text-(--color-primary) shadow-xs transition-colors duration-300 hover:bg-[#3c3c3c]"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 111 71"
+        class="h-6 w-auto sm:h-7 fill-current transition-transform duration-300 group-hover:scale-105"
+        aria-hidden="true"
+      >
+        <path d="M87.28,71l-28.1-37.59c-.59-.79-.59-1.88,0-2.68L82.14,0h-27.23l-29.12,39.41c-.68.93-2.16.44-2.16-.71V0H0v71h28.97l14.53-19.37c.61-.82,1.85-.79,2.43.06l13.14,19.31h28.22Z" />
+        <path d="M91.7,51.53c10.66,0,19.3-8.61,19.3-19.24s-8.64-19.24-19.3-19.24-19.3,8.61-19.3,19.24,8.64,19.24,19.3,19.24Z" />
+      </svg>
+      <div class="hidden sm:flex flex-col">
+        <span class="font-display text-xs font-bold uppercase tracking-[0.14em] text-(--color-paper) leading-none">
           {prestador.nombre}
         </span>
-        <span class="text-[11px] font-medium uppercase tracking-[0.2em] text-(--color-ink)/50">
-          Rechtsanwälte & Notare
+        <span class="mt-0.5 text-[10px] uppercase tracking-[0.18em] text-(--color-primary)/85 leading-none">
+          Abogados & Consultores
         </span>
       </div>
     </a>
 
-    <!-- Navegación ejecutiva minimalista -->
-    <nav class="hidden items-center gap-8 xl:flex" aria-label="Secciones">
-      {
-        navItems.map((item) => (
-          <a
-            href={item.href}
-            class="text-xs font-semibold uppercase tracking-[0.18em] text-(--color-ink)/70 transition-colors hover:text-(--color-ink)"
-          >
-            {item.label}
-          </a>
-        ))
-      }
-    </nav>
+    <!-- Barra de navegación flotante estilo Kümmerlein (#header_nav__menu.menu__outer) -->
+    <nav
+      aria-label="Navegación principal"
+      class="flex items-center gap-2 sm:gap-6 rounded-[12px] border border-(--color-ink)/10 bg-(--color-paper)/95 px-3 py-2 sm:px-5 sm:py-2.5 shadow-xs backdrop-blur-md"
+    >
+      <ul class="hidden lg:flex items-center gap-6">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="text-[13px] font-medium tracking-tight text-(--color-ink)/80 transition-colors hover:text-(--color-accent)"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
 
-    <!-- CTAs de conversión con estilo Kümmerlein -->
-    <div class="flex items-center gap-3">
-      <Button href={links.whatsapp} label="WhatsApp" variant="outline" size="md" external={true} />
-      <Button href={links.calendly} label="Agendá consulta" size="md" external={true} />
-    </div>
+      <div class="flex items-center gap-2">
+        <a
+          href={links.whatsapp}
+          target="_blank"
+          rel="noopener"
+          class="rounded-full border border-(--color-ink) px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-(--color-ink) transition-colors hover:bg-(--color-ink) hover:text-(--color-paper)"
+        >
+          WhatsApp
+        </a>
+        <a
+          href={links.calendly}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 rounded-[8px] bg-(--color-primary) px-3.5 py-1.5 font-display text-xs font-semibold text-[#111111] transition-colors hover:bg-[#3c3c3c] hover:text-(--color-primary)"
+        >
+          <span class="h-2 w-2 rounded-full bg-current" aria-hidden="true" />
+          <span>Agendá consulta</span>
+        </a>
+      </div>
+    </nav>
   </div>
 </header>

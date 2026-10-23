@@ -7,6 +7,20 @@ test("resolveOrder respeta el orden del tema y agrega Faq + FinalCta al final", 
   assert.deepEqual(resolveOrder(order), [...order, "Faq", "FinalCta"]);
 });
 
+test("resolveOrder soporta las secciones auténticas de SkyClinics", () => {
+  const skyClinicsOrder = [
+    "Hero",
+    "SpecialtiesShowcase",
+    "TechnologyDiagnostics",
+    "MedicalTeam",
+    "PatientJourney",
+    "FacilitiesShowcase",
+    "ClinicalReviews",
+    "BookingScheduler",
+  ];
+  assert.deepEqual(resolveOrder(skyClinicsOrder), [...skyClinicsOrder, "Faq", "FinalCta"]);
+});
+
 test("resolveOrder no duplica secciones repetidas", () => {
   assert.deepEqual(resolveOrder(["Hero", "Hero", "Pricing"]), ["Hero", "Pricing", "Faq", "FinalCta"]);
 });
@@ -26,5 +40,12 @@ test("resolveOrder con orden vacío devuelve solo el cierre del embudo", () => {
 
 test("todas las secciones del orden son conocidas", () => {
   assert.ok(SECTION_KEYS.includes("Hero"));
+  assert.ok(SECTION_KEYS.includes("SpecialtiesShowcase"));
+  assert.ok(SECTION_KEYS.includes("TechnologyDiagnostics"));
+  assert.ok(SECTION_KEYS.includes("MedicalTeam"));
+  assert.ok(SECTION_KEYS.includes("PatientJourney"));
+  assert.ok(SECTION_KEYS.includes("FacilitiesShowcase"));
+  assert.ok(SECTION_KEYS.includes("ClinicalReviews"));
+  assert.ok(SECTION_KEYS.includes("BookingScheduler"));
   assert.ok(SECTION_KEYS.includes("FinalCta"));
 });

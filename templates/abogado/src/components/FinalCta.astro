@@ -3,34 +3,73 @@ import Button from "./ui/Button.astro";
 import Lead from "./ui/Lead.astro";
 import { CONTENT } from "../site";
 
-const { pricing, links, final_cta } = CONTENT;
+const { pricing, links, final_cta, prestador } = CONTENT;
 ---
 
-<section class="relative overflow-hidden bg-(--color-ink) text-(--color-paper) py-24 lg:py-32">
-  <!-- Acento sutil en background -->
-  <div class="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-(--color-primary)/10 blur-3xl pointer-events-none" aria-hidden="true" />
-  
-  <div class="relative mx-auto max-w-5xl px-6 text-center lg:px-12">
-    <div class="inline-flex items-center gap-2.5 rounded-[6px] bg-white/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-(--color-primary)">
-      <span class="h-1.5 w-1.5 rounded-full bg-(--color-primary)" />
-      {pricing.garantia}
+<section class="cm_media_and_text relative px-3 py-12 sm:px-6 lg:py-20">
+  <div class="mx-auto max-w-[1520px]">
+    <!-- Bloque asimétrico final de Kümmerlein (.cm_media_and_text) -->
+    <div class="grid gap-6 lg:grid-cols-12 items-stretch">
+      <!-- Panel visual arquitectónico izquierdo -->
+      <div class="lg:col-span-6 relative overflow-hidden rounded-[24px] sm:rounded-[30px] bg-[#161615] p-8 sm:p-12 text-white flex flex-col justify-between min-h-[340px]">
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 opacity-30"
+          style="background: radial-gradient(circle at 20% 80%, rgba(247, 247, 136, 0.35), transparent 60%);"
+        />
+        <div class="relative z-10 flex items-center justify-between">
+          <span class="type__tiny_text_uc text-(--color-primary)">
+            {pricing.garantia}
+          </span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 111 71"
+            class="h-7 w-auto fill-(--color-primary)"
+            aria-hidden="true"
+          >
+            <path d="M87.28,71l-28.1-37.59c-.59-.79-.59-1.88,0-2.68L82.14,0h-27.23l-29.12,39.41c-.68.93-2.16.44-2.16-.71V0H0v71h28.97l14.53-19.37c.61-.82,1.85-.79,2.43.06l13.14,19.31h28.22Z" />
+            <path d="M91.7,51.53c10.66,0,19.3-8.61,19.3-19.24s-8.64-19.24-19.3-19.24-19.3,8.61-19.3,19.24,8.64,19.24,19.3,19.24Z" />
+          </svg>
+        </div>
+
+        <div class="relative z-10 mt-8">
+          <h2 class="type__headline font-semibold text-white text-balance">
+            <Lead text={final_cta.titulo} emClass="font-serif italic text-(--color-primary) font-normal" />
+          </h2>
+          <p class="mt-4 text-base sm:text-lg leading-relaxed text-white/80">
+            {final_cta.bajada}
+          </p>
+        </div>
+      </div>
+
+      <!-- Panel derecho de acción inmediata -->
+      <div class="lg:col-span-6 rounded-[24px] sm:rounded-[30px] bg-[#e2e4d7] p-8 sm:p-12 text-[#111111] flex flex-col justify-between">
+        <div>
+          <p class="type__tiny_text_uc text-[#686155]">
+            Compromiso Institucional · {prestador.nombre}
+          </p>
+          <p class="type__headline_smaller mt-4 font-medium text-[#111111]">
+            Transformá hoy la complejidad legal en decisiones seguras, ágiles y rentables para tu organización.
+          </p>
+        </div>
+
+        <div class="mt-8 space-y-4">
+          <div class="flex flex-wrap items-center gap-4">
+            <Button href={links.calendly} label={pricing.cta} variant="primary" size="lg" external={true} />
+            <a
+              href={links.whatsapp}
+              target="_blank"
+              rel="noopener"
+              class="link_dot py-3"
+            >
+              <span>Hablar por WhatsApp</span>
+            </a>
+          </div>
+          <p class="text-xs text-[#686155]">
+            Atención presencial en estudio y videoconferencia cifrada en todo el país.
+          </p>
+        </div>
+      </div>
     </div>
-
-    <h2 class="mt-8 font-display text-3xl sm:text-5xl lg:text-6xl font-bold leading-[1.06] tracking-tight text-balance text-white">
-      <Lead text={final_cta.titulo} emClass="text-(--color-primary) italic" />
-    </h2>
-
-    <p class="mx-auto mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-white/70">
-      {final_cta.bajada}
-    </p>
-
-    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
-      <Button href={links.calendly} label={pricing.cta} variant="primary" external={true} />
-      <Button href={links.whatsapp} label="Consultar por WhatsApp" variant="outline" external={true} />
-    </div>
-
-    <p class="mt-8 text-xs uppercase tracking-widest text-white/40">
-      Atención presencial en oficinas centrales y vía teleconferencia segura
-    </p>
   </div>
 </section>

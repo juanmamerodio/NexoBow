@@ -1,36 +1,44 @@
 ---
-import SectionHead from "./ui/SectionHead.astro";
 import { CONTENT } from "../site";
 
 const { faq } = CONTENT;
 ---
 
-<section id="faq" class="border-b border-(--color-ink)/10 bg-(--soft-grey1)/20">
-  <div class="mx-auto max-w-4xl px-6 py-20 lg:px-12 lg:py-28">
-    <SectionHead tag={faq.tag} title={faq.titulo} align="center" />
+<section id="faq" class="cm_text_list relative px-3 py-14 sm:px-6 lg:py-22">
+  <div class="mx-auto max-w-[1520px]">
+    <div class="grid gap-10 lg:grid-cols-10 items-start">
+      <div class="lg:col-span-4 lg:col-start-2">
+        <p class="type__tiny_text_uc text-(--color-accent) mb-2">
+          {faq.tag}
+        </p>
+        <h2 class="type__headline font-semibold text-(--color-ink) text-balance">
+          {faq.titulo}
+        </h2>
+      </div>
 
-    <div class="mt-14 space-y-4">
-      {
-        faq.items.map((item) => (
-          <details class="group rounded-[8px] border border-(--color-ink)/15 bg-white/80 p-6 transition-all duration-200 hover:border-(--color-ink)/40 open:bg-white open:shadow-sm">
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-lg sm:text-xl font-bold tracking-tight text-(--color-ink) [&::-webkit-details-marker]:hidden">
-              <span class="flex items-center gap-3">
-                <span class="h-1.5 w-1.5 rounded-full bg-(--color-primary) flex-shrink-0" />
-                {item.q}
-              </span>
-              <span
-                aria-hidden="true"
-                class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-[6px] bg-(--color-ink)/5 text-base font-bold text-(--color-ink) transition-transform duration-300 group-open:rotate-45"
-              >
-                +
-              </span>
-            </summary>
-            <p class="mt-4 pt-4 border-t border-(--color-ink)/5 text-sm sm:text-base leading-relaxed text-(--color-ink)/75 pl-4">
-              {item.a}
-            </p>
-          </details>
-        ))
-      }
+      <div class="lg:col-span-4 lg:col-start-6 space-y-4">
+        {
+          faq.items.map((item, idx) => (
+            <details class="group rounded-[15px] border border-(--color-ink)/15 bg-[#e2e4d7]/70 p-6 text-[#111111] transition-colors duration-200 open:bg-(--color-primary)">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-base sm:text-lg font-bold tracking-tight text-[#111111] [&::-webkit-details-marker]:hidden">
+                <span class="flex items-center gap-3">
+                  <span class="type__tiny_text_uc text-[#686155] group-open:text-[#111111]">0{idx + 1}</span>
+                  <span>{item.q}</span>
+                </span>
+                <span
+                  aria-hidden="true"
+                  class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white text-sm font-bold text-[#111111] transition-transform duration-300 group-open:rotate-45 group-open:bg-[#111111] group-open:text-(--color-primary)"
+                >
+                  +
+                </span>
+              </summary>
+              <p class="mt-4 border-t border-black/10 pt-4 text-sm sm:text-base leading-relaxed text-[#111111]/85">
+                {item.a}
+              </p>
+            </details>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>

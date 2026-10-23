@@ -3,8 +3,8 @@ id: 0
 sheet_id: 0
 lead_status: "1. Prospecto Identificado"
 created_at: "2026-10-21"
-last_activity_at: "2026-10-21"
-expires_at: "2026-10-28"
+last_activity_at: "2026-10-22"
+expires_at: "2026-10-29"
 rubro: abogado
 template_archetype: "obsidian-authority"
 nombre: "Dr. Martín Albarracín"
@@ -15,37 +15,37 @@ whatsapp: "5491155550000"
 calendly: "https://calendly.com/estudio-albarracin/consulta-diagnostica"
 google_maps: "https://maps.google.com/?cid=123456789"
 instagram: "estudio.albarracin.ar"
-template_version: "abogado@1.0.0"
+template_version: "abogado@2.0.0"
 tema:
-  nombre: "Obsidian Authority"
-  primary: "#D97706"
-  accent: "#F7F788"
-  fondo: "#090D16"
-  tinta: "#F1F5F9"
-  fuente: "Archivo"
+  nombre: "Kümmerlein Classic"
+  primary: "#f7f788"
+  accent: "#686155"
+  fondo: "#f6f6f4"
+  tinta: "#111111"
+  fuente: "Space Grotesk"
   fuente_sans: "Inter"
-  orden_secciones: [Hero, Problem, Steps, Reviews, CaseStudy, Pricing]
+  orden_secciones: [Hero, ValueProposition, PracticeAreas, Attorneys, CaseResults, ConsultationCta]
 paletas_alternativas:
-  - nombre: "Obsidian Authority (Original)"
+  - nombre: "Kümmerlein Classic (Original)"
+    fondo: "#f6f6f4"
+    tinta: "#111111"
+    primary: "#f7f788"
+    accent: "#686155"
+  - nombre: "Obsidian Authority"
     fondo: "#090D16"
     tinta: "#F1F5F9"
-    primary: "#D97706"
-    accent: "#F7F788"
-  - nombre: "Kümmerlein Classic"
-    fondo: "#f6f6f4"
-    tinta: "#000000"
-    primary: "#003388"
-    accent: "#f7f788"
+    primary: "#f7f788"
+    accent: "#D97706"
   - nombre: "Editorial Navy"
     fondo: "#0B132B"
     tinta: "#F8FAFC"
     primary: "#3A86FF"
     accent: "#60A5FA"
-  - nombre: "Minimalist Carbon"
-    fondo: "#18181B"
-    tinta: "#FFFFFF"
-    primary: "#71717A"
-    accent: "#E4E4E7"
+  - nombre: "Minimalist Stone"
+    fondo: "#e2e4d7"
+    tinta: "#18181B"
+    primary: "#f7f788"
+    accent: "#52525B"
 consentimiento_testimonios: true
 setup_ars: 189999
 abono_ars: 12259
@@ -65,12 +65,12 @@ Transformamos la incertidumbre jurídica en decisiones ejecutivas claras y renta
 Dilatar una definición jurídica o firmar contratos estándar suele costar diez veces más que un buen asesoramiento preventivo. Resolvemos la falta de respuesta de los estudios tradicionales, los honorarios opacos y la pasividad ante expedientes judiciales críticos.
 
 ## Reseñas
-- "Excelente nivel técnico y velocidad de respuesta. Nos solucionaron un conflicto entre socios en 45 días sin llegar a juicio." — Fernando Morales, Director Comercial (Google Maps).
-- "Transparencia total desde la primera reunión. Sabíamos con exactitud los riesgos y los pasos a seguir." — Luciana Gómez (Google Maps).
+- **Fernando Morales, Director Comercial (Google Maps):** "Excelente nivel técnico y velocidad de respuesta. Nos solucionaron un conflicto entre socios en 45 días sin llegar a juicio."
+- **Luciana Gómez, Titular de Logística B2B (Google Maps):** "Transparencia total desde la primera reunión. Sabíamos con exactitud los riesgos y los pasos a seguir."
 
 ## Casos de éxito
-- **Reestructuración societaria sin litigio:** Mediación extrajudicial estratégica que preservó el 100% de los activos operativos y evitó una demanda millonaria.
-- **Auditoría y blindaje contractual:** Diagnóstico integral de 30 contratos comerciales, eliminando cláusulas lesivas y garantizando cobranzas seguras.
+- **Reestructuración societaria sin litigio:** Mediación extrajudicial estratégica entre accionistas de grupo industrial. Resultado: Preservación del 100% de los activos operativos y cierre en 45 días sin demanda judicial.
+- **Auditoría y blindaje contractual B2B:** Diagnóstico integral de 30 contratos comerciales de distribución y suministro. Resultado: Eliminación del 100% de cláusulas lesivas y garantía de cobranza ejecutiva.
 
 ## Preguntas frecuentes
 - **¿Cómo es la consulta diagnóstica inicial?** Una sesión enfocada de 25 minutos para revisar antecedentes, clarificar contingencias y trazar el plan de acción inmediato.

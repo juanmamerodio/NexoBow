@@ -1,73 +1,104 @@
 ---
-import Button from "./ui/Button.astro";
 import { CONTENT, THEME } from "../site";
-import { resolveOrder, SECTION_NAV } from "../sections";
 
-const { links, prestador } = CONTENT;
-const order = resolveOrder(THEME.orden_secciones);
-const navItems = SECTION_NAV.filter((item) => order.includes(item.key));
+const links = [
+  { href: "#especialidades", label: "Especialidades" },
+  { href: "#tecnologia", label: "Tecnología 3D" },
+  { href: "#equipo", label: "Equipo Médico" },
+  { href: "#instalaciones", label: "Instalaciones" },
+  { href: "#casos", label: "Casos & Opiniones" },
+];
+
+const prestadorNombre = CONTENT.prestador.nombre || "SkyClinics";
+const bookingUrl = CONTENT.links.calendly || "#agendar";
 ---
 
 <header
-  class="sticky top-0 z-40 border-b border-(--color-ink)/10 bg-(--color-paper)/85 backdrop-blur-md transition-colors"
+  class="sticky top-0 z-50 w-full border-b border-(--color-primary)/10 bg-(--color-paper)/85 backdrop-blur-md transition-colors"
 >
-  <div class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-6 lg:px-12">
-    <!-- Logotipo Institucional Sobrio SkyClinics -->
-    <a href="#inicio" class="group flex items-center gap-3 no-underline">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+    {/* Logotipo SkyClinics */}
+    <a href="#" class="group flex items-center gap-2.5 text-decoration-none">
       <div
-        class="flex h-10 w-10 items-center justify-center rounded-[10px] bg-(--color-primary) text-(--color-paper) transition-all duration-300 group-hover:bg-(--color-accent) group-hover:text-(--color-ink)"
+        class="flex h-9 w-9 items-center justify-center rounded-lg bg-(--color-primary) text-(--color-accent) shadow-sm transition-transform duration-300 group-hover:scale-105"
       >
         <svg
           class="h-5 w-5"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2.2"
+          stroke-width="2.5"
           stroke-linecap="round"
           stroke-linejoin="round"
+          aria-hidden="true"
         >
-          <path d="M12 2v20M2 12h20"></path>
+          <path d="M12 4v16M4 12h16" />
         </svg>
       </div>
       <div class="flex flex-col">
-        <span class="font-display text-lg font-bold tracking-tight text-(--color-ink) sm:text-xl">
-          {prestador.nombre}
+        <span
+          class="font-display text-base font-bold tracking-[0.14em] uppercase text-(--color-ink) sm:text-lg"
+        >
+          {prestadorNombre}
         </span>
-        <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-(--color-primary)">
-          Excelencia Quirúrgica & Médica
+        <span class="text-[10px] font-medium tracking-wider uppercase text-(--color-ink)/60">
+          Alta Complejidad Quirúrgica
         </span>
       </div>
     </a>
 
-    <!-- Navegación Institucional Espaciosa -->
-    <nav class="hidden items-center gap-8 lg:flex" aria-label="Secciones">
+    {/* Navegación Desktop */}
+    <nav class="hidden items-center gap-6 md:flex lg:gap-8" aria-label="Navegación principal">
       {
-        navItems.map((item) => (
+        links.map((link) => (
           <a
-            href={item.href}
-            class="text-xs font-semibold uppercase tracking-[0.18em] text-(--color-ink)/75 transition-colors hover:text-(--color-primary)"
+            href={link.href}
+            class="text-xs font-medium tracking-[0.08em] uppercase text-(--color-ink)/75 transition-colors hover:text-(--color-primary)"
           >
-            {item.label}
+            {link.label}
           </a>
         ))
       }
     </nav>
 
-    <!-- CTAs Header: Valoración quirúrgica & WhatsApp -->
+    {/* Acciones & Audio Wave Indicator */}
     <div class="flex items-center gap-3">
-      <Button
-        href={links.whatsapp}
-        label="WhatsApp"
-        variant="outline"
-        size="md"
-        external={true}
-      />
-      <Button
-        href={links.calendly}
-        label="Valoración Inicial"
-        size="md"
-        external={true}
-      />
+      {/* Audio Ambient Visualizer Pill (Fiel a SkyClinics) */}
+      <div
+        class="hidden items-center gap-2 rounded-full border border-(--color-primary)/15 bg-(--color-primary)/5 px-3 py-1.5 text-[11px] font-medium text-(--color-primary) sm:flex"
+        title="Protocolos de Serenidad Quirúrgica & Audio Controlado"
+      >
+        <span class="flex items-end gap-0.5 h-3">
+          <span class="w-0.5 bg-(--color-accent) audio-bar-1 rounded-full"></span>
+          <span class="w-0.5 bg-(--color-accent) audio-bar-2 rounded-full"></span>
+          <span class="w-0.5 bg-(--color-accent) audio-bar-3 rounded-full"></span>
+        </span>
+        <span class="tracking-wider uppercase text-[10px]">Modo Clínico</span>
+      </div>
+
+      {/* Botón Agendar Prioritario */}
+      <a
+        href={bookingUrl}
+        class="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-(--color-primary) px-4 py-2 text-xs font-semibold tracking-wide text-(--color-on-primary) shadow-sm transition-all duration-300 hover:shadow-md hover:brightness-110 sm:px-5 sm:py-2.5"
+      >
+        <span
+          class="h-2 w-2 rounded-full bg-(--color-accent) pulse-mint"
+          aria-hidden="true"
+        ></span>
+        <span>Agendar Consulta</span>
+        <svg
+          class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M6 12l4-4-4-4" />
+        </svg>
+      </a>
     </div>
   </div>
 </header>

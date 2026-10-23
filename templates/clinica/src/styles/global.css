@@ -18,6 +18,53 @@
   }
 }
 
+@keyframes pulse-surgical {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(26, 158, 143, 0.7));
+  }
+}
+
+@keyframes wave-bar {
+  0%, 100% {
+    height: 4px;
+  }
+  50% {
+    height: 14px;
+  }
+}
+
+@keyframes orbit-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scan-line {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  85% {
+    opacity: 0.7;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -29,6 +76,10 @@ body {
   overflow-x: hidden;
 }
 
+.font-display {
+  font-family: var(--font-display);
+}
+
 .marquee-track {
   animation: marquee 32s linear infinite;
   will-change: transform;
@@ -38,11 +89,39 @@ body {
   animation-play-state: paused;
 }
 
+.audio-bar-1 {
+  animation: wave-bar 1.2s ease-in-out infinite;
+}
+.audio-bar-2 {
+  animation: wave-bar 1.2s ease-in-out infinite 0.2s;
+}
+.audio-bar-3 {
+  animation: wave-bar 1.2s ease-in-out infinite 0.4s;
+}
+
+.pulse-mint {
+  animation: pulse-surgical 2.4s ease-in-out infinite;
+}
+
+.scanner-ray {
+  animation: scan-line 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.orbit-badge {
+  animation: orbit-slow 28s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .marquee-track {
-    animation: none;
+  .marquee-track,
+  .audio-bar-1,
+  .audio-bar-2,
+  .audio-bar-3,
+  .pulse-mint,
+  .scanner-ray,
+  .orbit-badge {
+    animation: none !important;
   }
 }
