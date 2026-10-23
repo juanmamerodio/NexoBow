@@ -74,10 +74,11 @@ export const SITE = {
     {
       id: "05",
       name: "Kinetic Performance",
-      niche: "Deporte & Kinesiología",
-      palette: ["#0F1419", "#F3F4F6", "#10B981"],
-      status: "Catálogo REA",
-      description: "Estética dinámica de alto rendimiento para rehabilitación deportiva y centros de entrenamiento.",
+      niche: "Deporte & Alto Rendimiento",
+      palette: ["#0F1419", "#FFFFFF", "#10B981"],
+      status: "En Vivo (Demo)",
+      description: "Estética The Performance Lab: Dark Carbon, tipografía display atlética, métricas biomecánicas en vivo y acentos kinetic emerald para laboratorios deportivos y gimnasios de alto rendimiento.",
+      demoUrl: "https://preview.nexobow.site/demo-deportes/",
     },
     {
       id: "06",
