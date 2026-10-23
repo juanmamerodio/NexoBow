@@ -22,18 +22,18 @@
 - [x] [15: Limpieza de documentación y tracker](./scratch/nexobow-v2/issues/15-docs-and-tracker-cleanup.md) (`done`)
 
 ## Frente C.0 — Prerrequisitos del Entorno REA (bloqueantes de los tickets 20–32)
-> Verificado el 2026-10-22: MCP `rea-agents@6.7.0` instalado y operativo (207 tools). Faltan acciones humanas antes de duplicar webs reales vía CDP.
-- [ ] **R-01 (humano):** Instalar Chromium/Chrome con soporte CDP: `sudo apt install chromium` (hoy solo hay Firefox) (`blocked-human`)
-- [ ] **R-02 (humano):** Ejecutar `npx rea-agents setup` para instalar la skill oficial y resolver `config_drift`; luego `rea-agents doctor` (`blocked-human`)
-- [ ] **R-03 (humano):** Reiniciar sesión/IDE para exponer el MCP `rea` como herramientas nativas del agente (`blocked-human`)
-- [ ] **R-04 (humano):** Decidir licencias tipográficas por template (comprar o autorizar fallback libre) (`blocked-human`)
-- [ ] **R-05 (humano):** Aprobar tag git `template/{rubro}@1.0.0` y push tras revisar cada demo (`blocked-human`)
-- [ ] **R-06 (agente):** Tras R-01..R-03, correr `rea-agents doctor` y una inspección piloto (`list-browser-targets` → `inspect-web-page`) sobre la URL del ticket 20 (`ready-for-agent`)
+> Verificado el 2026-10-22: MCP `rea-agents@6.7.0` instalado y operativo (207 tools) + Chromium 154 headless CDP.
+- [x] **R-01 (humano):** Instalar Chromium/Chrome con soporte CDP: `sudo apt install chromium` (`done`)
+- [x] **R-02 (humano):** Ejecutar `npx rea-agents setup` para instalar la skill oficial y resolver `config_drift`; luego `rea-agents doctor` (`done`)
+- [ ] **R-03 (humano):** Reiniciar sesión/IDE para exponer el MCP `rea` como herramientas nativas del agente (`optional`)
+- [x] **R-04 (humano):** Decidir licencias tipográficas por template (autorizado fallback libre para Ticket 20) (`done`)
+- [ ] **R-05 (humano):** Aprobar tag git `template/{rubro}@x.y.z` y push tras revisar cada demo (`blocked-human`)
+- [x] **R-06 (agente):** Piloto OK el 2026-10-22 (`inspect-web-page` y `analyze-web-bundle` sobre Kümmerlein por CDP en `.reports/rea/abogado/`) (`done`)
 
 ## Frente C — Motor de Ingeniería Inversa de Templates (REA) — depende de R-01..R-03
 - [x] [16: Inspector REA y Extractor Estético (`scripts/rea-inspect.mjs`)](./scratch/nexobow-v2/issues/16-rea-inspect-extractor.md) (`done`)
-- [ ] [20: Template #02 REA — Kümmerlein Abogacía & Notaría (`obsidian-authority`)](./scratch/nexobow-v2/issues/20-template-abogado-kuemmerlein.md) (`ready-for-agent`)
-- [ ] [21: Template #03 REA — SkyClinics Clínicas & Salud Quirúrgica (`architectural-prestige`)](./scratch/nexobow-v2/issues/21-template-clinica-skyclinics.md) (`ready-for-agent`)
+- [x] [20: Template #02 REA — Kümmerlein Abogacía & Notaría (`obsidian-authority` v2.0.0)](./scratch/nexobow-v2/issues/20-template-abogado-kuemmerlein.md) (`done`)
+- [x] [21: Template #03 REA — SkyClinics Clínicas & Salud Quirúrgica (`architectural-prestige` v2.0.0)](./scratch/nexobow-v2/issues/21-template-clinica-skyclinics.md) (`done`)
 - [ ] [22: Template #04 REA — Vetter Consulting Negocios B2B (`high-ticket-consulting`)](./scratch/nexobow-v2/issues/22-template-corporativo-vetter.md) (`ready-for-agent`)
 - [ ] [23: Template #05 REA — Think Company Tech & Digital Systems (`tech-editorial-system`)](./scratch/nexobow-v2/issues/23-template-tech-thinkcompany.md) (`ready-for-agent`)
 - [ ] [24: Template #06 REA — The Performance Lab Deporte & Gym (`kinetic-performance`)](./scratch/nexobow-v2/issues/24-template-deportes-performancelab.md) (`ready-for-agent`)

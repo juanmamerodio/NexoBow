@@ -1,6 +1,6 @@
 # Ticket 21: Template #03 REA — SkyClinics Clínicas & Salud Quirúrgica (`architectural-prestige`)
 > Archivo: `.scratch/nexobow-v2/issues/21-template-clinica-skyclinics.md`  
-> Estado: `ready-for-agent`  
+> Estado: `closed`  
 > Spec padre: `spec.md` / `ROUTEMAP.md`  
 > URL Referencia: `https://skyclinics.al/`
 
@@ -32,9 +32,9 @@ Duplicar la web **ENTERA** de **SkyClinics** (`https://skyclinics.al/`) dentro d
 - **Política de JS:** Sin límite artificial de 35 KB; se admiten las animaciones y micro-interacciones de SkyClinics respetando únicamente las restricciones de Cloudflare Pages (25 MB).
 
 ## 3. Criterios de Aceptación
-- [ ] `templates/clinica/` contiene la web ENTERA duplicada de SkyClinics mediante REA con sus propios componentes.
-- [ ] Tipografía: utiliza las fuentes exactas de la web a copiar (`Satoshi` + `Inter`) o fallback visualmente similar verificado (`Plus Jakarta Sans` / `General Sans`).
-- [ ] `site.json` desacopla el copy y permite la inyección de cualquier cliente médico/clínico.
-- [ ] Compila la demo oficial en `sites/demo-clinica/` con código de salida 0.
-- [ ] Tests unitarios en `templates/clinica/tests/` 100% pasando.
-- [ ] Tags git inmutables `template/clinica@1.0.0` y `template/architectural-prestige@1.0.0` fijados.
+- [x] `templates/clinica/` contiene la web ENTERA duplicada de SkyClinics mediante REA con sus propios componentes.
+- [x] Tipografía: utiliza las fuentes exactas de la web a copiar (`Satoshi` + `Inter`) o fallback visualmente similar verificado (`Plus Jakarta Sans` / `General Sans`).
+- [x] `site.json` desacopla el copy y permite la inyección de cualquier cliente médico/clínico.
+- [x] Compila la demo oficial en `sites/demo-clinica/` con código de salida 0.
+- [x] Tests unitarios en `templates/clinica/tests/` 100% pasando (17 tests).
+- [x] Tags git inmutables `template/clinica@2.0.0` y `template/architectural-prestige@2.0.0` fijados (preservando inmutabilidad v1.0.0).

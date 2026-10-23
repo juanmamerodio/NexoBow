@@ -1,119 +1,123 @@
 ---
 name: rea-template
-description: "Motor de Ingeniería Inversa de Templates (REA): integra el MCP oficial de REA (morluto/rea via rea-agents) para inspección profunda de bundles web, extracción de paleta 60-30-10, tipografías y arquetipos visuales, creación de templates Astro inmutables en /templates/{rubro}/ bajo site.json, generación de demos en /sites/demo-{rubro}/ y versionado con tags git template/{rubro}@1.0.0."
+description: "Duplica una web de referencia real como template Astro en /templates/{rubro}/ usando el MCP REA (morluto/rea, rea-agents) por CDP: extrae DOM, CSS, fuentes, bundles y animaciones reales; reconstruye componentes propios; conserva el contrato site.json; registra el template en build-client-site; compila demo en /sites/demo-{rubro}/ y fija el tag git template/{rubro}@x.y.z. Usar cuando el usuario diga 'duplicá <URL>' o pida un ticket de template (20-32)."
 tools: ["read_file", "write_to_file", "execute_command", "read_url_content"]
 ---
 
-# 🎨 REA Template — Motor de Ingeniería Inversa de Templates
+# 🎨 REA Template — Duplicar una web real como template NexoBow
 
-## Propósito y Contexto
+## Qué hace cada parte (no confundir)
+- **REA (MCP/CLI):** solo **observa** la web de referencia y devuelve evidencia (DOM, estilos computados, fuentes, scripts, bundles, red). **No genera código ni clona.**
+- **Esta skill (el agente):** convierte la evidencia en un proyecto Astro propio, con la misma estética, estructura, animaciones y componentes únicos de la referencia.
+- **Copy:** es texto de relleno por slots (`site.json`). El copy real de cada cliente lo inyecta `build-client-site`. Nunca copiar el texto de la referencia como copy final.
 
-Permite expandir el catálogo de NexoBow a las **+10 direcciones estéticas por rubro** de forma industrializada y sin fricción manual. Esta skill ejecuta el protocolo **REA (Reverse Engineering Architecture)** potenciado por el MCP oficial de REA ([**morluto/rea**](https://github.com/morluto/rea)):
-1. **Inspección Profunda REA:** Conecta mediante `rea-agents` (o herramientas CDP/inspección de assets web) para examinar la arquitectura visual real, tokens CSS, componentes y bundles de la web de referencia.
-2. **Extracción Estética 60-30-10:** Identifica fondo de lienzo (60%), tinta/soporte (30%) y acentos de conversión (10%), más tipografías exactas de la web a duplicar o fallbacks métricos idénticos.
-3. **Duplicación Integral (Web ENTERA):** Construye un nuevo template Astro inmutable en `/templates/{rubro}/` desacoplado bajo el contrato `site.json`.
-4. **Compilación & Auditoría:** Compila la demo oficial en `/sites/demo-{rubro}/` y sincroniza la vista previa a `dist-previews/`.
-5. **Versionado Inmutable Git:** Fija el tag git inmutable `template/{rubro}@1.0.0`.
+## Gate Ask-First (obligatorio, antes de escribir código)
+Confirmar con el usuario: URL, `rubro` (slug del folder), `arquetipo`, secciones/animaciones a copiar, y si el template existente se **reemplaza** (ver "Templates existentes"). Declarar la fase (`/grill-me` → `/implement`) según `prompts_structure.md`.
 
-## Requisitos Previos y Herramientas
+## Estado del entorno (verificado 2026-10-22)
+- `rea-agents@6.7.0` global, registrado en `~/.gemini/config/mcp_config.json`, 207 tools, skill oficial `reverse-engineer-anything` instalada, Chromium 154 en `/usr/bin/chromium`.
+- Verificado de punta a punta contra `kuemmerlein.de`: `list-browser-targets`, `inspect-web-page` y `analyze-web-bundle` devuelven evidencia real.
+- `rea-agents doctor` reporta `healthy:false` por motores nativos (Hopper/Ghidra/IDA/JADX/Kuna): **irrelevantes para web**. Re-verificar antes de cada template con `rea-agents doctor` + `rea-agents --version`.
+- Si el MCP `rea` no figura como tool nativa, llamarlo con `call_mcp_tool` (server `rea`) o por CLI `rea-agents ...`.
 
-- **REA MCP Server (`morluto/rea`) — Estado verificado el 2026-10-22:**
-  - ✅ Paquete oficial `rea-agents@6.7.0` (npm, `repository: github.com/morluto/rea`, MIT), instalado globalmente con binarios `rea` y `rea-agents` (nvm Node v22).
-  - ✅ Registrado en `~/.gemini/config/mcp_config.json` como `npx -y rea-agents@6.7.0 mcp`; esquemas de herramientas en `~/.gemini/antigravity/mcp/rea/`.
-  - ✅ Handshake MCP real: `serverInfo = rea@6.7.0`, `tools/list` = **207 herramientas**.
-  - ⚠️ `rea-agents doctor` → `healthy: false` por (a) motores nativos ausentes (Hopper/Ghidra/IDA/JADX/Kuna: **irrelevantes** para REA web) y (b) `skill:identity` = `config_drift` (la skill oficial de REA no está instalada: ver acción humana H2).
-  - ⚠️ **No hay Chrome/Chromium instalado** (solo Firefox) ni navegadores Playwright en caché: bloquea las herramientas web de REA hasta resolver H1.
-- **Re-verificar antes de usar:** `rea-agents --version` y `rea-agents doctor`. Si el MCP `rea` no aparece como herramienta nativa del agente, reiniciar la sesión (H3); mientras tanto usar la CLI `rea-agents ...` por terminal.
-- **Contrato REAL de la CLI web (NO aceptan `--url`):**
-  - `rea-agents list-browser-targets <endpoint>` → obtiene el `targetId` de la pestaña abierta.
-  - `rea-agents inspect-web-page <endpoint> <targetId>` → inspección pasiva (DOM, CSS, estilos).
-  - `rea-agents analyze-web-bundle <endpoint> <targetId> [--fetch-source-maps]` → bundle estático.
-  - `rea-agents export-web-scripts ...` → exporta scripts a un directorio inexistente.
-  - `rea-agents capture-web-screenshot ...` / `capture-browser-scenario <inputJson>` (Playwright).
-  - `<endpoint>` = CDP loopback, ej: `http://127.0.0.1:9222`, levantado con `chromium --remote-debugging-port=9222 --user-data-dir=/tmp/rea-profile <URL>`.
-- **Fallback si REA web no está operativo:** `read_url_content` + `node scripts/rea-inspect.mjs <url> [rubro]` (script propio basado en fetch, **no** es REA). Declarar en la entrega que se usó el fallback y que la geometría/animaciones no fueron verificadas por CDP.
-- **URL de referencia:** enlace HTTP/HTTPS público con diseño inspirador o representativo del rubro (ej: `https://www.kuemmerlein.de/`).
-- **Rubro / Vertical:** slug normalizado (ej: `abogado`, `clinica`, `corporativo`, `nutricionista`).
+## Paso 0 — Captura de evidencia con REA (CDP)
+Las tools web **no aceptan `--url`**: requieren `<endpoint CDP> <targetId>`.
 
-## 🧑 Acciones Humanas Requeridas (el agente NO puede hacerlas)
+```bash
+# 1) Chromium headless con CDP (usar PID file; NUNCA `pkill -f`/`pgrep -f`: matchea el propio shell y cancela el comando)
+chromium --headless=new --no-sandbox --remote-debugging-port=9222 \
+  --user-data-dir=/tmp/rea-profile-{rubro} "<URL>" >/tmp/rea-chromium.log 2>&1 &
+echo $! > /tmp/rea-chromium.pid; sleep 9
 
-| ID | Acción | Comando / Detalle | Bloquea |
-| :-- | :-- | :-- | :-- |
-| **H1** | Instalar un navegador Chromium (CDP) | `sudo apt install chromium` (o Chrome estable `.deb`). Alternativa Playwright: `npx playwright install chromium` | Inspección web REA (`inspect-web-page`, `analyze-web-bundle`, capturas) |
-| **H2** | Instalar la skill oficial de REA y corregir `config_drift` | `npx rea-agents setup` (aprobar prompts interactivos; **rechazar** instalar Hopper salvo que se necesite análisis nativo). Luego `rea-agents doctor` | Warning `skill:identity`; workflows oficiales REA |
-| **H3** | Reiniciar sesión/IDE de Antigravity | Para que el MCP `rea` quede expuesto como herramientas nativas del agente | Uso nativo de las 207 herramientas |
-| **H4** | Por cada template: abrir la URL de referencia en el Chromium con puerto de depuración (si hay login/cookie wall o captcha) | `chromium --remote-debugging-port=9222 --user-data-dir=/tmp/rea-profile <URL>` | Capturas de sitios con muro de consentimiento |
-| **H5** | Licencias tipográficas (Monument Grotesk, Rhymes Display, etc.) | Decidir comprar licencia o autorizar fallback libre (Space Grotesk / Instrument Serif / Inter) | Fidelidad tipográfica de cada template |
-| **H6** | Aprobar el tag git y el push | `git tag template/{rubro}@1.0.0` + push a producción tras revisar la demo | Versionado inmutable |
+# 2) targetId = el target con type=="page" y url http(s) (NO tomar el primer id de /json)
+rea-agents list-browser-targets http://127.0.0.1:9222 --format json
+TID=$(curl -s http://127.0.0.1:9222/json | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>console.log(JSON.parse(d).find(t=>t.type==='page'&&t.url.startsWith('http')).id))")
 
-> Opcionales (solo si se hace análisis nativo/APK, fuera del alcance web): `GHIDRA_INSTALL_DIR`, `HOPPER_LAUNCHER_PATH`, `REA_JADX_MCP_JAR`, `REA_KUNA_COMMAND`, `REA_IDA_MCP_CONFIG`.
+# 3) evidencia (cada salida queda en .reports/rea/{rubro}/)
+mkdir -p .reports/rea/{rubro}
+rea-agents inspect-web-page   http://127.0.0.1:9222 $TID --observation-ms 3000 --include-script-sources --format json > .reports/rea/{rubro}/page.json
+rea-agents analyze-web-bundle http://127.0.0.1:9222 $TID --fetch-source-maps --format json > .reports/rea/{rubro}/bundle.json
+# JS/animaciones legibles (GSAP, Lenis, three, etc.): toma el JSON guardado y un directorio ABSOLUTO inexistente
+rea-agents export-web-scripts "$PWD/.reports/rea/{rubro}/page.json" "$PWD/.reports/rea/{rubro}/scripts"
+rea-agents capture-web-screenshot http://127.0.0.1:9222 $TID --format json   # referencia visual para comparar luego
 
-## Paso a Paso de Ejecución (SOP)
+# 4) cerrar siempre
+kill $(cat /tmp/rea-chromium.pid); rm -rf /tmp/rea-profile-{rubro} /tmp/rea-chromium.pid
+```
+- Para scroll/hover/transiciones usar `capture-browser-scenario <inputJson>` (Playwright) o `inspect-web-event-listeners`.
+- Páginas internas (subpáginas relevantes): repetir con cada URL; una landing de template cubre las secciones de la home, pero registrar en el ticket qué subpáginas se omiten.
+- Si falla CDP o el sitio exige login/captcha/cookies → **frenar y pedir al usuario** abrir la URL (H4). Fallback declarado: `read_url_content` + `node scripts/rea-inspect.mjs <url> [rubro]` (**no es REA**; avisar que animaciones y geometría no fueron verificadas).
 
-0. **Pre-flight REA:** correr `rea-agents doctor` y confirmar que existe Chromium (H1). Si falta, **frenar y pedir la acción humana** (Gate Ask-First); no simular la inspección.
+## Paso 1 — Análisis estético (desde la evidencia, no de memoria)
+- Paleta **60-30-10** con valores reales (`getComputedStyle`): `fondo` (60%), `tinta` (30%), `primary`/`accent` (10%). Sumar 3 `paletas_alternativas` armónicas para el ThemeSwitcher.
+- Fuentes **exactas** (woff2/Fontshare/Google). Si son comerciales o inaccesibles → fallback libre de máxima fidelidad métrica, declarado (decisión H5 del usuario).
+- Arquetipos de UI: radios, sombras, densidad, botones, grilla, recortes SVG, tipografía fluida, easing/duración de animaciones y librerías detectadas en el bundle.
+- Inventario de secciones y componentes **únicos** (nav, hero, cursor, marquee, carruseles, 3D, loaders, transiciones de página). Cada uno se mapea a un componente Astro propio.
 
-1. **Extracción & Análisis Estético (Inspección REA):**
-   - Con Chromium en `--remote-debugging-port=9222` apuntando a la URL: `list-browser-targets` → `inspect-web-page` → `analyze-web-bundle` / `export-web-scripts` para obtener tokens CSS, fuentes, bundles y animaciones reales.
-   - Complementar con `read_url_content` o `scripts/rea-inspect.mjs` (HTML/CSS estático).
-   - Identificar la paleta armónica **60-30-10**:
-     - `fondo` (60%): color de lienzo base (claro, crema, sepia o neutro según el estilo).
-     - `tinta` / secundario (30%): color de texto principal y fondos de tarjetas/secciones alternadas.
-     - `primary` y `accent` (10%): color de botones de acción (CTA) y acentos de conversión.
-   - Detectar familias tipográficas:
-     - `fuente`: tipografía display/títulos (Serif elegante, Sans geométrica o Display editorial).
-     - `fuente_sans`: tipografía de lectura y cuerpo.
-     - *Regla mandatoria de tipografía (Misma fuente o similar):* Priorizar y utilizar las **mismas fuentes exactas de la web a copiar** (extraídas como webfonts/woff2 o CDNs abiertas como Fontshare/Google Fonts). De no ser viable utilizar la misma fuente original (por restricciones de licencia comercial cerrada o inaccesibilidad), buscar y configurar una **fuente similar / equivalente de máxima fidelidad visual y métrica**.
-   - Analizar arquetipos de UI: curvatura de bordes (`rounded-none`, `rounded-xl`, `rounded-full`), sombras, densidad de espaciados y estilo de botones.
+## Paso 2 — Andamiaje del template (`/templates/{rubro}/`)
+- Base técnica: copiar solo la **infraestructura** de un template existente (`package.json`, `astro.config.mjs`, `tsconfig.json`, `src/theme.ts`, `src/site.ts`, `tests/`). **Los componentes, layout, estilos y orden de secciones se reescriben a partir de la referencia.** Prohibido dejar los componentes de Delta Cafés/nutricionista.
+- JS sin límite artificial (GSAP, Lenis, three, Rive, motion ya disponibles); solo rigen 25 MB por activo (Cloudflare Pages). Respetar `prefers-reduced-motion`.
+- Pasar `impeccable detect templates/{rubro}` y corregir antes de seguir.
 
-2. **Andamiaje del Template (`/templates/{rubro}/`):**
-   - Crear el directorio `/templates/{rubro}/` clonando el andamiaje Astro desacoplado.
-   - Configurar `templates/{rubro}/src/site.json` respetando rigurosamente el contrato inmutable:
-     - Bloque `tema`: `primary`, `accent`, `fondo`, `tinta`, `fuente`, `fuente_sans`, `orden_secciones`.
-     - Bloque `content`: `hero`, `marquee`, `prestador`, `problema`, `pasos`, `reviews`, `casos`, `pricing`, `faq`, `cta`.
-   - Adaptar los componentes de presentación en `templates/{rubro}/src/components/` para reflejar la personalidad visual del nicho (ej: layout cálido y acogedor para psicología, minimalista y clínico para estética, estructurado y sobrio para abogacía).
-   - Generar la suite de tests unitarios en `templates/{rubro}/tests/` verificando `site.json`, orden de secciones y compatibilidad con el motor de inyección.
+### Contrato `site.json` (inmutable: lo consume `scripts/build-client-site.mjs`)
+```
+tema: { primary, accent, fondo, tinta, fuente, fuente_sans, orden_secciones[] }
+paletas_alternativas: [{ nombre, fondo, tinta, primary, accent } x4]
+content: { hero, marquee, prestador, problema, pasos, reviews, casos, pricing, faq, cta, ... }
+```
+- Se pueden **agregar** claves de `content` o secciones nuevas (propias de la referencia); **no** renombrar ni quitar las existentes: `build-client-site` hace `patch` sobre ellas (`reviews[]`, `casos[]`, `faq[{q,a}]`, WhatsApp, `bookingUrl`, `nombre`, `tagline`).
+- Todo componente lee del `site.json`; cero texto hardcodeado de la referencia.
+- Obligatorio: botón de WhatsApp/CTA de agenda visible (lo exige `audit-site`), `ThemeSwitcher.astro` con paletas + botón WhatsApp precargado, precios en `$X ARS`, voseo argentino, Ley 25.326 en footer.
+- **Tipografía:** `src/theme.ts#fontUrl` solo genera URLs de Google Fonts. Si la fuente exacta no está allí, self-hostear en `public/fonts/` con `@font-face` y ajustar `fontUrl`/`Layout.astro` **sin cambiar** la forma de `tema`.
 
-3. **Verificación Automatizada & Build Demo:**
-   - Crear la ficha de demo en `/clients/demo-{rubro}.md` con datos sintéticos verosímiles en voseo argentino profesional.
-   - Compilar el clon de demo ejecutando:
-     ```bash
-     npm run build-site clients/demo-{rubro}.md
-     ```
-   - Auditar el sitio generado en `/sites/demo-{rubro}/` corriendo:
-     ```bash
-     npm run audit-site sites/demo-{rubro}
-     ```
-   - Verificar:
-     - Cero errores de compilación Astro (SSG puro).
-     - Cero scripts de terceros no declarados.
-     - Sin límite artificial de JS en `/templates/` y `/sites/` (solo tope Cloudflare Pages: 25 MB por activo); `web/` mantiene 0 JS.
-     - Contrastes accesibles en botones y textos.
+## Paso 3 — Registro en el pipeline
+Editar `scripts/build-client-site.mjs` (y su test):
+- `RUBRO_TO_ARCHETYPE_MAP`: `{rubro}` → arquetipo.
+- `ARCHETYPE_ALIASES`: arquetipo → `[rubro, arquetipo]` para que `resolveTemplateSourceDirectory` encuentre la carpeta.
+- Ejecutar `npm test` (suite raíz) tras el cambio.
 
-4. **Versionado Inmutable Git & Disponibilidad en Catálogo:**
-   - Crear el tag git correspondiente para congelar la versión del template:
-     ```bash
-     git tag template/{rubro}@1.0.0
-     ```
-   - Actualizar el catálogo de templates en `web/src/config.ts`:
-     - Marcar el rubro como implementado/activo (`active: true`).
-     - Enlazar la URL de demo pública (`https://preview.nexobow.site/demo-{rubro}/`).
-   - Ejecutar la suite completa de pruebas:
-     ```bash
-     npm test
-     ```
+## Paso 4 — Verificación (todo debe pasar)
+```bash
+cd templates/{rubro} && npm install && npm run build && npm test   # tests: site.json, orden de secciones, tema
+cd ../.. && npm run build-site clients/demo-{rubro}.md             # ficha demo sintética en voseo (crearla antes)
+npm run audit-site sites/demo-{rubro}
+node scripts/screenshot-qa.mjs demo-{rubro}                         # 375px y 1440px: sin overflow-x (arg2 opcional: URL)
+.agents/skills/impeccable/scripts/impeccable detect templates/{rubro}
+npm test
+```
+- **Fidelidad:** comparar screenshots de la referencia vs la demo (1440px y 375px) y listar diferencias aceptadas. Anotar en el ticket qué animaciones/3D quedaron aproximadas.
+- **Auditoría limpia:** correr `audit-code` en sub-agente con sesión limpia.
 
-## Negaciones Explícitas (Qué NO hacer)
+## Paso 5 — Versionado y catálogo
+- **Tags inmutables:** nunca mover ni reescribir un tag existente. Hoy existen `template/abogado@1.0.0`, `clinica@1.0.0`, `corporativo@1.0.0`, `nutricionista@1.0.0`, `obsidian-authority@1.0.0`, `architectural-prestige@1.0.0`, `high-ticket-consulting@1.0.0`, `editorial-classic@1.0.0`. Verificar con `git tag -l 'template/*'`.
+- Template nuevo → `@1.0.0`. **Reemplazo de uno existente → `@2.0.0`** (los clientes bloqueados en 1.0.0 conservan su código; `--upgrade-template` migra a 2.0.0).
+- Crear el tag y hacer push **solo con aprobación del usuario** (H6).
+- Actualizar `web/src/config.ts` (`active: true`, `demoUrl: https://preview.nexobow.site/demo-{rubro}/`).
+- Actualizar `tickets.md`, `memory.md` y `brain.md` al cerrar.
 
-- **PROHIBIDO** copiar componentes o estilos de `web/` a `/templates/{rubro}/` (Violación de `ERROR-001`: la identidad Soft-Obsidian ejecutiva es exclusiva de la agencia NexoBow; cada rubro debe tener su identidad visual distintiva).
-- **PROHIBIDO** alterar o romper el esquema de datos en `site.json` (`tema` + `content`), ya que causaría fallos en `scripts/build-client-site.mjs`, `generate-client-fiche.mjs` y `LeadStore`.
-- **PROHIBIDO** ignorar la identidad tipográfica de la web de referencia: se deben utilizar las mismas fuentes originales del sitio a copiar (self-hosted o CDNs abiertas); solo si son inaccesibles o cerradas con DRM estricto se permite un fallback similar de máxima proximidad visual.
-- **PROHIBIDO** incluir scripts de telemetría de terceros no declarados. (No existe tope de JS en templates/sites; solo el límite de 25 MB por activo de Cloudflare Pages.)
-- **PROHIBIDO** simular o inventar una inspección REA si Chromium/CDP no está disponible: frenar y pedir la acción humana H1, o declarar explícitamente el uso del fallback `read_url_content`/`rea-inspect.mjs`.
-- **PROHIBIDO** crear o desplegar un template sin su tag git inmutable `template/{rubro}@1.0.0` y su suite de tests unitarios verde.
+## Templates existentes (advertencia)
+`templates/abogado`, `clinica` y `corporativo` comparten **exactamente los mismos componentes** que `nutricionista` (re-skins): violan `ERROR-005`. Los tickets 20-22 los reemplazan con duplicaciones reales; por eso son `@2.0.0` si se conserva el rubro. `templates/nutricionista` (Delta Cafés) es el único legítimo y **no se toca**.
+
+## 🧑 Acciones humanas (el agente no puede hacerlas)
+| ID | Acción | Estado |
+| :-- | :-- | :-- |
+| H1 | Chromium con CDP (`sudo apt install chromium`) | ✅ hecho |
+| H2 | `npx rea-agents setup` (skill oficial) | ✅ hecho |
+| H3 | Reiniciar IDE para tools nativas | opcional (hoy vía `call_mcp_tool`) |
+| H4 | Abrir manualmente URLs con login/captcha/cookie wall | por template, si aplica |
+| H5 | Licencias tipográficas: comprar o autorizar fallback libre | por template |
+| H6 | Aprobar tag git + push a producción | por template |
+
+## Negaciones explícitas
+- **PROHIBIDO** reusar componentes, layout o estilos de `nutricionista`/Delta Cafés o de `web/` (Soft-Obsidian) en otro template (`ERROR-001`, `ERROR-005`).
+- **PROHIBIDO** romper el esquema `tema` + `content` de `site.json`.
+- **PROHIBIDO** simular o inventar una inspección REA sin CDP: usar la evidencia real o declarar el fallback.
+- **PROHIBIDO** tocar tags existentes, editar `/sites/{slug}` a mano o incluir telemetría de terceros no declarada.
+- **PROHIBIDO** entregar sin build 0 errores, tests verdes, `audit-site`, QA dual-viewport e `impeccable detect` sin anti-patrones críticos.
+- Usar `pkill -f`/`pgrep -f` con el patrón del puerto en el mismo comando (mata el shell).
 
 ## Salidas
-
-- Nuevo template inmutable en `/templates/{rubro}/` con su propio `site.json` y suite de tests.
-- Demo funcional compilada en `/sites/demo-{rubro}/` y accesible en `https://preview.nexobow.site/demo-{rubro}/`.
-- Tag git inmutable `template/{rubro}@1.0.0`.
-- Entrada activada en el catálogo de `web/src/config.ts`.
+- `/templates/{rubro}/` con componentes propios, `site.json`, tests y evidencia en `.reports/rea/{rubro}/`.
+- Registro en `scripts/build-client-site.mjs` y entrada activa en `web/src/config.ts`.
+- Demo en `/sites/demo-{rubro}/` → `https://preview.nexobow.site/demo-{rubro}/`.
+- Tag `template/{rubro}@x.y.z` (tras aprobación) y ticket/memoria actualizados.
