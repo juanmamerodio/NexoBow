@@ -1,0 +1,35 @@
+---
+import { CONTENT } from "../site";
+import Lead from "./ui/Lead.astro";
+import Button from "./ui/Button.astro";
+
+const finalCta = CONTENT.final_cta;
+const bookingLink = CONTENT.links?.calendly || "#agendar";
+const whatsappLink = CONTENT.links?.whatsapp || "#";
+---
+
+<section class="py-20 lg:py-28 bg-[var(--color-paper)] relative overflow-hidden">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+    <div class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--color-primary)] font-bold mb-4">
+      <span>{finalCta.tag || "El Próximo Paso"}</span>
+    </div>
+
+    <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--color-ink)] tracking-tight leading-tight mb-6">
+      <Lead text={finalCta.titulo} />
+    </h2>
+
+    <p class="text-lg text-[var(--color-ink)]/80 font-sans leading-relaxed max-w-2xl mx-auto mb-10">
+      {finalCta.bajada}
+    </p>
+
+    <div class="flex flex-wrap items-center justify-center gap-4">
+      <Button href={bookingLink} variant="cta">
+        <span>{finalCta.cta_primary || "Agendar sesión de descubrimiento"}</span>
+      </Button>
+
+      <Button href={whatsappLink} variant="frosted" external>
+        <span>{finalCta.cta_secondary || "Escribinos por WhatsApp"}</span>
+      </Button>
+    </div>
+  </div>
+</section>

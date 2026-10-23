@@ -42,6 +42,9 @@ export const RUBRO_TO_ARCHETYPE_MAP = {
   clinica: "architectural-prestige",
   corporativo: "high-ticket-consulting",
   consultor: "high-ticket-consulting",
+  tech: "tech-editorial-system",
+  software: "tech-editorial-system",
+  sistemas: "tech-editorial-system",
 };
 
 export const ARCHETYPE_ALIASES = {
@@ -49,6 +52,7 @@ export const ARCHETYPE_ALIASES = {
   "obsidian-authority": ["abogado", "obsidian-authority"],
   "architectural-prestige": ["clinica", "architectural-prestige"],
   "high-ticket-consulting": ["corporativo", "consultor", "high-ticket-consulting"],
+  "tech-editorial-system": ["tech", "software", "sistemas", "tech-editorial-system"],
   "minimalist-pure": ["odontologo", "minimalist-pure"],
   "kinetic-cards": ["kinesiologo", "kinetic-cards"],
 };

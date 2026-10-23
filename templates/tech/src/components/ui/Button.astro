@@ -1,0 +1,60 @@
+---
+interface Props {
+  href?: string;
+  variant?: "cta" | "frosted" | "primary" | "outline";
+  class?: string;
+  type?: "button" | "submit" | "reset";
+  external?: boolean;
+  id?: string;
+  "aria-label"?: string;
+}
+
+const {
+  href,
+  variant = "cta",
+  class: className = "",
+  type = "button",
+  external = false,
+  id,
+  "aria-label": ariaLabel,
+} = Astro.props;
+
+const Tag = href ? "a" : "button";
+const isCta = variant === "cta";
+const isFrosted = variant === "frosted";
+const isPrimary = variant === "primary";
+const isOutline = variant === "outline";
+
+const baseClasses = isCta
+  ? "cta-btn"
+  : isFrosted
+  ? "frosted-btn"
+  : isPrimary
+  ? "inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-[var(--color-primary)] text-white font-medium hover:brightness-110 transition-all duration-200 shadow-sm"
+  : "inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg border border-[var(--color-ink)]/20 text-[var(--color-ink)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-all duration-200";
+
+const targetAttrs = external
+  ? { target: "_blank", rel: "noopener noreferrer" }
+  : {};
+---
+
+<Tag
+  href={href}
+  type={href ? undefined : type}
+  class:list={[baseClasses, className]}
+  id={id}
+  aria-label={ariaLabel}
+  {...targetAttrs}
+>
+  <slot />
+  {isCta && (
+    <span class="btn-icon-wrap" aria-hidden="true">
+      <svg class="icon-first" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <svg class="icon-second" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  )}
+</Tag>

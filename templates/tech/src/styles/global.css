@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Bagoss";
+  src: url("/fonts/BagossStandard-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bagoss";
+  src: url("/fonts/BagossStandard-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bagoss";
+  src: url("/fonts/BagossStandard-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bagoss";
+  src: url("/fonts/BagossStandard-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ABC Diatype";
+  src: url("/fonts/ABCDiatype-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ABC Diatype";
+  src: url("/fonts/ABCDiatype-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Mono";
+  src: url("/fonts/SpaceMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-display: "Bagoss", "Syne", "Familjen Grotesk", Georgia, serif;
+  --font-sans: "ABC Diatype", "Inter", -apple-system, system-ui, sans-serif;
+  --font-mono: "Space Mono", monospace;
+  --color-paper: #fdffee;
+  --color-ink: #031b36;
+  --color-primary: #ff2c17;
+  --color-accent: #b6ffff;
+  --color-surface-navy: #031b36;
+  --color-surface-navy-light: #0b2c52;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Frosted pill button */
+.frosted-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  background: rgba(3, 27, 54, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(3, 27, 54, 0.15);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.frosted-btn:hover {
+  background: rgba(3, 27, 54, 0.1);
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 44, 23, 0.12);
+}
+
+/* Think Company Signature Dual-Arrow CTA Button */
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.75rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-surface-navy);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cta-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: #ffffff;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.32s cubic-bezier(0.83, 0, 0.17, 1);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.cta-btn .btn-icon-wrap {
+  position: relative;
+  width: 1.125rem;
+  height: 1rem;
+  display: grid;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.cta-btn .btn-icon-wrap svg {
+  grid-area: 1/1;
+  width: 1.125rem;
+  height: 1rem;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cta-btn .btn-icon-wrap .icon-first {
+  color: #ffffff;
+  transform: translate(0);
+}
+
+.cta-btn .btn-icon-wrap .icon-second {
+  color: var(--color-primary);
+  transform: translate(calc(-100% - 0.375rem));
+}
+
+.cta-btn:hover,
+.cta-btn:focus-visible {
+  color: var(--color-surface-navy);
+}
+
+.cta-btn:hover::before,
+.cta-btn:focus-visible::before {
+  transform: scaleY(1);
+}
+
+.cta-btn:hover .btn-icon-wrap .icon-first,
+.cta-btn:focus-visible .btn-icon-wrap .icon-first {
+  transform: translate(calc(100% + 0.375rem));
+}
+
+.cta-btn:hover .btn-icon-wrap .icon-second,
+.cta-btn:focus-visible .btn-icon-wrap .icon-second {
+  transform: translate(0);
+}
+
+/* Dots and lines grid canvas effect */
+.grid-dots-pattern {
+  background-image: radial-gradient(rgba(3, 27, 54, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.grid-dots-pattern-light {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .cta-btn,
+  .cta-btn::before,
+  .cta-btn .btn-icon-wrap svg {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,92 @@
+---
+import { CONTENT, ars } from "../site";
+import Lead from "./ui/Lead.astro";
+import Button from "./ui/Button.astro";
+
+const pricing = CONTENT.pricing;
+const bookingLink = CONTENT.links?.calendly || "#agendar";
+const whatsappLink = CONTENT.links?.whatsapp || "#";
+const included = pricing?.incluido || [];
+const priceFormatted = pricing?.precio_ars ? ars(pricing.precio_ars) : "$1.250.000 ARS";
+---
+
+<section id="agendar" class="py-20 lg:py-28 bg-[var(--color-surface-navy)] text-white relative overflow-hidden">
+  <!-- Subtle tech canvas grid -->
+  <div class="absolute inset-0 grid-dots-pattern-light opacity-30 pointer-events-none" aria-hidden="true"></div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <!-- Header Block (Think Company text-cta style) -->
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-mono uppercase tracking-wider text-[var(--color-accent)] font-bold mb-4">
+        <span>[04 // SESIÓN DE DESCUBRIMIENTO & DIAGNÓSTICO]</span>
+      </div>
+
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-6">
+        <Lead text={pricing.titulo} emClass="text-[var(--color-accent)] font-display italic" />
+      </h2>
+
+      <p class="text-lg text-white/80 font-sans leading-relaxed">
+        {pricing.precio_sub || "Contanos qué desafío tecnológico enfrentás y trazamos un plan de arquitectura sin costo."}
+      </p>
+    </div>
+
+    <!-- Booking Card -->
+    <div class="rounded-3xl p-8 sm:p-12 bg-white/5 border border-white/15 backdrop-blur-sm shadow-2xl relative overflow-hidden">
+      <!-- Glow effect -->
+      <div class="absolute -top-32 -right-32 w-80 h-80 bg-[var(--color-primary)]/20 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <!-- Left: Scope & Deliverables -->
+        <div class="lg:col-span-7">
+          <span class="text-xs font-mono uppercase tracking-widest text-[var(--color-accent)] font-bold">
+            ALCANCE DEL SERVICIO TÉCNICO
+          </span>
+          <h3 class="font-display text-2xl font-bold text-white mt-2 mb-6">
+            {pricing.plan || "Diagnóstico de Arquitectura & Blueprint de Sistemas"}
+          </h3>
+
+          <ul class="space-y-3.5 mb-8">
+            {included.map((item: string) => (
+              <li class="flex items-start gap-3 text-sm sm:text-base text-white/85 font-sans">
+                <span class="text-[var(--color-primary)] font-bold mt-0.5">✓</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="flex items-center gap-2 text-xs font-mono text-white/60">
+            <svg class="w-4 h-4 text-emerald-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM11 14a1 1 0 11-2 0 1 1 0 012 0zm0-7a1 1 0 10-2 0v3a1 1 0 102 0V7z" clip-rule="evenodd" />
+            </svg>
+            <span>{pricing.garantia || "Garantía de confidencialidad respaldada por acuerdo legal vinculante (NDA)."}</span>
+          </div>
+        </div>
+
+        <!-- Right: Investment & Actions -->
+        <div class="lg:col-span-5 p-6 sm:p-8 rounded-2xl bg-white/5 border border-white/10 flex flex-col justify-between text-center lg:text-left">
+          <div>
+            <div class="text-xs font-mono uppercase tracking-wider text-white/60 mb-2">
+              Honorarios de Intervención
+            </div>
+            <div class="font-mono text-3xl sm:text-4xl font-bold text-white mb-2">
+              {priceFormatted}
+            </div>
+            <div class="text-xs text-white/70 font-sans mb-6">
+              {pricing.precio_label || "Diagnóstico en 10 días hábiles"}
+            </div>
+          </div>
+
+          <div class="space-y-3 pt-6 border-t border-white/10">
+            <Button href={bookingLink} variant="cta" class="w-full justify-center">
+              <span>{pricing.cta || "Agendar Sesión de Descubrimiento"}</span>
+            </Button>
+
+            <Button href={whatsappLink} variant="frosted" external class="w-full justify-center text-white border-white/20 bg-white/5">
+              <span>Consultar por WhatsApp</span>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

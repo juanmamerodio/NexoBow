@@ -1,0 +1,19 @@
+---
+interface Props {
+  text: string;
+  emClass?: string;
+}
+
+const { text, emClass = "text-[var(--color-primary)] font-display italic" } = Astro.props;
+const parts = text.split("*");
+---
+
+{
+  parts.map((p, i) =>
+    i % 2 === 1 ? (
+      <span class={emClass}>{p}</span>
+    ) : (
+      <span>{p}</span>
+    )
+  )
+}

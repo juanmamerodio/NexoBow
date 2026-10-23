@@ -1,0 +1,230 @@
+{
+  "_meta": "NO EDITAR A MANO. Punto de inyeccion del skill build-client-site: este archivo se regenera en cada clon a partir de la ficha de /clients/. Los valores aqui son PLACEHOLDERS del template tech (reemplazables por la ficha).",
+  "tema": {
+    "primary": "#ff2c17",
+    "accent": "#b6ffff",
+    "fondo": "#fdffee",
+    "tinta": "#031b36",
+    "fuente": "Bagoss",
+    "fuente_sans": "ABC Diatype",
+    "fuente_mono": "Space Mono",
+    "orden_secciones": [
+      "Hero",
+      "SystemChallenges",
+      "TransformationPhases",
+      "ClientCaseStudies",
+      "DiscoveryBooking"
+    ]
+  },
+  "paletas_alternativas": [
+    {
+      "nombre": "Think Vanilla (Original)",
+      "fondo": "#fdffee",
+      "tinta": "#031b36",
+      "primary": "#ff2c17",
+      "accent": "#b6ffff"
+    },
+    {
+      "nombre": "Obsidian Terminal",
+      "fondo": "#031b36",
+      "tinta": "#fdffee",
+      "primary": "#ff2c17",
+      "accent": "#b6ffff"
+    },
+    {
+      "nombre": "Digital Cyan",
+      "fondo": "#f0f7f8",
+      "tinta": "#041f2a",
+      "primary": "#0ea5e9",
+      "accent": "#ff2c17"
+    },
+    {
+      "nombre": "Electric Violet",
+      "fondo": "#faf8ff",
+      "tinta": "#18112e",
+      "primary": "#7c3aed",
+      "accent": "#ff2c17"
+    }
+  ],
+  "content": {
+    "hero": {
+      "eyebrow": "Ingeniería de Sistemas Complejos & Arquitectura Digital",
+      "tagline": "Somos el equipo que querés en la sala cuando el problema es difícil.",
+      "card_caption": "Consola de Diagnóstico & Modernización de Software",
+      "card_footer": "Auditoría de arquitectura en 48hs · Acuerdos de confidencialidad estrictos (NDA)."
+    },
+    "marquee": {
+      "items": [
+        "Modernización de Monolitos",
+        "Arquitectura Distribuida & Microservicios",
+        "Optimización de Latencia & Concurrencia",
+        "Plataformas de Datos en Tiempo Real",
+        "CI/CD & Automatización Cloud",
+        "Squads Embebidos de Alto Desempeño"
+      ]
+    },
+    "prestador": {
+      "nombre": "Think Systems & Architecture",
+      "rol": "Consultoría de Ingeniería de Software & Arquitectura Digital",
+      "titulo": "Resolvemos los problemas de software *que valen la pena resolver*",
+      "bajada": "Trabajamos codo a codo con CTOs, líderes técnicos y directores de producto para superar cuellos de botella de escalabilidad, modernizar sistemas legados y construir software que funciona.",
+      "bio": "Firma boutique de ingeniería de sistemas y estrategia digital con más de 14 años modernizando plataformas de misión crítica en telecomunicaciones, finanzas, salud y servicios masivos.",
+      "enfoque": "No empezamos rediseñando botones en una pantalla: nos metemos en la raíz de la arquitectura, aislamos los puntos de fricción, diseñamos con precisión y entregamos código que escala sin deuda técnica."
+    },
+    "problema": {
+      "tag": "Desafíos de Sistemas y Software",
+      "titulo": "Navegás un sistema complejo. *Estuvimos acá antes.*",
+      "descripcion": "Los cuellos de botella de ingeniería y las fricciones de escala suelen verse exactamente así:",
+      "pains": [
+        {
+          "tag": "Prioridades & Backlog",
+          "t": "“Todo es prioritario. El backlog tiene 300 ítems y nadie puede decirte qué 10 mueven la aguja del negocio.”",
+          "d": "Partimos de los usuarios y de las métricas de negocio, aislamos el problema estructural real y trazamos un plan de ingeniería ejecutable."
+        },
+        {
+          "tag": "Sistemas Legados",
+          "t": "“El software está obsoleto. Los usuarios sufren la lentitud y algunos ya están empezando a elegir a la competencia.”",
+          "d": "Modernizamos y desacoplamos plataformas digitales críticas sin detener la operación diaria de tu empresa."
+        },
+        {
+          "tag": "Staffing & Gestión",
+          "t": "“Probamos consultoras tradicionales. Te mandan perfiles junior y pasás la mitad del día gestionándolos.”",
+          "d": "Nos embebemos con tus desarrolladores seniors como pares técnicos, elevando el estándar y la velocidad de entrega del equipo."
+        },
+        {
+          "tag": "Deuda Técnica & Escalabilidad",
+          "t": "“Cada nuevo feature rompe dos existentes. El costo de infraestructura sube pero la velocidad de despliegue baja.”",
+          "d": "Implementamos arquitectura modular, pruebas automatizadas y pipelines robustos para recuperar la cadencia de release semanal."
+        }
+      ]
+    },
+    "pasos": {
+      "tag": "Fases de Transformación",
+      "titulo": "De la deuda técnica a la *arquitectura de alto desempeño*",
+      "bajada": "Un proceso metódico de 4 fases de ingeniería sin informes teóricos de 200 páginas que nadie lee:",
+      "steps": [
+        {
+          "n": "01",
+          "k": "Triage & Diagnóstico de Cuellos de Botella (Semana 1)",
+          "d": "Auditamos repositorios, métricas de observabilidad, cuellos de botella en base de datos y flujos de despliegue. Mapeamos la arquitectura y los 3 puntos de falla críticos."
+        },
+        {
+          "n": "02",
+          "k": "Diseño de Arquitectura Modular & Estrangulamiento de Monolito (Semana 2)",
+          "d": "Diseñamos el blueprint de desacoplamiento gradual (Strangler Fig pattern), contratos de API y pruebas de carga sin frenar el roadmap de producto."
+        },
+        {
+          "n": "03",
+          "k": "Implementación en Parejas & Squad Embebido (Semana 3 a 6)",
+          "d": "Nuestros ingenieros construyen los nuevos servicios junto a tu equipo, aplicando buenas prácticas de tipado estricto, CI/CD y telemetría de producción."
+        },
+        {
+          "n": "04",
+          "k": "Despliegue Cero Downtime & Transferencia de Conocimiento (Semana 7+)",
+          "d": "Migración canary/blue-green de tráfico real, dashboards de monitoreo en tiempo real y documentación ejecutable para que tu equipo mantenga el control total."
+        }
+      ]
+    },
+    "casos": {
+      "tag": "Casos de Estudio & ROI",
+      "titulo": "Resolvemos la complejidad con *resultados de ingeniería medibles*",
+      "bajada": "Transformaciones en plataformas que procesan millones de transacciones diarias.",
+      "items": [
+        {
+          "titulo": "Plataforma de Medios & Telecomunicaciones",
+          "descripcion": "Los equipos de soporte buscaban respuestas dispersas en una docena de herramientas legadas. Diseñamos e implementamos una plataforma unificada en tiempo real.",
+          "resultado": "-68% en tiempo de resolución de incidentes y unificación de 12 herramientas en 1 stack moderno."
+        },
+        {
+          "titulo": "Fintech de Pagos Masivos B2B",
+          "descripcion": "Microservicios saturados y fallos en picos de fin de mes. Reestructuración de colas de mensajería asíncrona y optimización de base de datos.",
+          "resultado": "+340% de capacidad transaccional y cero caídas en picos de liquidación mensual."
+        },
+        {
+          "titulo": "HealthTech de Historias Clínicas Distribuidas",
+          "descripcion": "Tiempos de respuesta lentos en consultas de historiales de pacientes. Refactorización de queries y cache distribuido con Redis.",
+          "resultado": "Latencia p99 reducida de 2.8s a 110ms y cumplimiento estricto de normativas de seguridad de datos."
+        }
+      ]
+    },
+    "reviews": {
+      "tag": "Lo que dicen los líderes técnicos",
+      "titulo": "Opiniones de CTOs y *directores de ingeniería*",
+      "bajada": "Equipos que superaron cuellos de botella críticos junto a nosotros.",
+      "items": [
+        {
+          "nombre": "Esteban Morales",
+          "rol": "VP de Ingeniería en FinTech Regional",
+          "texto": "No vinieron a darnos lecciones teóricas. Se metieron en el código desde el día uno, resolvieron el cuello de botella de la base de datos y aceleraron nuestros deploys un 300%."
+        },
+        {
+          "nombre": "Carolina Varela",
+          "rol": "CTO en TeleCom Solutions",
+          "texto": "La claridad técnica de Think es única. Nos ahorraron meses de prueba y error en la migración a la nube y formaron a nuestros desarrolladores en el camino."
+        },
+        {
+          "nombre": "Martín Benavídez",
+          "rol": "Head of Product en HealthCare Global",
+          "texto": "Nuestra plataforma médica requería precisión milimétrica y cero caídas. Modernizaron los servicios críticos sin un solo minuto de downtime."
+        }
+      ]
+    },
+    "pricing": {
+      "tag": "Sesión de Descubrimiento & Triage",
+      "titulo": "Tenés un problema complejo en tus sistemas. *Te escuchamos.*",
+      "plan": "Diagnóstico de Arquitectura & Blueprint Técnico",
+      "precio_ars": 1250000,
+      "precio_label": "Inversión inicial · Diagnóstico profundo y blueprint en 10 días hábiles",
+      "precio_sub": "Garantía de impacto: si no encontramos al menos 3 optimizaciones de alto impacto en tu arquitectura, no pagás un solo centavo.",
+      "detalle_titulo": "Qué incluye la sesión y el entregable:",
+      "incluido": [
+        "Auditoría técnica de repositorios, base de datos y pipeline CI/CD",
+        "Diagrama de arquitectura actual vs arquitectura objetivo escalable",
+        "Sesión técnica de 3 horas con arquitectos senior para tu equipo",
+        "Roadmap de modernización priorizado por impacto y riesgo",
+        "Acuerdo de confidencialidad estricto (NDA) previo a cualquier acceso"
+      ],
+      "cta": "Agendá tu sesión de descubrimiento técnico",
+      "garantia": "Garantía 100% de confidencialidad respaldada por contrato legal vinculante."
+    },
+    "faq": {
+      "tag": "Preguntas Frecuentes",
+      "titulo": "Todo lo que necesitás saber sobre la *colaboración técnica*",
+      "bajada": "Respuestas claras sobre confidencialidad, metodologías y procesos.",
+      "items": [
+        {
+          "q": "¿Cómo garantizan la seguridad de nuestro código fuente y base de datos?",
+          "a": "Firmamos un Acuerdo de Confidencialidad (NDA) vinculante previo a cualquier acceso. Operamos bajo el principio de menor privilegio, utilizando accesos revocables y sin almacenar copias de datos sensibles fuera de tu entorno."
+        },
+        {
+          "q": "¿Qué nivel de disponibilidad requiere nuestro equipo interno?",
+          "a": "El proceso está diseñado para minimizar la interrupción de tus sprints: necesitamos una sesión de alineación inicial de 90 minutos y acceso a 1 interlocutor técnico para consultas puntuales. Nosotros hacemos el análisis profundo."
+        },
+        {
+          "q": "¿Qué pasa si nuestro sistema está en una tecnología legacy o poco común?",
+          "a": "Tenemos experiencia en modernizaciones de sistemas en Java, .NET, Node.js, Python, Ruby y monolitos SQL. Nuestro enfoque de estrangulamiento permite desacoplar capas sin importar el stack subyacente."
+        },
+        {
+          "q": "¿Trabajan de forma presencial o remota?",
+          "a": "Trabajamos 100% integrados a tus canales de comunicación habituales (Slack, Discord, GitHub, Google Meet) con sincronización horaria directa y reuniones ejecutivas según requerimiento."
+        }
+      ]
+    },
+    "footer": {
+      "blurb": "Think Systems & Architecture · Consultoría de Ingeniería de Software, Modernización de Plataformas y Arquitectura Digital para organizaciones que demandan escalabilidad.",
+      "credit": "Landing por NexoBow"
+    },
+    "final_cta": {
+      "tag": "El Próximo Paso",
+      "titulo": "Desbloqueá el potencial de tu equipo de desarrollo *hoy mismo*",
+      "bajada": "Coordiná una sesión de descubrimiento de 30 minutos sin cargo con nuestros arquitectos. Evaluamos tu desafío técnico y te decimos con total franqueza si podemos ayudarte.",
+      "cta_primary": "Agendar sesión de descubrimiento",
+      "cta_secondary": "Escribinos por WhatsApp"
+    },
+    "links": {
+      "calendly": "#agendar",
+      "whatsapp": "https://wa.me/5491100000000?text=Hola!%20Quiero%20coordinar%20una%20sesi%C3%B3n%20de%20descubrimiento%20t%C3%A9cnico%20para%20mi%20sistema."
+    },
+    "consentimiento_testimonios": true
+  }
+}

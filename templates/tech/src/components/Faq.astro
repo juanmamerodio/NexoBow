@@ -1,0 +1,39 @@
+---
+import { CONTENT } from "../site";
+import Lead from "./ui/Lead.astro";
+
+const faq = CONTENT.faq;
+const items = faq.items || [];
+---
+
+<section id="faq" class="py-20 lg:py-28 bg-[var(--color-paper)] border-b border-[var(--color-ink)]/10">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[var(--color-primary)] font-bold mb-4">
+        <span>[05 // PREGUNTAS FRECUENTES]</span>
+      </div>
+      <h2 class="font-display text-3xl sm:text-4xl font-bold text-[var(--color-ink)] tracking-tight mb-4">
+        <Lead text={faq.titulo} />
+      </h2>
+      <p class="text-base sm:text-lg text-[var(--color-ink)]/75 font-sans">
+        {faq.bajada}
+      </p>
+    </div>
+
+    <div class="space-y-4">
+      {items.map((item, index) => (
+        <details class="group rounded-xl border border-[var(--color-ink)]/10 bg-white/70 p-6 transition-colors duration-200 open:bg-white open:border-[var(--color-primary)]/40 open:shadow-sm">
+          <summary class="flex cursor-pointer items-center justify-between gap-4 font-display text-lg font-bold text-[var(--color-ink)] select-none">
+            <span>{item.q}</span>
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--color-ink)]/5 text-xs text-[var(--color-ink)] transition-transform duration-200 group-open:rotate-45 group-open:bg-[var(--color-primary)] group-open:text-white">
+              +
+            </span>
+          </summary>
+          <div class="mt-4 text-sm sm:text-base leading-relaxed text-[var(--color-ink)]/80 font-sans border-t border-[var(--color-ink)]/5 pt-4">
+            {item.a}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

@@ -120,5 +120,14 @@ export const SITE = {
       status: "Catálogo REA",
       description: "Arquitectura institucional con derivación por profesional y múltiples agendas sincronizadas.",
     },
+    {
+      id: "11",
+      name: "Tech & Digital Systems (Think Editorial)",
+      niche: "Software Engineering & Arquitectura Digital",
+      palette: ["#fdffee", "#031b36", "#ff2c17"],
+      status: "En Vivo (Demo)",
+      description: "Estética Think Company: canvas vainilla claro, navy ink profundo y acento red para consultoras de software, arquitectos de sistemas y plataformas SaaS.",
+      demoUrl: "https://preview.nexobow.site/demo-tech/",
+    },
   ],
 };

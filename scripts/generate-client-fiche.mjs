@@ -379,6 +379,34 @@ export const RUBRO_BRANDING_MAP = {
     CONTEXTUAL_BRANDING_PALETTES[0],
     CONTEXTUAL_BRANDING_PALETTES[1],
   ],
+  tech: [
+    {
+      name: "Think Vanilla",
+      primary: "#ff2c17",
+      accent: "#b6ffff",
+      fondo: "#fdffee",
+      tinta: "#031b36",
+      fuente: "Bagoss",
+      fuente_sans: "ABC Diatype",
+    },
+    CONTEXTUAL_BRANDING_PALETTES[1],
+    CONTEXTUAL_BRANDING_PALETTES[0],
+    CONTEXTUAL_BRANDING_PALETTES[3],
+  ],
+  software: [
+    {
+      name: "Think Vanilla",
+      primary: "#ff2c17",
+      accent: "#b6ffff",
+      fondo: "#fdffee",
+      tinta: "#031b36",
+      fuente: "Bagoss",
+      fuente_sans: "ABC Diatype",
+    },
+    CONTEXTUAL_BRANDING_PALETTES[1],
+    CONTEXTUAL_BRANDING_PALETTES[0],
+    CONTEXTUAL_BRANDING_PALETTES[3],
+  ],
 };
 
 export const DEFAULT_ALTERNATIVE_PALETTES = [
