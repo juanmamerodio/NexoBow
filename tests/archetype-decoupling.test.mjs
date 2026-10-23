@@ -61,6 +61,14 @@ test("T-ARC-01: resolveTemplateArchetype infiere arquetipo desde template_archet
     resolveTemplateArchetype({ rubro: "gym" }),
     "kinetic-performance"
   );
+  assert.equal(
+    resolveTemplateArchetype({ rubro: "dermatologia" }),
+    "clinical-pure"
+  );
+  assert.equal(
+    resolveTemplateArchetype({ rubro: "medico" }),
+    "clinical-pure"
+  );
 
   // 3. Fallback seguro si no hay datos
   assert.equal(
@@ -113,6 +121,14 @@ test("T-ARC-02: resolveTemplateSourceDirectory mapea nombres de arquetipo y rubr
   // 'deportes' mapea físicamente a templates/deportes
   const dirFromRubroDeportes = resolveTemplateSourceDirectory("deportes");
   assert.ok(dirFromRubroDeportes.endsWith("templates/deportes"));
+
+  // 'clinical-pure' mapea físicamente al template 'dermatologia'
+  const dirFromClinical = resolveTemplateSourceDirectory("clinical-pure");
+  assert.ok(dirFromClinical.endsWith("templates/dermatologia"));
+
+  // 'dermatologia' mapea físicamente a templates/dermatologia
+  const dirFromRubroDermato = resolveTemplateSourceDirectory("dermatologia");
+  assert.ok(dirFromRubroDermato.endsWith("templates/dermatologia"));
 
   // 'nutricionista' mapea físicamente a templates/nutricionista
   const dirFromRubro = resolveTemplateSourceDirectory("nutricionista");

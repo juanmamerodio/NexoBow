@@ -1,0 +1,78 @@
+---
+import { CONTENT } from "../site.ts";
+
+const { prestador, footer } = CONTENT;
+---
+
+<footer class="bg-[var(--color-slate-navy)] text-slate-300 py-12 sm:py-16 px-4 sm:px-8 border-t border-slate-800 text-sm font-sans">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+      <!-- Columna 1: Brand & Bio -->
+      <div class="md:col-span-2 space-y-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center font-bold text-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14"/>
+            </svg>
+          </div>
+          <span class="font-display text-lg font-bold text-white tracking-tight">
+            {prestador.nombre}
+          </span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-400 max-w-md leading-relaxed">
+          {prestador.tagline}. Práctica clínica enfocada en el abordaje integral, diagnóstico diferencial ecográfico y tratamiento multimodal de pacientes con lipedema.
+        </p>
+        <div class="text-xs text-slate-400 space-y-1">
+          <div><span class="text-white font-medium">Matrícula:</span> {prestador.matricula}</div>
+          <div><span class="text-white font-medium">Ubicación:</span> {prestador.ubicacion}</div>
+          <div><span class="text-white font-medium">Atención:</span> {prestador.horarios}</div>
+        </div>
+      </div>
+
+      <!-- Columna 2: Navegación Rápida -->
+      <div>
+        <h4 class="font-display text-sm font-bold uppercase tracking-wider text-white mb-4">
+          Navegación
+        </h4>
+        <ul class="space-y-2 text-xs text-slate-400">
+          <li><a href="#sintomas" class="hover:text-white transition-colors">Signos Clínicos</a></li>
+          <li><a href="#protocolos" class="hover:text-white transition-colors">Protocolos de Manejo</a></li>
+          <li><a href="#ventajas" class="hover:text-white transition-colors">Ventajas & Casos</a></li>
+          <li><a href="#agendar" class="hover:text-white transition-colors">Agendar Consulta</a></li>
+          <li><a href="#faq" class="hover:text-white transition-colors">Preguntas Frecuentes</a></li>
+        </ul>
+      </div>
+
+      <!-- Columna 3: Contacto y Guardias -->
+      <div>
+        <h4 class="font-display text-sm font-bold uppercase tracking-wider text-white mb-4">
+          Contacto Directo
+        </h4>
+        <div class="space-y-2 text-xs text-slate-400">
+          <p><span class="text-white">Teléfono:</span> {prestador.telefono}</p>
+          <a
+            href={prestador.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-[var(--color-accent)] hover:underline mt-1"
+          >
+            <span>WhatsApp Consultorio</span>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none">
+              <path d="M3.33334 8H12.6667M12.6667 8L8.00001 3.33334M12.6667 8L8.00001 12.6667" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aviso Legal & Cumplimiento Ley 25.326 -->
+    <div class="pt-8 border-t border-slate-800 text-[11px] text-slate-500 space-y-2 leading-relaxed">
+      <p>{footer.legal}</p>
+      <p>{footer.compliance}</p>
+      <div class="pt-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-slate-400">
+        <p>© {new Date().getFullYear()} {prestador.nombre}. Todos los derechos reservados.</p>
+        <p class="text-[10px] text-slate-400">Fábrica de embudos médicos de alta fidelidad · NexoBow</p>
+      </div>
+    </div>
+  </div>
+</footer>

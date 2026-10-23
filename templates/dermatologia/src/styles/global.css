@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "GothicCompact";
+  src: url("/fonts/PPRightGothic-CompactRegular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GroteskMedium";
+  src: url("/fonts/PPRightGrotesk-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GroteskText";
+  src: url("/fonts/PPRightGroteskText-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GroteskCompact";
+  src: url("/fonts/PPRightGrotesk-CompactRegular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-display: "GothicCompact", "GroteskMedium", "Poppins", -apple-system, sans-serif;
+  --font-sans: "GroteskText", "Figtree", "DM Sans", -apple-system, system-ui, sans-serif;
+  --color-paper: #f8fafc;
+  --color-ink: #0f172a;
+  --color-primary: #0284c7;
+  --color-accent: #e0f2fe;
+  --color-clinical-white: #ffffff;
+  --color-clinical-border: #e2e8f0;
+  --color-clinical-blue: #0284c7;
+  --color-clinical-ice: #e0f2fe;
+  --color-slate-navy: #0f172a;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Headings with Lipedema Guru condensed display typography */
+.type-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.type-h1 {
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+  font-size: clamp(2.75rem, 6.5vw, 5.5rem);
+  font-weight: 600;
+  line-height: 1.02;
+}
+
+.type-h2 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  font-size: clamp(1.85rem, 4vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+/* Button styles inspired by Lipedema Guru */
+.btn-clinical {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  border-radius: 9999px;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0.75rem 1.75rem;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid transparent;
+}
+
+.btn-clinical-primary {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary, #ffffff);
+  border-color: var(--color-primary);
+}
+
+.btn-clinical-primary:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px -4px rgba(2, 132, 199, 0.25);
+}
+
+.btn-clinical-outline {
+  background-color: transparent;
+  color: var(--color-ink);
+  border-color: var(--color-clinical-border, #cbd5e1);
+}
+
+.btn-clinical-outline:hover {
+  background-color: rgba(2, 132, 199, 0.06);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Clinical rounded cards */
+.clinical-card {
+  background-color: #ffffff;
+  border-radius: 1.5rem;
+  border: 1px solid var(--color-clinical-border, #e2e8f0);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.clinical-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -8px rgba(15, 23, 42, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .btn-clinical,
+  .clinical-card {
+    transition: none !important;
+    transform: none !important;
+  }
+}

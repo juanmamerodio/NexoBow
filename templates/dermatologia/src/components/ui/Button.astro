@@ -1,0 +1,53 @@
+---
+interface Props {
+  href?: string;
+  variant?: "primary" | "outline" | "ghost";
+  size?: "sm" | "md" | "lg";
+  class?: string;
+  id?: string;
+  target?: string;
+  rel?: string;
+}
+
+const {
+  href,
+  variant = "primary",
+  size = "md",
+  class: className = "",
+  id,
+  target,
+  rel,
+} = Astro.props;
+
+const sizeStyles = {
+  sm: "text-xs py-2 px-4 gap-1.5",
+  md: "text-sm py-2.5 px-6 gap-2",
+  lg: "text-base py-3.5 px-8 gap-2.5",
+}[size];
+
+const variantStyles = {
+  primary: "btn-clinical-primary font-medium shadow-sm hover:shadow-md",
+  outline: "btn-clinical-outline font-medium",
+  ghost: "bg-transparent text-current hover:bg-black/5 dark:hover:bg-white/5",
+}[variant];
+
+const baseClasses = `btn-clinical ${sizeStyles} ${variantStyles} ${className}`.trim();
+---
+
+{
+  href ? (
+    <a href={href} class={baseClasses} id={id} target={target} rel={rel}>
+      <slot />
+      <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3.33334 8H12.6667M12.6667 8L8.00001 3.33334M12.6667 8L8.00001 12.6667" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  ) : (
+    <button class={baseClasses} id={id}>
+      <slot />
+      <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3.33334 8H12.6667M12.6667 8L8.00001 3.33334M12.6667 8L8.00001 12.6667" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  )
+}

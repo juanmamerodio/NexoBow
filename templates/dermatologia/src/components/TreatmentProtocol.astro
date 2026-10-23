@@ -1,0 +1,107 @@
+---
+import { CONTENT } from "../site.ts";
+import Button from "./ui/Button.astro";
+
+const protocols = CONTENT.treatment_protocol || {
+  badge: "PLANES DE CONSULTA & TRATAMIENTO",
+  title: "Protocolos Clínicos de Intervención",
+  subtitle: "Dos instancias médicas diseñadas para brindarte dirección terapéutica clara.",
+  plans: []
+};
+
+const whatsappBase = CONTENT.prestador?.whatsapp || "#";
+---
+
+<section id="protocolos" class="py-16 sm:py-24 px-4 sm:px-8 bg-slate-50/70 border-y border-[var(--color-clinical-border)]/60">
+  <div class="max-w-7xl mx-auto">
+    <!-- Encabezado de Sección -->
+    <div class="text-center max-w-3xl mx-auto mb-14 sm:mb-20">
+      <span class="inline-block text-xs font-semibold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-accent)]/80 px-3.5 py-1 rounded-full mb-3.5">
+        {protocols.badge}
+      </span>
+      <h2 class="type-h2 font-display text-[var(--color-ink)] mb-4">
+        {protocols.title}
+      </h2>
+      <p class="text-base sm:text-lg text-[var(--color-ink)]/70 font-sans leading-relaxed">
+        {protocols.subtitle}
+      </p>
+    </div>
+
+    <!-- Grilla de Planes de Protocolo -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      {
+        protocols.plans.map((plan: any) => (
+          <div
+            class={`relative clinical-card p-8 sm:p-10 flex flex-col justify-between ${
+              plan.popular
+                ? "border-2 border-[var(--color-primary)] ring-4 ring-[var(--color-primary)]/10 shadow-lg"
+                : "border border-[var(--color-clinical-border)]"
+            }`}
+          >
+            {plan.popular && (
+              <div class="absolute -top-3.5 left-8 px-3.5 py-0.5 rounded-full bg-[var(--color-primary)] text-white text-[11px] font-bold uppercase tracking-wider shadow-sm">
+                Protocolo Inicial Recomendado
+              </div>
+            )}
+
+            <div>
+              <div class="flex items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="text-xs font-mono uppercase tracking-wider text-[var(--color-ink)]/50 block mb-1">
+                    {plan.duration}
+                  </span>
+                  <h3 class="font-display text-2xl sm:text-3xl font-bold text-[var(--color-ink)] leading-snug">
+                    {plan.name}
+                  </h3>
+                </div>
+              </div>
+
+              <div class="my-6 pb-6 border-b border-[var(--color-clinical-border)] flex items-baseline gap-2">
+                <span class="font-display text-4xl sm:text-5xl font-bold text-[var(--color-ink)]">
+                  {plan.price}
+                </span>
+                <span class="text-xs text-[var(--color-ink)]/60 font-sans">
+                  arancel final
+                </span>
+              </div>
+
+              <p class="text-sm sm:text-base text-[var(--color-ink)]/80 font-sans mb-6 leading-relaxed">
+                {plan.desc}
+              </p>
+
+              <!-- Lista de Entregables Clínicos -->
+              <div class="space-y-3 mb-8">
+                <span class="text-xs font-bold uppercase tracking-wider text-[var(--color-ink)]/50 block mb-2">
+                  Entregables y Criterios Médicos:
+                </span>
+                {plan.features.map((feat: string) => (
+                  <div class="flex items-start gap-3 text-sm text-[var(--color-ink)]/80">
+                    <div class="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-200">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor">
+                        <path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <span class="font-sans leading-snug">{feat}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-[var(--color-clinical-border)]/60">
+              <Button
+                href={`${whatsappBase}&text=${encodeURIComponent(`Hola Dra. Valentina, quisiera agendar el protocolo: ${plan.name}`)}`}
+                variant={plan.popular ? "primary" : "outline"}
+                size="md"
+                class="w-full text-center justify-center"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {plan.cta}
+              </Button>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

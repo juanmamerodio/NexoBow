@@ -1,0 +1,73 @@
+---
+import { CONTENT } from "../site.ts";
+import Button from "./ui/Button.astro";
+
+const { hero, prestador } = CONTENT;
+---
+
+<section class="relative pt-6 pb-12 sm:pt-10 sm:pb-16 px-4 sm:px-8">
+  <div class="max-w-7xl mx-auto">
+    <!-- Main Clinical Hero Card con bordes redondeados característicos de Lipedema Guru -->
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[var(--color-slate-navy)] via-[#0b1727] to-[var(--color-slate-navy)] text-white p-6 sm:p-12 lg:p-16 border border-white/10 shadow-xl">
+      <!-- Soft Ambient Background Glows -->
+      <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-[var(--color-primary)]/20 blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-cyan-400/15 blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-4xl">
+        <!-- Medical Badge -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs sm:text-sm font-medium text-[var(--color-accent)] mb-6 sm:mb-8">
+          <span class="w-2 h-2 rounded-full bg-[var(--color-primary)]"></span>
+          <span>{hero.badge}</span>
+        </div>
+
+        <!-- Titular Display Lipedema Guru -->
+        <h1 class="type-h1 font-display tracking-tight text-white mb-6 max-w-3xl">
+          {hero.title}
+        </h1>
+
+        <!-- Copy Empático de Alivio Hormozi -->
+        <p class="text-base sm:text-xl text-slate-200/90 font-sans leading-relaxed mb-8 sm:mb-10 max-w-2xl font-normal">
+          {hero.subtitle}
+        </p>
+
+        <!-- Botones de Acción -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-12 sm:mb-16">
+          <Button href={prestador.whatsapp} variant="primary" size="lg" target="_blank" rel="noopener noreferrer">
+            {hero.cta_primary}
+          </Button>
+
+          <a
+            href="#sintomas"
+            class="inline-flex items-center justify-center gap-2 text-sm sm:text-base font-medium py-3.5 px-6 rounded-full border border-white/20 text-white hover:bg-white/10 transition-colors"
+          >
+            <span>{hero.cta_secondary}</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Métricas Clínicas Auténticas (90% / +320) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-8 border-t border-white/15">
+          <div class="flex items-start gap-4 p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+            <span class="font-display text-4xl sm:text-5xl font-bold text-[var(--color-accent)] leading-none">
+              {hero.stat_1_value}
+            </span>
+            <span class="text-xs sm:text-sm text-slate-300 font-sans leading-snug">
+              {hero.stat_1_label}
+            </span>
+          </div>
+
+          <div class="flex items-start gap-4 p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+            <span class="font-display text-4xl sm:text-5xl font-bold text-[var(--color-accent)] leading-none">
+              {hero.stat_2_value}
+            </span>
+            <span class="text-xs sm:text-sm text-slate-300 font-sans leading-snug">
+              {hero.stat_2_label}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

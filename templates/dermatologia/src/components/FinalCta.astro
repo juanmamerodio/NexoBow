@@ -1,0 +1,45 @@
+---
+import { CONTENT } from "../site.ts";
+import Button from "./ui/Button.astro";
+
+const finalCta = CONTENT.final_cta || CONTENT.cta || {
+  badge: "TU SALUD ES HOY",
+  title: "¿Lista para ponerle nombre y solución al dolor?",
+  subtitle: "No sigas postergando tu bienestar. Agendá tu valoración médica y comenzá hoy mismo tu protocolo de manejo personalizado.",
+  btn: "Solicitar Valoración por WhatsApp"
+};
+
+const whatsapp = CONTENT.prestador?.whatsapp || "#";
+---
+
+<section class="py-16 sm:py-20 px-4 sm:px-8 bg-slate-50">
+  <div class="max-w-5xl mx-auto">
+    <div class="rounded-3xl bg-gradient-to-r from-[var(--color-slate-navy)] to-[#1e293b] text-white p-8 sm:p-14 text-center relative overflow-hidden border border-white/10 shadow-lg">
+      <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-[var(--color-primary)]/20 blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-2xl mx-auto">
+        <span class="inline-block text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)] bg-white/10 px-3.5 py-1 rounded-full mb-4 border border-white/10">
+          {finalCta.badge || "TU SALUD ES HOY"}
+        </span>
+        <h2 class="type-h2 font-display text-white mb-4">
+          {finalCta.title || finalCta.titulo}
+        </h2>
+        <p class="text-sm sm:text-base text-slate-300 font-sans mb-8 leading-relaxed">
+          {finalCta.subtitle || finalCta.subtitulo}
+        </p>
+
+        <div class="flex justify-center">
+          <Button
+            href={whatsapp}
+            variant="primary"
+            size="lg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {finalCta.btn || finalCta.boton || "Agendar por WhatsApp"}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

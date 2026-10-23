@@ -1,0 +1,320 @@
+{
+  "tema": {
+    "primary": "#0284c7",
+    "accent": "#e0f2fe",
+    "fondo": "#f8fafc",
+    "tinta": "#0f172a",
+    "fuente": "GothicCompact",
+    "fuente_sans": "GroteskText",
+    "orden_secciones": [
+      "Hero",
+      "SymptomAssessment",
+      "TreatmentProtocol",
+      "ClinicalOutcomes",
+      "MedicalBooking"
+    ]
+  },
+  "paletas_alternativas": [
+    {
+      "nombre": "Clinical Pure",
+      "fondo": "#f8fafc",
+      "tinta": "#0f172a",
+      "primary": "#0284c7",
+      "accent": "#e0f2fe"
+    },
+    {
+      "nombre": "Lipedema Warm Clinic",
+      "fondo": "#fbf2e9",
+      "tinta": "#372426",
+      "primary": "#c25e68",
+      "accent": "#efe1d4"
+    },
+    {
+      "nombre": "Dermato Teal",
+      "fondo": "#f0fdfa",
+      "tinta": "#134e4a",
+      "primary": "#0d9488",
+      "accent": "#ccfbf1"
+    },
+    {
+      "nombre": "Obsidian Clinical",
+      "fondo": "#0b1120",
+      "tinta": "#f8fafc",
+      "primary": "#38bdf8",
+      "accent": "#1e293b"
+    }
+  ],
+  "content": {
+    "meta": {
+      "title": "Dra. Valentina Morales — Dermatología Clínica & Manejo Integral de Lipedema",
+      "description": "Consultoría médica dermatológica especializada en diagnóstico diferencial y protocolos conservadores de lipedema. Turnos en Recoleta y atención online.",
+      "favicon": "/icons/FAVICON-3.svg"
+    },
+    "prestador": {
+      "nombre": "Dra. Valentina Morales",
+      "tagline": "Dermatología Clínica & Especialista en Lipedema",
+      "matricula": "M.N. 142.890 · M.P. 45.120",
+      "telefono": "+54 9 11 4589-2210",
+      "whatsapp": "https://wa.me/5491145892210?text=Hola%20Dra.%20Valentina%2C%20quisiera%20solicitar%20una%20consulta%20de%20valoraci%C3%B3n.",
+      "bookingUrl": "#agendar",
+      "ubicacion": "Recoleta, Ciudad Autónoma de Buenos Aires",
+      "horarios": "Lunes a Viernes de 09:00 a 19:00 hs"
+    },
+    "hero": {
+      "badge": "CONSULTORÍA MÉDICA & DERMATOLÓGICA ESPECIALIZADA",
+      "title": "Diagnóstico Temprano y Manejo Integral del Lipedema",
+      "subtitle": "Acompañamos a mujeres que enfrentan inflamación, dolor en extremidades y fatiga crónica, brindando un protocolo clínico validado para recuperar movilidad y calidad de vida sin diagnósticos erróneos.",
+      "stat_1_value": "90%",
+      "stat_1_label": "Alivio y control sintomático con abordaje multimodal temprano",
+      "stat_2_value": "+320",
+      "stat_2_label": "Pacientes con protocolo de manejo personalizado activo",
+      "cta_primary": "Solicitar Valoración Clínica",
+      "cta_secondary": "Conocer Signos Clínicos"
+    },
+    "symptom_assessment": {
+      "badge": "DIAGNÓSTICO DIFERENCIAL & SIGNOS",
+      "title": "Cuándo podemos ayudarte",
+      "subtitle": "El lipedema suele confundirse erróneamente con sobrepeso o retención hídrica convencional. Identificar estos patrones clínicos es el primer paso hacia el alivio real.",
+      "items": [
+        {
+          "id": "01",
+          "title": "Diagnóstico Formal y Diferencial",
+          "desc": "Diferenciación certera de celulitis común, obesidad o linfedema primario mediante examen ecográfico y clínico minucioso."
+        },
+        {
+          "id": "02",
+          "title": "Dolor Crónico & Sensibilidad al Tacto",
+          "desc": "Sensación de pesadez intensa, dolor difuso en extremidades y aparición espontánea de hematomas con traumatismos mínimos."
+        },
+        {
+          "id": "03",
+          "title": "Falta de Escucha Médica & Errores Previos",
+          "desc": "Años de dietas restrictivas sin cambios en miembros inferiores y la frustración de no recibir un diagnóstico certero a tiempo."
+        },
+        {
+          "id": "04",
+          "title": "Abordaje Conservador No Quirúrgico",
+          "desc": "Terapia descongestiva compleja, nutrición antiinflamatoria específica y optimización del retorno venoso y linfático."
+        },
+        {
+          "id": "05",
+          "title": "Desafíos Emocionales & Autoimagen",
+          "desc": "Espacio médico empático y libre de juicios para abordar el impacto del lipedema en tu bienestar físico y mental cotidiano."
+        },
+        {
+          "id": "06",
+          "title": "Prendas de Compresión Especializada",
+          "desc": "Prescripción y ajuste milimétrico de compresión médica de tejido plano (flat-knit) para frenar la progresión del tejido graso."
+        }
+      ]
+    },
+    "problema": {
+      "badge": "DIAGNÓSTICO DIFERENCIAL & SIGNOS",
+      "title": "Cuándo podemos ayudarte",
+      "subtitle": "El lipedema suele confundirse erróneamente con sobrepeso o retención hídrica convencional.",
+      "items": [
+        "Diagnóstico Formal y Diferencial de Lipedema vs Celulitis",
+        "Dolor Crónico, Pesadez y Hematomas Espontáneos",
+        "Años de Dietas Ineficaces y Diagnósticos Erróneos Previos",
+        "Abordaje Terapéutico Conservador No Quirúrgico",
+        "Soporte Emocional y Validación Médica Empática",
+        "Prescripción Exacta de Compresión de Tejido Plano"
+      ]
+    },
+    "treatment_protocol": {
+      "badge": "PLANES DE CONSULTA & TRATAMIENTO",
+      "title": "Protocolos Clínicos de Intervención",
+      "subtitle": "Dos instancias médicas diseñadas para brindarte dirección terapéutica clara, respaldo científico y acompañamiento continuo.",
+      "plans": [
+        {
+          "id": "general",
+          "name": "Consulta Integral de Diagnóstico y Plan Terapéutico",
+          "price": "$89.000 ARS",
+          "duration": "60 minutos presencial u online",
+          "desc": "Evaluación clínica exhaustiva, estadiaje de lipedema (Estadio I a III) y diseño de tu plan conservador personalizado.",
+          "features": [
+            "Historia clínica completa y estadiaje clínico minucioso",
+            "Ecografía de partes blandas y doppler vascular in-situ",
+            "Pautas de nutrición antiinflamatoria médica personalizada",
+            "Prescripción precisa de compresión de tejido plano (flat-knit)",
+            "Informe médico detallado con pautas terapéuticas"
+          ],
+          "cta": "Agendar Consulta Integral",
+          "popular": true
+        },
+        {
+          "id": "surgery",
+          "name": "Acompañamiento Quirúrgico Pre y Post Operatorios",
+          "price": "$135.000 ARS",
+          "duration": "90 minutos + seguimiento evolutivo",
+          "desc": "Preparación de tejidos previo a liposucción especializada (WAL/PAL) y protocolo intensivo de recuperación postquirúrgica.",
+          "features": [
+            "Optimización de terreno tisular pre-quirúrgico",
+            "Terapia descongestiva y drenaje linfático médico previo",
+            "Acompañamiento en la elección y calce de fajas postquirúrgicas",
+            "Control de fibrosis y seromas en etapa post-operatoria",
+            "Interconsulta directa con tu cirujano tratante"
+          ],
+          "cta": "Agendar Acompañamiento Quirúrgico",
+          "popular": false
+        }
+      ]
+    },
+    "pasos": {
+      "badge": "PLANES DE CONSULTA",
+      "title": "Protocolos Clínicos de Intervención",
+      "items": [
+        {
+          "paso": "01",
+          "titulo": "Consulta Integral de Diagnóstico",
+          "descripcion": "Estadiaje de lipedema, pautas antiinflamatorias y prescripción de compresión médica."
+        },
+        {
+          "paso": "02",
+          "titulo": "Acompañamiento Quirúrgico Pre/Post",
+          "descripcion": "Preparación tisular y rehabilitación post-operatoria para liposucción WAL/PAL."
+        }
+      ]
+    },
+    "clinical_outcomes": {
+      "badge": "NUESTRAS VENTAJAS CLÍNICAS",
+      "title": "Por qué confiar tu salud en nuestro equipo",
+      "subtitle": "La combinación de rigor científico, tecnología de diagnóstico no invasivo y comprensión empática profunda.",
+      "advantages": [
+        {
+          "icon": "/icons/Group-10.svg",
+          "title": "Empoderamiento Educativo",
+          "desc": "Comprendé a fondo qué ocurre en tus tejidos y células para tomar decisiones terapéuticas informadas sin temores."
+        },
+        {
+          "icon": "/icons/Group-12.svg",
+          "title": "Abordaje Personalizado",
+          "desc": "Cada cuerpo responde de forma singular; tus protocolos se ajustan a tu estadio, nivel de dolor y estilo de vida."
+        },
+        {
+          "icon": "/icons/Group-2564.svg",
+          "title": "Perspectiva Holística & Multidisciplinar",
+          "desc": "Articulamos dermatología, flebología, nutrición funcional y kinesiología dermatofuncional."
+        },
+        {
+          "icon": "/icons/Group-2565.svg",
+          "title": "Foco Clínico Especializado",
+          "desc": "Dedicación exclusiva al lipedema y afecciones crónicas del tejido adiposo, con actualización científica internacional."
+        },
+        {
+          "icon": "/icons/Group-2566.svg",
+          "title": "Acompañamiento Paso a Paso",
+          "desc": "No estás sola tras la consulta: monitoreo evolutivo y ajustes periódicos para sostener tu bienestar a largo plazo."
+        }
+      ],
+      "testimonials": [
+        {
+          "nombre": "Mariana S.",
+          "edad": "38 años",
+          "estadio": "Estadio II diagnosticado",
+          "texto": "Pasé 12 años escuchando que solo tenía sobrepeso. La Dra. Valentina identificó mi lipedema en la primera consulta. Con la compresión adecuada y las pautas alimentarias, hoy no siento dolor al caminar.",
+          "rating": 5
+        },
+        {
+          "nombre": "Carolina M.",
+          "edad": "44 años",
+          "estadio": "Post-quirúrgico Liposucción WAL",
+          "texto": "El acompañamiento antes y después de mi cirugía fue fundamental. El control del edema y la fibrosis hicieron que mi recuperación fuera tres veces más rápida. Invaluable.",
+          "rating": 5
+        },
+        {
+          "nombre": "Luciana G.",
+          "edad": "31 años",
+          "estadio": "Estadio I en manejo temprano",
+          "texto": "Encontrar una profesional que realmente entienda el dolor físico y la carga mental del lipedema me cambió la vida. La consulta es súper humana y detallada.",
+          "rating": 5
+        }
+      ]
+    },
+    "reviews": [
+      {
+        "nombre": "Mariana S.",
+        "ocupacion": "38 años · Estadio II",
+        "texto": "Pasé 12 años escuchando que solo tenía sobrepeso. La Dra. Valentina identificó mi lipedema en la primera consulta. Con la compresión adecuada y las pautas alimentarias, hoy no siento dolor al caminar.",
+        "estrellas": 5
+      },
+      {
+        "nombre": "Carolina M.",
+        "ocupacion": "44 años · Postquirúrgica WAL",
+        "texto": "El acompañamiento antes y después de mi cirugía fue fundamental. El control del edema y la fibrosis hicieron que mi recuperación fuera tres veces más rápida. Invaluable.",
+        "estrellas": 5
+      },
+      {
+        "nombre": "Luciana G.",
+        "ocupacion": "31 años · Estadio I",
+        "texto": "Encontrar una profesional que realmente entienda el dolor físico y la carga mental del lipedema me cambió la vida. La consulta es súper humana y detallada.",
+        "estrellas": 5
+      }
+    ],
+    "casos": [
+      {
+        "titulo": "Remisión de Dolor en Miembros Inferiores",
+        "paciente": "Mariana S. (38 años)",
+        "resultado": "Reducción del 80% en pesadez y dolor a las 6 semanas con protocolo multimodal"
+      },
+      {
+        "titulo": "Recuperación Quirúrgica Acelerada",
+        "paciente": "Carolina M. (44 años)",
+        "resultado": "Cero seromas y recuperación funcional en 3 semanas post liposucción WAL"
+      }
+    ],
+    "pricing": {
+      "badge": "ARANCELES TRANSPARENTES",
+      "title": "Inversión en tu Salud y Bienestar",
+      "precio_consulta": "$89.000 ARS",
+      "precio_cirugia": "$135.000 ARS"
+    },
+    "medical_booking": {
+      "badge": "VALORACIÓN MÉDICA & AGENDAMIENTO",
+      "title": "Iniciá tu transformación sin miedos",
+      "subtitle": "El primer paso para recuperar tu movilidad, frenar la progresión del tejido graso y vivir sin dolor constante.",
+      "garantia": "Garantía de Claridad Clínica: Si durante los primeros 20 minutos de consulta no obtenés un plan de acción concreto y diagnóstico fundado, te reintegramos el 100% de tus honorarios.",
+      "direct_whatsapp": "Consultar Turnos por WhatsApp",
+      "direct_calendar": "Reservar Consulta Online"
+    },
+    "faq": [
+      {
+        "q": "¿Cómo me ayuda esta consulta a comprender y tratar mi lipedema?",
+        "a": "Realizamos una evaluación clínica exhaustiva para determinar si tus síntomas corresponden a lipedema, en qué estadio te encontrás y qué combinación de terapias (nutrición antiinflamatoria, compresión de tejido plano, drenaje y ejercicio de bajo impacto) frenará su progresión."
+      },
+      {
+        "q": "¿Las consultas se realizan en forma presencial o virtual?",
+        "a": "Ofrecemos ambas modalidades. La consulta presencial en nuestro consultorio de Recoleta incluye ecografía diagnóstica in-situ. Para pacientes del interior o exterior del país, disponemos de consulta médica virtual de alta resolución con guía fotográfica y análisis de estudios previos."
+      },
+      {
+        "q": "¿Qué incluye el informe médico que recibo tras la valoración?",
+        "a": "Recibís un informe clínico completo con estadiaje formal, orden médica para prendas de compresión de tejido plano con medidas exactas, pautas nutricionales antiinflamatorias y el plan de seguimiento sugerido para presentar ante obras sociales y prepagas."
+      },
+      {
+        "q": "¿Cómo sé si el acompañamiento pre y post quirúrgico es para mí?",
+        "a": "Si estás planificando una liposucción para lipedema (WAL o PAL), este protocolo prepara tus tejidos desinflamando el área antes de la intervención y previene complicaciones comunes como fibrosis, hematomas persistentes y seromas tras la cirugía."
+      },
+      {
+        "q": "¿La consulta me permite obtener una orden para prendas de compresión?",
+        "a": "Sí. Emitimos la receta médica y ficha de prescripción técnica de compresión de tejido plano (flat-knit), indispensable para que ortopedias especializadas confeccionen las medias adecuadas y para la cobertura ante prepagas."
+      }
+    ],
+    "final_cta": {
+      "badge": "TU SALUD ES HOY",
+      "title": "¿Lista para ponerle nombre y solución al dolor?",
+      "subtitle": "No sigas postergando tu bienestar. Agendá tu valoración médica con la Dra. Valentina Morales y comenzá hoy mismo tu protocolo de manejo personalizado.",
+      "btn": "Solicitar Valoración por WhatsApp"
+    },
+    "cta": {
+      "titulo": "¿Lista para ponerle nombre y solución al dolor?",
+      "subtitulo": "Agendá tu valoración médica con la Dra. Valentina Morales y comenzá tu protocolo de manejo personalizado.",
+      "boton": "Solicitar Valoración por WhatsApp"
+    },
+    "footer": {
+      "legal": "Todos los derechos reservados. La información proporcionada en este sitio web tiene fines educativos y no reemplaza el criterio médico profesional ni la consulta directa en consultorio.",
+      "compliance": "Cumplimiento Ley 25.326 de Protección de Datos Personales de la República Argentina. Tus datos médicos y de contacto son estrictamente confidenciales.",
+      "direccion": "Av. Callao 1450, Recoleta, CABA",
+      "horario": "Lunes a Viernes de 09:00 a 19:00 hs"
+    }
+  }
+}

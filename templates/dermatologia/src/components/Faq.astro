@@ -1,0 +1,41 @@
+---
+import { CONTENT } from "../site.ts";
+
+const faqs = CONTENT.faq || [];
+---
+
+<section id="faq" class="py-16 sm:py-24 px-4 sm:px-8 bg-[var(--color-paper)]">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+      <span class="inline-block text-xs font-semibold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-accent)]/80 px-3.5 py-1 rounded-full mb-3.5">
+        PREGUNTAS FRECUENTES
+      </span>
+      <h2 class="type-h2 font-display text-[var(--color-ink)] mb-4">
+        Popular Questions
+      </h2>
+      <p class="text-base text-[var(--color-ink)]/70 font-sans">
+        Respuestas claras y fundadas sobre diagnóstico, compresión y tratamiento del lipedema.
+      </p>
+    </div>
+
+    <div class="space-y-4">
+      {
+        faqs.map((item: any, i: number) => (
+          <details class="group clinical-card overflow-hidden transition-all duration-200">
+            <summary class="flex items-center justify-between p-6 cursor-pointer list-none select-none font-display text-base sm:text-lg font-bold text-[var(--color-ink)] group-open:text-[var(--color-primary)]">
+              <span class="pr-4">{item.q}</span>
+              <span class="w-8 h-8 rounded-full bg-[var(--color-accent)]/60 text-[var(--color-primary)] flex items-center justify-center shrink-0 transition-transform duration-200 group-open:rotate-180">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </span>
+            </summary>
+            <div class="px-6 pb-6 pt-1 text-sm sm:text-base text-[var(--color-ink)]/75 font-sans leading-relaxed border-t border-slate-100/80">
+              {item.a}
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

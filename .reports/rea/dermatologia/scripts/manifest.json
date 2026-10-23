@@ -1,0 +1,756 @@
+{
+  "capture_path": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/dermatologia/page.json",
+  "capture_sha256": "1a58d794fc79b41af0eb6ef89dd90111a165df81a879bfa71ef1d40a0475aeed",
+  "capture_kind": "page-inspection",
+  "source_evidence_id": "ev_c8f59ebb1b58dd312d121adc532708da417fcd3810be0ea353611e399c0f505c",
+  "capture_completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "accessibility",
+      "console_text",
+      "json_body_shapes",
+      "metadata",
+      "resources",
+      "scripts",
+      "storage_keys",
+      "websocket_shapes"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "accessibility",
+        "reason": "not_approved",
+        "count": 1207
+      },
+      {
+        "section": "console_text",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "metadata",
+        "reason": "disallowed_origin",
+        "count": 14
+      },
+      {
+        "section": "metadata",
+        "reason": "unsupported_url",
+        "count": 4
+      },
+      {
+        "section": "resources",
+        "reason": "disallowed_origin",
+        "count": 5
+      },
+      {
+        "section": "resources",
+        "reason": "unsupported_url",
+        "count": 3
+      },
+      {
+        "section": "scripts",
+        "reason": "disallowed_origin",
+        "count": 3
+      },
+      {
+        "section": "scripts",
+        "reason": "unsupported_url",
+        "count": 1
+      },
+      {
+        "section": "storage_keys",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "output_directory": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/dermatologia/scripts",
+  "analysis_input": {
+    "input_path": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/dermatologia/scripts/files",
+    "format": "directory"
+  },
+  "scripts": [
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_04742521e394947b8966e500890531862dc2606c0492c9ba0b5cc3e0c2ac3553",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/third-party/transit.min.js?ver=0.9.9",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-1-333df2daff5b02f889962a47f6aa106a46da40005a611003fb38781db2b0153e.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "fdcb39eec676f0d52a9647156d6e1c5e0668ebdbb1060cb8ff89d5b4ab4695e8",
+        "bytes": 7416,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_09a19265734a4596279c893d54f7c139d11ac4c9034749c64acd5ea7146df411",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/elements/nectar-text-inline-images.js?ver=17.4.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-2-c675f8d09f1208549a04396ba0a9925efcb248de598113bae307425b3fe82033.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "ef66536a8f16f684650fb4e7cad1b31ad3c6e4916c37c955c96e4c32824e399b",
+        "bytes": 1713,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_18d4810ee13252c2840331c3bb1c5682096ca94024f70ff9fedc4278b4388003",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/third-party/jquery.fancybox.js?ver=3.3.9",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-3-f04445c6975c1f1a5de0f6adbf41b068fd1ba68b1665307e8eef4937c5fc7550.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "3ce9be76f458848a316e79e59b1f08598f7bb71778871a34bd9c469772459728",
+        "bytes": 68855,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_1a2b3c9986458265e9863d71f9e94cd1f1247e54d4bc55de781cb0ee303701ed",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/elements/nectar-lottie.js?ver=17.4.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-4-54f3a304d3f81f67cba54db47341cba57bc39f1e13c0e4874d38e624ad9697e3.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "f7519d65e62fa3dd46c05759d22e9b70fada9321049850776493e5e11aef4ad3",
+        "bytes": 23617,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_261087c4d120f625ad75229898bca5b1fac0140d0ca7bf5077432a802005ac06",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/third-party/flickity.js?ver=2.3.2",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-5-fea12a9f2555f261373befd41b0cefe12b8c59806ec5c841f56d09c8bc90e860.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "7d54bed8617d23111a0b5bede2b9ebdeb1aa83e0a839cb60743223ba73b4e739",
+        "bytes": 55528,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_280a1d070f0e3835e6f23b40e4e8f61c0c4544e95fa1bce817a12f80313c331b",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-6-4f976eb218ef0e73f19230dd97f10b014b7fcec2e0c3fe42e4fff1ae1c501385.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "cb6f2d32c49d1c2b25e9ffc9aaafa3f83075346c01bcd4ae6eb187392a4292cf",
+        "bytes": 87553,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_2db0baab0fdb607c60ec959fdfed9197dc6201ac00114b4fd8518131c26531af",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/third-party/superfish.js?ver=1.5.8",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-7-cf49028df4085784d0793ef557d7b67ed2186d3d101b8004f26446b83275f170.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "5f180304e7e332ef978a8814a5aa94c1195323ad7eeaf5c9328c705fe7f5dae3",
+        "bytes": 5725,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_33813165754d2cdae051ea811d40fc65ec4504972bd30cab039b711d32c5e6a5",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/plugins/js_composer_salient/assets/js/dist/js_composer_front.min.js?ver=8.6.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-8-7146ebba4a5555e0ff50894c1077ad607ef9020c55c408e4c78333862db86056.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "2253f945ed1a00940367e33b0cb2c38e3047c18f31b46f1915796b21a94cdbb0",
+        "bytes": 23821,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_3b29416a3a31de7011216c820454e76e940403ef7fae444951bcc9ae644cc4f1",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/init.js?ver=17.4.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-9-1e5970f59984a14a46388455f2c5c07789fa20322961e453220143359ddcf0b4.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "bf7ebbd62a2b7d26bce4d8038c1e1129ee1492f6e56460f608488802a1dc6020",
+        "bytes": 382170,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_5279fc5db2ea618159c2c8c72ec93a38d65276cb506e4ccd9e8f89ff23e92d2d",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-10-0995f544a4ac707f61462f4ff324f825940c7b05b6b5e32e42bd4f740720215a.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "5274f11e6fb32ae0cf2dfb9f8043272865c397a7c4223b4cfa7d50ea52fbde89",
+        "bytes": 13577,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_53705ec6ae378e911b1a2bf20cfb01387ba774ef494a37d285a0ffba90fd768a",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-11-aca1f84b2431b76fe7b3a1799b9a065fc671e28c228e437209ce5aa13b3104f3.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "1b0c30756146e895d64ab948567f8eec42938d21035f0bd479fa5babf937d3a7",
+        "bytes": 772,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_5b154de3dea8cb6b849760251fac25b87d56575be2542e32d9e4c754e050cc49",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/nectar-smooth-scroll.js?ver=17.4.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-12-915cf39762d11dc0818fec1b6b073c335d93239ea4e43dd457c0ffc2fa4e75d8.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "007635c126e5600f7a8e12bb1b7cdb7d5761097eb3f7979977b6fc1b2b17e16f",
+        "bytes": 14307,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_65772f0b18bee29f65d3b663330314a56fcf935e79ad6d3ad89331affd12c884",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/third-party/jquery.mousewheel.min.js?ver=3.1.13",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-13-84db54536b3752601dbab6b805aceeecb1c7ef60397a38cc78bdccaf09a80f38.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "c962e74a0cd768609b29c247028bd61c3229a50bb3abe908feeaa98962eb0971",
+        "bytes": 2711,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_76f77da4bed381e8e176faecd4a34fc868de9fbe8d310aec38d91ec0b82dfff0",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/plugins/salient-portfolio/js/third-party/imagesLoaded.min.js?ver=4.1.4",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-14-70e1143cb7df54ad3cc5d075968cd43f2d6fe6d3e5ff53b883b006457291c270.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "96abf166b3cbb5f7df525d86fdeeeccea4af3c120b19bc26b0613530a94e8b44",
+        "bytes": 5594,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_8860fac8d54d297829b307c505e5d52dd1b7328adf785e78c2bf1aaedc8aa3c9",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/third-party/lottie-player.min.js?ver=5.12.2",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-15-e69e94a85ded10dba1e3133bcd5f4959b9b41d62f72dcf50ca96aeceb97b6a96.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "c3f36ae0edaa69284599c6292adb4f7595701016934a5d4c64c21efae53bef3e",
+        "bytes": 305602,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_91381e56fdce18afa13f87438e7e0c328d2d003299e1e1c7d6e2cf0211ec2b96",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/elements/nectar-sticky-media-sections.js?ver=17.4.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-16-5cd04baa63088ab4f435c2192e6dda3c8ab964980c5fe80f4dd4018bdeb955db.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "cae9fa17f27fd2065c025efcafb4d1f48bcceccaf0cfdf4e9adf009cf4284c13",
+        "bytes": 9502,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_b1b5d60599b181da6414628d43310866f18c55fd2be411132b8173fbf94ae8e8",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/plugins/salient-core/js/third-party/touchswipe.min.js?ver=3.1.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-17-2839e9f7118075840ecfb218b45bd67bf06d825b92fc630fe8b4de0e018756a9.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "cb225cbe89436bb47d3b4486cd9cee63db751cdaf60409f496253ca8be549dae",
+        "bytes": 9375,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_b38f0bd7cf3bf71eb03b5e07096ae624069e5aa473f0e9162f6f030dd8437a92",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/third-party/anime.min.js?ver=4.5.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-18-ea3f21c2ff00578824701bfd4fd1d7594059aeba6058b07fdd516d00f166efe4.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "5cbda29ea5096ac9404c59c77493a2f467d0eb4a27f16c750b61fc0d888dd716",
+        "bytes": 17741,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_b6602f366524f2899ccb5b6acf519893ef8dda48e242756a25b63e773928d2dd",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/priority.js?ver=17.4.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-19-e426697c335107e0b13f598bdb991de40ef6bde54787dcf9ddc796b962b30c34.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "2ff736ab797eedc5190bf7dae8ff0bd0dcd546d7cce417ed909a608ce385acd8",
+        "bytes": 1922,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_b7b7c3b4aceb77487c794635292dd2f0bd3c3876ad3aa58ce96ffbaea7372f62",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-20-d18b416ae48c3cf31b0779f05556dde15de366ca84aca7974947bdebd1fbc768.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "14bb15ea375ef0ac0dab6877c6c553b705d3a67c8512227a20a10152ab1b7db2",
+        "bytes": 534,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_bc9d44a81a07a1d9411ce5b2b496c3b3cd46607cf6ebf64e9cf807109a2b6135",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-21-fa8cd71977915aea92488e7f6b1c07c3932980401e887196040280f6dd02862c.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "bd9ba32410a71f01bac615bb7e8d6b15f9731e175b71a62dee8ba58496ed523d",
+        "bytes": 153,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_c14e72045462c1b2b48a3a1a196e22ac3609e95c3b3c633cda574ef9a06bf750",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-22-232713895e81af2bba56b0a146a2dc16c112ec304bf4fa87875531c41b59d609.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "fbfab4f2b189420d41a6e9ed84c885bdd4f1733975182628d0181043c6a0bfa1",
+        "bytes": 30,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_c3244551a9a174ca576ecb71d74bc3cc4a39d21f24af96256dd2c99906487247",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/third-party/jquery.easing.min.js?ver=1.3",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-23-1b470f749828a118b2e510d4687acbab5b944680c7eebc1e1cab448f66d99930.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "15a71d32b340bf3641581ac5b4f37887b9cb3981477d5886ec5849749c8a36e7",
+        "bytes": 2392,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_c818c15dabefa9a6baebe934b6b7a6692876970ce27c1f7054e104aa19689ca2",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/third-party/waypoints.js?ver=4.0.2",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-24-3a5fd42ea94962b931628a6ba9b1fc0552cacb9e0b3d0caab6aba2121d1367a1.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "3c9eb9bb1076bbb11745885964334df870bf7eb621daa5e7475a9a5cf4b2e424",
+        "bytes": 8999,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_e0fe3b2243e05e86d0eff816a524c25fbd2d195d8778112b03f11a0d6831f36d",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-25-7531967547a97a5acc40d0306649f37b5a960400694248b892e99f66ae656417.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "5907e64edfab073cceb6cc457eb93162456093676c36f945b93743d3bf91e3a9",
+        "bytes": 25,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_e1e9285f4ec35266f38ed6bc68b516fab87a7b66dc849f4aee4433ab558547e4",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-26-e0ee21b7e1b4c945303d879aa7ab2a6beda8519834ce7845ba981af3ff33aeac.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "107b854fc832809a763ca32c4e379f3da6a9a96fce0152e377972bc5905cb70c",
+        "bytes": 589,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_eef403bbc83b79f7998740ab203db24b5e90de14746ad59d91c21c283ddf360c",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/wp-content/themes/salient/js/build/third-party/hoverintent.min.js?ver=1.9",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-27-ce5c492ec7dacac40521142aaaccc4a021d3e3ddb6ecc0e519f3c4c523fab4eb.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "86a156b80c4342d46aa6bfdf42944e34cd85f5935e38c20bd58445006ca12a96",
+        "bytes": 2245,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_f4c6e6f94ee548c8f637e60111745a5228cd9326619b2ef9ad1cedebd1ace3ff",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-28-1155eded19dbc5c1a643c6253c8ccca0e4f74067bde9b20ceaa36328154d4219.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "c724d9bcc12cbbd28b2292e65e62fe4421d0c59acf34b8ee0ec95a9a4cc04121",
+        "bytes": 1042,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_fb1c925d9ae379bd93b85b307557a262367ad08a38591144b6d5c755de405703",
+        "frame_id": "C58AF2F7C196016D5094ACAFD24DBE2D",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://lipedemaguru.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-29-0802e5e2437b9b43912a00eb70ea795598820dd0cc9f37863cc3c71a96521d00.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "a38cd852ed2bd05d8578772d5628fe44b62810ad4881a5aa1a359d84b76e7980",
+        "bytes": 92,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    }
+  ],
+  "limitations": [
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+    "Only script bytes retained in this capture are exported. Sources are not refetched or executed, and a response or Debugger source does not prove execution.",
+    "Ordinary unambiguous URL paths preserve relative module layouts by origin, including case-distinct spellings. Query variants, exact path collisions, file/directory prefixes, inline sources, and unrepresentable paths are isolated. A case-distinct pair is isolated only when the destination filesystem cannot store both spellings; the record names that pair. Browser module relationships of isolated paths remain unknown.",
+    "Local JavaScript analysis does not implement browser import maps, root-relative URL resolution, remote URL loading, or browser runtime behavior. It may strip import queries and fragments; isolated variants are not canonical targets.",
+    "Source-map declarations are retained as metadata. No source maps or missing dependencies are fetched or reconstructed.",
+    "Scenario response bytes preserve the output of Playwright's Response.body() API; any source-body provenance caveat from the capture is retained in this manifest. Debugger sources are the exposed text encoded as UTF-8. Redacted bytes are exported exactly as retained, and may no longer parse as JavaScript."
+  ]
+}

@@ -1,0 +1,113 @@
+---
+import { CONTENT } from "../site.ts";
+import Button from "./ui/Button.astro";
+
+const { prestador } = CONTENT;
+---
+
+<header class="w-full sticky top-0 z-40 bg-[var(--color-paper)]/90 backdrop-blur-md border-b border-[var(--color-clinical-border)] transition-colors">
+  <!-- Topbar con información médica -->
+  <div class="hidden sm:block border-b border-[var(--color-clinical-border)]/60 text-xs py-1.5 px-4 sm:px-8 text-[var(--color-ink)]/70">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Consultorio Abierto: {prestador.horarios}</span>
+        </span>
+        <span class="text-[var(--color-clinical-border)]">|</span>
+        <span>{prestador.ubicacion}</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span>Matrícula: {prestador.matricula}</span>
+        <a href={`tel:${prestador.telefono}`} class="font-medium hover:text-[var(--color-primary)] transition-colors">
+          Tel: {prestador.telefono}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra Principal -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 sm:py-4 flex items-center justify-between">
+    <!-- Brand / Isotipo -->
+    <a href="#" class="flex items-center gap-2.5 text-decoration-none group">
+      <div class="w-9 h-9 rounded-full bg-[var(--color-accent)] text-[var(--color-primary)] flex items-center justify-center font-bold text-lg shadow-sm border border-[var(--color-primary)]/20 transition-transform group-hover:scale-105">
+        <svg class="w-5 h-5 text-[var(--color-primary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14"/>
+        </svg>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-display text-lg sm:text-xl font-bold tracking-tight text-[var(--color-ink)] leading-tight flex items-center gap-1">
+          {prestador.nombre}
+        </span>
+        <span class="text-[11px] text-[var(--color-ink)]/60 font-sans tracking-wide">
+          {prestador.tagline}
+        </span>
+      </div>
+    </a>
+
+    <!-- Navegación Desktop -->
+    <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-[var(--color-ink)]/80">
+      <a href="#sintomas" class="hover:text-[var(--color-primary)] transition-colors">Signos Clínicos</a>
+      <a href="#protocolos" class="hover:text-[var(--color-primary)] transition-colors">Protocolos</a>
+      <a href="#ventajas" class="hover:text-[var(--color-primary)] transition-colors">Ventajas</a>
+      <a href="#faq" class="hover:text-[var(--color-primary)] transition-colors">Preguntas</a>
+    </nav>
+
+    <!-- CTAs de Agendamiento -->
+    <div class="flex items-center gap-3">
+      <a
+        href={prestador.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hidden lg:inline-flex items-center gap-1.5 text-xs font-medium py-2 px-3 rounded-full border border-[var(--color-clinical-border)] text-[var(--color-ink)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary)]/40 transition-colors"
+      >
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span>WhatsApp Directo</span>
+      </a>
+
+      <Button href="#agendar" variant="primary" size="sm">
+        Agendar Consulta
+      </Button>
+
+      <!-- Botón Menú Móvil -->
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden w-9 h-9 rounded-full bg-[var(--color-accent)]/60 border border-[var(--color-clinical-border)] flex items-center justify-center text-[var(--color-ink)] focus:outline-none"
+        aria-label="Alternar navegación móvil"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-[var(--color-clinical-border)] bg-[var(--color-paper)] px-4 py-4 space-y-3">
+    <a href="#sintomas" class="block text-sm font-medium text-[var(--color-ink)] py-2 border-b border-[var(--color-clinical-border)]/40">Signos Clínicos</a>
+    <a href="#protocolos" class="block text-sm font-medium text-[var(--color-ink)] py-2 border-b border-[var(--color-clinical-border)]/40">Protocolos</a>
+    <a href="#ventajas" class="block text-sm font-medium text-[var(--color-ink)] py-2 border-b border-[var(--color-clinical-border)]/40">Ventajas</a>
+    <a href="#faq" class="block text-sm font-medium text-[var(--color-ink)] py-2">Preguntas</a>
+    <div class="pt-2">
+      <a href={prestador.whatsapp} target="_blank" rel="noopener noreferrer" class="w-full btn-clinical btn-clinical-primary text-xs py-2.5 text-center justify-center">
+        Contactar por WhatsApp
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById("mobile-menu-btn");
+  const menu = document.getElementById("mobile-menu");
+  if (btn && menu) {
+    btn.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+    });
+    // Cerrar al clickear cualquier link
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        menu.classList.add("hidden");
+      });
+    });
+  }
+</script>
