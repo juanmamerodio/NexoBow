@@ -1,5 +1,9 @@
 ---
 import { SITE } from "../config";
+
+const coreWaUrl = `https://wa.me/${SITE.phoneRaw}?text=Hola%20Juanma!%20Me%20interesa%20activar%20el%20Plan%20Core%20de%20NexoBow%20con%20los%203%20bonos.`;
+const clinicaWaUrl = `https://wa.me/${SITE.phoneRaw}?text=Hola%20Juanma!%20Quiero%20consultar%20por%20el%20Plan%20Cl%C3%ADnica%20Pro%20de%20NexoBow.`;
+const growthWaUrl = `https://wa.me/${SITE.phoneRaw}?text=Hola%20Juanma!%20Quiero%20cotizar%20el%20Plan%20Full%20Growth%20(Embudo%20%2B%20AfterBow%20Audiovisual).`;
 ---
 
 <section id="planes" class="relative mx-auto max-w-6xl px-6 py-24">
@@ -60,10 +64,12 @@ import { SITE } from "../config";
 
       <div class="mt-8">
         <a
-          href={SITE.bookingUrl}
+          href={coreWaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           class="flex w-full items-center justify-center rounded-full bg-[#BF40FA] px-6 py-3.5 text-sm font-bold text-[#F8F6FF] transition-all duration-200 hover:bg-[#A82EE3] shadow-[0_0_25px_rgba(191,64,250,0.4)]"
         >
-          Activar Plan Core + 3 Bonos →
+          Activar Plan Core por WhatsApp →
         </a>
       </div>
     </div>
@@ -102,10 +108,12 @@ import { SITE } from "../config";
 
       <div class="mt-8">
         <a
-          href={SITE.bookingUrl}
+          href={clinicaWaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           class="flex w-full items-center justify-center rounded-full border border-[#4928C2]/60 bg-[#040607] px-6 py-3.5 text-sm font-bold text-[#F8F6FF] transition-all duration-200 hover:border-[#BF40FA] hover:bg-[#5B2A62]/20"
         >
-          Consultar por Plan Clínica →
+          Consultar por Plan Clínica en WhatsApp →
         </a>
       </div>
     </div>
@@ -153,10 +161,12 @@ import { SITE } from "../config";
 
       <div class="mt-8 space-y-2.5">
         <a
-          href={SITE.bookingUrl}
+          href={growthWaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           class="flex w-full items-center justify-center rounded-full border border-[#BF40FA]/60 bg-[#5B2A62]/30 px-6 py-3.5 text-sm font-bold text-[#F8F6FF] transition-all duration-200 hover:bg-[#BF40FA] hover:text-[#F8F6FF]"
         >
-          Cotizar Plan Embudo + Mes de Contenido
+          Cotizar Plan Embudo + Contenido vía WhatsApp →
         </a>
         <a
           href={SITE.afterbowUrl}

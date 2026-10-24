@@ -4,9 +4,11 @@ const links = [
   { href: "#problema", label: "El Problema" },
   { href: "#como-funciona", label: "Cómo Funciona" },
   { href: "#disenos", label: "Diseños (+10)" },
+  { href: "#casos-de-exito", label: "Casos de Éxito" },
   { href: "#calculadora-roi", label: "Calculadora ROI" },
   { href: "#planes", label: "Planes y Bonos" },
   { href: "#quien-esta-detras", label: "Quién Está Detrás" },
+  { href: "#contacto", label: "Contacto" },
 ];
 ---
 
@@ -31,22 +33,27 @@ const links = [
       {links.map((l) => (
         <a
           href={l.href}
-          class="rounded-full px-3.5 py-2 transition-all duration-200 hover:bg-[#5B2A62]/20 hover:text-[#F8F6FF]"
+          class="rounded-full px-3 py-2 transition-all duration-200 hover:bg-[#5B2A62]/20 hover:text-[#F8F6FF]"
         >
           {l.label}
         </a>
       ))}
     </nav>
 
-    <!-- Primary Conversion Action Button -->
+    <!-- Primary Conversion Action Button: Direct WhatsApp Contact -->
     <a
-      href={SITE.bookingUrl}
-      class="group relative inline-flex items-center gap-2.5 rounded-full border border-[#4928C2]/50 bg-[#0B0D12] p-1 pl-4 pr-1.5 text-xs font-semibold tracking-wide text-[#F8F6FF] transition-all duration-300 hover:border-[#BF40FA] hover:bg-[#5B2A62]/20 hover:shadow-[0_0_24px_rgba(191,64,250,0.3)]"
+      href={SITE.whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="group relative inline-flex items-center gap-2.5 rounded-full border border-emerald-500/50 bg-[#0B0D12] p-1 pl-4 pr-1.5 text-xs font-semibold tracking-wide text-[#F8F6FF] transition-all duration-300 hover:border-emerald-400 hover:bg-emerald-950/20 hover:shadow-[0_0_24px_rgba(16,185,129,0.3)]"
     >
-      <span>Ver mi demo / Agendar</span>
-      <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#BF40FA] text-[#F8F6FF] transition-all duration-300 group-hover:translate-x-0.5 group-hover:bg-[#A82EE3]">
-        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+      <span class="flex items-center gap-2">
+        <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+        <span>Contactar por WhatsApp</span>
+      </span>
+      <span class="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-[#040607] font-extrabold transition-all duration-300 group-hover:translate-x-0.5 group-hover:bg-emerald-400">
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.586 1.86.897 2.796.897h.001c3.181 0 5.767-2.587 5.768-5.766.001-3.181-2.585-5.767-5.769-5.767zm7.575 5.766c-.002 4.174-3.398 7.57-7.574 7.57-1.309 0-2.548-.344-3.649-.976l-4.383 1.15 1.17-4.272c-.722-1.15-1.107-2.483-1.108-3.864.002-4.174 3.398-7.57 7.574-7.57 4.176 0 7.572 3.397 7.572 7.57z" />
         </svg>
       </span>
     </a>

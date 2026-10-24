@@ -63,6 +63,26 @@ function parseArgs() {
   return flags;
 }
 
+export function formatArgentinePhoneNumber(rawPhone) {
+  if (!rawPhone) return '';
+  let digits = String(rawPhone).replace(/\D/g, '');
+  if (!digits) return '';
+  if (digits.startsWith('549')) return `+${digits}`;
+  if (digits.startsWith('54')) return `+549${digits.slice(2)}`;
+  digits = digits.replace(/^0+/, '');
+  if (digits.startsWith('11')) {
+    let local = digits.slice(2).replace(/^15/, '');
+    return `+54911${local}`;
+  }
+  if ((digits.startsWith('3489') || digits.startsWith('3487') || digits.startsWith('348')) && digits.length >= 8) {
+    let area = digits.slice(0, 4);
+    let local = digits.slice(4).replace(/^15/, '');
+    return `+549${area}${local}`;
+  }
+  digits = digits.replace(/^15/, '');
+  return `+549${digits}`;
+}
+
 function slugify(text) {
   return text
     .toString()
@@ -73,7 +93,15 @@ function slugify(text) {
     .replace(/(^-|-$)+/g, '');
 }
 
-async function searchSerperPlaces(query, apiKey, limit = 20) {
+export function cleanDisplayName(title = '') {
+  return String(title || '')
+    .replace(/^Lic\.\s+[Ee]n\s+[Nn]utrici[oó]n\s+/i, 'Lic. ')
+    .replace(/^Licenciada\s+[Ee]n\s+[Nn]utrici[oó]n\s+/i, 'Lic. ')
+    .replace(/^Licenciado\s+[Ee]n\s+[Nn]utrici[oó]n\s+/i, 'Lic. ')
+    .trim();
+}
+
+export async function searchSerperPlaces(query, apiKey, limit = 20) {
   const url = 'https://google.serper.dev/places';
   const res = await fetch(url, {
     method: 'POST',
@@ -96,16 +124,16 @@ async function searchSerperPlaces(query, apiKey, limit = 20) {
 
   const data = await res.json();
   return (data.places || []).map(p => ({
-    displayName: p.title || '',
+    displayName: cleanDisplayName(p.title || ''),
     formattedAddress: p.address || '',
-    nationalPhoneNumber: p.phoneNumber || '',
+    nationalPhoneNumber: formatArgentinePhoneNumber(p.phoneNumber || ''),
     websiteUri: p.website || '',
     rating: p.rating || 5.0,
     userRatingCount: p.ratingCount || 0
   }));
 }
 
-async function searchMultiplePlaces(query, serperKey, googleKey, limit = 20) {
+export async function searchMultiplePlaces(query, serperKey, googleKey, limit = 20) {
   if (serperKey) {
     return await searchSerperPlaces(query, serperKey, limit);
   }
@@ -146,9 +174,9 @@ async function searchMultiplePlaces(query, serperKey, googleKey, limit = 20) {
 
   const data = await res.json();
   return (data.places || []).map(p => ({
-    displayName: p.displayName?.text || '',
+    displayName: cleanDisplayName(p.displayName?.text || ''),
     formattedAddress: p.formattedAddress || '',
-    nationalPhoneNumber: p.internationalPhoneNumber || p.nationalPhoneNumber || '',
+    nationalPhoneNumber: formatArgentinePhoneNumber(p.internationalPhoneNumber || p.nationalPhoneNumber || ''),
     websiteUri: p.websiteUri || '',
     rating: p.rating || 5.0,
     userRatingCount: p.userRatingCount || 0
@@ -212,14 +240,7 @@ async function main() {
 
   // 1. Obtener prospectos existentes en el Google Sheet para deduplicación
   console.log(`\n1. Verificando prospectos existentes en Google Sheet (${DEFAULT_SPREADSHEET_ID})...`);
-  const existingRows = defaultLeadStore.readRows();
-  const existingKeys = existingRows
-    .filter((r) => Array.isArray(r) && r.length >= 2)
-    .map((r) => ({
-      id: r[0] || '',
-      nombre: r[1] || '',
-      telefono: r[17] || ''
-    }));
+  const existingKeys = defaultLeadStore.getExistingKeys();
   console.log(`✓ ${existingKeys.length} registros existentes identificados para deduplicación.`);
 
   // 2. Extraer prospectos candidatos
@@ -231,13 +252,33 @@ async function main() {
     candidatePlaces = getMockPlaces(query || 'Campana', nicho);
   } else {
     console.log(`\n2. Consultando API para encontrar profesionales en la zona...`);
-    candidatePlaces = await searchMultiplePlaces(query, serperKey, apiKey, 20);
+    const subQueries = String(query).split(',').map(s => s.trim()).filter(Boolean);
+    const collected = [];
+    for (const sq of subQueries) {
+      console.log(`- Buscando: "${sq}"...`);
+      const places = await searchMultiplePlaces(sq, serperKey, apiKey, 20);
+      collected.push(...places);
+    }
+    const seen = new Set();
+    for (const p of collected) {
+      const key = `${p.displayName.toLowerCase().trim()}|${p.nationalPhoneNumber}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        candidatePlaces.push(p);
+      }
+    }
   }
 
   console.log(`✓ ${candidatePlaces.length} candidatos encontrados en la zona.`);
 
+  const nonRelevantWords = ['omnilife', 'seytu', 'cosme', 'amway', 'herbalife', 'belleza', 'uñas', 'depilacion'];
+  const filteredCandidates = candidatePlaces.filter(p => {
+    const t = (p.displayName || '').toLowerCase();
+    return !nonRelevantWords.some(w => t.includes(w));
+  });
+
   // 3. Filtrar candidatos (sin web corporativa + sin duplicados + tope 10)
-  const eligibleLeads = filterEligiblePlaces(candidatePlaces, existingKeys, limit);
+  const eligibleLeads = filterEligiblePlaces(filteredCandidates, existingKeys, limit);
 
   if (eligibleLeads.length === 0) {
     console.log(`\n\x1b[33m[AVISO] No se encontraron prospectos nuevos sin web en la zona especificada.\x1b[0m`);
@@ -310,16 +351,24 @@ async function main() {
         writeFileSync(join(assetDir, 'lead-raw.json'), JSON.stringify(rawPayload, null, 2), 'utf8');
 
         // 2. Generar ficha con generate-client-fiche
-        spawnSync('node', ['scripts/generate-client-fiche.mjs', `assets/${itemSlug}/lead-raw.json`], {
+        const ficheRes = spawnSync('node', ['scripts/generate-client-fiche.mjs', `assets/${itemSlug}/lead-raw.json`], {
           cwd: REPO_ROOT,
-          shell: process.platform === 'win32'
+          shell: process.platform === 'win32',
+          stdio: 'inherit'
         });
+        if (ficheRes.status !== 0) {
+          throw new Error(`generate-client-fiche falló con código ${ficheRes.status}`);
+        }
 
         // 3. Compilar sitio con build-client-site (auto-sincroniza con dist-previews/{slug}/)
-        spawnSync('node', ['scripts/build-client-site.mjs', `clients/${itemSlug}.md`], {
+        const buildRes = spawnSync('node', ['scripts/build-client-site.mjs', `clients/${itemSlug}.md`], {
           cwd: REPO_ROOT,
-          shell: process.platform === 'win32'
+          shell: process.platform === 'win32',
+          stdio: 'inherit'
         });
+        if (buildRes.status !== 0) {
+          throw new Error(`build-client-site falló con código ${buildRes.status}`);
+        }
         console.log(`\x1b[32m[prospect] ✓\x1b[0m Landing compilada para ${itemSlug}`);
       } catch (buildErr) {
         console.warn(`[prospect] Advertencia al generar landing para ${itemSlug}: ${buildErr.message}`);
@@ -358,7 +407,10 @@ async function main() {
   });
 }
 
-main().catch(err => {
-  console.error(`[ERROR FATAL] ${err.message}`);
-  process.exit(1);
-});
+const { pathToFileURL } = await import('node:url');
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch(err => {
+    console.error(`[ERROR FATAL] ${err.message}`);
+    process.exit(1);
+  });
+}

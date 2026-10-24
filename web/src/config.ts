@@ -1,18 +1,71 @@
 // Single source of truth for NexoBow B2B Flagship Web (see /spec.md).
 export const SITE = {
   name: "NexoBow",
-  bookingUrl: "#agendar",
+  phone: "+54 9 3489 53-6088",
+  phoneRaw: "5493489536088",
   whatsappUrl:
-    "https://wa.me/5491100000000?text=Hola%20Juanma!%20Vi%20la%20web%20de%20NexoBow%20y%20quiero%20implementar%20el%20sistema%20en%20mi%20consultorio.",
+    "https://wa.me/5493489536088?text=Hola%20Juanma!%20Vi%20la%20web%20de%20NexoBow%20y%20quiero%20hacerte%20una%20consulta.",
+  bookingUrl:
+    "https://wa.me/5493489536088?text=Hola%20Juanma!%20Vi%20la%20web%20de%20NexoBow%20y%20quiero%20implementar%20el%20sistema%20en%20mi%20negocio.",
   afterbowUrl: "https://www.afterbow.com",
   founderCvUrl: "https://juanmamerodio.github.io/cv",
-  demoLiveUrl: "https://demo-nutri-sofia.nexobow.site",
+  demoLiveUrl: "https://preview.nexobow.site/demo-nutri-sofia/",
   setupPrice: "$189.999 ARS",
   setupOldPrice: "$260.000 ARS",
   monthlyPrice: "$12.259 ARS",
   clinicSetupPrice: "$329.999 ARS",
   clinicMonthlyPrice: "$19.899 ARS",
   demoExpirationDays: 7,
+  caseStudies: [
+    {
+      id: "afterbow",
+      title: "AfterBow",
+      subtitle: "Productora Audiovisual de Alto Impacto",
+      badge: "Productora Audiovisual",
+      url: "https://www.afterbow.com",
+      urlDisplay: "afterbow.com",
+      description:
+        "Sitio web corporativo y showcase dinámico para productora audiovisual. Portfolio cinematográfico de alta retención, reproducción ágil de reels publicitarios y conversión directa de clientes B2B.",
+      metrics: [
+        { value: "< 0.8s", label: "Carga Inicial" },
+        { value: "4K / HD", label: "Showcase Audiovisual" },
+        { value: "100%", label: "Mobile Responsive" },
+      ],
+      tags: ["Productora Audiovisual", "Showcase Cinematográfico", "Branding"],
+    },
+    {
+      id: "juanmamerodio",
+      title: "Embudo para Infoproducto",
+      subtitle: "Formación & Educación Digital",
+      badge: "Embudo de Infoproducto",
+      url: "https://juanmamerodio.github.io",
+      urlDisplay: "juanmamerodio.github.io",
+      description:
+        "Embudo de alta conversión diseñado estratégicamente para la venta directa de infoproductos digitales. Estructura de pre-calificación, copywriting persuasivo, prueba social y pasarela directa hacia WhatsApp y checkout.",
+      metrics: [
+        { value: "0.6s", label: "LCP Móvil" },
+        { value: "Alta Tasa", label: "Conversión de Venta" },
+        { value: "0 KB", label: "JS Innecesario" },
+      ],
+      tags: ["Embudo de Infoproducto", "Copywriting de Conversión", "Venta Directa"],
+    },
+    {
+      id: "esenciatecnica",
+      title: "Esencia Técnica",
+      subtitle: "E-Commerce Educativo Especializado",
+      badge: "E-Commerce Educativo",
+      url: "https://esenciatecnica.vercel.app",
+      urlDisplay: "esenciatecnica.vercel.app",
+      description:
+        "Plataforma completa de comercio electrónico para formación técnica y educativa. Catálogo interactivo de cursos técnicos, experiencia fluida de compra, pasarela de pago optimizada y arquitectura de carga instantánea.",
+      metrics: [
+        { value: "E-Commerce", label: "Catálogo Activo" },
+        { value: "Educativo", label: "Cursos Técnicos" },
+        { value: "Instantáneo", label: "Navegación Sin Fricción" },
+      ],
+      tags: ["E-Commerce Educativo", "Catálogo & Checkout", "Arquitectura Moderna"],
+    },
+  ],
   bonuses: [
     {
       number: "Bono #1",

@@ -112,4 +112,13 @@ test("T-WEB-04: Suite E2E Rebranding Soft-Obsidian y Funnel de 12 Secciones en w
     // 11 Faq & 12 FinalCta / Footer
     assert.match(textContent, /Ley 25\.326/i);
   });
+
+  await t.test("5. Canales de contacto directo a WhatsApp (+54 9 3489 53-6088) y casos de éxito reales", () => {
+    assert.match(html, /wa\.me\/5493489536088/, "Debe incluir enlace directo a wa.me/5493489536088");
+    assert.match(textContent, /\+54 9 3489 53-6088/, "Debe mostrar el número de WhatsApp +54 9 3489 53-6088 visible");
+    assert.match(html, /https:\/\/www\.afterbow\.com/, "Debe incluir caso de éxito AfterBow");
+    assert.match(html, /https:\/\/juanmamerodio\.github\.io/, "Debe incluir caso de éxito embudo infoproducto");
+    assert.match(html, /https:\/\/esenciatecnica\.vercel\.app/, "Debe incluir caso de éxito e-commerce educativo");
+  });
 });
+

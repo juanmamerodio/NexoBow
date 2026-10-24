@@ -98,14 +98,23 @@ export function buildCorrelativeSlug({ id, displayName = '', nicho = 'nutricioni
     'las',
     'y',
     'e',
+    'en',
     'asoc',
-    'asociados'
+    'asociados',
+    'nutricion',
+    'nutricionista'
   ]);
 
-  const tokens = basePart
+  const rawTokens = basePart
     .split(/\s+/)
     .filter(Boolean)
     .filter((tok) => !stopTitles.has(tok));
+
+  // Omitir iniciales de una sola letra (ej: "m" en "lucia m vega") si hay más de 2 tokens
+  const tokens =
+    rawTokens.length > 2
+      ? rawTokens.filter((tok) => tok.length > 1)
+      : rawTokens;
 
   const nameTokens = tokens.length >= 2 ? tokens.slice(0, 2) : tokens.length === 1 ? tokens : ['profesional'];
   const rubroShort = abbreviateRubro(nicho);

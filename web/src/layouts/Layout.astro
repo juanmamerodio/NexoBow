@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import { SITE } from "../config";
+
 interface Props {
   title: string;
   description: string;
@@ -48,5 +50,25 @@ const { title, description } = Astro.props;
     <div class="relative z-10">
       <slot />
     </div>
+
+    <!-- Floating 0-JS WhatsApp Pill (Bottom-Right, Pure CSS) -->
+    <a
+      href={SITE.whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="group fixed bottom-5 right-5 z-50 flex items-center gap-2.5 rounded-full border border-emerald-500/50 bg-[#0B0D12]/95 px-4 py-3 text-xs font-bold text-[#F8F6FF] shadow-[0_10px_35px_rgba(0,0,0,0.85),0_0_20px_rgba(16,185,129,0.25)] backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-emerald-400 hover:shadow-[0_0_30px_rgba(16,185,129,0.45)]"
+      aria-label={`Contactar por WhatsApp a Juanma Merodio (${SITE.phone})`}
+    >
+      <span class="flex h-2.5 w-2.5 items-center justify-center">
+        <span class="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+      </span>
+      <span class="hidden sm:inline text-[#E3D9FC] group-hover:text-[#F8F6FF] transition-colors">
+        WhatsApp: <span class="text-emerald-400 font-extrabold">{SITE.phone}</span>
+      </span>
+      <span class="sm:hidden text-emerald-400 font-bold">WhatsApp</span>
+      <svg class="h-4 w-4 text-emerald-400 group-hover:translate-x-0.5 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.586 1.86.897 2.796.897h.001c3.181 0 5.767-2.587 5.768-5.766.001-3.181-2.585-5.767-5.769-5.767zm7.575 5.766c-.002 4.174-3.398 7.57-7.574 7.57-1.309 0-2.548-.344-3.649-.976l-4.383 1.15 1.17-4.272c-.722-1.15-1.107-2.483-1.108-3.864.002-4.174 3.398-7.57 7.574-7.57 4.176 0 7.572 3.397 7.572 7.57z" />
+      </svg>
+    </a>
   </body>
 </html>

@@ -211,5 +211,21 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
     - `Footer.astro`: Pie industrial con cobertura geográfica, línea de despacho 24/7 y cumplimiento Ley 25.326.
     - `ThemeSwitcher.astro`: Selector flotante anti-rebote con 4 paletas industriales en vivo (Safety Amber & Asphalt, Concrete Light, Caterpillar Yellow & Onyx, Heavy Industrial Steel) con persistencia y WhatsApp dinámico.
   - **Demo & Auditoría:** Compilada `sites/demo-construccion/` (`65.8 KB` HTML, `1.64 KB` JS propio vs presupuesto <= 25 MB), `audit-site` 100% aprobada, `impeccable detect` con 0 anti-patrones, 12 tests unitarios en template y 55 tests de la suite raíz 100% en verde. Activado Template 13 (`Industrial Authority`) en `web/src/config.ts`. Tags inmutables `template/construccion@1.0.0` y `template/industrial-authority@1.0.0` fijados.
+- [2026-10-23] **Prospección Automatizada In-Conversation & Previews en Vivo (5 Nutricionistas Campana y Zárate — IDs 9 al 13)**:
+  - **Filtro y Deduplicación Rigurosa:** Corregido paso de claves en `prospect-in-conversation.mjs` usando `defaultLeadStore.getExistingKeys()` y filtro estricto de cosméticos/MLM (`omnilife`, `seytu`, etc.).
+  - **Normalización Argentina de WhatsApp:** Creado `formatArgentinePhoneNumber` con prefijo canónico `+54 9 ...` para habilitar `wa.me/549...` funcional directamente sin errores de prefijo.
+  - **Slugs Correlativos y Stop Titles:** Añadidos `'en'`, `'nutricion'` y `'nutricionista'` a `stopTitles` y omisión de iniciales de una sola letra en `buildCorrelativeSlug`.
+  - **Generación de Fichas & Compilación SSG:** Creadas fichas en `clients/` (`9-lucia-vega-nutri.md`, `10-lucila-fagnani-nutri.md`, `11-centro-endocrinologia-nutri.md`, `12-amr-nutri.md`, `13-ludmila-ramos-nutri.md`), clonadas en `sites/`, compiladas en Astro SSG y sincronizadas a `dist-previews/`.
+  - **Inyección en Google Sheets y Despliegue:** Insertadas las 5 filas en `'Prospección NexoBow'!B11:S1000` con pitch de Juanma vinculando la preview (`https://preview.nexobow.site/{slug}/`) y la web oficial (`https://nexobow.site`), y desplegadas con Wrangler Pages a Cloudflare Pages con 0 errores.
+- [2026-10-24] **Actualización Web NexoBow (Canales de Contacto WhatsApp +5493489536088 & Casos de Éxito Reales)**:
+  - **Canales de Contacto Directo**: Configurado el número real de Juanma Merodio `+54 9 3489 53-6088` (`5493489536088`) en `web/src/config.ts`.
+  - **Flujo de Conversión**: Actualizados Header, Hero, Pricing (mensajes específicos por plan), Founder, FinalCta/Contacto (`#contacto`), Footer y píldora flotante persistente 0-JS (`Layout.astro`) para acceso inmediato a WhatsApp.
+  - **Casos de Éxito de Juanma**: Integrados en `CaseStudies.astro` y `Founder.astro` los 3 proyectos reales con enlaces directos (`target="_blank"`):
+    1. **AfterBow** (`https://www.afterbow.com`): Productora audiovisual de alto impacto.
+    2. **Embudo para Infoproducto** (`https://juanmamerodio.github.io`): Embudo de conversión y ventas para infoproductos digitales.
+    3. **Esencia Técnica** (`https://esenciatecnica.vercel.app`): E-commerce educativo con catálogo técnico.
+  - **Verificación & 0-JS**: Compilación exitosa en Astro SSG con 0 scripts clientes en `web/dist/`, suite E2E ampliada en `tests/web-redesign.test.mjs` con 6 tests verdes, y auditoría visual `impeccable detect` aprobada sin animaciones decorativas engañosas.
+
+
 
 
