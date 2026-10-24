@@ -429,6 +429,44 @@ export const RUBRO_BRANDING_MAP = {
     CONTEXTUAL_BRANDING_PALETTES[1],
     CONTEXTUAL_BRANDING_PALETTES[3],
   ],
+  producto: [
+    {
+      name: "Minimalist Hardware",
+      primary: "#2563eb",
+      accent: "#60a5fa",
+      fondo: "#0a0a0a",
+      tinta: "#fafafa",
+      fuente: "Averta",
+      fuente_sans: "Averta",
+    },
+    {
+      name: "Matte Aluminum",
+      primary: "#71717a",
+      accent: "#a1a1aa",
+      fondo: "#121214",
+      tinta: "#f4f4f5",
+      fuente: "Averta",
+      fuente_sans: "Averta",
+    },
+    {
+      name: "Circadian Amber",
+      primary: "#f59e0b",
+      accent: "#fbbf24",
+      fondo: "#0d0b09",
+      tinta: "#fffaf5",
+      fuente: "Averta",
+      fuente_sans: "Averta",
+    },
+    {
+      name: "Pure Daylight",
+      primary: "#38bdf8",
+      accent: "#93c5fd",
+      fondo: "#080b11",
+      tinta: "#f8fafc",
+      fuente: "Averta",
+      fuente_sans: "Averta",
+    },
+  ],
 };
 
 export const DEFAULT_ALTERNATIVE_PALETTES = [

@@ -1,0 +1,159 @@
+---
+import { CONTENT, ars } from "../site.ts";
+import Button from "./ui/Button.astro";
+
+const { order_checkout, prestador } = CONTENT;
+const { badge, title, subtitle, variants, colors, warranty, trial, whatsappCta, calendlyCta } = order_checkout || {};
+
+const waLink = prestador?.whatsapp || "https://wa.me/5491100000000";
+const bookingUrl = prestador?.bookingUrl || "https://calendly.com";
+---
+
+<section id="configurar" class="py-24 border-b border-[var(--color-hardware-border)] relative bg-[var(--color-hardware-surface)]">
+  <div class="mx-auto max-w-7xl px-6">
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-950/40 px-3.5 py-1 mb-4">
+        <span class="type-tech-mono text-[11px] text-blue-300">
+          {badge || "CONFIGURADOR & RESERVA DIRECTA"}
+        </span>
+      </div>
+      <h2 class="type-hardware-h2 text-[var(--color-ink)] mb-4">
+        {title || "Elegí tu modelo y transformá tu espacio."}
+      </h2>
+      <p class="text-zinc-400 text-base md:text-lg font-sans leading-relaxed">
+        {subtitle || "Fabricada en Múnich bajo normas de ingeniería aeroespacial. 5 años de garantía internacional y 30 días de prueba sin riesgo."}
+      </p>
+    </div>
+
+    <!-- Product Configuration Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
+      {(variants || []).map((v) => (
+        <div class={`relative rounded-2xl border p-8 flex flex-col justify-between transition-all ${v.popular ? "border-[var(--color-primary)] bg-zinc-950 shadow-2xl shadow-blue-950/40" : "border-zinc-800 bg-[var(--color-paper)]"}`}>
+          {v.popular && (
+            <div class="absolute -top-3 right-8 rounded-full bg-[var(--color-primary)] px-3 py-0.5 text-[10px] font-mono font-bold tracking-widest text-white uppercase">
+              Modelo Más Elegido
+            </div>
+          )}
+
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="type-tech-mono text-zinc-400 text-xs">
+                {v.mount}
+              </span>
+            </div>
+            
+            <h3 class="type-hardware-h3 text-white mb-2">
+              {v.name}
+            </h3>
+
+            <div class="flex items-baseline gap-2 mb-4">
+              <span class="font-display text-3xl md:text-4xl font-bold text-white tracking-tight">
+                {v.priceFormatted || ars(v.price)}
+              </span>
+              <span class="text-xs text-zinc-400 font-mono">IVA Incluido</span>
+            </div>
+
+            <p class="text-sm text-zinc-400 font-sans leading-relaxed mb-6">
+              {v.desc}
+            </p>
+
+            <!-- Hardware Inclusions Checklist -->
+            <ul class="space-y-2.5 text-xs text-zinc-300 font-sans border-t border-zinc-800 pt-6 mb-8">
+              <li class="flex items-center gap-2">
+                <svg class="h-4 w-4 text-[var(--color-accent)] shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span>4.700 Lumen totales (3 fuentes de emisión)</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="h-4 w-4 text-[var(--color-accent)] shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span>Espectro solar continuo 2.200K – 6.500K</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="h-4 w-4 text-[var(--color-accent)] shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span>Rotación mecánica suave 360° en aluminio CNC</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="h-4 w-4 text-[var(--color-accent)] shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span>Control touchless gestual + Smart App BLE</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Color Finishes Selector Visual -->
+          <div class="mb-6 pt-4 border-t border-zinc-800 flex items-center justify-between text-xs">
+            <span class="text-zinc-400 font-mono">Acabados disponibles:</span>
+            <div class="flex items-center gap-2">
+              <span class="flex items-center gap-1.5 text-zinc-300">
+                <span class="inline-block h-3 w-3 rounded-full bg-zinc-950 border border-zinc-600"></span>
+                Midnight Black
+              </span>
+              <span class="flex items-center gap-1.5 text-zinc-300 ml-2">
+                <span class="inline-block h-3 w-3 rounded-full bg-zinc-300 border border-zinc-400"></span>
+                Aero Silver
+              </span>
+            </div>
+          </div>
+
+          <!-- Direct Ordering CTAs -->
+          <div class="flex flex-col gap-3">
+            <Button
+              href={`${waLink}?text=${encodeURIComponent(`Hola! Quiero consultar y coordinar la reserva de una luminaria ${v.name} (${v.priceFormatted || ars(v.price)}). ¿Tienen unidades para entrega inmediata?`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant={v.popular ? "primary" : "outline"}
+              class="w-full text-center"
+            >
+              <svg class="h-4 w-4 fill-current mr-1" viewBox="0 0 24 24">
+                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.838.814 2.796.814 3.183 0 5.769-2.588 5.77-5.767 0-3.18-2.587-5.769-5.77-5.769zm0-2.172c4.381 0 7.937 3.556 7.938 7.938 0 4.382-3.556 7.939-7.938 7.939-1.332 0-2.593-.338-3.714-.949l-4.317 1.132 1.152-4.208c-.708-1.189-1.059-2.529-1.059-3.914 0-4.382 3.556-7.938 7.938-7.938z"/>
+              </svg>
+              <span>{whatsappCta || "Reservar vía WhatsApp"}</span>
+            </Button>
+
+            <a
+              href={bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-center text-xs text-zinc-400 hover:text-white font-mono py-2 transition-colors"
+            >
+              {calendlyCta || "Agendar Demostración Virtual →"}
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Guarantees Bar -->
+    <div class="max-w-4xl mx-auto rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 flex flex-wrap items-center justify-around gap-6 text-xs text-zinc-300 font-mono text-center">
+      <div class="flex items-center gap-2">
+        <svg class="h-4 w-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        <span>{warranty || "5 Años de Garantía Internacional de Fábrica"}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <svg class="h-4 w-4 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+        <span>{trial || "30 Días de Prueba en tu Espacio"}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <svg class="h-4 w-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="1" y="3" width="15" height="13"/>
+          <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+          <circle cx="5.5" cy="18.5" r="2.5"/>
+          <circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
+        <span>Envío Asegurado Puerta a Puerta</span>
+      </div>
+    </div>
+  </div>
+</section>

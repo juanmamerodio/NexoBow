@@ -52,6 +52,11 @@ export const RUBRO_TO_ARCHETYPE_MAP = {
   dermatologia: "clinical-pure",
   medico: "clinical-pure",
   dermatologo: "clinical-pure",
+  producto: "minimalist-hardware",
+  hardware: "minimalist-hardware",
+  iluminacion: "minimalist-hardware",
+  lamparas: "minimalist-hardware",
+  equipamiento: "minimalist-hardware",
 };
 
 export const ARCHETYPE_ALIASES = {
@@ -62,6 +67,7 @@ export const ARCHETYPE_ALIASES = {
   "tech-editorial-system": ["tech", "software", "sistemas", "tech-editorial-system"],
   "kinetic-performance": ["deportes", "gym", "entrenador", "fitness", "kinetic-performance"],
   "clinical-pure": ["dermatologia", "medico", "dermatologo", "clinical-pure"],
+  "minimalist-hardware": ["producto", "hardware", "iluminacion", "lamparas", "equipamiento", "minimalist-hardware"],
   "minimalist-pure": ["odontologo", "minimalist-pure"],
   "kinetic-cards": ["kinesiologo", "kinetic-cards"],
 };
@@ -428,13 +434,13 @@ function main() {
         credit: "Landing por NexoBow",
       },
       reviews: {
-        items: reviewsItems.length > 0 ? reviewsItems : baseSite.content.reviews.items,
+        items: reviewsItems.length > 0 ? reviewsItems : (baseSite.content?.reviews?.items || baseSite.content?.reviews || []),
       },
       casos: {
-        items: caseItems.length > 0 ? caseItems : baseSite.content.casos.items,
+        items: caseItems.length > 0 ? caseItems : (baseSite.content?.casos?.items || baseSite.content?.casos || []),
       },
       faq: {
-        items: faqItems.length > 0 ? faqItems : baseSite.content.faq.items,
+        items: faqItems.length > 0 ? faqItems : (baseSite.content?.faq?.items || baseSite.content?.faq || []),
       },
       links: {
         calendly: bookingUrl,

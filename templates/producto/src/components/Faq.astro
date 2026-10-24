@@ -1,0 +1,37 @@
+---
+import { CONTENT } from "../site.ts";
+
+const { faq } = CONTENT;
+const items = Array.isArray(faq) ? faq : (faq?.items || []);
+---
+
+<section id="faq" class="py-24 border-b border-[var(--color-hardware-border)] relative bg-[var(--color-paper)]">
+  <div class="mx-auto max-w-4xl px-6">
+    <div class="text-center mb-16">
+      <span class="type-tech-mono text-[var(--color-accent)] mb-2 block">
+        INGENIERÍA & SOPORTE
+      </span>
+      <h2 class="type-hardware-h2 text-white">
+        Preguntas Frecuentes
+      </h2>
+    </div>
+
+    <div class="space-y-4">
+      {items.map((item) => (
+        <details class="hardware-card group p-6 transition-all duration-200 open:border-[var(--color-primary)]/50">
+          <summary class="flex cursor-pointer items-center justify-between text-base font-display font-semibold text-white list-none select-none">
+            <span>{item.q}</span>
+            <span class="ml-4 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-zinc-700 bg-zinc-800 text-zinc-300 transition-transform duration-200 group-open:rotate-180 group-open:border-[var(--color-primary)] group-open:text-[var(--color-primary)]">
+              <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="mt-4 text-sm text-zinc-400 font-sans leading-relaxed border-t border-zinc-800/80 pt-4">
+            {item.a}
+          </p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

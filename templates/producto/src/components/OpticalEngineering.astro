@@ -1,0 +1,106 @@
+---
+import { CONTENT } from "../site.ts";
+
+const { optical_engineering } = CONTENT;
+const { badge, title, subtitle, modes, biorhythm_chart_image } = optical_engineering || {};
+---
+
+<section id="ingenieria-optica" class="py-24 border-b border-[var(--color-hardware-border)] relative bg-[var(--color-paper)]">
+  <div class="mx-auto max-w-7xl px-6">
+    <!-- Header -->
+    <div class="max-w-3xl mb-16">
+      <div class="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-950/40 px-3.5 py-1 mb-4">
+        <span class="type-tech-mono text-[11px] text-blue-300">
+          {badge || "CIENCIA DEL ESPECTRO LUMÍNICO"}
+        </span>
+      </div>
+      <h2 class="type-hardware-h2 text-[var(--color-ink)] mb-4">
+        {title || "Luz que se siente como el sol verdadero."}
+      </h2>
+      <p class="text-zinc-400 text-base md:text-lg font-sans leading-relaxed">
+        {subtitle || "HEAVN One reproduce la trayectoria biológica de la luz natural mediante tres fuentes emisoras sincronizadas que actúan sobre tu sistema neuroendocrino."}
+      </p>
+    </div>
+
+    <!-- 3 Core Optical Modes Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+      {(modes || []).map((mode, idx) => (
+        <div class="hardware-card p-6 md:p-8 flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="type-tech-mono text-xs px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">
+                {mode.tag}
+              </span>
+              <span class="font-mono text-sm text-[var(--color-accent)] font-semibold">
+                {mode.kelvin}
+              </span>
+            </div>
+            <h3 class="type-hardware-h3 text-white mb-3">
+              {mode.name}
+            </h3>
+            <p class="text-sm text-zinc-400 leading-relaxed font-sans mb-6">
+              {mode.desc}
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-zinc-800 flex items-center justify-between text-xs font-mono text-zinc-400">
+            <span>Rendimiento Óptico</span>
+            <span class="text-zinc-200 font-bold">{mode.lux}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Circadian Cycle Diagram & Scientific Tri-Emitter Breakdown -->
+    <div class="hardware-card p-8 md:p-12 relative overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <!-- Text Explanation -->
+        <div class="lg:col-span-5 space-y-6">
+          <span class="type-tech-mono text-blue-400 font-semibold">ARQUITECTURA DE TRIPLE EMISIÓN</span>
+          <h3 class="type-hardware-h3 text-white">
+            Tres fuentes independientes. Cero fatiga visual.
+          </h3>
+          <p class="text-zinc-300 text-sm leading-relaxed font-sans">
+            La mayoría de las lámparas concentran toda su potencia en un solo punto, creando contrastes extremos con el entorno. HEAVN One distribuye la energía en 3 canales:
+          </p>
+          
+          <ul class="space-y-3 text-sm text-zinc-400 font-sans">
+            <li class="flex items-start gap-3">
+              <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-900/50 text-blue-400 border border-blue-600/40 text-xs font-mono">1</span>
+              <div>
+                <strong class="text-zinc-200">2.200 lm Directo a Escritorio:</strong> Cono de luz uniforme sin reflejos en pantallas ni deslumbramiento periférico.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-900/50 text-blue-400 border border-blue-600/40 text-xs font-mono">2</span>
+              <div>
+                <strong class="text-zinc-200">2.200 lm Indirección Cenital:</strong> Iluminación del techo que emula la bóveda celeste y reduce el contraste ocular.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-900/50 text-blue-400 border border-blue-600/40 text-xs font-mono">3</span>
+              <div>
+                <strong class="text-zinc-200">2.800 lm Softbox Frontal:</strong> Panel difusor PMMA que actúa como softbox de estudio para videollamadas y ducha circadiana.
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Visual Diagram Image -->
+        <div class="lg:col-span-7 flex flex-col items-center justify-center">
+          <div class="relative w-full rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 p-2 shadow-2xl">
+            <img
+              src={biorhythm_chart_image || "/images/hcl-cycle.jpg"}
+              alt="Curva Solar y Biorritmo Humano Circadiano"
+              class="w-full h-auto object-cover rounded-lg"
+              loading="lazy"
+            />
+          </div>
+          <p class="mt-3 text-xs text-zinc-400 text-center font-mono">
+            Figura 1.0: Modulación del espectro Kelvin y flujo Lux a lo largo de las 24 horas del día.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,58 @@
+---
+import { CONTENT } from "../site.ts";
+import Button from "./ui/Button.astro";
+
+const { prestador, hero } = CONTENT;
+---
+
+<header class="sticky top-0 z-40 w-full border-b border-[var(--color-hardware-border)] bg-[var(--color-paper)]/85 backdrop-blur-md transition-all">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+    <!-- Brand Logo -->
+    <a href="#inicio" class="flex items-center gap-3 group">
+      <div class="relative flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-hardware-surface-light)] border border-[var(--color-hardware-border)] group-hover:border-[var(--color-primary)] transition-colors">
+        <!-- Technical aperture / shutter icon -->
+        <svg class="h-4 w-4 text-[var(--color-primary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <path d="m14.31 8 5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16 3.95 6.06M14.31 16H2.83M16.62 12l-5.74 9.94" />
+        </svg>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-display text-lg font-bold tracking-tight text-[var(--color-ink)]">
+          {prestador?.nombre || "HEAVN One"}
+        </span>
+        <span class="type-tech-mono text-[10px] text-zinc-400">
+          Human Centric Lighting
+        </span>
+      </div>
+    </a>
+
+    <!-- Navigation links -->
+    <nav class="hidden md:flex items-center gap-8 text-sm font-sans text-zinc-300">
+      <a href="#ingenieria-optica" class="hover:text-[var(--color-accent)] transition-colors">
+        Ingeniería Óptica
+      </a>
+      <a href="#materiales" class="hover:text-[var(--color-accent)] transition-colors">
+        Materiales & Despiece
+      </a>
+      <a href="#experiencias" class="hover:text-[var(--color-accent)] transition-colors">
+        Líderes & Premios
+      </a>
+      <a href="#configurar" class="hover:text-[var(--color-accent)] transition-colors">
+        Especificaciones
+      </a>
+      <a href="#faq" class="hover:text-[var(--color-accent)] transition-colors">
+        FAQ
+      </a>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="flex items-center gap-3">
+      <Button href="#configurar" size="sm" variant="primary">
+        <span>Pedir HEAVN One</span>
+        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </Button>
+    </div>
+  </div>
+</header>

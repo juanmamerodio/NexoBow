@@ -1,0 +1,88 @@
+[ {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b510e9d7cd3a2fbd78d0ddc42234103206c5f78d/inspector.html?ws=127.0.0.1:9222/devtools/page/D47F1FC0509FA64D6909E6085D2195FD",
+   "id": "D47F1FC0509FA64D6909E6085D2195FD",
+   "title": "Google Hangouts",
+   "type": "background_page",
+   "url": "chrome-extension://nkeimhogjdpnpccoofpliimaahmaaome/background.html",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/D47F1FC0509FA64D6909E6085D2195FD"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b510e9d7cd3a2fbd78d0ddc42234103206c5f78d/inspector.html?ws=127.0.0.1:9222/devtools/page/F0B22A5F720D547ECB57F6EFD7B71956",
+   "faviconUrl": "https://heavn-lights.com/cdn/shop/files/favicon-32x32.png?v=1710173472&width=96",
+   "id": "F0B22A5F720D547ECB57F6EFD7B71956",
+   "title": "HEAVN - Human Centric Lightning - ideal für das Home Office Wellbeing",
+   "type": "page",
+   "url": "https://heavn-lights.com/",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/F0B22A5F720D547ECB57F6EFD7B71956"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b510e9d7cd3a2fbd78d0ddc42234103206c5f78d/inspector.html?ws=127.0.0.1:9222/devtools/page/9B3F5CE271E0D9A64EA5661D5E67AA1C",
+   "faviconUrl": "https://heavn-lights.com/cdn/shop/files/favicon-32x32.png?v=1710173472&width=96",
+   "id": "9B3F5CE271E0D9A64EA5661D5E67AA1C",
+   "parentId": "F0B22A5F720D547ECB57F6EFD7B71956",
+   "title": "https://heavn-lights.com/web-pixels@fcc46ef0w9d3a45bbp8938e2eamdcca70d4/custom/web-pixel-67862793@1/sandbox/modern/",
+   "type": "iframe",
+   "url": "https://heavn-lights.com/web-pixels@fcc46ef0w9d3a45bbp8938e2eamdcca70d4/custom/web-pixel-67862793@1/sandbox/modern/",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/9B3F5CE271E0D9A64EA5661D5E67AA1C"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b510e9d7cd3a2fbd78d0ddc42234103206c5f78d/inspector.html?ws=127.0.0.1:9222/devtools/page/4DBAD8961009DD05711C0374B018CA98",
+   "faviconUrl": "https://heavn-lights.com/cdn/shop/files/favicon-32x32.png?v=1710173472&width=96",
+   "id": "4DBAD8961009DD05711C0374B018CA98",
+   "parentId": "F0B22A5F720D547ECB57F6EFD7B71956",
+   "title": "https://heavn-lights.com/web-pixels@fcc46ef0w9d3a45bbp8938e2eamdcca70d4/custom/web-pixel-shopify-custom-pixel@0530/sandbox/modern/",
+   "type": "iframe",
+   "url": "https://heavn-lights.com/web-pixels@fcc46ef0w9d3a45bbp8938e2eamdcca70d4/custom/web-pixel-shopify-custom-pixel@0530/sandbox/modern/",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/4DBAD8961009DD05711C0374B018CA98"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b510e9d7cd3a2fbd78d0ddc42234103206c5f78d/inspector.html?ws=127.0.0.1:9222/devtools/page/7447FEA87F0534F032DFEA6533F48E9F",
+   "faviconUrl": "https://heavn-lights.com/cdn/shop/files/favicon-32x32.png?v=1710173472&width=96",
+   "id": "7447FEA87F0534F032DFEA6533F48E9F",
+   "parentId": "F0B22A5F720D547ECB57F6EFD7B71956",
+   "title": "https://cdn.wishpond.net/storage.html",
+   "type": "iframe",
+   "url": "https://cdn.wishpond.net/storage.html",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/7447FEA87F0534F032DFEA6533F48E9F"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b510e9d7cd3a2fbd78d0ddc42234103206c5f78d/inspector.html?ws=127.0.0.1:9222/devtools/page/7C2ECFE457FCBEE6FFE3FFA6028A0FCD",
+   "id": "7C2ECFE457FCBEE6FFE3FFA6028A0FCD",
+   "title": "Omnibox Popup",
+   "type": "browser_ui",
+   "url": "chrome://omnibox-popup.top-chrome/",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/7C2ECFE457FCBEE6FFE3FFA6028A0FCD"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b510e9d7cd3a2fbd78d0ddc42234103206c5f78d/inspector.html?ws=127.0.0.1:9222/devtools/page/D24D024DF98DAECA943687A53EAB4681",
+   "id": "D24D024DF98DAECA943687A53EAB4681",
+   "title": "Omnibox Popup",
+   "type": "browser_ui",
+   "url": "chrome://omnibox-popup.top-chrome/omnibox_popup_aim.html",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/D24D024DF98DAECA943687A53EAB4681"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b510e9d7cd3a2fbd78d0ddc42234103206c5f78d/inspector.html?ws=127.0.0.1:9222/devtools/page/C8C9980417C4F0463998F5D3076F8485",
+   "id": "C8C9980417C4F0463998F5D3076F8485",
+   "title": "",
+   "type": "worker",
+   "url": "",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/C8C9980417C4F0463998F5D3076F8485"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b510e9d7cd3a2fbd78d0ddc42234103206c5f78d/inspector.html?ws=127.0.0.1:9222/devtools/page/739EE042212D5AA9528F341B7BF00B57",
+   "id": "739EE042212D5AA9528F341B7BF00B57",
+   "title": "",
+   "type": "worker",
+   "url": "",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/739EE042212D5AA9528F341B7BF00B57"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b510e9d7cd3a2fbd78d0ddc42234103206c5f78d/inspector.html?ws=127.0.0.1:9222/devtools/page/5D107BD3C398FD56F8EE2890EC96CA40",
+   "id": "5D107BD3C398FD56F8EE2890EC96CA40",
+   "title": "",
+   "type": "worker",
+   "url": "",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/5D107BD3C398FD56F8EE2890EC96CA40"
+} ]

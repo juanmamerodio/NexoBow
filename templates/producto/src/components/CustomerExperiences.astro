@@ -1,0 +1,62 @@
+---
+import { CONTENT } from "../site.ts";
+
+const { customer_experiences } = CONTENT;
+const { badge, title, subtitle, testimonials } = customer_experiences || {};
+---
+
+<section id="experiencias" class="py-24 border-b border-[var(--color-hardware-border)] relative bg-[var(--color-paper)]">
+  <div class="mx-auto max-w-7xl px-6">
+    <!-- Header -->
+    <div class="max-w-3xl mb-16">
+      <div class="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-950/40 px-3.5 py-1 mb-4">
+        <span class="type-tech-mono text-[11px] text-blue-300">
+          {badge || "VALIDACIÓN POR LÍDERES & ESTUDIOS"}
+        </span>
+      </div>
+      <h2 class="type-hardware-h2 text-[var(--color-ink)] mb-4">
+        {title || "97% de los usuarios reportan mayor concentración."}
+      </h2>
+      <p class="text-zinc-400 text-base md:text-lg font-sans leading-relaxed">
+        {subtitle || "Desde fundadores de unicornios hasta directores de diseño, HEAVN One es el estándar de iluminación en despachos ejecutivos."}
+      </p>
+    </div>
+
+    <!-- Testimonials Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {(testimonials || []).map((t) => (
+        <div class="hardware-card p-8 flex flex-col justify-between group">
+          <div>
+            <!-- Stars -->
+            <div class="flex items-center gap-1 text-amber-400 mb-6">
+              {[...Array(5)].map(() => (
+                <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+              ))}
+              <span class="ml-2 font-mono text-xs text-zinc-400 font-bold">5.0</span>
+            </div>
+
+            <blockquote class="text-zinc-200 text-sm md:text-base font-sans italic leading-relaxed mb-6">
+              "{t.quote}"
+            </blockquote>
+          </div>
+
+          <div class="pt-6 border-t border-zinc-800 flex items-center gap-3">
+            <div class="h-10 w-10 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center font-display font-bold text-sm text-[var(--color-accent)]">
+              {t.author.charAt(0)}
+            </div>
+            <div class="flex flex-col">
+              <span class="font-display font-semibold text-sm text-white">
+                {t.author}
+              </span>
+              <span class="text-xs text-zinc-400 font-sans">
+                {t.role} · <strong class="text-zinc-300 font-normal">{t.company}</strong>
+              </span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

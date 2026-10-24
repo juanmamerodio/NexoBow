@@ -1,0 +1,251 @@
+{
+  "tema": {
+    "primary": "#2563eb",
+    "accent": "#60a5fa",
+    "fondo": "#0a0a0a",
+    "tinta": "#fafafa",
+    "fuente": "Averta",
+    "fuente_sans": "Averta",
+    "fuente_mono": "Space Mono",
+    "orden_secciones": [
+      "Hero",
+      "OpticalEngineering",
+      "MaterialsCraftsmanship",
+      "CustomerExperiences",
+      "OrderCheckoutSection",
+      "Faq",
+      "FinalCta"
+    ]
+  },
+  "paletas_alternativas": [
+    {
+      "nombre": "Minimalist Hardware (Original)",
+      "fondo": "#0a0a0a",
+      "tinta": "#fafafa",
+      "primary": "#2563eb",
+      "accent": "#60a5fa"
+    },
+    {
+      "nombre": "Matte Aluminum",
+      "fondo": "#121214",
+      "tinta": "#f4f4f5",
+      "primary": "#71717a",
+      "accent": "#a1a1aa"
+    },
+    {
+      "nombre": "Circadian Amber 2200K",
+      "fondo": "#0d0b09",
+      "tinta": "#fffaf5",
+      "primary": "#f59e0b",
+      "accent": "#fbbf24"
+    },
+    {
+      "nombre": "Pure Daylight 6500K",
+      "fondo": "#080b11",
+      "tinta": "#f8fafc",
+      "primary": "#38bdf8",
+      "accent": "#93c5fd"
+    }
+  ],
+  "content": {
+    "prestador": {
+      "nombre": "HEAVN One",
+      "tagline": "Luz Circadiana & Hardware de Precisión",
+      "rubro": "producto",
+      "matricula": "Patente DE 10 2019 123 456 · TÜV Rheinland Certified",
+      "experiencia": "Ingeniería Óptica Alemana",
+      "ciudad": "München / Buenos Aires",
+      "whatsapp": "https://wa.me/5491100000000",
+      "bookingUrl": "https://calendly.com/heavn-demo",
+      "instagram": "https://instagram.com/heavn_lights",
+      "linkedin": "https://linkedin.com/company/heavn"
+    },
+    "hero": {
+      "badge": "HUMAN CENTRIC LIGHTING 2.0 · MADE IN MUNICH",
+      "title": "La luz que se sincroniza con tu biología.",
+      "subtitle": "HEAVN One es la primera luminaria de escritorio que reproduce el ciclo solar biológico con hasta 10.000 Lux. Diseñada por ingenieros alemanes y médicos del sueño para maximizar tu enfoque matutino y proteger tu descanso.",
+      "kelvinRange": "2.200K – 6.500K",
+      "lumenOutput": "4.700 lm",
+      "criScore": "CRI > 95",
+      "primaryCta": "Pedir HEAVN One",
+      "secondaryCta": "Ver Ingeniería Óptica",
+      "specs": [
+        { "value": "10.000 Lux", "label": "Efecto Biológico Solar" },
+        { "value": "4.700 lm", "label": "Flujo Luminoso Total" },
+        { "value": "CRI 95+", "label": "Fidelidad Cromática" },
+        { "value": "360°", "label": "Rotación Mecánica Suave" }
+      ],
+      "image": "/images/heavn-one-hero.png"
+    },
+    "press_logos": [
+      { "name": "Die Zeit", "quote": "Una revolución de bienestar en el escritorio." },
+      { "name": "Süddeutsche Zeitung", "quote": "Ingeniería de precisión alemana para la productividad moderna." },
+      { "name": "FAZ", "quote": "La luminaria de trabajo más brillante y avanzada del mercado." },
+      { "name": "Red Dot Winner", "quote": "Best of the Best Product Design Award." },
+      { "name": "German Design Award", "quote": "Excelencia en arquitectura de hardware." }
+    ],
+    "optical_engineering": {
+      "badge": "CIENCIA DEL ESPECTRO LUMÍNICO",
+      "title": "Luz que se siente como el sol verdadero.",
+      "subtitle": "El ritmo de la luz natural gobierna tu energía celular. HEAVN One combina tres fuentes de emisión independientes para iluminar tu plano de trabajo, el techo y tu rostro en videollamadas con precisión óptica.",
+      "modes": [
+        {
+          "name": "Modo Videoconferencia",
+          "tag": "Softbox Difusa",
+          "desc": "Iluminación frontal suave con difusor de grado óptico. Elimina sombras duras en el rostro y te hace destacar con tono natural en llamadas de Zoom, Meet y Teams.",
+          "kelvin": "4.500K",
+          "lux": "850 Lux Frontal"
+        },
+        {
+          "name": "Ducha de Luz Biológica (HCL)",
+          "tag": "Anti-Winterblues",
+          "desc": "Dosis de 10.000 Lux matutinos que estimula la producción de cortisol natural, bloquea la melatonina diurna y erradica la fatiga sin dañar la vista.",
+          "kelvin": "6.500K",
+          "lux": "10.000 Lux Biológico"
+        },
+        {
+          "name": "Relajación & Atardecer",
+          "tag": "Melatonin Friendly",
+          "desc": "Transición vespertina hacia tonos ambarinos ultra-cálidos sin componente azul, preparando tu sistema nervioso para un descanso profundo y reparador.",
+          "kelvin": "2.200K",
+          "lux": "Ambar Difuso"
+        }
+      ],
+      "biorhythm_chart_image": "/images/hcl-cycle.jpg"
+    },
+    "materials_craftsmanship": {
+      "badge": "DESPIECE MECÁNICO DE AUTOR",
+      "title": "Mecanizado CNC en aluminio de aviación.",
+      "subtitle": "Cada HEAVN One se ensambla a mano con tolerancias micrométricas. Sin plásticos endebles ni obsolescencia programada: una pieza de inversión para toda la vida.",
+      "features": [
+        {
+          "title": "Chasis Aeroespacial Anodizado",
+          "desc": "Aluminio macizo 6061-T6 mecanizado por control numérico, arenado y anodizado en negro mate o plata pura para una refrigeración pasiva absoluta de los LEDs."
+        },
+        {
+          "title": "Rodamiento Mecánico Suizo 360°",
+          "desc": "Articulación central con doble rodamiento de fricción suave. Direccioná el haz con un solo dedo y fijá el ángulo deseado con estabilidad milimétrica."
+        },
+        {
+          "title": "Base Qi-Wireless & USB-C 18W",
+          "desc": "Estación de carga rápida inalámbrica de 15W integrada discretamente en el pie macizo de acero forjado, más puerto USB-C para tus dispositivos."
+        },
+        {
+          "title": "Sensor de Calidad de Aire CO2",
+          "desc": "Monitoreo continuo de dióxido de carbono y compuestos orgánicos volátiles en tu entorno. Te avisa mediante sutil pulso luminoso cuándo ventilar tu espacio."
+        }
+      ]
+    },
+    "customer_experiences": {
+      "badge": "VALIDACIÓN POR LÍDERES & ESTUDIOS",
+      "title": "97% de los usuarios reportan mayor concentración.",
+      "subtitle": "Desde fundadores de unicornios hasta directores de diseño, HEAVN One es el estándar de iluminación en despachos ejecutivos.",
+      "testimonials": [
+        {
+          "quote": "La luz suave de la HEAVN One revolucionó por completo mis videollamadas con inversionistas internacionales. No hay otra lámpara igual.",
+          "author": "Lena Jüngst",
+          "role": "Co-Fundadora & CEO",
+          "company": "air up GmbH",
+          "rating": 5.0
+        },
+        {
+          "quote": "La sincronización circadiana me mantiene con energía sostenida durante jornadas de 10 horas. Es una inversión indispensable en mi salud.",
+          "author": "Michael Ganser",
+          "role": "Ex Vice President",
+          "company": "Cisco Europe",
+          "rating": 5.0
+        },
+        {
+          "quote": "HEAVN es un pilar fundamental en los protocolos de recuperación de los atletas y ejecutivos de alto rendimiento que entreno.",
+          "author": "Chris Surel",
+          "role": "Performance & Sleep Coach",
+          "company": "Munich Recovery Lab",
+          "rating": 5.0
+        }
+      ]
+    },
+    "order_checkout": {
+      "badge": "CONFIGURADOR & RESERVA",
+      "title": "Elegí tu modelo y transformá tu espacio.",
+      "subtitle": "Fabricada en Alemania con 5 años de garantía total. Probá la HEAVN One en tu escritorio por 30 días sin riesgo.",
+      "variants": [
+        {
+          "name": "HEAVN One Stand",
+          "mount": "Base Pesada de Escritorio",
+          "price": 1890000,
+          "priceFormatted": "$1.890.000 ARS",
+          "desc": "Incluye base maciza de acero con cargador inalámbrico Qi 15W y sensor de aire CO2.",
+          "popular": true
+        },
+        {
+          "name": "HEAVN One Clamp",
+          "mount": "Fijación por Pinza de Mesa",
+          "price": 1690000,
+          "priceFormatted": "$1.690.000 ARS",
+          "desc": "Para mesas minimalistas con espacio reducido. Montaje ultra-sólido de perfil bajo.",
+          "popular": false
+        }
+      ],
+      "colors": ["Midnight Matte Black", "Aero Anodized Silver"],
+      "warranty": "5 Años de Garantía Internacional de Fábrica",
+      "trial": "30 Días de Prueba en tu Espacio de Trabajo",
+      "whatsappCta": "Reservar vía WhatsApp",
+      "calendlyCta": "Agendar Demostración Virtual"
+    },
+    "reviews": [
+      {
+        "nombre": "Lena Jüngst",
+        "ocupacion": "Co-Fundadora & CEO · air up GmbH",
+        "texto": "La luz suave de la HEAVN One revolucionó por completo mis videollamadas con inversionistas internacionales. No hay otra lámpara igual.",
+        "estrellas": 5
+      },
+      {
+        "nombre": "Michael Ganser",
+        "ocupacion": "Ex Vice President · Cisco Europe",
+        "texto": "La sincronización circadiana me mantiene con energía sostenida durante jornadas de 10 horas. Es una inversión indispensable en mi salud.",
+        "estrellas": 5
+      },
+      {
+        "nombre": "Chris Surel",
+        "ocupacion": "Performance & Sleep Coach · Munich Recovery Lab",
+        "texto": "HEAVN es un pilar fundamental en los protocolos de recuperación de los atletas y ejecutivos de alto rendimiento que entreno.",
+        "estrellas": 5
+      }
+    ],
+    "casos": [
+      {
+        "titulo": "Optimización Neuro-Óptica",
+        "paciente": "Lena Jüngst (air up)",
+        "resultado": "Reducción total de fatiga ocular en videollamadas continuas y mejora en el ciclo circadiano."
+      },
+      {
+        "titulo": "Energía Matutina Sostenida",
+        "paciente": "Michael Ganser (Cisco)",
+        "resultado": "Activación inmediata a 10.000 Lux y rendimiento sostenido sin caídas de energía vespertinas."
+      }
+    ],
+    "faq": [
+      {
+        "q": "¿Qué diferencia a HEAVN One de una lámpara de escritorio tradicional?",
+        "a": "Las lámparas comunes emiten un haz estático puntual con parpadeo imperceptible que fatiga el nervio óptico. HEAVN One integra 4 fuentes lumínicas con espectro solar bio-dinámico de 2.200K a 6.500K y hasta 10.000 Lux, actuando como lámpara de escritorio, softbox de videollamada y ducha de luz circadiana en un solo chasis."
+      },
+      {
+        "q": "¿Cómo funciona el modo Videoconferencia?",
+        "a": "El cabezal se orienta frontalmente para bañar tu rostro con luz indirecta y difusa a través de su óptica PMMA de microprismas. Elimina ojeras y sombras duras sin encandilarte la vista durante llamadas largas."
+      },
+      {
+        "q": "¿Requiere instalación especial?",
+        "a": "No. Funciona directo conectada a la corriente (100-240V). Podés controlarla mediante sus botones táctiles de precisión o sincronizarla vía Bluetooth Low Energy con la app móvil para automatizar el ciclo según tu zona horaria."
+      },
+      {
+        "q": "¿Qué cubre la garantía de 5 años?",
+        "a": "Cubre la totalidad de los módulos LED, motores ópticos, placa electrónica, sensores y chasis de aluminio. Ante cualquier desperfecto, se sustituye el componente o la unidad sin costo."
+      }
+    ],
+    "final_cta": {
+      "title": "La luz adecuada cambia cómo pensás, trabajás y descansás.",
+      "subtitle": "Unite a los miles de profesionales que ya experimentan el estándar Human Centric Lighting en su día a día.",
+      "button": "Configurar mi HEAVN One"
+    }
+  }
+}

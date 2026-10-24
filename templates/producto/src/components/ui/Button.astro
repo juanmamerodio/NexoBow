@@ -1,0 +1,47 @@
+---
+// Button.astro — Botón técnico con micro-borde metálico y hover óptico
+interface Props {
+  href?: string;
+  variant?: "primary" | "outline";
+  size?: "sm" | "md" | "lg";
+  class?: string;
+  target?: string;
+  rel?: string;
+  [key: string]: any;
+}
+
+const {
+  href,
+  variant = "primary",
+  size = "md",
+  class: className = "",
+  target,
+  rel,
+  ...rest
+} = Astro.props;
+
+const sizeClasses = {
+  sm: "px-4 py-2 text-xs",
+  md: "px-6 py-3 text-sm",
+  lg: "px-8 py-4 text-base",
+}[size];
+
+const variantClasses = {
+  primary: "btn-hardware-primary text-white",
+  outline: "btn-hardware-outline",
+}[variant];
+
+const classes = `btn-hardware ${sizeClasses} ${variantClasses} ${className}`;
+---
+
+{
+  href ? (
+    <a href={href} class={classes} target={target} rel={rel} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <button class={classes} {...rest}>
+      <slot />
+    </button>
+  )
+}

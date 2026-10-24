@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Averta";
+  src: url("/fonts/opensans_n4.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Averta";
+  src: url("/fonts/opensans_n7.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-display: "Averta", "Space Grotesk", -apple-system, sans-serif;
+  --font-sans: "Averta", "Open Sans", -apple-system, system-ui, sans-serif;
+  --font-mono: "Space Mono", monospace;
+  --color-paper: #0a0a0a;
+  --color-ink: #fafafa;
+  --color-primary: #2563eb;
+  --color-accent: #60a5fa;
+  --color-hardware-surface: #141417;
+  --color-hardware-surface-light: #1c1c21;
+  --color-hardware-border: #27272a;
+  --color-metallic-edge: #3f3f46;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Precision Optical Typography */
+.type-hardware-h1 {
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+  font-size: clamp(2.75rem, 6.5vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.type-hardware-h2 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  font-size: clamp(1.85rem, 4vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.type-hardware-h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  font-size: clamp(1.25rem, 2.5vw, 1.85rem);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.type-tech-mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Precision Hardware Button */
+.btn-hardware {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-hardware-border);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-hardware-primary {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.25);
+}
+
+.btn-hardware-primary:hover {
+  background-color: #3b82f6;
+  box-shadow: 0 0 30px rgba(37, 99, 235, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-hardware-outline {
+  background-color: rgba(20, 20, 23, 0.7);
+  backdrop-filter: blur(8px);
+  color: var(--color-ink);
+  border-color: var(--color-hardware-border);
+}
+
+.btn-hardware-outline:hover {
+  border-color: var(--color-primary);
+  color: #ffffff;
+  background-color: rgba(37, 99, 235, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Hardware Chassis Cards */
+.hardware-card {
+  background-color: var(--color-hardware-surface);
+  border: 1px solid var(--color-hardware-border);
+  border-radius: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.hardware-card:hover {
+  border-color: rgba(37, 99, 235, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(37, 99, 235, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Optical Spectrum Beam Animation */
+@keyframes optical-pulse {
+  0%, 100% {
+    opacity: 0.4;
+    filter: drop-shadow(0 0 15px rgba(37, 99, 235, 0.4));
+  }
+  50% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 35px rgba(96, 165, 250, 0.8));
+  }
+}
+
+.optical-beam {
+  animation: optical-pulse 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .optical-beam,
+  .btn-hardware {
+    animation: none !important;
+    transition: none !important;
+  }
+}

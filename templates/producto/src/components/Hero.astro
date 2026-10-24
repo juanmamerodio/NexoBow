@@ -1,0 +1,227 @@
+---
+import { CONTENT } from "../site.ts";
+import Button from "./ui/Button.astro";
+
+const { hero, press_logos } = CONTENT;
+---
+
+<section id="inicio" class="relative overflow-hidden pt-12 pb-24 md:pt-20 md:pb-32 border-b border-[var(--color-hardware-border)]">
+  <!-- Subtle ambient optical beam in background -->
+  <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-[500px] w-[800px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,0.18)_0%,rgba(10,10,10,0)_70%)] blur-3xl optical-beam"></div>
+
+  <div class="mx-auto max-w-7xl px-6 relative z-10">
+    <div class="flex flex-col items-center text-center">
+      <!-- Badge -->
+      <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-950/40 px-4 py-1.5 backdrop-blur-md">
+        <span class="inline-block h-2 w-2 rounded-full bg-[var(--color-primary)] animate-pulse"></span>
+        <span class="type-tech-mono text-[11px] text-blue-300">
+          {hero?.badge || "HUMAN CENTRIC LIGHTING 2.0 · MADE IN MUNICH"}
+        </span>
+      </div>
+
+      <!-- Main Title -->
+      <h1 class="type-hardware-h1 max-w-4xl text-[var(--color-ink)] mb-6">
+        {hero?.title || "La luz que se sincroniza con tu biología."}
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="max-w-2xl text-base md:text-lg text-zinc-400 mb-10 leading-relaxed font-sans">
+        {hero?.subtitle || "HEAVN One reproduce el ciclo solar natural en tu escritorio. Creada por ingenieros alemanes y médicos del sueño para energizar tus mañanas y proteger tu descanso."}
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
+        <Button href="#configurar" size="lg" variant="primary">
+          <span>{hero?.primaryCta || "Configurar HEAVN One"}</span>
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </Button>
+        <Button href="#ingenieria-optica" size="lg" variant="outline">
+          <span>{hero?.secondaryCta || "Ver Ingeniería Óptica"}</span>
+        </Button>
+      </div>
+
+      <!-- Interactive Hardware Simulation Chassis -->
+      <div class="w-full max-w-4xl rounded-2xl border border-[var(--color-hardware-border)] bg-[var(--color-hardware-surface)] p-6 md:p-8 relative shadow-2xl overflow-hidden mb-16">
+        <!-- Glow gradient dynamically modulated by the slider -->
+        <div id="lamp-glow-field" class="absolute -top-24 left-1/2 -translate-x-1/2 w-3/4 h-64 rounded-full blur-3xl opacity-40 transition-colors duration-500 pointer-events-none" style="background: radial-gradient(circle, #60a5fa 0%, transparent 70%);"></div>
+
+        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+          <!-- Lamp Visual Frame -->
+          <div class="relative w-full md:w-1/2 flex items-center justify-center p-4">
+            <div id="lamp-emissive-source" class="relative w-full max-w-xs transition-transform duration-500 hover:scale-105">
+              <img
+                src={hero?.image || "/images/heavn-one-hero.png"}
+                alt="HEAVN One Hardware"
+                class="w-full h-auto object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]"
+                loading="eager"
+              />
+              <!-- Dynamic light emitter bar indicator -->
+              <div id="light-beam-glow" class="absolute top-[28%] left-[20%] w-[60%] h-2.5 rounded-full transition-all duration-300 blur-[2px]" style="background-color: #60a5fa; box-shadow: 0 0 25px 8px #3b82f6;"></div>
+            </div>
+          </div>
+
+          <!-- Optical Controller Console -->
+          <div class="w-full md:w-1/2 flex flex-col text-left space-y-6">
+            <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
+              <span class="type-tech-mono text-zinc-400">CONTROLADOR ESPECTRAL HEAVN</span>
+              <span id="kelvin-display" class="type-tech-mono font-bold text-[var(--color-accent)] text-sm">
+                5.000K · LUZ ENFOQUE
+              </span>
+            </div>
+
+            <!-- Temperature Slider -->
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs text-zinc-400 font-sans">
+                <span>2.200K (Atardecer Cálido)</span>
+                <span>6.500K (Cénit Solar)</span>
+              </div>
+              <input
+                id="kelvin-slider"
+                type="range"
+                min="2200"
+                max="6500"
+                step="50"
+                value="5000"
+                aria-label="Temperatura de color Kelvin"
+                class="w-full h-2 rounded-lg bg-gradient-to-r from-amber-500 via-amber-200 to-sky-400 cursor-pointer accent-blue-500 appearance-none"
+              />
+            </div>
+
+            <!-- Quick Mode Selectors -->
+            <div class="grid grid-cols-3 gap-2 pt-2">
+              <button
+                type="button"
+                class="mode-btn rounded-lg border border-zinc-700 bg-zinc-900/80 px-3 py-2 text-xs font-sans text-zinc-300 hover:border-blue-400 transition-colors"
+                data-kelvin="2700"
+                data-label="2.700K · RELAJACIÓN"
+              >
+                Relajación
+              </button>
+              <button
+                type="button"
+                class="mode-btn rounded-lg border border-zinc-700 bg-zinc-900/80 px-3 py-2 text-xs font-sans text-zinc-300 hover:border-blue-400 transition-colors"
+                data-kelvin="4500"
+                data-label="4.500K · VIDEOCALL"
+              >
+                Videollamada
+              </button>
+              <button
+                type="button"
+                class="mode-btn rounded-lg border border-blue-500 bg-blue-950/40 px-3 py-2 text-xs font-sans text-blue-200 hover:border-blue-400 transition-colors"
+                data-kelvin="6500"
+                data-label="6.500K · DUCHA SOLAR"
+              >
+                Ducha 10k Lux
+              </button>
+            </div>
+
+            <!-- Live Optical Telemetry -->
+            <div class="grid grid-cols-2 gap-3 pt-2 text-xs text-zinc-400 border-t border-zinc-800">
+              <div class="flex flex-col">
+                <span class="text-zinc-500">Intensidad Biológica</span>
+                <span class="text-zinc-200 font-mono font-medium">Hasta 10.000 Lux</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-zinc-500">Índice CRI</span>
+                <span class="text-zinc-200 font-mono font-medium">&gt; 95 Ra (Espectro Solar)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Specifications Matrix -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-5xl mb-16">
+        {(hero?.specs || []).map((spec) => (
+          <div class="hardware-card p-5 text-center flex flex-col items-center justify-center">
+            <span class="type-hardware-h3 text-white mb-1 font-mono">
+              {spec.value}
+            </span>
+            <span class="type-tech-mono text-zinc-400 text-[11px]">
+              {spec.label}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <!-- Press & Awards Endorsements -->
+      {press_logos && press_logos.length > 0 && (
+        <div class="w-full max-w-5xl pt-8 border-t border-[var(--color-hardware-border)]">
+          <p class="type-tech-mono text-zinc-400 mb-6 text-center text-xs">
+            RECONOCIDA POR LA PRENSA Y EL DISEÑO INTERNACIONAL
+          </p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 items-center justify-center">
+            {press_logos.map((press) => (
+              <div class="flex flex-col items-center p-3 rounded-xl bg-zinc-900/40 border border-zinc-800/80 hover:border-zinc-700 transition-colors">
+                <span class="font-display font-bold text-sm text-zinc-200 mb-1">
+                  {press.name}
+                </span>
+                <span class="text-[11px] text-zinc-400 italic line-clamp-1">
+                  "{press.quote}"
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    const slider = document.getElementById("kelvin-slider");
+    const display = document.getElementById("kelvin-display");
+    const glowField = document.getElementById("lamp-glow-field");
+    const beamGlow = document.getElementById("light-beam-glow");
+    const modeButtons = document.querySelectorAll(".mode-btn");
+
+    function updateKelvin(kelvin, label) {
+      const k = parseInt(kelvin, 10);
+      let colorHex = "#60a5fa";
+      let textLabel = label || `${k.toLocaleString()}K · AJUSTE MANUAL`;
+
+      if (k <= 3000) {
+        colorHex = "#f59e0b"; // Warm amber
+      } else if (k <= 4500) {
+        colorHex = "#fef08a"; // Soft white/warm
+      } else if (k <= 5500) {
+        colorHex = "#93c5fd"; // Balanced daylight
+      } else {
+        colorHex = "#38bdf8"; // High intensity solar blue
+      }
+
+      if (display) display.textContent = textLabel;
+      if (glowField) {
+        glowField.style.background = `radial-gradient(circle, ${colorHex} 0%, transparent 70%)`;
+      }
+      if (beamGlow) {
+        beamGlow.style.backgroundColor = colorHex;
+        beamGlow.style.boxShadow = `0 0 25px 8px ${colorHex}`;
+      }
+    }
+
+    if (slider) {
+      slider.addEventListener("input", function (e) {
+        updateKelvin(e.target.value);
+      });
+    }
+
+    modeButtons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const k = btn.getAttribute("data-kelvin");
+        const lbl = btn.getAttribute("data-label");
+        if (slider) slider.value = k;
+        updateKelvin(k, lbl);
+
+        modeButtons.forEach((b) => {
+          b.classList.remove("border-blue-500", "bg-blue-950/40", "text-blue-200");
+          b.classList.add("border-zinc-700", "bg-zinc-900/80", "text-zinc-300");
+        });
+        btn.classList.add("border-blue-500", "bg-blue-950/40", "text-blue-200");
+      });
+    });
+  })();
+</script>

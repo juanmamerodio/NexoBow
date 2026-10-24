@@ -1,0 +1,88 @@
+---
+import { CONTENT } from "../site.ts";
+
+const { materials_craftsmanship } = CONTENT;
+const { badge, title, subtitle, features } = materials_craftsmanship || {};
+---
+
+<section id="materiales" class="py-24 border-b border-[var(--color-hardware-border)] relative bg-[var(--color-hardware-surface)]">
+  <div class="mx-auto max-w-7xl px-6">
+    <!-- Header -->
+    <div class="max-w-3xl mb-16">
+      <div class="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-950/40 px-3.5 py-1 mb-4">
+        <span class="type-tech-mono text-[11px] text-blue-300">
+          {badge || "DESPIECE MECÁNICO DE AUTOR"}
+        </span>
+      </div>
+      <h2 class="type-hardware-h2 text-[var(--color-ink)] mb-4">
+        {title || "Mecanizado CNC en aluminio de aviación."}
+      </h2>
+      <p class="text-zinc-400 text-base md:text-lg font-sans leading-relaxed">
+        {subtitle || "Cada HEAVN One se ensambla a mano con tolerancias micrométricas. Sin plásticos endebles ni obsolescencia programada: una pieza de inversión para toda la vida."}
+      </p>
+    </div>
+
+    <!-- 4 Core Mechanical Pillars Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+      {(features || []).map((feat, idx) => (
+        <div class="rounded-2xl border border-[var(--color-hardware-border)] bg-[var(--color-paper)] p-8 transition-all hover:border-[var(--color-primary)]/50 group">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-zinc-900 border border-zinc-700 text-[var(--color-accent)] font-mono text-sm font-bold">
+              0{idx + 1}
+            </div>
+            <h3 class="type-hardware-h3 text-white">
+              {feat.title}
+            </h3>
+          </div>
+          <p class="text-sm text-zinc-400 font-sans leading-relaxed">
+            {feat.desc}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Architectural Context Showcase -->
+    <div class="rounded-2xl border border-[var(--color-hardware-border)] overflow-hidden bg-zinc-950 relative">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 items-center">
+        <div class="lg:col-span-7 h-72 lg:h-[450px] relative overflow-hidden">
+          <img
+            src="/images/heavn-office.jpg"
+            alt="HEAVN One en espacio de trabajo ejecutivo"
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent lg:hidden"></div>
+        </div>
+
+        <div class="lg:col-span-5 p-8 lg:p-12 space-y-6">
+          <span class="type-tech-mono text-[var(--color-accent)]">ESTÁNDAR AEROESPACIAL</span>
+          <h3 class="type-hardware-h3 text-white">
+            Diseñada en Múnich. Construida para perdurar décadas.
+          </h3>
+          <p class="text-sm text-zinc-300 font-sans leading-relaxed">
+            El disipador térmico interno mantiene los diodos LED a menos de 45°C incluso en potencia máxima, garantizando más de 50.000 horas de vida útil sin pérdida de flujo luminoso ni deriva de color.
+          </p>
+
+          <div class="grid grid-cols-2 gap-4 pt-4 border-t border-zinc-800 text-xs font-mono">
+            <div>
+              <span class="text-zinc-400 block">Tolerancia Mecánica</span>
+              <span class="text-zinc-100 font-bold">&plusmn; 0.05 mm CNC</span>
+            </div>
+            <div>
+              <span class="text-zinc-400 block">Eficiencia Térmica</span>
+              <span class="text-zinc-100 font-bold">&lt; 45°C Pasiva</span>
+            </div>
+            <div>
+              <span class="text-zinc-400 block">Vida Útil LED</span>
+              <span class="text-zinc-100 font-bold">&gt; 50.000 Horas</span>
+            </div>
+            <div>
+              <span class="text-zinc-400 block">Garantía</span>
+              <span class="text-zinc-100 font-bold">5 Años de Fábrica</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

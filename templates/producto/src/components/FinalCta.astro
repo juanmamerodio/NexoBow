@@ -1,0 +1,32 @@
+---
+import { CONTENT } from "../site.ts";
+import Button from "./ui/Button.astro";
+
+const { final_cta } = CONTENT;
+---
+
+<section class="py-24 relative overflow-hidden border-b border-[var(--color-hardware-border)] bg-[var(--color-hardware-surface)]">
+  <!-- Optical ambient light background -->
+  <div class="pointer-events-none absolute -bottom-24 left-1/2 -translate-x-1/2 h-64 w-[600px] rounded-full bg-[radial-gradient(circle,rgba(37,99,235,0.25)_0%,transparent_70%)] blur-3xl optical-beam"></div>
+
+  <div class="mx-auto max-w-4xl px-6 relative z-10 text-center">
+    <span class="type-tech-mono text-[var(--color-accent)] mb-3 block">
+      ILUMINACIÓN CIRCADIANO PROFESIONAL
+    </span>
+    <h2 class="type-hardware-h2 text-white max-w-3xl mx-auto mb-6">
+      {final_cta?.title || "La luz adecuada cambia cómo pensás, trabajás y descansás."}
+    </h2>
+    <p class="text-zinc-400 text-base md:text-lg font-sans max-w-xl mx-auto mb-10 leading-relaxed">
+      {final_cta?.subtitle || "Unite a los miles de profesionales que ya experimentan el estándar Human Centric Lighting en su día a día."}
+    </p>
+
+    <div class="flex justify-center">
+      <Button href="#configurar" size="lg" variant="primary">
+        <span>{final_cta?.button || "Configurar mi HEAVN One"}</span>
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </Button>
+    </div>
+  </div>
+</section>
