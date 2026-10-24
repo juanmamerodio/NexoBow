@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Tahoma";
+  src: url("/fonts/Tahoma.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tahoma";
+  src: url("/fonts/Tahoma-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-display: "Tahoma", "Oswald", "Chakra Petch", -apple-system, sans-serif;
+  --font-sans: "Roboto", -apple-system, system-ui, sans-serif;
+  --font-mono: "Space Mono", monospace;
+  --color-paper: #1c1917;
+  --color-ink: #fafaf9;
+  --color-primary: #f59e0b;
+  --color-accent: #44403c;
+  --color-asphalt-dark: #1c1917;
+  --color-asphalt-surface: #292524;
+  --color-asphalt-border: #44403c;
+  --color-safety-amber: #f59e0b;
+  --color-safety-warning: #fbbf24;
+  --color-heavy-steel: #44403c;
+  --color-concrete-white: #fafaf9;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #1c1917;
+}
+::-webkit-scrollbar-thumb {
+  background: #44403c;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f59e0b;
+}

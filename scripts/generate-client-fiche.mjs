@@ -467,6 +467,50 @@ export const RUBRO_BRANDING_MAP = {
       fuente_sans: "Averta",
     },
   ],
+  construccion: [
+    {
+      name: "Safety Amber & Asphalt",
+      primary: "#f59e0b",
+      accent: "#44403c",
+      fondo: "#1c1917",
+      tinta: "#fafaf9",
+      fuente: "Tahoma",
+      fuente_sans: "Barlow",
+    },
+    {
+      name: "Concrete Light",
+      primary: "#f59e0b",
+      accent: "#292524",
+      fondo: "#fafaf9",
+      tinta: "#1c1917",
+      fuente: "Tahoma",
+      fuente_sans: "Barlow",
+    },
+    CONTEXTUAL_BRANDING_PALETTES[0],
+    CONTEXTUAL_BRANDING_PALETTES[3],
+  ],
+  pavimentacion: [
+    {
+      name: "Safety Amber & Asphalt",
+      primary: "#f59e0b",
+      accent: "#44403c",
+      fondo: "#1c1917",
+      tinta: "#fafaf9",
+      fuente: "Tahoma",
+      fuente_sans: "Barlow",
+    },
+    {
+      name: "Concrete Light",
+      primary: "#f59e0b",
+      accent: "#292524",
+      fondo: "#fafaf9",
+      tinta: "#1c1917",
+      fuente: "Tahoma",
+      fuente_sans: "Barlow",
+    },
+    CONTEXTUAL_BRANDING_PALETTES[0],
+    CONTEXTUAL_BRANDING_PALETTES[3],
+  ],
 };
 
 export const DEFAULT_ALTERNATIVE_PALETTES = [

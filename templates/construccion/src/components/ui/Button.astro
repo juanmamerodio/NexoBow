@@ -1,0 +1,60 @@
+---
+interface Props {
+  href?: string;
+  variant?: "primary" | "secondary" | "outline" | "danger";
+  size?: "sm" | "md" | "lg";
+  class?: string;
+  id?: string;
+  target?: string;
+  rel?: string;
+}
+
+const {
+  href,
+  variant = "primary",
+  size = "md",
+  class: className = "",
+  id,
+  target,
+  rel,
+} = Astro.props;
+
+const baseClasses =
+  "inline-flex items-center justify-center font-bold tracking-wider uppercase transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-[0.98] select-none rounded-sm border";
+
+const sizeClasses = {
+  sm: "px-3.5 py-1.5 text-xs gap-1.5",
+  md: "px-5 py-2.5 text-sm gap-2",
+  lg: "px-7 py-3.5 text-base gap-3",
+};
+
+const variantClasses = {
+  primary:
+    "bg-[var(--color-primary)] text-[#1c1917] border-[var(--color-primary)] hover:bg-[var(--color-safety-warning)] hover:border-[var(--color-safety-warning)] focus:ring-[var(--color-primary)] shadow-md shadow-amber-500/20",
+  secondary:
+    "bg-[var(--color-asphalt-surface)] text-[var(--color-ink)] border-[var(--color-asphalt-border)] hover:bg-[#34302d] hover:border-[#57534e] focus:ring-[#57534e]",
+  outline:
+    "bg-transparent text-[var(--color-primary)] border-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-[#1c1917] focus:ring-[var(--color-primary)]",
+  danger:
+    "bg-red-600 text-white border-red-700 hover:bg-red-700 focus:ring-red-500",
+};
+
+const classes = [baseClasses, sizeClasses[size], variantClasses[variant], className].join(" ");
+const Tag = href ? "a" : "button";
+---
+
+<Tag href={href} class={classes} id={id} target={target} rel={rel}>
+  <slot />
+  <svg
+    class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path
+      fill-rule="evenodd"
+      d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+      clip-rule="evenodd"
+    />
+  </svg>
+</Tag>

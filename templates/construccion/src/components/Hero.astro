@@ -1,0 +1,106 @@
+---
+import { CONTENT } from "../site";
+import Button from "./ui/Button.astro";
+
+const h = CONTENT.hero;
+const q = CONTENT.quoteEstimationSection;
+
+// Parse italics in headline
+const formattedHeadline = h.headline.replace(
+  /\*(.*?)\*/g,
+  '<span class="text-[var(--color-primary)] underline decoration-amber-500/50 underline-offset-8">$1</span>'
+);
+---
+
+<section class="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden bg-[var(--color-paper)]">
+  <!-- Subtle Industrial Hatch / Grid Pattern -->
+  <div
+    class="absolute inset-0 opacity-[0.03] pointer-events-none"
+    style="background-image: radial-gradient(#fafaf9 1px, transparent 1px); background-size: 24px 24px;"
+  ></div>
+
+  <!-- Safety diagonal hazard stripe accent at top -->
+  <div
+    class="h-1.5 w-full bg-repeating-linear"
+    style="background: repeating-linear-gradient(45deg, #f59e0b, #f59e0b 15px, #1c1917 15px, #1c1917 30px);"
+  ></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      <!-- Left Column: Copy & CTAs -->
+      <div class="lg:col-span-7 flex flex-col items-start text-left">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-[var(--color-asphalt-surface)] border border-[var(--color-asphalt-border)] mb-6">
+          <span class="w-2.5 h-2.5 rounded-full bg-[var(--color-primary)]"></span>
+          <span class="text-xs font-mono font-bold tracking-widest text-amber-400 uppercase">
+            {h.badge}
+          </span>
+        </div>
+
+        <!-- Headline -->
+        <h1
+          class="text-4xl sm:text-5xl lg:text-6xl font-black font-display uppercase tracking-tight text-[var(--color-ink)] leading-[1.08] mb-6"
+          set:html={formattedHeadline}
+        />
+
+        <!-- Subheadline -->
+        <p class="text-lg sm:text-xl text-stone-300 font-sans leading-relaxed mb-8 max-w-2xl font-normal">
+          {h.subheadline}
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto mb-12">
+          <Button href="#cotizar" variant="primary" size="lg">
+            {h.primaryCta}
+          </Button>
+          <Button href={q.whatsapp} target="_blank" rel="noopener noreferrer" variant="secondary" size="lg">
+            Hablar por WhatsApp
+          </Button>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full pt-8 border-t border-[var(--color-asphalt-border)]">
+          {h.stats.map((stat) => (
+            <div class="flex flex-col">
+              <span class="text-3xl lg:text-4xl font-black font-display text-[var(--color-primary)] tracking-tight">
+                {stat.value}
+              </span>
+              <span class="text-xs font-mono text-stone-400 uppercase tracking-wider mt-1">
+                {stat.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Right Column: Heavy Paving Imagery -->
+      <div class="lg:col-span-5 relative">
+        <div class="relative mx-auto max-w-md lg:max-w-none rounded-sm border-2 border-[var(--color-asphalt-border)] overflow-hidden bg-[var(--color-asphalt-surface)] shadow-2xl">
+          <!-- Image -->
+          <img
+            src="/images/hero-heavy-equipment.webp"
+            alt="Maquinaria pesada de pavimentación asfáltica en obra"
+            class="w-full h-[380px] sm:h-[460px] object-cover object-center filter contrast-105 brightness-95 hover:scale-105 transition-transform duration-700"
+            loading="eager"
+            width="600"
+            height="460"
+          />
+
+          <!-- Industrial Tag Stamp Overlay -->
+          <div class="absolute bottom-4 left-4 right-4 bg-[#1c1917]/90 backdrop-blur-md border border-[var(--color-asphalt-border)] p-4 rounded-sm">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-[var(--color-primary)] font-bold uppercase tracking-wider">Flota Pesada Activa</span>
+              <span class="text-emerald-400">● Listo para Despacho</span>
+            </div>
+            <div class="mt-2 text-xs text-stone-300">
+              Pavimentadoras Vögele Super 1800-3 · Rodillos Hamm HD120 · Fresadoras Wirtgen W100
+            </div>
+          </div>
+        </div>
+
+        <!-- Decorative Technical Offset Box -->
+        <div class="absolute -bottom-6 -right-6 w-32 h-32 border-r-2 border-b-2 border-amber-500/30 -z-10 pointer-events-none hidden sm:block"></div>
+      </div>
+    </div>
+  </div>
+</section>

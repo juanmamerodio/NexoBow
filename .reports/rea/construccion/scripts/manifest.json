@@ -1,0 +1,812 @@
+{
+  "capture_path": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/construccion/page.json",
+  "capture_sha256": "32a091fd499f849659bab9044ac57bc17daf494592ed2dae470ec73a8934c81a",
+  "capture_kind": "page-inspection",
+  "source_evidence_id": "ev_dd5c7b3a80fcf51eaee8292e629c21c9a0794e23e0da56afb85867621401f9d4",
+  "capture_completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "accessibility",
+      "console_text",
+      "dom",
+      "frames",
+      "json_body_shapes",
+      "metadata",
+      "resources",
+      "scripts",
+      "storage_keys",
+      "websocket_shapes"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "accessibility",
+        "reason": "not_approved",
+        "count": 427
+      },
+      {
+        "section": "console_text",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "dom",
+        "reason": "unsupported_url",
+        "count": 1
+      },
+      {
+        "section": "frames",
+        "reason": "unsupported_url",
+        "count": 1
+      },
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "metadata",
+        "reason": "disallowed_origin",
+        "count": 13
+      },
+      {
+        "section": "metadata",
+        "reason": "unsupported_url",
+        "count": 3
+      },
+      {
+        "section": "resources",
+        "reason": "disallowed_origin",
+        "count": 10
+      },
+      {
+        "section": "scripts",
+        "reason": "disallowed_origin",
+        "count": 8
+      },
+      {
+        "section": "scripts",
+        "reason": "unattributed_origin",
+        "count": 2
+      },
+      {
+        "section": "scripts",
+        "reason": "unsupported_url",
+        "count": 5
+      },
+      {
+        "section": "storage_keys",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "output_directory": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/construccion/scripts",
+  "analysis_input": {
+    "input_path": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/construccion/scripts/files",
+    "format": "directory"
+  },
+  "scripts": [
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_035c362364c7f4a228281c428f155fc3129b2f7d3015f72b915e0b777dff28d9",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-1-d14fd79d82db470280384d727d322768de5f80afd288063df6791bc173c3beea.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "18cf9bcbee084b33585433b824d4f179815e0b148044e5179b06c5640cfff2ba",
+        "bytes": 971,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_03666db6d30b5b2d0fbf53feef9ba0c4a51355fb78a2b451ad7cd5596dad1e48",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/pixelyoursite/dist/scripts/js.cookie-2.1.3.min.js?ver=2.1.3",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-2-0b9ea435eca0b3310fd82e71caba7d82a8c47d86370c3456bd4ceb5bce85b988.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "4af105297c5b49ca668eaa0774c0eb479e907175f12ccc30e9c038dd7b6fcaf0",
+        "bytes": 1709,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_06c8418764f52dba464efce703b902a47312ff4dba5e23e68cc75758d6d33a92",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/elementor/assets/js/chunks/image-carousel.min.js?ver=4.3.5",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-3-19a71f2bbb2e6b247b99ad711f23794781769df19b57131c09f1e1082fd1cd61.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "ef7af3233638831fee4085f43f2c9f733f5fc9c505694f6d961ba57cab260891",
+        "bytes": 1002,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_12cb173ca9480d5f2020c0072eda0609a85818af6dbcbf71255ced2a620af0b3",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-includes/js/jquery/ui/core.min.js?ver=1.14.2",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-4-b0e3dd83b9e2a787f22a058244a5fbdfa02fbec2d6a84ffd7f3b3179e61a62f6.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "b7a27a4b4abfc300eaf7d9151afeef8df2663d98586e38f59f91bbe98ef30af7",
+        "bytes": 18674,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_15ab36bc4e78cee7442d7317603da17beb0aea3875422483e157b4f39372f866",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-5-65417ffa7f3a3c8a11ab5193f9dee31e0fa0f9fb8d74f6e9e6cdfd22f924c0ef.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "5083905862c2b7aa8a84c4f2313d359d2288fb25fbe1ff577fa7325eff2ed2d9",
+        "bytes": 5791,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_1ad64396898f81abb7b6d8132d555204bc83c46389e00112806d51e2f9cb6725",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-6-24b4a62ca2704592a043f1e54442a7071945bc4d2ebbb6b3bf0dd5bb3814aa1a.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "fc774906082b59dedcfc55b8ef127783b6d056578ff4586a8ebbdb81bbe286f1",
+        "bytes": 5107,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_23282e7d748394420e6b6b427bd89ac185803fecf7f41aafe1970d038102f757",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-7-35b3207a621b4b6947553ac614f2676da788fab5c1879838a20e3f84d593614a.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "eae2c399307b3c4a1c9d628def97a3b520a5fac12456d849bb77ee6401723469",
+        "bytes": 921,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_270c63851939fbb27abe50c449e9abb3d238beba5eb235818a7e682c28d8b171",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=4.3.2",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-8-0578351f6fc7e77e895a0c06fde853a0685bd2d1dfccb99c8433598d73427472.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "cd9c7eb928d82956dac04e5b39b0a86690daa455e350d68581e95c22efc6835e",
+        "bytes": 80170,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_273da4d4d359ac6260ea8ce49ba25c28ebab3f1ee9ce0c4ff7838d69e3f5e2ed",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/pixelyoursite/dist/scripts/public.js?ver=11.4.2.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-9-1c441644b39a13a5fcd6eb3648e300a71721e3b400d84483446947114af3429d.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "2b0d2e68387328796d129d3f2e83f6d9df36c41fcee388aeb6730d36b418dfde",
+        "bytes": 238975,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_401a8489083414e59811f5a537565fefa371c567a8bd283e8f9d07c16d2cb75e",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=4.3.5",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-10-ecc43d5e6b24f0a8fb8f99af459e8b9e4130da40e7e36743f5a0cb9cfa61df1e.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "bbfe6403b4ddba29284c72d20f000154d04588d60850fc39a6fd65861c6d83e6",
+        "bytes": 60022,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_48e3e368ee327d31b0e3525f4a37b718623c1beba611d5bcef420a670323e1f6",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js?ver=1.2.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-11-eead4d64a2b273734c2f04c85c101d4d0c59f1e29caa0fad9f818cbcbfe9f3eb.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "f9b60ae2f2938c589960ef00d9b9a644f0847f7183f597cdc3fbf8cfe904c552",
+        "bytes": 24109,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_499ec66386789f4b9a0d166d664b266f11c25aedd0021e654e484d9e28db3471",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/elementor/assets/lib/jquery-numerator/jquery-numerator.min.js?ver=0.2.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-12-4f94f268e1dc65b4bf3ee74707db15acbd1b4f2b4ef1d660c05ddcd0e189f6be.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "9aa9bb8be2b834059533ce5de7eed3a662ad3d3e70643bbe5f75265075e9bd28",
+        "bytes": 1801,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_5df58aa8f5a93619ea27bb7ce4719bdaa56cdfeb9f8f3ee9e5ec0a48752fd79b",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": "https://www.reliablepaving.com/wp-content/plugins/elementor/assets/lib/swiper/v8/swiper-bundle.min.js.map"
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/elementor/assets/lib/swiper/v8/swiper.min.js?ver=8.4.5",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-13-9a490d9e2ebecc21d560dd2b2261c58803201b89d12981cf4389492c4861f7cc.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "2ac3af00c283c0b2ae6108fa83a2053e51274a2a812fb063916cbe19bc4f96b5",
+        "bytes": 143709,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_60fa1420134e22cfb7f5a76e4807aeed8aae17417bc98a759cbb6b6dfbcbe6c3",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=4.3.5",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-14-fa255b84c6c8388666bbfae182f4411175c2657ab1a2d88104338b98b16a997e.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "8d2011a2a7c0d96582f8495b69b6e5f56432ed8b5095cf7aac7e2f259ea2fbfb",
+        "bytes": 103,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_672a5f3fceec5ee9d74ce84494f55fb511182e65359eb091813911270de382bc",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/pixelyoursite/dist/scripts/jquery.bind-first-0.2.3.min.js?ver=0.2.3",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-15-6818f5556c31564da26f0e8a71c1b2962fcbab9941669b315818831dac0a2c27.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "37045bf0d243623db4f2e99567c986944957b336dafa6368f4f75bcbad6fc4fa",
+        "bytes": 1317,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_705e3d7d645c593d13ae370a8706da82ffbb50bbdec768f5ba9e26981ba99f44",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-16-8cccbf38ff159358f9f5c8844d3c1c98d52027d75a529b95b918f8a003107ab8.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "9f7a87d73cf34cd5d76d600a5ce326ac1ce32a021067b1bb50587fa488b13444",
+        "bytes": 329,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_823eb3e7b237df027ed712d1746a9afcc529d0c343a01a802815b9f8022f9ba6",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/pixelyoursite/dist/scripts/sha256.js?ver=0.11.0",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-17-0a6b993d85b5acc8fb481bec4d16ad73cd27e0d0a1ba92089d3784ba66fdf4aa.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "2ea7178606d75ce40364238195b38d790cab4101a59ec42bdc168f05aa0010f6",
+        "bytes": 21450,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_8b446a921f1567f311e79bbe21c4133e530aac6a720e8479941288ff15199442",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/elementor/assets/js/chunks/background-slideshow.min.js?ver=4.3.5",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-18-a2ba866db0101bb54392bd46602c932ac04c3231fc14d64ec4ac0c7439723e40.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "b988fa9f49a827ea9e370928141eea3bbc6de3bb8ba09be948ae80352c3a906d",
+        "bytes": 23186,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_92576092aa304335242f906b1fea68dbfefe3b98583f5d07fad5610cdf369f22",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/themes/ReliablePavingInc/assets/js/scripts.js?ver=1792074116",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-19-847a7b328395767061edcd49e2949757641d353c58f5cd058eba9a8d5eb2b498.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "1782b57b9ead5915c1c5cde1d4110028d6c6bd35b4bff8a0a65e44965fc65be3",
+        "bytes": 1097,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_9b2560d1f18061bfee7d25089220c3cc2df8e9c84a71ac0ff7d46ea7098e4b18",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=4.3.5",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-20-91bccab6717e02bf29c487ede87913a214a063f6e600b51c568624b786f6859b.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "2636846470306c226883fb4ede46a96d71a54454d6c8b1bd9e26e6baf72db965",
+        "bytes": 53086,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_a43c23c75729ee8ae11aaed7dc90e6658b568af578e8ee4940412873f8a23a8c",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-21-5c41971983750a39ba664845bfa3f71c65c5e88e916ed4655a2a07f7ae93715e.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "cb6f2d32c49d1c2b25e9ffc9aaafa3f83075346c01bcd4ae6eb187392a4292cf",
+        "bytes": 87553,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_ab12ae28d898abcc89cbb5486fd4c6dfbc1ecde982dbec44e0f6c5ab0988701e",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-22-e81f5b78a51ebf4fbeb41cb690452f055242bddab7673469438d67b79c3fef8b.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "64c79f05b15d95f988d14a70f20df6bf7e1d383cc3c31677d3868c7faeae0791",
+        "bytes": 420,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_af0a3996442b9afe2c922866b3678613591a9578ed8d2b93ad1d1ab7e34dbc8f",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-23-09841a9bd2877600831677dace0f99f00267ae9b3822edbe2b54d54024203211.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "aa453fb82bdca5b300ea049a9a3079e555f97c092df889f1066444e1891fb42c",
+        "bytes": 51,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_b4c1b9ca95c9c0fd273eb09b116fc21de5bfdebd78c5515f9477f3ad1ce5cc59",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js?ver=4.3.2",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-24-27b9764b8b910fa12deb193e38a223e458ce829e1deffd4ebfa5d8394331a058.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "cf8b52ece0e12112f97b78cbbe11d089ae5ea5fd9125e70104a2cf45572e48fe",
+        "bytes": 291601,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_d5814578f02aef7a57f0074cc709d4c63a637d96873b66e1305d2beed72d24c8",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/elementor-pro/assets/lib/sticky/jquery.sticky.min.js?ver=4.3.2",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-25-57c9acb11a3dd507fe093f0615d3c99d545e88a01a386d405af325a5da78a7d0.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "34bbd1c367ffc7d80fcff86c7e5f8777e70f4911bb324e8ecfc7dd3604a96e68",
+        "bytes": 3721,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_dce4e544fcf9487ed62612800d2389661a348b3341d48d74d6d3fc8a0fbe2387",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/elementor/assets/js/chunks/background-video.min.js?ver=4.3.5",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-26-0a284883130a75a37f87318f6fae6938c8248b06bd52077122353112da5d5fbc.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "4bafd11c752be817df7d0a1bf792465c6198e5d957700e64fb6263affb784f1f",
+        "bytes": 24570,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_decef76933a889e6ed1e39beafc8d575e0ccbe5482d82edf69a7c7331354de26",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/elementor/assets/js/chunks/counter.min.js?ver=4.3.5",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-27-131df00d00e5b536f3f35d17df5a9ff12f36839093414936706cfbe18e86ee37.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "d0f15fb89f96c3f95b25c69c003187276c966cb4ec2fb060175667b752bdc51d",
+        "bytes": 20228,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_e2f95555e15b730f76d9374d6b2bb09f6ac613fcd9d8cf636871e3f48787d247",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-28-78f008e49ae22a82d1e85408789258eb79e05f1cda7c8d94ccf32dbf7a86457e.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "5274f11e6fb32ae0cf2dfb9f8043272865c397a7c4223b4cfa7d50ea52fbde89",
+        "bytes": 13577,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_ede18dfa239d680980fdfabc3484951cd11ca0683e3aa5c4a67d05b8fc1d995a",
+        "frame_id": null,
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/cdn-cgi/challenge-platform/scripts/jsd/main.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/a01f3d474b7bf52a00fd686ab0597370916415ee5f753ebc542779fca14abc4d/cdn-cgi/challenge-platform/scripts/jsd/main.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "1634634619e984a067ef397f62f986e6b15ec811748e651696dffe13432f4196",
+        "bytes": 23115,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_f9879c1a7b089e9e3b7555cdd08332c155c0a1d59042eaf6c31c57e039de6566",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/wp-content/plugins/elementor/assets/js/chunks/text-editor.min.js?ver=4.3.5",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-30-16d04a5df681da70d8d4dc85f4a0fde2ce4862380008dcc10a553031f4b85174.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "a7b26ee1157dd6916bd9a82e218629d8f4fe8e818153289d7ede0286caaf543b",
+        "bytes": 20662,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_ff0acdda1c373f2745e4085e2780d80fb3bdb8c02b54276589831e10c38a7be7",
+        "frame_id": "DCAF624CE0A530E493E68F98C60EC834",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.reliablepaving.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-31-d2267cd7eb68dd659c8d3813ae11587c450daf51146d3c29a204de0b05bb7a7c.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "1161089c1e766b4b5e21660df24aa855c106961f84e56a58058ae51fd3657fc6",
+        "bytes": 1981,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    }
+  ],
+  "limitations": [
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+    "Only script bytes retained in this capture are exported. Sources are not refetched or executed, and a response or Debugger source does not prove execution.",
+    "Ordinary unambiguous URL paths preserve relative module layouts by origin, including case-distinct spellings. Query variants, exact path collisions, file/directory prefixes, inline sources, and unrepresentable paths are isolated. A case-distinct pair is isolated only when the destination filesystem cannot store both spellings; the record names that pair. Browser module relationships of isolated paths remain unknown.",
+    "Local JavaScript analysis does not implement browser import maps, root-relative URL resolution, remote URL loading, or browser runtime behavior. It may strip import queries and fragments; isolated variants are not canonical targets.",
+    "Source-map declarations are retained as metadata. No source maps or missing dependencies are fetched or reconstructed.",
+    "Scenario response bytes preserve the output of Playwright's Response.body() API; any source-body provenance caveat from the capture is retained in this manifest. Debugger sources are the exposed text encoded as UTF-8. Redacted bytes are exported exactly as retained, and may no longer parse as JavaScript."
+  ]
+}

@@ -1,0 +1,201 @@
+@charset "UTF-8";
+/*
+Theme Name: Reliable Paving Inc.
+Theme URI: 
+Author: Red Spot Design, LLC
+Author URI: https://www.redspotdesign.com/
+Description: A theme for WordPress 5.
+Requires at least: WordPress 4.9.6
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: LICENSE
+Text Domain: wp5default
+Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+
+Website Name is based on Underscores https://underscores.me/, (C) 2012-2018 Automattic, Inc.
+Underscores is distributed under the terms of the GNU GPL v2 or later.
+
+Normalizing styles have been helped along thanks to the fine work of
+Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
+*/
+
+
+/*###################################
+# GENERAL STYLES
+###################################*/
+
+* { box-sizing: border-box; }
+html {font-size: 16px; /* 1em */ overflow: auto; line-height: 1.15; -webkit-text-size-adjust: 100%;}
+body {margin: 0 auto; width: 100%; overflow: hidden;}
+a, a:visited {color: inherit; text-decoration: none; -webkit-transition: all .5s ease; text-decoration: none !important;}
+a, img {-webkit-transition: all ease 0.5s;-o-transition: all ease 0.5s;transition: all ease 0.5s;}
+a:focus {outline: none!important;}
+h1, h2, h3, h4, h5, h6, p, li, ul, ol {margin-top: 0;}
+p:last-of-type { margin-bottom: 0!important; }
+
+/*###################################
+## LAYOUTS
+###################################*/
+
+.dbl { display: inline; }
+.db { display: block!important; }
+.tc { text-align: center; }
+.tl { text-align: left; }
+.tr { text-align: right; }
+.lr { left: 0!important; right: 0!important; }
+.mgla { margin: 0 0 0 auto!important; }
+.mgra { margin: 0 auto 0 0!important; }
+.mgla > .e-con-inner { margin: 0 0 0 auto!important; }
+.mgra > .e-con-inner { margin: 0 auto 0 0!important; }
+.mg, .mg .e-con-inner { margin: 0 auto!important; }
+.mid { transform: translateY(-50%)!important; }
+.full-width { width: 100%; left: 0; right: 0; }
+.alpha { text-transform: uppercase; }
+
+
+.green-border { border-left: 5px solid #3BB44B!important; }
+.black-border { border-left: 5px solid #222222!important; }
+
+
+/* IMAGE */
+
+.image-gradient-bottom { -webkit-mask-image: linear-gradient(to bottom, rgb( 31 31 31 / 70% ) 80%, transparent 105%); -webkit-mask-repeat: no-repeat; -webkit-mask-size: 100% 100%; mask-image: linear-gradient(to bottom, rgb( 31 31 31 / 70% ) 80%, transparent 105%); mask-repeat: no-repeat; mask-size: 100% 100%; }
+.image-filter { filter: brightness(0) invert(1); }
+
+/*###################################
+## BUTTONS
+###################################*/
+
+.site-btn .elementor-button { max-width: 180px!important; width: 100%!important; }
+.full-btn .elementor-button { width: 100%!important; }
+
+/*###################################
+## HEADER
+###################################*/
+
+/* body.elementor-editor-active #site-header { } */
+/* body:not(.elementor-editor-active) #site-header { position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 999; } */
+/* body:not(.elementor-editor-active) #site-header.sticky .site-logo img { max-width: 100px; } */
+body:not(.elementor-editor-active) #site-header.sticky { background: #3BB44B; }
+body:not(.elementor-editor-active) #site-header.sticky .header-button .elementor-button { background: #222222!important; }
+body:not(.elementor-editor-active) #site-header.sticky .elementor-menu-toggle { background: #222222!important; }
+
+.main-nav .elementor-nav-menu .sub-arrow { padding: 0 0 0 8px!important; font-size: 16px; }
+
+/*###################################
+## BANNER
+###################################*/
+
+
+/*###################################
+## CONTENT
+###################################*/
+	
+	.navigation-list ul { padding: 0; margin: 0; list-style: none; column-count: 2; }
+	.navigation-list ul li { padding: 0 0 30px; }
+	.navigation-list ul li:last-of-type { padding: 0; }
+
+	/* INFO */
+
+	.info-item .elementor-counter-title { line-height: 1.2em!important; }
+
+	/* SERVICES */
+	
+	.services-item .services-text { display: none; }
+	.services-item::after { content: ''; background: rgb( 59 180 75 / 90% ); width: 100%; height: 100%; position: absolute; top: 0; left: 0; right: 0; opacity: 0; }
+	.services-item:hover::after { opacity: 1; }
+	.services-item:hover .services-image::before { opacity: 0; }
+	.services-item .services-image::before { content: ''; background: linear-gradient(to top, rgb(34 34 34 / 90%), transparent); width: 100%; height: 100%; position: absolute; top: 0; left: 0; right: 0; }
+	.services-item:hover .services-header { text-align: center!important; margin: 0 auto!important; }
+	.services-item:hover .services-text { display: block; text-align: center!important; }
+	.services-item:hover .services-content { top: 50%!important; transform: translateY(-50%)!important; bottom: unset!important; }
+
+/*###################################
+## INNER
+###################################*/
+
+	/* CONTACT */
+
+	.banner-flip .elementor-widget-image img { transform: scaleX(-1)!important; }
+
+	/* CAREERS */
+	
+	.single-careers .post-content h3 { text-transform: uppercase; }
+	.post-content h2, .post-content h3 { margin: 30px 0 !important; }
+	.post-content p { margin: 0 0 30px!important; }
+	.post-content p:last-of-type { margin-bottom: 0!important; }
+	
+	.careers-item { border-left: 5px solid #3BB44B!important; }
+	.careers-list { margin: 0 0 70px; }
+	.careers-list h3 { margin: 0 0 15px; }
+	.careers-list ul { margin: 0; padding: 0; list-style: none; }
+	.careers-list ul li { line-height: 1.4em; padding: 0 0 30px; }
+	.careers-list ul li:last-of-type { padding-bottom: 0; }
+
+
+/*###################################
+## RESPONSIVE
+###################################*/
+
+@media screen and (max-width: 1240px){
+
+	.careers-list { margin: 0 0 50px; }
+
+}
+
+@media screen and (max-width: 1200px){
+
+	.main-nav .elementor-nav-menu .sub-arrow { padding: 0 0 0 5px!important; font-size: 12px; }
+
+}
+
+@media screen and (max-width: 1045px){
+	
+	.navigation-list ul li { padding: 0 0 15px; }
+
+	.careers-list { margin: 0 0 30px; }
+	
+
+}
+
+@media screen and (max-width: 900px){
+
+	.careers-list { margin: 0 0 20px; }
+
+}
+
+@media screen and (max-width: 767px){
+	
+	.main-nav .elementor-nav-menu .sub-arrow { padding: 0 0 0 8px!important; font-size: 14px; }
+	
+	
+	/* BUTTON */
+	
+	.site-btn .elementor-button { max-width: 150px!important; }
+	
+	/* BANNER */
+	
+	.banner-content { top: 55%; transform: translateY(-50%); bottom: unset!important; }
+	
+	/* CONTENT	*/
+	
+	.info-item .elementor-counter-title { text-align: center!important; }
+	
+	/* CAREERS */
+
+	.post-content p { margin: 0 0 15px!important; }
+	.post-content h2, .post-content h3 { margin: 15px 0!important; }
+	.careers-list ul li { padding: 0 0 15px; }
+	
+}
+
+@media screen and (max-width: 440px){
+	
+	.navigation-list ul { column-count: 1; }
+
+}
+
+

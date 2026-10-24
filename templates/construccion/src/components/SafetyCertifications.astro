@@ -1,0 +1,88 @@
+---
+import { CONTENT } from "../site";
+
+const sc = CONTENT.safetyCertifications;
+---
+
+<section id="certificaciones" class="py-20 md:py-28 bg-[var(--color-asphalt-surface)] border-y border-[var(--color-asphalt-border)] relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-[var(--color-paper)] border border-[var(--color-asphalt-border)] mb-4">
+        <span class="w-2 h-2 rounded-full bg-[var(--color-primary)]"></span>
+        <span class="text-xs font-mono font-bold tracking-widest text-[var(--color-primary)] uppercase">
+          {sc.badge}
+        </span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-display uppercase tracking-tight text-[var(--color-ink)] mb-4 leading-tight">
+        {sc.title}
+      </h2>
+      <p class="text-base sm:text-lg text-stone-300 font-sans">
+        Compromiso estricto con la seguridad operativa, prevención de riesgos en obra vial y estándares internacionales de pavimentación.
+      </p>
+    </div>
+
+    <!-- Certification Badges Row (Authentic Logos) -->
+    <div class="bg-[var(--color-paper)] border border-[var(--color-asphalt-border)] p-8 rounded-sm mb-12 shadow-lg">
+      <div class="text-xs font-mono text-center text-stone-400 uppercase tracking-widest mb-8">
+        Membresías Industriales & Sellos de Calidad de Obra
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center filter grayscale hover:grayscale-0 transition-all duration-300">
+        {sc.certifications.map((item) => (
+          <div class="flex flex-col items-center text-center p-3">
+            <img
+              src={item.icon}
+              alt={item.name}
+              class="h-16 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity duration-200"
+              loading="lazy"
+              width="120"
+              height="64"
+            />
+            <span class="text-xs font-mono font-bold text-stone-300 uppercase mt-3">
+              {item.name}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Safety Pillars Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-[var(--color-paper)] border border-[var(--color-asphalt-border)] p-6 rounded-sm">
+        <div class="w-10 h-10 rounded bg-[var(--color-primary)]/10 border border-amber-500/30 flex items-center justify-center text-[var(--color-primary)] mb-4 font-bold text-lg">
+          01
+        </div>
+        <h4 class="text-lg font-bold font-display uppercase text-[var(--color-ink)] mb-2">
+          Cero Accidentes de Trabajo
+        </h4>
+        <p class="text-xs text-stone-300 font-sans leading-relaxed">
+          Programa permanente de inducción diaria en seguridad vial, vallados perimetrales reflectivos y uso estricto de EPP de alta visibilidad clase 3.
+        </p>
+      </div>
+
+      <div class="bg-[var(--color-paper)] border border-[var(--color-asphalt-border)] p-6 rounded-sm">
+        <div class="w-10 h-10 rounded bg-[var(--color-primary)]/10 border border-amber-500/30 flex items-center justify-center text-[var(--color-primary)] mb-4 font-bold text-lg">
+          02
+        </div>
+        <h4 class="text-lg font-bold font-display uppercase text-[var(--color-ink)] mb-2">
+          Control de Suelos & Densidad Nuclear
+        </h4>
+        <p class="text-xs text-stone-300 font-sans leading-relaxed">
+          Ensayos in situ de valor soporte CBR, control de humedad y densidad por densímetro nuclear antes de autorizar el tendido de la carpeta asfáltica.
+        </p>
+      </div>
+
+      <div class="bg-[var(--color-paper)] border border-[var(--color-asphalt-border)] p-6 rounded-sm">
+        <div class="w-10 h-10 rounded bg-[var(--color-primary)]/10 border border-amber-500/30 flex items-center justify-center text-[var(--color-primary)] mb-4 font-bold text-lg">
+          03
+        </div>
+        <h4 class="text-lg font-bold font-display uppercase text-[var(--color-ink)] mb-2">
+          Responsabilidad Ambiental & RAP
+        </h4>
+        <p class="text-xs text-stone-300 font-sans leading-relaxed">
+          Reciclado de pavimento asfáltico fresado (RAP) para sub-bases granulares ecológicas, reduciendo el impacto en canteras y la huella de carbono.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

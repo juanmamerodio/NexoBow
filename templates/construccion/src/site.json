@@ -1,0 +1,210 @@
+{
+  "_meta": "NO EDITAR A MANO. Punto de inyeccion del skill build-client-site: este archivo se regenera en cada clon a partir de la ficha de /clients/. Los valores aqui son PLACEHOLDERS del template construccion (reemplazables por la ficha).",
+  "tema": {
+    "primary": "#f59e0b",
+    "accent": "#44403c",
+    "fondo": "#1c1917",
+    "tinta": "#fafaf9",
+    "fuente": "Tahoma",
+    "fuente_sans": "Barlow",
+    "fuente_mono": "Space Mono",
+    "orden_secciones": [
+      "Hero",
+      "IndustrialCapabilities",
+      "CompletedProjects",
+      "SafetyCertifications",
+      "QuoteEstimationSection"
+    ]
+  },
+  "paletas_alternativas": [
+    {
+      "nombre": "Safety Amber & Asphalt (Original)",
+      "fondo": "#1c1917",
+      "tinta": "#fafaf9",
+      "primary": "#f59e0b",
+      "accent": "#44403c"
+    },
+    {
+      "nombre": "Concrete Light",
+      "fondo": "#fafaf9",
+      "tinta": "#1c1917",
+      "primary": "#f59e0b",
+      "accent": "#292524"
+    },
+    {
+      "nombre": "Caterpillar Yellow & Onyx",
+      "fondo": "#111111",
+      "tinta": "#f5f5f5",
+      "primary": "#ffcc00",
+      "accent": "#333333"
+    },
+    {
+      "nombre": "Heavy Industrial Steel",
+      "fondo": "#0f172a",
+      "tinta": "#f8fafc",
+      "primary": "#38bdf8",
+      "accent": "#334155"
+    }
+  ],
+  "content": {
+    "prestador": {
+      "nombre": "Ing. Marcelo Rossi",
+      "titulo": "Rossi Pavimentación & Obras Viales",
+      "matricula": "Mat. CPII Nº 48.912",
+      "ciudad": "Buenos Aires & Zona Norte",
+      "experiencia": "35+ Años Ejecutando Obras Viales Pesadas",
+      "emergencias_tel": "+54 9 11 5555-PAVE",
+      "phone_display": "0800-888-PAVIMENTAR"
+    },
+    "hero": {
+      "badge": "DIVISIÓN INFRAESTRUCTURA PESADA & VIALIDAD",
+      "headline": "Pavimentación asfáltica y hormigón de alta durabilidad *sin fisuras ni demoras*",
+      "subheadline": "Ejecutamos obras viales, playas de maniobras logísticas y repavimentación comercial con flota pesada propia, control de compactación y garantía estructural de 10 años.",
+      "primaryCta": "Solicitar Relevamiento en Obra",
+      "secondaryCta": "Ver Obras Ejecutadas",
+      "stats": [
+        { "value": "35+", "label": "Años en Obra Pesada" },
+        { "value": "+1.400", "label": "Proyectos Entregados" },
+        { "value": "+1.200.000", "label": "Tn Asfalto Colocado" },
+        { "value": "10 Años", "label": "Garantía Estructural" }
+      ]
+    },
+    "industrialCapabilities": {
+      "badge": "CAPACIDAD OPERATIVA DIRECTA",
+      "title": "Soluciones de pavimentación pesada con equipamiento propio de última generación",
+      "subtitle": "Desde movimientos de suelo y fresado hasta asfalto modificado con polímeros y losas de hormigón H-30 para tránsito pesado.",
+      "items": [
+        {
+          "id": "01",
+          "title": "Pavimentación Asfáltica & Hormigón H-30",
+          "desc": "Colocación de mezcla asfáltica en caliente (CAC) y losas de hormigón de alta resistencia para tránsito pesado comercial y logístico.",
+          "spec": "Espesor de 5 a 15 cm · Compactación 98% Proctor · Pavimentadoras Vogele Super",
+          "image": "/images/asphalt-paving.webp"
+        },
+        {
+          "id": "02",
+          "title": "Bacheo Profundo & Reparación Estructural",
+          "desc": "Fresado técnico de carpetas degradadas, saneamiento de base granular y bacheo intensivo para evitar detenciones operativas.",
+          "spec": "Intervención express en 24/48hs · Fresadoras Wirtgen W100 · Rodillos tándem",
+          "image": "/images/concrete-repairs.webp"
+        },
+        {
+          "id": "03",
+          "title": "Sellado de Fisuras & Seal Coating",
+          "desc": "Tratamiento elastomérico en caliente y emulsiones protectoras UV que impermeabilizan la carpeta y duplican su vida útil.",
+          "spec": "Polímeros de alta adherencia · Bloqueo de filtraciones y congelamiento",
+          "image": "/images/seal-coating.webp"
+        },
+        {
+          "id": "04",
+          "title": "Demarcación Vial Termoplástica & Striping",
+          "desc": "Pintura vial reflectiva con microesferas de vidrio bajo norma IRAM para autopistas, dársenas y playones logísticos.",
+          "spec": "Alta visibilidad nocturna · Termoplástico de aplicación en caliente 3mm",
+          "image": "/images/striping.webp"
+        },
+        {
+          "id": "05",
+          "title": "Reductores de Velocidad & Topes de Estacionamiento",
+          "desc": "Instalación de reductores asfálticos normalizados, cordones cuneta y delimitadores de caucho de alto impacto.",
+          "spec": "Normativa de seguridad vial urbana · Drenaje pluvial integrado",
+          "image": "/images/speedbump.webp"
+        },
+        {
+          "id": "06",
+          "title": "Adecuación Normativa ADA & Accesibilidad",
+          "desc": "Rampas de acceso, pendientes reglamentarias, señalética háptica y dársenas exclusivas para personas con movilidad reducida.",
+          "spec": "Cumplimiento Ley 22.431 / ADA Compliant · Pendiente máx 8%",
+          "image": "/images/ada-compliance.webp"
+        }
+      ]
+    },
+    "completedProjects": {
+      "badge": "OBRAS EJECUTADAS",
+      "title": "Grandes obras de infraestructura comercial y logística entregadas en tiempo récord",
+      "projects": [
+        {
+          "name": "Centro de Distribución Logístico Norte",
+          "location": "Campana / Zárate, Buenos Aires",
+          "metric": "45.000 m² de pavimento industrial",
+          "scope": "Hormigón H-30 de 20cm con fibras metálicas para tránsito de bitrenes.",
+          "time": "42 días de ejecución continua",
+          "result": "0 fisuras tras 3 años de operación intensiva 24/7."
+        },
+        {
+          "name": "Playa de Maniobras Parque Industrial Pilar",
+          "location": "Pilar, Buenos Aires",
+          "metric": "28.000 m² de asfalto en caliente",
+          "scope": "Fresado de 7cm, saneamiento de base tosca-cemento y carpeta de rodamiento CAC.",
+          "time": "21 días de plazo de entrega",
+          "result": "+100 autoelevadores operando sin vibraciones destructivas."
+        },
+        {
+          "name": "Repavimentación Integral Shopping Mall",
+          "location": "San Isidro, Buenos Aires",
+          "metric": "1.200 plazas de estacionamiento",
+          "scope": "Bacheo profundo, sellado de fisuras, seal coating general y demarcación vial completa.",
+          "time": "Ejecución nocturna sin interrumpir atención al público",
+          "result": "Renovación estética total y reordenamiento de circulación vehicular."
+        },
+        {
+          "name": "Acceso Pavimentado Terminal Portuaria",
+          "location": "Dock Sud, Buenos Aires",
+          "metric": "3.5 km de calzada pesada",
+          "scope": "Pavimento asfáltico modificado con polímeros para sobrecarga de contenedores.",
+          "time": "Entrega anticipada en 15 días",
+          "result": "Tránsito fluido sin deformaciones por ahuellamiento ni baches."
+        }
+      ]
+    },
+    "safetyCertifications": {
+      "badge": "SEGURIDAD & CERTIFICACIONES",
+      "title": "Protocolos de seguridad laboral, bioética y normas de calidad constructiva",
+      "certifications": [
+        { "name": "Norma ISO 9001 / IRAM", "desc": "Gestión de calidad y trazabilidad de materiales áridos de cantera.", "icon": "/images/cert-agc.webp" },
+        { "name": "Seguridad Vial & Laboral", "desc": "TSSA / ART con 0 siniestros con tiempo perdido en obra.", "icon": "/images/cert-tssa.webp" },
+        { "name": "Estándar Constructivo TEXO", "desc": "Prácticas avanzadas de ingeniería civil y control de compactación.", "icon": "/images/cert-texo.webp" },
+        { "name": "Asociación de Contratistas AGC", "desc": "Acreditación gremial e industrial de primer nivel en pavimentación.", "icon": "/images/cert-metal-building.webp" },
+        { "name": "BOMA Standards", "desc": "Estándares internacionales para activos comerciales y corporativos.", "icon": "/images/cert-boma.webp" }
+      ]
+    },
+    "quoteEstimationSection": {
+      "badge": "RELEVAMIENTO TOPOGRÁFICO EN OBRA",
+      "title": "Cotización precisa de tu proyecto en menos de 24 horas",
+      "subtitle": "Un ingeniero vial inspecciona tu predio, mide pendientes pluviales y determina la mezcla exacta sin costo de visita.",
+      "price": "$189.999 ARS",
+      "priceNote": "Honorario de relevamiento topográfico y ensayo de suelo (100% bonificado al contratar la obra).",
+      "guarantee": "Garantía de nivelación, evacuación pluvial y resistencia de carga por contrato.",
+      "whatsapp": "https://wa.me/5491100000000?text=Hola%20Ing.%20Rossi!%20Quiero%20solicitar%20un%20relevamiento%20topogr%C3%A1fico%20para%20pavimentaci%C3%B3n.",
+      "bookingUrl": "https://calendly.com"
+    },
+    "faq": [
+      {
+        "q": "¿Qué diferencia hay entre mezcla asfáltica en caliente (CAC) y hormigón H-30?",
+        "a": "El asfalto en caliente ofrece una superficie elástica, de habilitación inmediata (en 24 horas) y menor costo inicial, ideal para playones y calles internas. El hormigón H-30 es rígido y soporta cargas estáticas extremas (autoelevadores y patas de acoplados), con una vida útil superior a 25 años."
+      },
+      {
+        "q": "¿Cuánto tiempo demora la ejecución de un playón o estacionamiento comercial?",
+        "a": "Un estacionamiento de 2.000 a 5.000 m² se realiza típicamente en 4 a 7 días hábiles, trabajando por sectores para que tu negocio o centro logístico nunca detenga su operatoria."
+      },
+      {
+        "q": "¿Cómo resuelven el agua acumulada y los charcos que rompen el pavimento?",
+        "a": "Antes de tirar un solo metro de asfalto, relevamos las pendientes con nivel óptico láser. Diseñamos cordones cuneta y sumideros pluviales con pendiente mínima del 1.5% para garantizar drenaje total inmediato."
+      },
+      {
+        "q": "¿Qué garantía otorgan sobre la obra ejecutada?",
+        "a": "Emitimos garantía estructural de hasta 10 años por contrato ante hundimientos o fisuras prematuras, respaldada por ensayos de laboratorio y ensayos de compactación in situ."
+      }
+    ],
+    "finalCta": {
+      "title": "¿Tu predio, estacionamiento o nave logística necesita intervención inmediata?",
+      "subtitle": "No dejes que los baches detengan tu operación ni dañen tus vehículos. Coordiná una inspección técnica sin cargo.",
+      "ctaWhatsapp": "Hablar Directo con un Ingeniero",
+      "ctaTel": "Guardia de Emergencias: 0800-888-PAVIMENTAR"
+    },
+    "footer": {
+      "tagline": "Rossi Pavimentación — Solidez estructural, maquinaria pesada propia y precisión milimétrica en asfalto y hormigón.",
+      "address": "Parque Industrial Norte, Buenos Aires, Argentina",
+      "compliance": "Cumplimiento estricto de la Ley 25.326 de Protección de Datos Personales. Presupuestos técnicos sujetos a relevamiento de suelo."
+    }
+  }
+}

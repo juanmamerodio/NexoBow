@@ -81,6 +81,18 @@ test("T-ARC-01: resolveTemplateArchetype infiere arquetipo desde template_archet
     resolveTemplateArchetype({ template_archetype: "minimalist-hardware" }),
     "minimalist-hardware"
   );
+  assert.equal(
+    resolveTemplateArchetype({ rubro: "construccion" }),
+    "industrial-authority"
+  );
+  assert.equal(
+    resolveTemplateArchetype({ rubro: "pavimentacion" }),
+    "industrial-authority"
+  );
+  assert.equal(
+    resolveTemplateArchetype({ template_archetype: "industrial-authority" }),
+    "industrial-authority"
+  );
 
   // 3. Fallback seguro si no hay datos
   assert.equal(
@@ -149,6 +161,14 @@ test("T-ARC-02: resolveTemplateSourceDirectory mapea nombres de arquetipo y rubr
   // 'producto' mapea físicamente a templates/producto
   const dirFromRubroProducto = resolveTemplateSourceDirectory("producto");
   assert.ok(dirFromRubroProducto.endsWith("templates/producto"));
+
+  // 'industrial-authority' mapea físicamente al template 'construccion'
+  const dirFromIndustrial = resolveTemplateSourceDirectory("industrial-authority");
+  assert.ok(dirFromIndustrial.endsWith("templates/construccion"));
+
+  // 'construccion' mapea físicamente a templates/construccion
+  const dirFromRubroConstruccion = resolveTemplateSourceDirectory("construccion");
+  assert.ok(dirFromRubroConstruccion.endsWith("templates/construccion"));
 
   // 'nutricionista' mapea físicamente a templates/nutricionista
   const dirFromRubro = resolveTemplateSourceDirectory("nutricionista");

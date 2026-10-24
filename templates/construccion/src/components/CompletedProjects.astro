@@ -1,0 +1,72 @@
+---
+import { CONTENT } from "../site";
+
+const cp = CONTENT.completedProjects;
+---
+
+<section id="obras" class="py-20 md:py-28 bg-[var(--color-paper)] relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-[var(--color-asphalt-surface)] border border-[var(--color-asphalt-border)] mb-4">
+        <span class="w-2 h-2 rounded-full bg-[var(--color-primary)]"></span>
+        <span class="text-xs font-mono font-bold tracking-widest text-[var(--color-primary)] uppercase">
+          {cp.badge}
+        </span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-display uppercase tracking-tight text-[var(--color-ink)] mb-4 leading-tight">
+        {cp.title}
+      </h2>
+      <p class="text-base sm:text-lg text-stone-300 font-sans">
+        Obras de alta envergadura ejecutadas con verificación de compactación in situ y entrega en plazo garantizado.
+      </p>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {cp.projects.map((project, idx) => (
+        <div class="bg-[var(--color-asphalt-surface)] border border-[var(--color-asphalt-border)] rounded-sm p-6 sm:p-8 flex flex-col justify-between hover:border-[var(--color-primary)] transition-all duration-300 relative group">
+          <!-- Top Row: Index + Metric -->
+          <div>
+            <div class="flex items-center justify-between pb-6 border-b border-[var(--color-asphalt-border)] mb-6">
+              <span class="text-xs font-mono font-bold text-stone-400 uppercase tracking-widest">
+                OBRA REGISTRADA · #{String(idx + 1).padStart(2, "0")}
+              </span>
+              <span class="inline-flex items-center px-3 py-1 rounded-sm bg-[var(--color-primary)] text-[#1c1917] font-mono font-black text-xs uppercase tracking-wide">
+                {project.metric}
+              </span>
+            </div>
+
+            <!-- Title & Location -->
+            <h3 class="text-2xl font-black font-display uppercase tracking-tight text-[var(--color-ink)] mb-2 group-hover:text-[var(--color-primary)] transition-colors">
+              {project.name}
+            </h3>
+            <div class="flex items-center gap-2 text-xs font-mono text-stone-400 mb-6">
+              <svg class="w-3.5 h-3.5 text-[var(--color-primary)]" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+              </svg>
+              <span>{project.location}</span>
+            </div>
+
+            <!-- Scope -->
+            <p class="text-sm text-stone-300 font-sans leading-relaxed mb-6">
+              {project.scope}
+            </p>
+          </div>
+
+          <!-- Bottom Operational Specs -->
+          <div class="pt-6 border-t border-[var(--color-asphalt-border)] space-y-3 bg-[var(--color-paper)] -mx-6 -mb-6 sm:-mx-8 sm:-mb-8 p-6 rounded-b-sm">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-stone-400 uppercase">Plazo de Ejecución:</span>
+              <span class="text-stone-200 font-semibold">{project.time}</span>
+            </div>
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-stone-400 uppercase">Resultado Operativo:</span>
+              <span class="text-emerald-400 font-semibold text-right">{project.result}</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

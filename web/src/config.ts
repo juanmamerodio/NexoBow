@@ -140,5 +140,14 @@ export const SITE = {
       description: "Estética Heavn One: lienzo Deep Matte Black, precisión óptica con espectro circadiano (2.200K–6.500K), aluminio CNC y micro-interacciones de producto.",
       demoUrl: "https://preview.nexobow.site/demo-producto/",
     },
+    {
+      id: "13",
+      name: "Industrial Authority (Heavy Infrastructure)",
+      niche: "Construcción & Pavimentación",
+      palette: ["#1c1917", "#fafaf9", "#f59e0b"],
+      status: "En Vivo (Demo)",
+      description: "Estética Reliable Paving: Asphalt Dark, acentos Safety Amber de alta visibilidad, módulos de maquinaria pesada y métricas de tonelaje para contratistas viales e infraestructura.",
+      demoUrl: "https://preview.nexobow.site/demo-construccion/",
+    },
   ],
 };

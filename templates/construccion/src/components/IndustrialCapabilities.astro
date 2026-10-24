@@ -1,0 +1,96 @@
+---
+import { CONTENT } from "../site";
+
+const c = CONTENT.industrialCapabilities;
+---
+
+<section id="capacidades" class="py-20 md:py-28 bg-[var(--color-asphalt-surface)] border-y border-[var(--color-asphalt-border)] relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-[var(--color-paper)] border border-[var(--color-asphalt-border)] mb-4">
+        <span class="w-2 h-2 rounded-full bg-[var(--color-primary)]"></span>
+        <span class="text-xs font-mono font-bold tracking-widest text-[var(--color-primary)] uppercase">
+          {c.badge}
+        </span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-display uppercase tracking-tight text-[var(--color-ink)] mb-4 leading-tight">
+        {c.title}
+      </h2>
+      <p class="text-base sm:text-lg text-stone-300 font-sans">
+        {c.subtitle}
+      </p>
+    </div>
+
+    <!-- Capabilities Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {c.items.map((item) => (
+        <div class="bg-[var(--color-paper)] border border-[var(--color-asphalt-border)] rounded-sm overflow-hidden flex flex-col group hover:border-[var(--color-primary)] transition-all duration-300 shadow-lg">
+          <!-- Image Container -->
+          <div class="relative h-56 overflow-hidden bg-black/40">
+            <img
+              src={item.image}
+              alt={item.title}
+              class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+              width="400"
+              height="224"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-paper)] via-transparent to-transparent opacity-80"></div>
+            <!-- ID Tag -->
+            <div class="absolute top-3 left-3 bg-[#1c1917]/90 text-[var(--color-primary)] font-mono font-bold text-xs px-2.5 py-1 border border-[var(--color-asphalt-border)] rounded-sm">
+              CAP #{item.id}
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="p-6 flex flex-col flex-1 justify-between">
+            <div>
+              <h3 class="text-xl font-bold font-display uppercase tracking-wide text-[var(--color-ink)] mb-3 group-hover:text-[var(--color-primary)] transition-colors">
+                {item.title}
+              </h3>
+              <p class="text-sm text-stone-300 font-sans leading-relaxed mb-6">
+                {item.desc}
+              </p>
+            </div>
+
+            <!-- Technical Specification Badge -->
+            <div class="pt-4 border-t border-[var(--color-asphalt-border)] bg-[var(--color-asphalt-surface)] -mx-6 -mb-6 p-4">
+              <span class="block text-[11px] font-mono text-stone-400 uppercase tracking-wider mb-1 font-bold">
+                Especificación Técnica:
+              </span>
+              <span class="block text-xs font-mono text-[var(--color-primary)]">
+                {item.spec}
+              </span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Quick Callout Banner -->
+    <div class="mt-16 bg-[var(--color-paper)] border border-[var(--color-asphalt-border)] p-6 sm:p-8 rounded-sm flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-sm bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-[var(--color-primary)] flex-shrink-0">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <div>
+          <h4 class="text-base font-bold font-display uppercase tracking-wider text-[var(--color-ink)]">
+            ¿Tenés un proyecto vial o estacionamiento con especificaciones especiales?
+          </h4>
+          <p class="text-sm text-stone-300 mt-0.5">
+            Realizamos formulación de mezclas asfálticas modificadas con polímeros y losas de hormigón a medida.
+          </p>
+        </div>
+      </div>
+      <a
+        href="#cotizar"
+        class="inline-flex items-center justify-center font-bold tracking-wider uppercase px-5 py-2.5 text-xs bg-[var(--color-primary)] text-[#1c1917] hover:bg-[var(--color-safety-warning)] rounded-sm whitespace-nowrap transition-colors"
+      >
+        Consultar con Ingeniería
+      </a>
+    </div>
+  </div>
+</section>

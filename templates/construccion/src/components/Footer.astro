@@ -1,0 +1,84 @@
+---
+import { CONTENT } from "../site";
+
+const f = CONTENT.footer;
+const p = CONTENT.prestador;
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-[#141210] border-t border-[var(--color-asphalt-border)] text-stone-400 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-12 border-b border-[#292524]">
+      <!-- Brand & Tagline -->
+      <div class="lg:col-span-5 flex flex-col items-start">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded bg-[var(--color-primary)] flex items-center justify-center text-[#1c1917] font-black text-xl">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 6h-2V4c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM9 4h6v2H9V4zm10 14H5V8h14v10z"/>
+              <circle cx="8" cy="13" r="2"/>
+              <circle cx="16" cy="13" r="2"/>
+            </svg>
+          </div>
+          <div>
+            <span class="font-black text-lg tracking-wider text-[var(--color-ink)] uppercase font-display block">
+              {p.nombre}
+            </span>
+            <span class="text-xs font-mono uppercase tracking-widest text-[var(--color-primary)]">
+              {p.titulo}
+            </span>
+          </div>
+        </div>
+
+        <p class="text-sm text-stone-300 font-sans leading-relaxed mb-6 max-w-sm">
+          {f.tagline}
+        </p>
+
+        <div class="text-xs font-mono text-stone-400 space-y-1">
+          <div>Matrícula: {p.matricula}</div>
+          <div>Planta Operativa: {f.address}</div>
+        </div>
+      </div>
+
+      <!-- Quick Nav -->
+      <div class="lg:col-span-3">
+        <h4 class="text-xs font-mono font-bold uppercase tracking-widest text-stone-200 mb-4">
+          Navegación de Obra
+        </h4>
+        <ul class="space-y-2.5 text-sm font-sans">
+          <li><a href="#capacidades" class="hover:text-[var(--color-primary)] transition-colors">Capacidad Operativa</a></li>
+          <li><a href="#obras" class="hover:text-[var(--color-primary)] transition-colors">Grandes Obras Entregadas</a></li>
+          <li><a href="#certificaciones" class="hover:text-[var(--color-primary)] transition-colors">Normativas & Certificaciones</a></li>
+          <li><a href="#cotizar" class="hover:text-[var(--color-primary)] transition-colors">Relevamiento & Cotización</a></li>
+          <li><a href="#faq" class="hover:text-[var(--color-primary)] transition-colors">Preguntas Frecuentes</a></li>
+        </ul>
+      </div>
+
+      <!-- Coverage & Emergency Contact -->
+      <div class="lg:col-span-4">
+        <h4 class="text-xs font-mono font-bold uppercase tracking-widest text-stone-200 mb-4">
+          Guardia de Operaciones Viales
+        </h4>
+        <div class="bg-[var(--color-asphalt-surface)] border border-[var(--color-asphalt-border)] p-4 rounded-sm mb-4">
+          <div class="text-xs font-mono text-stone-400 uppercase mb-1">Línea de Despacho Inmediato:</div>
+          <a href={`tel:${p.phone_display}`} class="text-lg font-black font-display text-[var(--color-primary)] hover:underline block">
+            {p.phone_display}
+          </a>
+          <div class="text-xs font-mono text-emerald-400 mt-2">● Guardia 24 horas · 365 días</div>
+        </div>
+        <p class="text-xs text-stone-400 font-sans">
+          Área de servicio: CABA, Corredor Norte, Parque Industrial Pilar, Campana, Zárate y todo el territorio nacional.
+        </p>
+      </div>
+    </div>
+
+    <!-- Bottom Legal & Compliance -->
+    <div class="pt-8 flex flex-col md:flex-row items-center justify-between text-xs font-mono text-stone-400 gap-4">
+      <div>
+        &copy; {currentYear} {p.nombre}. Todos los derechos reservados.
+      </div>
+      <div class="text-center md:text-right max-w-xl text-[11px] text-stone-400">
+        {f.compliance}
+      </div>
+    </div>
+  </div>
+</footer>

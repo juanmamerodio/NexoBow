@@ -1,0 +1,46 @@
+---
+import "../styles/global.css";
+import { CONTENT, fontUrl, themeVars, THEME } from "../site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+const rootStyle = themeVars(THEME);
+const fontsHref = fontUrl(THEME);
+
+const pageTitle =
+  title ?? `${CONTENT.prestador.nombre} | ${CONTENT.prestador.titulo || "Construcción & Pavimentación"}`;
+const pageDescription =
+  description ??
+  (CONTENT.hero?.subheadline || "Pavimentación asfáltica y obras viales de alta durabilidad con maquinaria pesada propia y garantía de 10 años.").slice(0, 160);
+---
+
+<!doctype html>
+<html lang="es-AR" style={rootStyle}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/webp" href="/images/favicon.webp" />
+    <link rel="preload" href="/fonts/Tahoma-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Tahoma.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href={fontsHref} rel="stylesheet" />
+  </head>
+  <body
+    class="relative min-h-screen bg-[var(--color-paper)] font-sans text-[var(--color-ink)] antialiased selection:bg-[var(--color-primary)] selection:text-[#1c1917]"
+  >
+    <div class="relative z-10">
+      <slot />
+    </div>
+  </body>
+</html>

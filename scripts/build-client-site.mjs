@@ -57,6 +57,10 @@ export const RUBRO_TO_ARCHETYPE_MAP = {
   iluminacion: "minimalist-hardware",
   lamparas: "minimalist-hardware",
   equipamiento: "minimalist-hardware",
+  construccion: "industrial-authority",
+  pavimentacion: "industrial-authority",
+  vial: "industrial-authority",
+  ingenieria: "industrial-authority",
 };
 
 export const ARCHETYPE_ALIASES = {
@@ -68,6 +72,7 @@ export const ARCHETYPE_ALIASES = {
   "kinetic-performance": ["deportes", "gym", "entrenador", "fitness", "kinetic-performance"],
   "clinical-pure": ["dermatologia", "medico", "dermatologo", "clinical-pure"],
   "minimalist-hardware": ["producto", "hardware", "iluminacion", "lamparas", "equipamiento", "minimalist-hardware"],
+  "industrial-authority": ["construccion", "pavimentacion", "vial", "ingenieria", "industrial-authority"],
   "minimalist-pure": ["odontologo", "minimalist-pure"],
   "kinetic-cards": ["kinesiologo", "kinetic-cards"],
 };
