@@ -24,10 +24,10 @@ Duplicar la web **ENTERA** de **Reliable Paving** (`https://reliablepaving.com/`
 **Blocked by:**
 None.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] `templates/construccion/` contiene la web ENTERA duplicada de Reliable Paving mediante REA
-- [ ] Tipografía: utiliza las fuentes exactas de la web a copiar (`Roboto` / `Tahoma`) o fallback visualmente similar verificado (`Oswald` / `Chakra Petch` + `Roboto`).
-- [ ] Tests unitarios en `templates/construccion/tests/` 100% pasando
-- [ ] Demo compilada en `sites/demo-construccion/` con código 0 y JS sin límite artificial
-- [ ] Tags git inmutables creados
+- [x] `templates/construccion/` contiene la web ENTERA duplicada de Reliable Paving mediante REA
+- [x] Tipografía: utiliza las fuentes exactas de la web a copiar (`Roboto` / `Tahoma`) o fallback visualmente similar verificado (`Oswald` / `Chakra Petch` + `Barlow`).
+- [x] Tests unitarios en `templates/construccion/tests/` 100% pasando
+- [x] Demo compilada en `sites/demo-construccion/` con código 0 y JS sin límite artificial
+- [x] Tags git inmutables creados (`template/construccion@1.0.0` y `template/industrial-authority@1.0.0`)
