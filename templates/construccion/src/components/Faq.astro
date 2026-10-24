@@ -1,7 +1,12 @@
 ---
 import { CONTENT } from "../site";
 
-const faqs = CONTENT.faq || [];
+const rawFaq = CONTENT.faq;
+const faqs = Array.isArray(rawFaq)
+  ? rawFaq
+  : Array.isArray(rawFaq?.items)
+    ? rawFaq.items
+    : [];
 ---
 
 <section id="faq" class="py-20 md:py-28 bg-[var(--color-asphalt-surface)] border-t border-[var(--color-asphalt-border)] relative">
@@ -22,21 +27,25 @@ const faqs = CONTENT.faq || [];
     </div>
 
     <div class="space-y-4">
-      {faqs.map((faq) => (
-        <details class="group bg-[var(--color-paper)] border border-[var(--color-asphalt-border)] rounded-sm overflow-hidden p-6 hover:border-[var(--color-primary)] transition-colors duration-200">
-          <summary class="flex items-center justify-between cursor-pointer list-none text-base sm:text-lg font-bold font-display uppercase tracking-wide text-[var(--color-ink)] group-open:text-[var(--color-primary)] select-none">
-            <span>{faq.q}</span>
-            <span class="ml-4 flex-shrink-0 transition-transform duration-200 group-open:rotate-180 text-[var(--color-primary)]">
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </span>
-          </summary>
-          <div class="mt-4 pt-4 border-t border-[var(--color-asphalt-border)] text-sm sm:text-base text-stone-300 font-sans leading-relaxed">
-            {faq.a}
-          </div>
-        </details>
-      ))}
+      {faqs.map((faq) => {
+        const q = faq.q || faq.pregunta || faq.question || "";
+        const a = faq.a || faq.respuesta || faq.answer || "";
+        return (
+          <details class="group bg-[var(--color-paper)] border border-[var(--color-asphalt-border)] rounded-sm overflow-hidden p-6 hover:border-[var(--color-primary)] transition-colors duration-200">
+            <summary class="flex items-center justify-between cursor-pointer list-none text-base sm:text-lg font-bold font-display uppercase tracking-wide text-[var(--color-ink)] group-open:text-[var(--color-primary)] select-none">
+              <span>{q}</span>
+              <span class="ml-4 flex-shrink-0 transition-transform duration-200 group-open:rotate-180 text-[var(--color-primary)]">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-[var(--color-asphalt-border)] text-sm sm:text-base text-stone-300 font-sans leading-relaxed">
+              {a}
+            </div>
+          </details>
+        );
+      })}
     </div>
   </div>
 </section>
