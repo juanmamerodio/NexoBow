@@ -181,4 +181,21 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
     - `Footer.astro`: Pie médico con matrícula profesional, horario de atención, enlaces de navegación y cumplimiento Ley 25.326.
     - `ThemeSwitcher.astro`: Selector flotante anti-rebote con 4 paletas en vivo (Clinical Pure, Lipedema Warm Clinic, Dermato Teal, Obsidian Clinical) con persistencia y WhatsApp dinámico.
   - **Demo & Auditoría:** Compilada `sites/demo-dermatologia/` (`62.6 KB` HTML, `2.06 KB` JS propio vs presupuesto <= 25 MB), `audit-site` 100% aprobada, `impeccable detect` con 0 anti-patrones y 0 advisories, capturas dual-viewport verificadas en `.reports/screenshots/demo-dermatologia/` (`1440px` y `375px`), 17 tests unitarios en template y 55 tests de la suite raíz 100% en verde. Activado Template 02 (`Clinical Pure`) en `web/src/config.ts`. Tags inmutables `template/dermatologia@1.0.0` y `template/clinical-pure@1.0.0` fijados.
+- [2026-10-23] **Ticket 27 Completado (`templates/producto@1.0.0` — Duplicación Integral REA de Heavn One `https://heavn-lights.com/` y `https://heavn-lights.com/pages/one-landingpage`)**:
+  - **Evidencia REA CDP (`rea-agents@6.7.0`):** Capturada en `.reports/rea/producto/` (`page.json` [1.4 MB], `bundle.json` [6.5 MB], `screenshot.json` [394 KB], `targets.json`, `index.html` [188 KB], `one-landingpage.html` [243 KB]). Paleta 60-30-10 auténtica: Deep Matte Black (`#0a0a0a`), Pure White (`#fafafa`), Laser Blue (`#2563eb`), Borde Metálico (`#27272a`).
+  - **Tipografías y Activos Auténticos:** Tipografía `Averta` (`Open Sans` woff2 high performance) + `Space Mono` para especificaciones y lecturas ópticas descargadas a `public/fonts/`. Activos oficiales alojados en `public/`: `images/heavn-one-hero.png`, `images/hcl-cycle.jpg`, `images/heavn-office.jpg`, `icons/heavn-logo.png`, `icons/favicon.png`.
+  - **Componentes Auténticos de Heavn One (`minimalist-hardware`):**
+    - `Header.astro`: Barra técnica minimalista con selector de producto, navegación ancla y botón CTA directo.
+    - `Hero.astro`: Primer plano inmersivo del producto con interactividad de temperatura de color Kelvin (2.200K–6.500K) en tiempo real, selector de 4 modos ópticos rápidos, métricas clave (10.000 Lux, 4.700 lm, 2.200K-6.500K, 6061-T6 CNC) y endorsements de prensa.
+    - `ui/Button.astro`: Botón técnico de precisión con micro-borde metálico y halo óptico.
+    - `OpticalEngineering.astro`: Módulo interactivo Human Centric Lighting 2.0, despiece de triple emisor (desk 2.200 lm, ceiling 2.200 lm, front 2.800 lm), 3 modos ópticos e infografía de curva circadiana biológica.
+    - `MaterialsCraftsmanship.astro`: Chasis CNC de aluminio aeronáutico 6061-T6, rodamiento mecánico suizo 360°, base Qi-wireless 15W + USB-C 18W y sensor de calidad de aire CO2 integrado.
+    - `CustomerExperiences.astro`: Testimonios verificados de CEOs y directivos (Lena Jüngst de air up, Michael Ganser ex Cisco Europe, Chris Surel Recovery Coach), valoración 5.0 ★ y sellos de diseño (Red Dot, German Design Award).
+    - `OrderCheckoutSection.astro`: Selector de montaje (Desk Stand vs Table Clamp), acabados (Midnight Matte Black vs Aero Silver), precios transparentes en ARS, garantía alemana de 5 años, 30 días de prueba y links directos a WhatsApp y Calendly.
+    - `Faq.astro`: Acordeones técnicos accesibles con `<details>`.
+    - `FinalCta.astro`: Banner de cierre de alto contraste y llamado a agendar demostración o pedir unidad.
+    - `Footer.astro`: Pie técnico con especificaciones de patentes alemanas, certificaciones CE / TÜV Rheinland y cumplimiento Ley 25.326.
+    - `ThemeSwitcher.astro`: Selector flotante anti-rebote con 4 esquemas en vivo (Minimalist Hardware, Matte Aluminum, Circadian Amber 2200K, Pure Daylight 6500K) con persistencia y WhatsApp dinámico.
+  - **Demo & Auditoría:** Compilada `sites/demo-producto/` (`60.3 KB` HTML, `3.64 KB` JS propio vs presupuesto <= 25 MB), `audit-site` 100% aprobada, `impeccable detect` con 0 anti-patrones y 0 advisories, 14 tests unitarios en template y 55 tests de la suite raíz 100% en verde. Activado Template 12 (`Minimalist Hardware`) en `web/src/config.ts`. Tags inmutables `template/producto@1.0.0` y `template/minimalist-hardware@1.0.0` fijados.
+
 

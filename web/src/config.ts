@@ -131,5 +131,14 @@ export const SITE = {
       description: "Estética Think Company: canvas vainilla claro, navy ink profundo y acento red para consultoras de software, arquitectos de sistemas y plataformas SaaS.",
       demoUrl: "https://preview.nexobow.site/demo-tech/",
     },
+    {
+      id: "12",
+      name: "Minimalist Hardware (Precision Craft)",
+      niche: "Hardware, Iluminación & Producto Físico",
+      palette: ["#0a0a0a", "#fafafa", "#2563eb"],
+      status: "En Vivo (Demo)",
+      description: "Estética Heavn One: lienzo Deep Matte Black, precisión óptica con espectro circadiano (2.200K–6.500K), aluminio CNC y micro-interacciones de producto.",
+      demoUrl: "https://preview.nexobow.site/demo-producto/",
+    },
   ],
 };

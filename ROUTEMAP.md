@@ -39,7 +39,7 @@
 - ⏳ **`templates/deportes/`** (`kinetic-performance`, Ticket 24): Referente **The Performance Lab** (`https://theperformancelab.ca/`). Carbon Dark + Kinetic Emerald.
 - ⏳ **`templates/dermatologia/`** (`clinical-pure`, Ticket 25): Referente **Lipedema Guru** (`https://lipedemaguru.com/`). Espacio negativo clínico y acentos cian/turquesa.
 - ⏳ **`templates/propiedades/`** (`architectural-spaces`, Ticket 26): Referente **Lufte** (`https://www.lufte.us/`). Outfit + Manrope, bronce oak y galerías arquitectónicas.
-- ⏳ **`templates/producto/`** (`minimalist-hardware`, Ticket 27): Referente **Heavn One** (`https://heavn-lights.com/`). Deep Matte Black, precisión óptica e ingeniería de producto.
+- ✅ **`templates/producto/`** (`minimalist-hardware`, Ticket 27): Referente **Heavn One** (`https://heavn-lights.com/`). Deep Matte Black, precisión óptica e ingeniería de producto (HCL 2.0, Kelvin 2.200K–6.500K, CNC aluminio).
 - ⏳ **`templates/construccion/`** (`industrial-authority`, Ticket 28): Referente **Reliable Paving** (`https://reliablepaving.com/`). Asphalt Dark + Safety Amber, métricas de obra pesada.
 - ⏳ **`templates/farmaceutica/`** (`biotech-clarity`, Ticket 29): Referente **Roveia** (`https://roveia.com/`). Pure White + Deep Molecule Navy y formulaciones científicas.
 - ⏳ **`templates/profesional/`** (`island-creative-pure`, Ticket 30): Referente **Tahiti Numérique** (`https://tahitinumerique.com/`). Instrument Sans + Serif, Pacific Cyan + Lagoon Dark.

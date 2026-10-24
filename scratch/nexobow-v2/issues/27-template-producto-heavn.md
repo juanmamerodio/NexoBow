@@ -24,10 +24,10 @@ Duplicar la web **ENTERA** de **Heavn One** (`https://heavn-lights.com/`) dentro
 **Blocked by:**
 None.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] `templates/producto/` contiene la web ENTERA duplicada de Heavn One mediante REA
-- [ ] Tipografía: utiliza las fuentes exactas de la web a copiar (`Averta` + `Open Sans`) o fallback visualmente similar verificado (`Space Grotesk` / `Plus Jakarta Sans` + `Inter`).
-- [ ] Tests unitarios en `templates/producto/tests/` 100% pasando
-- [ ] Demo compilada en `sites/demo-producto/` con código 0 y JS sin límite artificial
-- [ ] Tags git inmutables creados
+- [x] `templates/producto/` contiene la web ENTERA duplicada de Heavn One mediante REA
+- [x] Tipografía: utiliza las fuentes exactas de la web a copiar (`Averta` + `Open Sans`) o fallback visualmente similar verificado (`Space Grotesk` / `Plus Jakarta Sans` + `Inter`).
+- [x] Tests unitarios en `templates/producto/tests/` 100% pasando
+- [x] Demo compilada en `sites/demo-producto/` con código 0 y JS sin límite artificial
+- [x] Tags git inmutables creados
