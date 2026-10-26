@@ -3,6 +3,8 @@ import { CONTENT } from "../site";
 
 const reviews = CONTENT.reviews || {};
 const items = reviews.items || [];
+const casos = CONTENT.casos || {};
+const caseItems = casos.items || [];
 
 function formatEmphasis(text: string) {
   if (!text) return "";
@@ -14,7 +16,7 @@ function formatEmphasis(text: string) {
 
 const formattedTitle = formatEmphasis(
   reviews.titulo ||
-    "Historias reales de pacientes que *recuperaron su bienestar y sonrisa*"
+    "Historias reales de pacientes que *recuperaron su bienestar y salud*"
 );
 ---
 
@@ -28,7 +30,7 @@ const formattedTitle = formatEmphasis(
       <p
         class="font-mono text-xs font-semibold tracking-[0.3em] uppercase text-(--color-primary)/80"
       >
-        {reviews.tag || "06 · CASOS DOCUMENTADOS"}
+        {reviews.tag || "06 · CASOS DOCUMENTADOS & RESEÑAS"}
       </p>
 
       <h2
@@ -37,12 +39,48 @@ const formattedTitle = formatEmphasis(
       />
 
       <p class="mt-4 text-base leading-relaxed text-(--color-ink)/75 sm:text-lg">
-        Casos clínicos auditados con consentimiento informado según normativas de bioética y ejercicio de la medicina.
+        {casos.bajada || "Evolución clínica documentada y reseñas verificadas de pacientes reales en Google Maps."}
       </p>
     </div>
 
-    {/* Tarjetas de Testimonios */}
-    <div class="mt-12 grid grid-cols-1 gap-8 sm:mt-16 md:grid-cols-2 lg:grid-cols-3">
+    {/* Casos de Éxito Documentados */}
+    {caseItems.length > 0 && (
+      <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+        {caseItems.map((c: any, idx: number) => (
+          <div class="flex flex-col justify-between rounded-2xl border border-(--color-primary)/20 bg-(--color-paper) p-6 sm:p-7 shadow-xs">
+            <div>
+              <div class="flex items-center justify-between border-b border-(--color-primary)/10 pb-3 mb-4">
+                <span class="font-mono text-xs font-bold uppercase tracking-wider text-(--color-primary)">
+                  Caso de Éxito · 0{idx + 1}
+                </span>
+                <span class="rounded bg-(--color-accent)/15 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-(--color-primary)">
+                  Evolución Real
+                </span>
+              </div>
+              <h3 class="font-display text-lg font-bold text-(--color-ink) mb-2">
+                {c.titulo}
+              </h3>
+              <p class="text-sm leading-relaxed text-(--color-ink)/75">
+                {c.descripcion}
+              </p>
+            </div>
+            {c.resultado && (
+              <div class="mt-5 rounded-xl bg-(--color-primary)/8 p-3.5 border border-(--color-primary)/15">
+                <span class="block font-mono text-[10px] uppercase tracking-wider text-(--color-primary) font-semibold mb-1">
+                  Resultado Alcanzado
+                </span>
+                <p class="font-display text-sm font-bold text-(--color-ink)">
+                  {c.resultado}
+                </p>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    )}
+
+    {/* Tarjetas de Testimonios de Google Maps */}
+    <div class="mt-12 grid grid-cols-1 gap-8 sm:mt-14 md:grid-cols-2 lg:grid-cols-3">
       {
         items.map((item) => (
           <div class="flex flex-col justify-between rounded-2xl border border-(--color-primary)/15 bg-(--color-paper) p-6 sm:p-8 shadow-xs transition-all duration-300 hover:border-(--color-accent) hover:shadow-md">

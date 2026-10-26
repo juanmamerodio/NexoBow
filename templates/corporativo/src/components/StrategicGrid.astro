@@ -1,7 +1,7 @@
 ---
 import { CONTENT } from "../site";
 
-const services = [
+const defaultServices = [
   {
     icon: "/assets/user-tie.svg",
     number: "01",
@@ -45,6 +45,9 @@ const services = [
     tag: "Dirección Financiera",
   },
 ];
+
+const problema = CONTENT.problema || {};
+const services = problema.services || defaultServices;
 ---
 
 <section id="servicios" class="py-24 bg-[#090909] text-[#f4f4f4] border-b border-[#222222] relative">
@@ -56,15 +59,21 @@ const services = [
         <div class="inline-flex items-center gap-2 mb-3">
           <span class="w-1.5 h-1.5 bg-(--color-primary)"></span>
           <span class="text-xs uppercase tracking-widest text-[#888888] font-mono">
-            6 Frentes de Intervención Estratégica
+            {problema.tag || "6 Frentes de Intervención Estratégica"}
           </span>
         </div>
         <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#f4f4f4]">
-          Te respaldamos en <span class="text-(--color-primary)">seis áreas críticas</span>
+          {problema.titulo ? (
+            problema.titulo.split("*").map((part: string, i: number) =>
+              i % 2 === 1 ? <span class="text-(--color-primary)">{part}</span> : part
+            )
+          ) : (
+            <>Te respaldamos en <span class="text-(--color-primary)">seis áreas críticas</span></>
+          )}
         </h2>
       </div>
       <p class="text-sm sm:text-base text-[#888888] font-sans max-w-md leading-relaxed">
-        Intervenciones directas para directores que buscan erradicar cuellos de botella de liquidez y consolidar su rentabilidad operativa.
+        {problema.descripcion || "Intervenciones directas para directores que buscan erradicar cuellos de botella de liquidez y consolidar su rentabilidad operativa."}
       </p>
     </div>
 

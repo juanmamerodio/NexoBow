@@ -1,7 +1,7 @@
 ---
 import { CONTENT } from "../site";
 
-const steps = [
+const defaultSteps = [
   {
     step: "Paso 01",
     tag: "Diagnóstico Quirúrgico",
@@ -35,6 +35,9 @@ const steps = [
     badge: "Continuo",
   },
 ];
+
+const pasos = CONTENT.pasos || {};
+const steps = pasos.roadmap || defaultSteps;
 ---
 
 <section id="metodologia" class="py-24 bg-[#0c0c0c] text-[#f4f4f4] border-b border-[#222222] relative overflow-hidden">
@@ -45,14 +48,20 @@ const steps = [
       <div class="inline-flex items-center gap-2 mb-3">
         <span class="w-1.5 h-1.5 bg-(--color-primary)"></span>
         <span class="text-xs uppercase tracking-widest text-[#888888] font-mono">
-          Hoja de Ruta de 4 Etapas
+          {pasos.tag || "Hoja de Ruta de 4 Etapas"}
         </span>
       </div>
       <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#f4f4f4] mb-4">
-        Así funciona nuestra <span class="text-(--color-primary)">intervención estratégica</span>
+        {pasos.titulo ? (
+          pasos.titulo.split("*").map((part: string, i: number) =>
+            i % 2 === 1 ? <span class="text-(--color-primary)">{part}</span> : part
+          )
+        ) : (
+          <>Así funciona nuestra <span class="text-(--color-primary)">intervención estratégica</span></>
+        )}
       </h2>
       <p class="text-sm sm:text-base text-[#888888] font-sans max-w-xl mx-auto">
-        Un proceso estructurado para directores que no tienen tiempo para consultorías teóricas ni informes de 200 páginas que nadie lee.
+        {pasos.bajada || "Un proceso estructurado para directores que no tienen tiempo para consultorías teóricas ni informes de 200 páginas que nadie lee."}
       </p>
     </div>
 

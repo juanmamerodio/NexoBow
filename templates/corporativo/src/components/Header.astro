@@ -29,7 +29,7 @@ const bookingUrl = CONTENT.links?.calendly || "#agendar";
         <!-- Live Status Pill -->
         <div class="hidden xl:inline-flex items-center gap-2 px-3 py-1 bg-[#141414] border border-[#262626] rounded-xs text-[11px] font-sans text-[#a0a0a0]">
           <span class="w-2 h-2 rounded-full bg-(--color-primary) animate-pulse"></span>
-          <span>DISPONIBILIDAD DIRECTA Q4</span>
+          <span>{CONTENT.hero?.status_badge || "DISPONIBILIDAD DIRECTA Q4"}</span>
         </div>
       </div>
 

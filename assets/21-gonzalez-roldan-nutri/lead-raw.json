@@ -1,0 +1,31 @@
+{
+  "id": 21,
+  "slug": "21-gonzalez-roldan-nutri",
+  "nombre": "González Roldán",
+  "mapTitle": "Licenciada Gonzalez Roldan",
+  "rubro": "nutricionista",
+  "subtitulo": "Nutrición Clínica, Tiroides & Descenso Real",
+  "ciudad": "Belgrano, CABA",
+  "direccion": "Mcal. Antonio José de Sucre 2512, Belgrano, CABA",
+  "telefono": "+54 9 11 3397-0742",
+  "whatsapp": "+5491133970742",
+  "instagram": "",
+  "rating": 5,
+  "reviewsCount": 33,
+  "placeId": "3600438640477811881",
+  "reviews": [
+    {
+      "autor": "Mar Penyalver (Google Maps)",
+      "texto": "Llegué al consultorio pesando 105,5 kg, frustrada de mil intentos. Con ella no solo bajé de peso de forma constante sino que me cambió la autoestima y la relación con mi cuerpo. Jamás un reto, siempre contención y ciencia."
+    },
+    {
+      "autor": "Gisela Yáñez (Google Maps)",
+      "texto": "Empecé en octubre y ya bajé 7,700 kg! Pero lo más importante es que logré regular mis valores de glucemia en sangre y se me fue por completo el dolor de espalda que tenía todos los días."
+    },
+    {
+      "autor": "Eliana Navarro (Google Maps)",
+      "texto": "Tengo hipotiroidismo y siempre me costó horrores bajar un gramo. Es la primera nutricionista que dio en la tecla con mi metabolismo. Y Karina M. coincide: ¡6 kilos menos en 6 sesiones comiendo más que antes!"
+    }
+  ],
+  "fecha_scouting": "2026-10-26T19:52:22.308Z"
+}

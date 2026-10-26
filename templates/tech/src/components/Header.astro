@@ -18,15 +18,18 @@ const bookingLink = CONTENT.links?.calendly || "#agendar";
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
     <!-- Brand & Status -->
     <div class="flex items-center gap-4">
-      <a href="/" class="flex items-center gap-2 group" aria-label={prestador.nombre}>
+      <a href="/" class="flex items-center gap-2.5 group" aria-label={prestador.nombre}>
         <svg class="h-8 w-auto text-[var(--color-ink)] group-hover:text-[var(--color-primary)] transition-colors" viewBox="0 0 158 65" fill="currentColor">
           <use href="/icon-sprite.svg#logo"></use>
         </svg>
+        <span class="font-display font-bold text-base sm:text-lg text-[var(--color-ink)] tracking-tight">
+          {prestador.nombre}
+        </span>
       </a>
 
       <div class="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-full bg-[var(--color-ink)]/5 border border-[var(--color-ink)]/10 text-xs font-mono text-[var(--color-ink)]/80">
         <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] animate-pulse" aria-hidden="true"></span>
-        <span class="tracking-wide">ARQUITECTURA DIGITAL · Q4</span>
+        <span class="tracking-wide">{CONTENT.hero?.badge || "ARQUITECTURA DIGITAL · Q4"}</span>
       </div>
     </div>
 

@@ -1,0 +1,63 @@
+---
+interface Props {
+  href?: string;
+  variant?: "primary" | "secondary" | "nav" | "outline" | "pill";
+  class?: string;
+  type?: "button" | "submit";
+  target?: string;
+  rel?: string;
+}
+
+const {
+  href,
+  variant = "primary",
+  class: className = "",
+  type = "button",
+  target,
+  rel,
+} = Astro.props;
+
+const baseStyles =
+  "inline-flex items-center justify-center font-medium transition-all duration-300 select-none cursor-pointer tracking-wide group";
+
+const variants: Record<string, string> = {
+  primary:
+    "bg-[var(--color-primary)] text-white hover:opacity-90 active:scale-[0.98] rounded-full px-7 py-3.5 text-sm sm:text-base shadow-sm hover:shadow-md",
+  secondary:
+    "bg-[var(--color-accent)] text-[var(--color-ink)] hover:bg-stone-300 active:scale-[0.98] rounded-full px-6 py-3 text-sm sm:text-base",
+  outline:
+    "border border-[var(--color-stone-border)] text-[var(--color-ink)] hover:bg-[var(--color-accent)] hover:border-transparent rounded-full px-6 py-3 text-sm sm:text-base",
+  nav:
+    "border border-[rgba(28,25,23,0.12)] text-[var(--color-ink)] hover:border-stone-400 hover:bg-stone-100/50 backdrop-blur-md rounded-xl px-5 py-2.5 text-xs sm:text-sm uppercase tracking-wider font-semibold",
+  pill:
+    "border border-[var(--color-stone-border)] bg-white/70 backdrop-blur-md text-[var(--color-ink)] hover:bg-[var(--color-accent)] rounded-full px-5 py-2 text-xs sm:text-sm font-medium",
+};
+
+const finalClass = `${baseStyles} ${variants[variant] || variants.primary} ${className}`;
+---
+
+{
+  href ? (
+    <a href={href} class={finalClass} target={target} rel={rel}>
+      <slot />
+      <svg
+        class="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:translate-x-1"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M6 12L10 8L6 4"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </a>
+  ) : (
+    <button type={type} class={finalClass}>
+      <slot />
+    </button>
+  )
+}

@@ -11,7 +11,8 @@ const outcomes = CONTENT.clinical_outcomes || {
 
 const rawReviews = CONTENT.reviews;
 const reviewsList = Array.isArray(rawReviews) ? rawReviews : (rawReviews?.items || []);
-const testimonials = (outcomes.testimonials && outcomes.testimonials.length > 0) ? outcomes.testimonials : reviewsList;
+const testimonials = reviewsList.length > 0 ? reviewsList : (outcomes.testimonials || []);
+const caseItems = CONTENT.casos?.items || [];
 ---
 
 <section id="ventajas" class="py-16 sm:py-24 px-4 sm:px-8 bg-[var(--color-paper)]">
@@ -57,12 +58,53 @@ const testimonials = (outcomes.testimonials && outcomes.testimonials.length > 0)
       }
     </div>
 
-    <!-- Sección de Testimonios y Casos Documentados -->
+    <!-- Casos de Éxito Documentados -->
+    {caseItems.length > 0 && (
+      <div class="pt-12 pb-12 border-t border-[var(--color-clinical-border)]">
+        <div class="mb-8">
+          <span class="text-xs font-semibold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-accent)]/80 px-3 py-1 rounded-full inline-block mb-2">
+            Casos de Éxito Documentados
+          </span>
+          <h3 class="font-display text-2xl sm:text-3xl font-bold text-[var(--color-ink)]">
+            Transformaciones Reales en Consultorio
+          </h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {caseItems.map((c: any, idx: number) => (
+            <div class="p-6 rounded-2xl bg-white border border-[var(--color-clinical-border)] flex flex-col justify-between shadow-xs">
+              <div>
+                <span class="text-xs font-mono text-[var(--color-primary)] font-bold uppercase tracking-wider block mb-2">
+                  Caso 0{idx + 1}
+                </span>
+                <h4 class="font-display text-lg font-bold text-[var(--color-ink)] mb-2">
+                  {c.titulo}
+                </h4>
+                <p class="text-xs sm:text-sm text-[var(--color-ink)]/75 font-sans leading-relaxed mb-4">
+                  {c.descripcion}
+                </p>
+              </div>
+              {c.resultado && (
+                <div class="p-3.5 rounded-xl bg-[var(--color-accent)]/40 border border-[var(--color-primary)]/20">
+                  <span class="block text-[10px] font-mono uppercase tracking-wider text-[var(--color-primary)] font-bold mb-0.5">
+                    Resultado Clínico
+                  </span>
+                  <p class="font-display text-xs sm:text-sm font-bold text-[var(--color-ink)]">
+                    {c.resultado}
+                  </p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Sección de Testimonios y Reseñas de Google Maps -->
     <div class="pt-12 border-t border-[var(--color-clinical-border)]">
       <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
         <div>
           <span class="text-xs font-semibold uppercase tracking-wider text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full inline-block mb-2">
-            Casos Clínicos & Experiencias de Pacientes
+            Experiencias Reales en Google Maps
           </span>
           <h3 class="font-display text-2xl sm:text-3xl font-bold text-[var(--color-ink)]">
             Evolución y Calidad de Vida Recuperada
@@ -71,7 +113,7 @@ const testimonials = (outcomes.testimonials && outcomes.testimonials.length > 0)
         <div class="flex items-center gap-1.5 text-xs text-[var(--color-ink)]/60 font-sans">
           <span class="flex text-amber-400">★★★★★</span>
           <span class="font-medium text-[var(--color-ink)]">5.0 / 5.0</span>
-          <span>(Consentimiento ético informado)</span>
+          <span>(Reseñas Verificadas)</span>
         </div>
       </div>
 
@@ -85,7 +127,7 @@ const testimonials = (outcomes.testimonials && outcomes.testimonials.length > 0)
                     {"★".repeat(t.rating || t.estrellas || 5)}
                   </div>
                   <span class="text-xs font-mono bg-slate-100 text-slate-700 px-2 py-0.5 rounded">
-                    {t.estadio || t.ocupacion || "Paciente Verificada"}
+                    {t.estadio || t.ocupacion || t.fuente || "Paciente Verificada"}
                   </span>
                 </div>
                 <blockquote class="text-sm sm:text-base text-[var(--color-ink)]/80 font-sans leading-relaxed italic mb-6">

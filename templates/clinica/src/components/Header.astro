@@ -42,7 +42,7 @@ const bookingUrl = CONTENT.links.calendly || "#agendar";
           {prestadorNombre}
         </span>
         <span class="text-[10px] font-medium tracking-wider uppercase text-(--color-ink)/60">
-          Alta Complejidad Quirúrgica
+          {CONTENT.prestador.subtitulo || "Alta Complejidad Quirúrgica"}
         </span>
       </div>
     </a>
@@ -66,7 +66,7 @@ const bookingUrl = CONTENT.links.calendly || "#agendar";
       {/* Audio Ambient Visualizer Pill (Fiel a SkyClinics) */}
       <div
         class="hidden items-center gap-2 rounded-full border border-(--color-primary)/15 bg-(--color-primary)/5 px-3 py-1.5 text-[11px] font-medium text-(--color-primary) sm:flex"
-        title="Protocolos de Serenidad Quirúrgica & Audio Controlado"
+        title="Protocolos de Atención Clínica & Seguimiento Personalizado"
       >
         <span class="flex items-end gap-0.5 h-3">
           <span class="w-0.5 bg-(--color-accent) audio-bar-1 rounded-full"></span>

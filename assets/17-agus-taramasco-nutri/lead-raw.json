@@ -1,0 +1,31 @@
+{
+  "id": 17,
+  "slug": "17-agus-taramasco-nutri",
+  "nombre": "Taramasco",
+  "mapTitle": "Centro de Nutrición Deportiva Agus Taramasco",
+  "rubro": "nutricionista",
+  "subtitulo": "Nutrición Deportiva de Primer Nivel",
+  "ciudad": "Caballito, CABA",
+  "direccion": "Cachimayo 392, Caballito, CABA",
+  "telefono": "+54 9 11 7361-6814",
+  "whatsapp": "+5491173616814",
+  "instagram": "https://www.instagram.com/agustaramasco.nd/",
+  "rating": 5,
+  "reviewsCount": 26,
+  "placeId": "5250751351317281294",
+  "reviews": [
+    {
+      "autor": "Yanina Meaurio (Google Maps)",
+      "texto": "Un equipo de nutrición deportiva de primer nivel en Caballito! Agus y las chicas te atienden con una calidez enorme, súper personalizadas y atentas a cada detalle de tu entrenamiento."
+    },
+    {
+      "autor": "Tatiana Palavecino (Google Maps)",
+      "texto": "Hermosa experiencia! Te explican todo con muchísima claridad, adaptan el plan a tus horarios reales y el seguimiento te motiva un montón a seguir mejorando."
+    },
+    {
+      "autor": "Eleazar Pin Etchave (Google Maps)",
+      "texto": "Excelentes profesionales! Se nota la formación en nutrición deportiva y el compromiso con el paciente desde la primera consulta en Cachimayo."
+    }
+  ],
+  "fecha_scouting": "2026-10-26T19:50:57.100Z"
+}

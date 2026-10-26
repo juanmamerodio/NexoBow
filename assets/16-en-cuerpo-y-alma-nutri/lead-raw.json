@@ -1,0 +1,31 @@
+{
+  "id": 16,
+  "slug": "16-en-cuerpo-y-alma-nutri",
+  "nombre": "En Cuerpo y Alma",
+  "mapTitle": "En Cuerpo y Alma Nutricion",
+  "rubro": "nutricionista",
+  "subtitulo": "Nutrición Integral en Cuerpo y Alma",
+  "ciudad": "Caballito, CABA",
+  "direccion": "Av. Acoyte 200, Caballito, CABA",
+  "telefono": "+54 9 11 3563-3078",
+  "whatsapp": "+5491135633078",
+  "instagram": "https://instagram.com/encuerpoyalmanutricion",
+  "rating": 4.8,
+  "reviewsCount": 21,
+  "placeId": "5497161603311592506",
+  "reviews": [
+    {
+      "autor": "Yanina K (Google Maps)",
+      "texto": "Empecé con Paula hace 5 meses y ya bajé 10,500 kg!! Lo mejor es que fue sin pasar hambre, comiendo rico y entendiendo qué me pasa con la comida cuando estoy ansiosa. Una genia total."
+    },
+    {
+      "autor": "Gabriela Camargo (Google Maps)",
+      "texto": "Un espacio hermoso en Caballito donde te miran de forma integral: cuerpo y emoción. Dejé de contar calorías con culpa y aprendí a escuchar mi cuerpo. Súper recomendable."
+    },
+    {
+      "autor": "Lucía Dalma (Google Maps)",
+      "texto": "Paula tiene una calidez única. Te acompaña paso a paso, sin retos ni presiones, y los cambios se sostienen porque son hábitos reales para toda la vida."
+    }
+  ],
+  "fecha_scouting": "2026-10-26T19:50:35.558Z"
+}

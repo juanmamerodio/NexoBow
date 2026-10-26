@@ -1,0 +1,31 @@
+{
+  "id": 20,
+  "slug": "20-centro-mi-nutricion-nutri",
+  "nombre": "Mi Nutrición",
+  "mapTitle": "Centro Mi Nutrición",
+  "rubro": "nutricionista",
+  "subtitulo": "Lic. Micaela Laborde & Equipo",
+  "ciudad": "Belgrano, CABA",
+  "direccion": "Franklin D. Roosevelt 2524, Belgrano, CABA",
+  "telefono": "+54 9 11 3193-7861",
+  "whatsapp": "+5491131937861",
+  "instagram": "",
+  "rating": 5,
+  "reviewsCount": 26,
+  "placeId": "8486428380139073338",
+  "reviews": [
+    {
+      "autor": "Liliana Manfroni (Google Maps)",
+      "texto": "Excelente atención de Mica y todo el equipo de Mi Nutrición! En muy poco tiempo me ayudaron a repensar la calidad de mis comidas sin hacerme sentir que estaba a dieta."
+    },
+    {
+      "autor": "Estefania Freytag (Google Maps)",
+      "texto": "Súper recomendables! Conseguí turno re rápido, tienen modalidad presencial en Belgrano y online, y las chicas son un amor cómo te explican y acompañan."
+    },
+    {
+      "autor": "Sofi Gamba (Google Maps)",
+      "texto": "Micaela Laborde es una genia! Me armó un plan súper práctico para mis horarios de facultad y trabajo, con opciones ricas y fáciles de hacer."
+    }
+  ],
+  "fecha_scouting": "2026-10-26T19:52:00.085Z"
+}

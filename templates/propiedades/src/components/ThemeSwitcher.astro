@@ -1,0 +1,136 @@
+---
+// ThemeSwitcher.astro — NexoBow: Selector de paletas interactivo anti-rebote para previews
+import { PALETAS_ALTERNATIVAS, THEME, CONTENT } from "../site.ts";
+
+interface Palette {
+  nombre: string;
+  fondo: string;
+  tinta: string;
+  primary: string;
+  accent: string;
+}
+
+const defaultOriginal: Palette = {
+  nombre: "Mineral Bronze (Original)",
+  fondo: THEME.fondo || "#fbfbf9",
+  tinta: THEME.tinta || "#1c1917",
+  primary: THEME.primary || "#854d0e",
+  accent: THEME.accent || "#e7e5e4",
+};
+
+const palettes: Palette[] = (PALETAS_ALTERNATIVAS && PALETAS_ALTERNATIVAS.length > 0)
+  ? (PALETAS_ALTERNATIVAS as Palette[])
+  : [defaultOriginal];
+
+const parsedPhone = CONTENT.prestador?.whatsapp?.match(/wa\.me\/(\d+)/)?.[1];
+const juanmaWaPhone = parsedPhone || "5491100000000";
+---
+
+<aside
+  id="nexobow-theme-switcher"
+  aria-label="Selector de temas NexoBow"
+  class="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2 text-xs font-sans select-none"
+>
+  <div
+    id="theme-panel"
+    class="flex flex-col gap-2 rounded-2xl bg-stone-900/95 p-3.5 text-stone-100 shadow-2xl backdrop-blur-md border border-[var(--color-primary)]/40 transition-all duration-300"
+  >
+    <div class="flex items-center justify-between gap-3 border-b border-white/10 pb-2">
+      <span class="font-semibold text-stone-200 flex items-center gap-1.5 font-['Manrope'] text-[11px]">
+        <span class="inline-block h-2 w-2 rounded-full bg-[var(--color-primary)]"></span>
+        Paleta en vivo
+      </span>
+      <span id="active-theme-name" class="text-[11px] font-['Manrope'] text-[var(--color-accent)] font-bold">
+        {palettes[0]?.nombre || "Mineral Bronze"}
+      </span>
+    </div>
+
+    <!-- Swatches -->
+    <div class="flex items-center gap-2 pt-1">
+      {palettes.map((pal) => (
+        <button
+          type="button"
+          class="theme-swatch-btn group relative flex h-7 w-7 items-center justify-center rounded-full p-0.5 border border-white/20 transition-transform hover:scale-110 focus:outline-hidden focus:ring-2 focus:ring-offset-1 focus:ring-white/40"
+          style={`background: linear-gradient(135deg, ${pal.fondo} 50%, ${pal.primary} 50%);`}
+          data-theme={JSON.stringify(pal)}
+          data-name={pal.nombre}
+          title={pal.nombre}
+          aria-label={`Activar paleta ${pal.nombre}`}
+        >
+          <span class="sr-only">{pal.nombre}</span>
+        </button>
+      ))}
+    </div>
+
+    <!-- Botón CTA WhatsApp -->
+    <a
+      id="theme-wa-btn"
+      href={`https://wa.me/${juanmaWaPhone}?text=${encodeURIComponent(`Hola Juanma! Estuve viendo la web demo y me encantó la combinación ${palettes[0]?.nombre || "Mineral Bronze"}. ¿Cómo seguimos para activarla?`)}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-1 flex items-center justify-center gap-1.5 rounded-full bg-[var(--color-primary)] px-3.5 py-1.5 font-medium text-white transition-all hover:brightness-110 hover:shadow-lg active:scale-95 text-xs font-['Manrope']"
+    >
+      <span>Pedir esta versión</span>
+      <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
+        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.838.814 2.796.814 3.183 0 5.769-2.588 5.77-5.767 0-3.18-2.587-5.769-5.77-5.769zm0-2.172c4.381 0 7.937 3.556 7.938 7.938 0 4.382-3.556 7.939-7.938 7.939-1.332 0-2.593-.338-3.714-.949l-4.317 1.132 1.152-4.208c-.708-1.189-1.059-2.529-1.059-3.914 0-4.382 3.556-7.938 7.938-7.938z"/>
+      </svg>
+    </a>
+  </div>
+</aside>
+
+<script is:inline>
+  (function () {
+    const STORAGE_KEY = "nexobow_theme";
+    const JUANMA_PHONE = "5491100000000";
+
+    function applyTheme(pal) {
+      if (!pal) return;
+      const root = document.documentElement;
+      if (pal.primary) root.style.setProperty("--color-primary", pal.primary);
+      if (pal.accent) root.style.setProperty("--color-accent", pal.accent);
+      if (pal.fondo) {
+        root.style.setProperty("--color-paper", pal.fondo);
+      }
+      if (pal.tinta) {
+        root.style.setProperty("--color-ink", pal.tinta);
+        root.style.setProperty("--color-stone-border", pal.tinta === "#1c1917" ? "rgba(28, 25, 23, 0.12)" : "rgba(255, 255, 255, 0.15)");
+      }
+
+      const activeNameLabel = document.getElementById("active-theme-name");
+      if (activeNameLabel) activeNameLabel.textContent = pal.nombre || "Elegida";
+
+      const waBtn = document.getElementById("theme-wa-btn");
+      if (waBtn) {
+        const msg = `Hola Juanma! Estuve viendo la web demo y me encantó la combinación ${pal.nombre || ""}. ¿Cómo seguimos para activarla?`;
+        waBtn.href = `https://wa.me/${JUANMA_PHONE}?text=${encodeURIComponent(msg)}`;
+      }
+    }
+
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        applyTheme(parsed);
+      }
+    } catch (e) {
+      // Ignorar fallo de parse o privacidad
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const buttons = document.querySelectorAll(".theme-swatch-btn");
+      buttons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          try {
+            const raw = btn.getAttribute("data-theme");
+            if (!raw) return;
+            const pal = JSON.parse(raw);
+            applyTheme(pal);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(pal));
+          } catch (err) {
+            console.error("ThemeSwitcher error:", err);
+          }
+        });
+      });
+    });
+  })();
+</script>

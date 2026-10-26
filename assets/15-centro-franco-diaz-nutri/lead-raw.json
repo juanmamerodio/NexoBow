@@ -1,0 +1,31 @@
+{
+  "id": 15,
+  "slug": "15-centro-franco-diaz-nutri",
+  "nombre": "Centro Franco Díaz",
+  "mapTitle": "Centro de Nutrición Franco Diaz",
+  "rubro": "nutricionista",
+  "subtitulo": "NUTRICIÓN DEPORTIVA & ANTROPOMETRÍA ISAK",
+  "ciudad": "Caballito, CABA",
+  "direccion": "Av. Ángel Gallardo 1084, Caballito, CABA",
+  "telefono": "+54 9 11 3845-3910",
+  "whatsapp": "+5491138453910",
+  "instagram": "",
+  "rating": 5,
+  "reviewsCount": 41,
+  "placeId": "11124665649495727772",
+  "reviews": [
+    {
+      "autor": "Verónica (Google Maps)",
+      "texto": "Fui con mi hijo adolescente que juega al fútbol. Franco nos atendió con muchísima paciencia, le explicó todo sobre cómo alimentarse antes y después de entrenar y hoy tiene mucha más energía en los partidos."
+    },
+    {
+      "autor": "Simón Márquez Páez (Google Maps)",
+      "texto": "Excelente atención de Franco! Te hace la antropometría súper detallada, te explica cada dato con claridad y te arma tanto el plan nutricional como pautas de ejercicio adaptadas a tu objetivo."
+    },
+    {
+      "autor": "Hernán Guglielmo (Google Maps)",
+      "texto": "Gran profesional en Caballito. Cero apuro en la consulta, escucha tus horarios reales y el seguimiento hace que realmente cumplas el plan y veas cambios en los pliegues."
+    }
+  ],
+  "fecha_scouting": "2026-10-26T19:50:10.593Z"
+}

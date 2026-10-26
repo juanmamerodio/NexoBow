@@ -403,6 +403,49 @@ function main() {
       ? fm.calendly
       : `https://wa.me/${cleanPhone}?text=Hola!%20Quiero%20agendar%20mi%20primera%20consultor%C3%ADa%20gratuita`;
 
+  const baseContentPatch = {
+    prestador: {
+      nombre: fm.nombre,
+      rol: fm.rol || baseSite.content?.prestador?.rol || `Especialista · ${fm.subtitulo || "Atención Personalizada"}`,
+      subtitulo: fm.subtitulo || fm.rol || baseSite.content?.prestador?.subtitulo || "Nutrición Clínica & Hábitos",
+      tagline: fm.subtitulo || fm.rol || baseSite.content?.prestador?.tagline || "Nutrición Basada en Evidencia",
+      titulo: fm.titulo || baseSite.content.prestador.titulo,
+      bajada: fm.bajada || baseSite.content.prestador.bajada,
+      bio: sectionText(body, "Bio") || baseSite.content.prestador.bio,
+      enfoque: sectionText(body, "Enfoque") || baseSite.content.prestador.enfoque,
+      whatsapp: waLink,
+    },
+    problema: {
+      ...baseSite.content.problema,
+      descripcion:
+        sectionText(body, "Problema") ||
+        baseSite.content?.problema?.descripcion ||
+        "Atención personalizada y tratamientos de alta calidad para resolver tu situación desde el primer día.",
+    },
+    footer: {
+      blurb:
+        fm.tagline ||
+        sectionText(body, "Footer") ||
+        baseSite.content?.footer?.blurb ||
+        `${fm.nombre} · Atención profesional y consultorías de alta calidad.`,
+      credit: "Landing por NexoBow",
+    },
+    reviews: {
+      items: reviewsItems.length > 0 ? reviewsItems : (baseSite.content?.reviews?.items || baseSite.content?.reviews || []),
+    },
+    casos: {
+      items: caseItems.length > 0 ? caseItems : (baseSite.content?.casos?.items || baseSite.content?.casos || []),
+    },
+    faq: {
+      items: faqItems.length > 0 ? faqItems : (baseSite.content?.faq?.items || baseSite.content?.faq || []),
+    },
+    links: {
+      calendly: bookingUrl,
+      whatsapp: waLink,
+    },
+    consentimiento_testimonios: Boolean(fm.consentimiento_testimonios),
+  };
+
   const patch = {
     template_version: requestedVersion,
     tema: {
@@ -414,45 +457,7 @@ function main() {
       fuente_sans: fm.tema?.fuente_sans || baseSite.tema.fuente_sans,
       orden_secciones: fm.tema?.orden_secciones || baseSite.tema.orden_secciones,
     },
-    content: {
-      prestador: {
-        nombre: fm.nombre,
-        rol: fm.rol || baseSite.content?.prestador?.rol || `Especialista · ${fm.subtitulo || "Atención Personalizada"}`,
-        titulo: fm.titulo || baseSite.content.prestador.titulo,
-        bajada: fm.bajada || baseSite.content.prestador.bajada,
-        bio: sectionText(body, "Bio") || baseSite.content.prestador.bio,
-        enfoque: sectionText(body, "Enfoque") || baseSite.content.prestador.enfoque,
-      },
-      problema: {
-        ...baseSite.content.problema,
-        descripcion:
-          sectionText(body, "Problema") ||
-          baseSite.content?.problema?.descripcion ||
-          "Atención personalizada y tratamientos de alta calidad para resolver tu situación desde el primer día.",
-      },
-      footer: {
-        blurb:
-          fm.tagline ||
-          sectionText(body, "Footer") ||
-          baseSite.content?.footer?.blurb ||
-          `${fm.nombre} · Atención profesional y consultorías de alta calidad.`,
-        credit: "Landing por NexoBow",
-      },
-      reviews: {
-        items: reviewsItems.length > 0 ? reviewsItems : (baseSite.content?.reviews?.items || baseSite.content?.reviews || []),
-      },
-      casos: {
-        items: caseItems.length > 0 ? caseItems : (baseSite.content?.casos?.items || baseSite.content?.casos || []),
-      },
-      faq: {
-        items: faqItems.length > 0 ? faqItems : (baseSite.content?.faq?.items || baseSite.content?.faq || []),
-      },
-      links: {
-        calendly: bookingUrl,
-        whatsapp: waLink,
-      },
-      consentimiento_testimonios: Boolean(fm.consentimiento_testimonios),
-    },
+    content: fm.content_overrides ? deepMerge(baseContentPatch, fm.content_overrides) : baseContentPatch,
     paletas_alternativas: fm.paletas_alternativas || baseSite.paletas_alternativas || [],
   };
 

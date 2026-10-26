@@ -1,0 +1,1133 @@
+{
+  "capture_path": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/tech/page.json",
+  "capture_sha256": "b9755d2cabcb41680f6392b3a6453a36d96274ddcb0396a693d9a88f68a9aa37",
+  "capture_kind": "page-inspection",
+  "source_evidence_id": "ev_875c1b1bba4a2272c3c52033fb8516a0e070ec3d6b8f88e2afe5c59b5f5c0cca",
+  "capture_completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "accessibility",
+      "console_events",
+      "console_text",
+      "dom",
+      "frames",
+      "json_body_shapes",
+      "metadata",
+      "network_initiators",
+      "network_requests",
+      "resources",
+      "scripts",
+      "storage_keys",
+      "websocket_shapes"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "accessibility",
+        "reason": "not_approved",
+        "count": 363
+      },
+      {
+        "section": "console_events",
+        "reason": "disallowed_origin",
+        "count": 1
+      },
+      {
+        "section": "console_text",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "dom",
+        "reason": "unsupported_url",
+        "count": 1
+      },
+      {
+        "section": "frames",
+        "reason": "unsupported_url",
+        "count": 1
+      },
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "metadata",
+        "reason": "disallowed_origin",
+        "count": 48
+      },
+      {
+        "section": "metadata",
+        "reason": "unsupported_url",
+        "count": 2
+      },
+      {
+        "section": "network_initiators",
+        "reason": "disallowed_origin",
+        "count": 1
+      },
+      {
+        "section": "network_requests",
+        "reason": "disallowed_origin",
+        "count": 12
+      },
+      {
+        "section": "resources",
+        "reason": "disallowed_origin",
+        "count": 33
+      },
+      {
+        "section": "scripts",
+        "reason": "disallowed_origin",
+        "count": 18
+      },
+      {
+        "section": "scripts",
+        "reason": "unattributed_origin",
+        "count": 15
+      },
+      {
+        "section": "storage_keys",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "output_directory": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/tech/scripts",
+  "analysis_input": {
+    "input_path": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/tech/scripts/files",
+    "format": "directory"
+  },
+  "scripts": [
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_00b4afcb0bfef43ce40ff25dc53789cb4498b7188bd3289a8e6f3356d43e5c44",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/lib.CHYEm3G9.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-1-7b35d67a98a8c60564f087b7c4ddf57b81ec8ae59a10f528f54d055056fe25ac.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "6a4163f516ce0c36cfee7610e486ff451a9634e047e9e0e38d990c5e30131e43",
+        "bytes": 19885,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_029d0fed83d6d3c4cecc62410b3e44041aa0bb70b475f28814022d3ff4b2e98e",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/frosted-button.O0DzFB8W.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-2-a2e5064dc4c3eeea5f265b055b967dd6cf12ccf02d1bf20a8c9b9252120fc1f9.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "043f2f1224ccd4fbbaa6bb8a29cac29fb29ee74436b198aa7b97880559a628ce",
+        "bytes": 1334,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_0a469849edea45f501c567bd69505fbced6227fe90336122934a7472dcff3e3e",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/mixtape-cards.C5p6egwD.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-3-d240aff4dfbfab015d85e7bb58bd235771665a0214dd1a54a684fb134db73854.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "ccfefd96fdccb7b2b1dc7337ff1093b6be48592f8ab86c4fd5a76b447be44ee0",
+        "bytes": 4098,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_1d0615c6c23e7a0e4ff7949480c78f677dfbfb25bd128c4f1b671c8f6aa31798",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/mixtape-card-overlay.YsiZNtZU.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-4-17704e3932b84d9e74c31108bca007e3e49abf54b7e24daf05ee56f538049f86.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "8b1b0d82f2a8fe9f1853d9cd31596a711c2ef1e95d76d305326bfc5df8574d4b",
+        "bytes": 737,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_1febaf286e3604d349d474daeef428e741bc6cd24cfe8d8efec7295c457a7c15",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/dots-grid.Zr1guTNv.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-5-4718000e4be55af263177608b62516373285dbb9433bfcb6feb5bfaec89aadf5.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "eb54068d35b729dac30eee0c0a9fdd6d758a44a0ee0ab7e6c1e1c6877991d9f2",
+        "bytes": 6157,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_2992331ee309a56ed3ca02596c94bc392574b61dfbca6ebf7daedc5445ff0871",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/jsx-runtime.BfiOPkxk.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-6-71730e241701ed80a3a9dcd4fa6c6d05fde9df6c4adddc4c5a9827ec68078a4a.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "813f66e7ce560ca0b3a92426b8eb3ac35ccf1f63bec2777498a286aa59055f26",
+        "bytes": 472,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_2eba1179f6271152b9552296015b4dc06bb06d5b27c9303829add6579f582357",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/lines-grid.C1Rwa83z.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-7-71a3892bf250ce62d01e63093f83e5fbc35d5f81f0e42771949bfb07aaf14a37.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "d423fe91de0aa892182ccf854e6e071ebb82dfd20d92e7811ea7d549a025b678",
+        "bytes": 7323,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_441c65d64817ca272a78f137cce9ed03e66f99cc68235a298a7088ebfe16c9dc",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-8-4ec053c81145017ab374e1116f2238c1ee7dd745146e924730857cea834e47d0.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "47ddd3c4ba42a80d8bce00d008f8f9037e6109c023e41917e79672be198bf8e8",
+        "bytes": 464,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_4d2396c190dd4b5b7d670fa75271afa7975ea25d3f8b05f150ab1e55e1f24436",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/preload-helper.CxFQXtKk.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-9-e32e352237677fb7f301cda8b41d8b89af200a99aaf2f99dbd16bb32b0de46a2.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "b39ea8a0a9ff7dd6b08f09d4cc161bbfc41f2039d1606fecbaed8f165af4070d",
+        "bytes": 1342,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_51fb30087d8a210baa530db6a135038339c998f703cba0c52d3638180733ede8",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/think-notice.-AqF_v3y.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-10-6248f16e7d60500deb013d1f1aa898728475e6f3d74363f2aff9ca21b4798952.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "fe236fd44e9bebaddc98a862e7fbc91473646e086a7818ab37f86897c506a47e",
+        "bytes": 716,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_5dcdf04674d629050122344c64fb07e9c6f5046df8d8dd0d942ff5dd09023d53",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/how-we-help.B12pn0QH.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-11-9beb7fb0899bce2084b5fed4c36c6da21cf714cfc416906ca43bbd80073f17b1.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "0c25223fcd6a3af8cfb28f34fd346a07fc167071f7a80efecae7052a020aaaa4",
+        "bytes": 2856,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_5eb038b8b9f948a654ef47993a071da0685c3dfcfdf54e42a0e4492938fbd19a",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/agent-prompt-button.Cj62Lz9E.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-12-b5d0b90903143ef176fb55fff95b299c0343c26fb43e4968f541167c3c8abab5.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "d545743f29bd4983e51dc6d56360f10c33e34b283705163f525e684a7a733749",
+        "bytes": 596,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_5efffe87b4902e20bf417a2b0b3c95a8eb9914621263220d3137a1bba55919eb",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/expandable-video.CDCuPcVo.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-13-7cfa289b32a38a3017437f492dab9bc2e037321297a4e88a6ebae2974e3cc7b8.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "2e75f80a404def4d1201186e02717c3fa4be1db63eb21128c354d3c5ea6a8dc6",
+        "bytes": 29358,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_5f4ae343b999d3a8aa83be5f99ad85e6a2ade79e10504ce5d12515b10c2dc840",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/embla-carousel.esm.D-xAhe_h.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-14-239f76e6bdf5f6d81690bbe7ec936535289ab2c009ca3a2031a0aaffe86f2755.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "f08b0cac97ed1f0cbcd9c7d70f1228f9e24e3a0768d240c7f7b281911d398ec7",
+        "bytes": 17965,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_62dab4bf960799bd9b7cf119e3a6853177a40ae30b26bbe26aed3d956b1fec46",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/aria-manager.oGCjm1Lq.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-15-c5225b338a0e698a097ba1f47dd84b6e55dc2dbaea4135c969435e32a4397d78.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "7774576af8a06942c0a1dc9214ed62939c97bbeef8ebdb37421bafc0903f980a",
+        "bytes": 550,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_679e5a7bd420320cec2f65ef164b0e0d26e30fecc8a278c36ddb5725c8f1d50f",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/Root.astro_astro_type_script_index_0_lang.D0N1E2DR.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-16-418f095fc46b92f688699d8814233f93f7a476658fb202e1acfd6b9bd5762ee1.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "d50a1fe16003b343a1745cdec4e8bd1aa4fcf85c0dcb3186cf84c9966f4b9085",
+        "bytes": 34041,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_6856ac0ad4656f13e800444aaa64cf6cd87861568eef42e1c3d2c7ac0c1e2d0d",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/rolldown-runtime.DAXXjFlN.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-17-9c4788d290c7244b9481e0026b9c017b4cc4abc5575b14bb17775d67fb2aff41.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "152d561ebfda45259b1bd8a6ea69fdfd98bb2ea4f7a1bf1e0eba68b2d08cca41",
+        "bytes": 1269,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_704d8f9e9b4227e2b8db6d3e7109dde3f46eb4598f56566a67ee5d8a997ad208",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/smooth-scroll.DQHa4WFG.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-18-1a1ebcf16892995ffb01e994d3ea89f06dad36ea7ef7f8d934164879fa2bcb61.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "9dbf923cc8ca5d9928c7622fd14f2ed2cd75d5fe94667eb5b29162aaa9d87ea3",
+        "bytes": 18573,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_7b26311d66f0045c098f7fd365f4e14b625027f95e5e6c3f4b91d0f624af2721",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/ScrollTrigger.DDi3XPDo.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-19-fc1a36c38d39a4620d64e5b8db1b929fa3748e5d33548ca0498adfc606663e95.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "cca4324afe43f37073e31fc52495b58e3d1976a8c60d4aba9116fbf3dd9c206e",
+        "bytes": 112811,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_825e653e4617d7f28719b03276bc013aa3bddb4037e0e00b7d14a32576f1ab22",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/video-player.F3JSZi6u.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-20-6d3cb996152a00e7588aa6980bfc064c8de82be83955eb35d5890b4157580924.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "fc4929af1aeafd248f6a8ea33aee1936faeabd4d0a1f781ae3ccbd964fc72038",
+        "bytes": 15492,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_82ad449f79d6ebebeae2f08cdbcd1a5fcaf3bcb5c9dabffd0191f607a9ecdfee",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/react-dom.OhcHZzyi.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-21-f462cc901321719e56765d268f1c087f59c927c8de0b3af9dfe072dd3c2f20da.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "55de96039a0c6adc56f7508b662587839f1f841ec82d98527dd39d0973905adb",
+        "bytes": 3653,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_82dc24fe93f766490b9ef225e6def59632f50120df605339a924f21ffb9e3ab6",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/menu.BIrOTFaK.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-22-7d23dc0bcdc1292ff49efe8565896c70bac83dae25a562da363affb7ac238edf.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "db5cbdd4ab82f634424ef07c198467dc0c841c00a7da09cf70e1e239bf0a60dc",
+        "bytes": 14976,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_890e1349ef6966bc50fed0c25dd848510837cf4f4513b4ee921a5f4679748bc6",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/mixtape-detail-hero.BhixKvxD.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-23-1fc43fc7d15c8bb15de3738be4b4bd568ff93e0b613c7d32d818b3ebde7b8b6e.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "d796e62a6b5a43943b99098ec5e433317176e482070712d824da81ab9dcf34ed",
+        "bytes": 1503,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_8ad57e77e112545ab845a730d139e019300a5ac0268816a27807c50a815b627c",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/text-reveal._fgKUtCq.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-24-50d7ce1cf4d4a4b33d5d4d3dfaa9ac8b7ce744c828d64d848085d20ec0597e09.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "0730b6c27fe3c0e009f142871ab6e6d0ee6f07577fd0c2c44de237b13da84a0b",
+        "bytes": 1748,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_a075cfb21888133a81c832c0b7f411e2e5c0764ecf6c4ed97bfe3512298af91e",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/unicorn-background.Z58qmmnr.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-25-7fd043854092cc554eed41806867eb0ec1428ee0fed74830d35f8a37e8c641a9.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "38c748f8e8e2b1bb48843f661d88ffcc162491ec2a79a79fc7c54fcfebf4be10",
+        "bytes": 4087,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_a1b97791e89891d1fd6aa2ebdb7f82e9788f59674a5dbcd6cbe1823147047c8d",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/react.yNGxKKq6.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-26-dd26a9cd40cec51b3f0b112c67b01080275acf1475a5dcdc036cd9ddca7e8c3d.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "98fd85cdeab873d0e38a6a150f4ff9b1b76e3a6d8f9459c3858822e9a89b47c8",
+        "bytes": 7569,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_a45aa1373e75450c3638aa676856d3f136a969dd33d4616eb643b820d31274e9",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/AgentChat.DMooG-ii.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-27-dc09206e478291337d2744088c1c1f4531938c7ca69aadf2c458714f572ff081.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "a16f96304807371d7e7295672dfd5b2707f2e28efa2ee21ee2b47f3fcc6475cd",
+        "bytes": 331254,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_a4e329e5b0a791d48cf1af4410152543a92cc7743da7ab3d1a41ddeb626684a5",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "blob:https://www.thinkcompany.com/b51014de-cf53-470e-b6bc-34e9e1c4f620",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-28-01b7df36887a569dd66edd1f584eef610a60e2497795bcb7d11b868811c44854.js",
+        "layout": "isolated",
+        "layout_reason": "Source URL scheme has no local module layout mapping.",
+        "sha256": "9f3cde627db03118d398850e840329bc923be5c922e4a3b2186cd895b4e3db96",
+        "bytes": 5859,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_a9bbb1fd74541f9d0900db6c2b0a211de509cfc807114f11276171e06112317e",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/ask-think.hN-KYkN9.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-29-db677e27679aee4273e51fb8bf99d88301d681c0cb1928746ec580077b313337.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "ae5cf443545a08e6357cd9191aeeea5b8d8ba81531f0a02486200cf85fd8cf35",
+        "bytes": 2160,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_b3718b915bb53599a517158521a23243d19219c5785bd88393196af268be0785",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/lines-connection.zzX1o2lV.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-30-defd47c38ae2516fb3df6fa435419bbc33f7a074ff693deb08bad2fd00694975.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "62a48699da53929c4b5b9cc01c565bc500bc6f415dd202a81a5e09121c7f19e1",
+        "bytes": 5494,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_ba2296292bb404d27fc2fd26606879ca00eaa652d30a96aeecbfed60ff89a6f9",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/client.CfMuSSpE.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-31-cc15906f71a09b84e3f7d4c498bd20a6eb208a4a9089f25c7c2a7532314412d9.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "601da96d1e9e8369a8dff7807879219cdfe77388498c343c4b814d2df1f4fe52",
+        "bytes": 179035,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_c12fd3f58ffd6c889731bb59e124ae537906d42c40781fd88f89247bfeb8d590",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/shared.NdkX_Nyr.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-32-580eeda24163ee50b6335c36d76dc1de7ea38b0e479f80e228d275c9eede18ef.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "c9d0e429acc15f6e77a48cd32d02f9538553cd96e44640f0686b57fad7fef37d",
+        "bytes": 1356,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_c4348db240fe50e8647c0723b4c0c626f748b29543b6982ed9887d91a8cd330c",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/footer-ask.xmj3pqIb.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-33-db27c3908a20765d0bf23032173ce15aa874f9515b96600155ac36bbcc0f7f22.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "4739c06210375dc1d89e0696acf3475d5307bd0bc1e333bffcbc85de54cacbb7",
+        "bytes": 733,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_c566e889e240a252386d701977d516089911723e4a945ee80a64a26442d3e87b",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/home-feature.gVsTABMc.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-34-22485636b9defa8a977408e0d8d09a1e12d6d55d6f065a2cce622dea1d896ac9.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "126d8b7b14750f01637444ec89476efada70af40f0a6936d1c177f83c0748353",
+        "bytes": 12997,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_cccfe6506dc782192be47c0dce6fab1f2a64253772d2cf3091ed67b6d41d5800",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-35-e371e5ed2f284f39a6e023e20ec38d5d2f31dd01d9e620bf61521ed8ee9b1ea3.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "045d36f74a646f78f142c13bcf4d3147c226a7c5f7e052c2f3c2f4964327ac6c",
+        "bytes": 316,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_cef00e2cca850402bb88ad648c34a324da84d573b371d606adedd6ce4295a202",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/client.Dlt01ZFC.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-36-762382ff5811e2576c12eaa260c0ec897a76a99cafa95e10ba0c1952d75b45a0.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "33ff769e07ff0da9be28728e1be7e85bb29b035634696b395362480e457cdcbf",
+        "bytes": 2061,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_d20d0d7f262a8dc2507b54f41587e76dcfc0b1c224498e00fa12b0bceb23bb9e",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/vendor/unicornStudio.umd.js",
+      "content": {
+        "state": "exported",
+        "relative_path": "origins/f9801b340403ee9ac0c033ef509bb69e452b0025b72f49a086a60729c3c1d72e/vendor/unicornStudio.umd.js",
+        "layout": "url-path",
+        "layout_reason": null,
+        "sha256": "a7d02f681b5d24e12fb1a640bdab1e4d3bdfd733c4c2daa8e9227cfc2e486e61",
+        "bytes": 189431,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_e878398cd89caa7f74278065e54a24127eba81c0086deef99f56c3c45c7a13e4",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-38-1a5ed5c46d5ff0624718fb101c27e50d8441fbc37ec6f00b60d784b835eceed1.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "61ad29518ac2ee73390a7ff4e7a4f256e122cfa7451abce6916ce038dd291745",
+        "bytes": 4380,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_eac47bef24a67e0bada89118922b7ca05f51298d7b95b858c38ff861e80e188a",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/text-reveal.BaHXSXZ3.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-39-28f2a5e3b0b5fe9a88cb329baa5c41a6e662e476f5418903b23c9692d9078379.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "f11f3b034e068af1c07afe5e67402097c6b3ba4a75dc4b6a6db7e8dfa91ef10c",
+        "bytes": 9942,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_eae650ca72bed38c518bc230dcf8af902fbd7b0c207a68892642ab632d9cab43",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/functions.Cuyj6h5l.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-40-28ea8bd5a50fd1b89b026264b446fd22cf1ff069a39ecc884e4b1baeb527cda6.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "f4c361c71788e2ef02fa8a2e42ac0d8567b3af641138e5b0e443e6f5380a8709",
+        "bytes": 1119,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_eceec1f90fef4f38b673a0df1103843bfc1f0ab6b1e47ea056f5db4c3d99163e",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/detail-hero-images.BSoXOdv0.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-41-9578e7f6073eb0c7dd56b12f8776f65e4620e509c83a4b9ee48ba3abaab26e0b.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "caf116bf1efd29a53d2963a7ad294f3741d30dfc328e9cbe7718fe426068ea73",
+        "bytes": 2196,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_f497c21e259da82949ddcbf58afe2e789cb73b764f0bdd32becf7907c4e8efb4",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/work-item-video.DiXgkOXo.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-42-bcbfc711f446b4d856c19244162904b710dcc77891be6db148d100d9ffe64be3.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "23302568885be7e55a5b57d70c6ccb27419b09810009a57964efc46ebd51b51c",
+        "bytes": 1950,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_f617ca1fe07571d08961422eaa8573b2cd5fa52c7463c0540a91e580cfb536bd",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/work-item-narrative-video.CWo7Whfi.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-43-b9f3091d42c4315fb172eb0844df24048d7a96354d3cf29225274fdea7b87996.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "d3776ba539ca4d18d2291179b9be4b6870af83568c42b0b0e94f15eb5088cb27",
+        "bytes": 4166,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_f921ceb6660f1cd7fb25339336f8589e6c64070a62e43638062dbf12fc6b026a",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-44-0905b9eb6891643fb5f10018d4214c6e96a4a04bf04ff3d6924c99033605b962.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "d143f92796889e39f00d7ae25948dd84487c7f00255029040edeb34d41a6066e",
+        "bytes": 262,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_fe84b32b8b665db885227f90cddac16a7c170c6ed1867c85dcb51088893b710b",
+        "frame_id": "1969A3D0DF9B020A2BFB80E4050B6190",
+        "is_module": true,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.thinkcompany.com/_astro/menu-same-url.WxPOCIjH.js?dpl=dpl_2LkS43G29S5XMhzGDxtS42qzrcrE",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-45-e25d279399b8976d018a94ede48c6c8be993635131e7df268103504c78666773.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "4ded594b1c43760805cbdcb18762a33aef7765d0898cf3b9934df05fc417b904",
+        "bytes": 3164,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    }
+  ],
+  "limitations": [
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+    "Only script bytes retained in this capture are exported. Sources are not refetched or executed, and a response or Debugger source does not prove execution.",
+    "Ordinary unambiguous URL paths preserve relative module layouts by origin, including case-distinct spellings. Query variants, exact path collisions, file/directory prefixes, inline sources, and unrepresentable paths are isolated. A case-distinct pair is isolated only when the destination filesystem cannot store both spellings; the record names that pair. Browser module relationships of isolated paths remain unknown.",
+    "Local JavaScript analysis does not implement browser import maps, root-relative URL resolution, remote URL loading, or browser runtime behavior. It may strip import queries and fragments; isolated variants are not canonical targets.",
+    "Source-map declarations are retained as metadata. No source maps or missing dependencies are fetched or reconstructed.",
+    "Scenario response bytes preserve the output of Playwright's Response.body() API; any source-body provenance caveat from the capture is retained in this manifest. Debugger sources are the exposed text encoded as UTF-8. Redacted bytes are exported exactly as retained, and may no longer parse as JavaScript."
+  ]
+}

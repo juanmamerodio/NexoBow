@@ -1,0 +1,60 @@
+---
+import { CONTENT } from "../site.ts";
+
+const { prestador, footer } = CONTENT;
+---
+
+<footer class="bg-stone-900 text-stone-400 py-16 border-t border-stone-800 font-['Manrope']">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12 pb-12 border-b border-stone-800">
+      <!-- Identity & Matricula -->
+      <div class="md:col-span-5">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-8 rounded-lg bg-stone-800 border border-stone-700 flex items-center justify-center p-1.5">
+            <svg class="w-full h-full text-[var(--color-primary)]" viewBox="0 0 73 25" fill="currentColor">
+              <path d="M48.5845 21.002V5.38415H49.9083V21.002H48.5845ZM42.6895 6.25541V5.00195H55.8034V6.25541H42.6895Z"/>
+              <path d="M21.3485 21.002C20.1984 21.002 19.1681 20.7604 18.2576 20.2774C17.3631 19.7944 16.6523 19.1303 16.1251 18.285C15.614 17.4246 15.3584 16.4586 15.3584 15.3869V5.00195H16.6793V15.319C16.6793 16.2398 16.8584 17.0247 17.2737 17.719C17.6891 18.3982 18.2061 18.8742 18.9249 19.2516C19.6437 19.6138 20.454 19.8133 21.3485 19.8133C22.259 19.8133 23.0434 19.6138 23.7463 19.2516C24.4491 18.8742 24.9821 18.3982 25.3974 17.719C25.8127 17.0247 25.9258 16.2247 25.9258 15.319V5.00195H27.2467V15.3869C27.2467 16.4586 27.0751 17.4397 26.5479 18.285C26.0208 19.1303 25.31 19.7944 24.4155 20.2774C23.5209 20.7604 22.4986 21.002 21.3485 21.002Z"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M4.32812 19.9955V5.00195H5.63331V19.7448H14.378V20.9983H5.37227C4.79561 20.9983 4.32812 20.5493 4.32812 19.9955Z"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M59.4383 21.002C58.8554 21.002 58.3828 20.553 58.3828 19.9992V6.00472C58.3828 5.45091 58.8554 5.00195 59.4383 5.00195H68.5498V6.25541H59.7022L59.7022 12.1152H67.7892V13.3634H59.7022L59.7022 19.7485H68.5498V21.002H59.4383Z"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M29.8652 21.0019V6.00472C29.8652 5.45091 30.3382 5.00195 30.9215 5.00195H40.0323V6.25541H31.1856V12.3262H39.2038V13.543H31.1856V21.0019H29.8652Z"/>
+            </svg>
+          </div>
+          <span class="font-bold text-lg text-white font-['Outfit']">{prestador.nombre}</span>
+        </div>
+        <p class="text-xs text-stone-400 mb-3">{prestador.tagline}</p>
+        <p class="text-xs font-mono text-stone-400 mb-4">{prestador.matricula}</p>
+        <p class="text-xs text-stone-400 leading-relaxed max-w-sm">
+          {prestador.ubicacion} · {prestador.horarios}
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="md:col-span-3 text-sm">
+        <div class="font-bold text-white uppercase tracking-wider text-xs font-['Outfit'] mb-4">Navegación</div>
+        <ul class="space-y-2.5">
+          <li><a href="#propiedades" class="hover:text-white transition-colors">Colección Residencial</a></li>
+          <li><a href="#especificaciones" class="hover:text-white transition-colors">Especificaciones Técnicas</a></li>
+          <li><a href="#proceso" class="hover:text-white transition-colors">Fases de Adquisición</a></li>
+          <li><a href="#visita" class="hover:text-white transition-colors">Agendar Visita VIP</a></li>
+          <li><a href="#faq" class="hover:text-white transition-colors">Preguntas Frecuentes</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact & Trust -->
+      <div class="md:col-span-4 text-sm">
+        <div class="font-bold text-white uppercase tracking-wider text-xs font-['Outfit'] mb-4">Contacto Directo</div>
+        <p class="text-xs text-stone-400 mb-2">Tel: {prestador.telefono}</p>
+        <p class="text-xs text-stone-400 mb-4">WhatsApp Oficial: Disponible para inversores y estudios asociados.</p>
+        <div class="p-3.5 rounded-xl bg-stone-800/80 border border-stone-700/80 text-xs text-stone-300">
+          {footer.certificaciones}
+        </div>
+      </div>
+    </div>
+
+    <!-- Legal & Copyright -->
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-400">
+      <div>{footer.copy}</div>
+      <div class="text-center sm:text-right">{footer.ley}</div>
+    </div>
+  </div>
+</footer>

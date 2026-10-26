@@ -1,0 +1,31 @@
+{
+  "id": 14,
+  "slug": "14-melisa-ciccioli-nutri",
+  "nombre": "Ciccioli",
+  "mapTitle": "Nutricionista Melisa Ciccioli",
+  "rubro": "nutricionista",
+  "subtitulo": "Educación Alimentaria & Hábitos",
+  "ciudad": "Caballito, CABA",
+  "direccion": "Bogotá 1678, Caballito, CABA",
+  "telefono": "+54 9 11 6485-5933",
+  "whatsapp": "+5491164855933",
+  "instagram": "https://www.instagram.com/nutricion.mc",
+  "rating": 5,
+  "reviewsCount": 79,
+  "placeId": "9770519631101240468",
+  "reviews": [
+    {
+      "autor": "Romina Martini (Google Maps)",
+      "texto": "Súper recomendable Meli! Me ayudó a mejorar mis desayunos y meriendas dándome mucha variedad de opciones. Además me enseñó a equilibrar mis platos y a entender que el progreso va mucho más allá de un número en la balanza."
+    },
+    {
+      "autor": "Augusto Fortunato (Google Maps)",
+      "texto": "Excelente profesional y persona! Te escucha, adapta todo a tus gustos y horarios, y te acompaña con muchísima calidez en cada control en Caballito."
+    },
+    {
+      "autor": "Camila B (Google Maps)",
+      "texto": "Me encantó la consulta con Meli. Te explica todo con paciencia, te da ideas súper prácticas para cocinar en la semana y por primera vez siento que no estoy haciendo dieta sino aprendiendo a comer."
+    }
+  ],
+  "fecha_scouting": "2026-10-26T19:49:49.471Z"
+}

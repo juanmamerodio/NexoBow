@@ -2,12 +2,13 @@
 import { CONTENT } from "../site";
 import Button from "./ui/Button.astro";
 
-const metrics = [
+const defaultMetrics = [
   { label: "VO2 MAX (CONSUMO PICO)", value: "68.4", unit: "ml/kg/min", status: "ZONA ÉLITE" },
   { label: "FUERZA REACTIVA (RSI)", value: "2.84", unit: "índice", status: "ÓPTIMO" },
   { label: "POTENCIA EXPLOSIVA (PPO)", value: "1.420", unit: "Watts", status: "+18% VS BASE" },
   { label: "ASIMETRÍA BILATERAL", value: "< 3.1%", unit: "diferencial", status: "SEGURO" },
 ];
+const metrics = CONTENT.hero?.metrics || defaultMetrics;
 ---
 
 <section class="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden border-b border-[var(--color-carbon-border)]">
@@ -26,7 +27,7 @@ const metrics = [
     <!-- Main Athletic Title (Display Massive) -->
     <div class="mb-8">
       <h1 class="type-h1 text-white tracking-tighter max-w-5xl">
-        {CONTENT.hero.tagline}
+        {CONTENT.prestador.titulo || CONTENT.hero.tagline}
       </h1>
       <p class="mt-6 text-lg sm:text-xl text-gray-300 max-w-2xl font-sans leading-relaxed">
         {CONTENT.prestador.bajada}

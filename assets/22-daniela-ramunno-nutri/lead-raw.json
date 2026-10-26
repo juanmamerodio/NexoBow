@@ -1,0 +1,31 @@
+{
+  "id": 22,
+  "slug": "22-daniela-ramunno-nutri",
+  "nombre": "Ramunno",
+  "mapTitle": "Lic. Daniela Ramunno Nutricionista",
+  "rubro": "nutricionista",
+  "subtitulo": "Educación Alimentaria & Compras Reales",
+  "ciudad": "Palermo, CABA",
+  "direccion": "Av. Córdoba 5869, Palermo, CABA",
+  "telefono": "+54 9 11 2490-8956",
+  "whatsapp": "+5491124908956",
+  "instagram": "https://www.instagram.com/nutricion.daniramunno",
+  "rating": 5,
+  "reviewsCount": 21,
+  "placeId": "12624247479406779541",
+  "reviews": [
+    {
+      "autor": "Matías Bracchitta (Google Maps)",
+      "texto": "Dani es una genia total! Cero juicios en la consulta, te escucha de verdad y además se conoce todas las marcas del supermercado para recomendarte exactamente qué comprar según tus gustos."
+    },
+    {
+      "autor": "Florencia Pannunzio (Google Maps)",
+      "texto": "La mejor nutri de Palermo! Te explica súper claro cómo cada alimento afecta a tu cuerpo, la antropometría es re cuidada y salís con mil ideas prácticas para la semana."
+    },
+    {
+      "autor": "Lorena Dominguez (Google Maps)",
+      "texto": "Excelente profesional y súper cálida. Me ayudó a ordenar mis comidas sin prohibirme nada y a hacer compras inteligentes sin perder tiempo."
+    }
+  ],
+  "fecha_scouting": "2026-10-26T19:52:50.887Z"
+}

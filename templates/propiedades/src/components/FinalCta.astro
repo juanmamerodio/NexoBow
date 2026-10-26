@@ -1,0 +1,33 @@
+---
+import { CONTENT } from "../site.ts";
+import Button from "./ui/Button.astro";
+
+const { final_cta, prestador } = CONTENT;
+---
+
+<section id="contacto" class="py-20 sm:py-32 bg-stone-950 text-white relative overflow-hidden">
+  <div class="absolute inset-0 opacity-10 architectural-grid pointer-events-none"></div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-stone-800 border border-stone-700 text-xs font-semibold uppercase tracking-wider text-stone-300 mb-6">
+      {final_cta.badge}
+    </div>
+
+    <h2 class="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight font-['Outfit'] mb-6 max-w-3xl mx-auto leading-tight">
+      {final_cta.title}
+    </h2>
+
+    <p class="text-base sm:text-xl text-stone-400 font-['Manrope'] mb-10 max-w-2xl mx-auto leading-relaxed">
+      {final_cta.subtitle}
+    </p>
+
+    <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+      <Button href={prestador.whatsapp} variant="primary">
+        {final_cta.cta}
+      </Button>
+      <Button href={`tel:${prestador.telefono}`} variant="outline" class="text-white border-stone-700 hover:bg-stone-800">
+        Llamada Directa: {prestador.telefono}
+      </Button>
+    </div>
+  </div>
+</section>

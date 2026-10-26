@@ -1,0 +1,31 @@
+{
+  "id": 18,
+  "slug": "18-oh-my-nutri-nutri",
+  "nombre": "OH MY NUTRI",
+  "mapTitle": "OH MY NUTRI - Cinthia Kwaterka",
+  "rubro": "nutricionista",
+  "subtitulo": "Nutrición Clínica, Fertilidad & Hábitos",
+  "ciudad": "Belgrano, CABA",
+  "direccion": "Monroe 2716, Belgrano, CABA",
+  "telefono": "+54 9 11 3626-5424",
+  "whatsapp": "+5491136265424",
+  "instagram": "",
+  "rating": 5,
+  "reviewsCount": 145,
+  "placeId": "5627273799736821583",
+  "reviews": [
+    {
+      "autor": "Eugenia (Google Maps)",
+      "texto": "Cin me ayudó muchísimo con la alimentación durante mi tratamiento de fertilidad, y acá estoy a días de esperar a mi beba! Eternamente agradecida por su calidez, su conocimiento y cómo me acompañó en todo este camino."
+    },
+    {
+      "autor": "Sebastian Fernandez Funes (Google Maps)",
+      "texto": "Excelente atención en Belgrano. Te enseñan a cambiar hábitos de verdad sin sentir que estás a dieta ni pasando hambre. Los resultados se notan rapidísimo."
+    },
+    {
+      "autor": "Romina Schwindt (Google Maps)",
+      "texto": "Todo el equipo de OH MY NUTRI es increíble! Súper cálidas, puntuales, te arman planes llenos de ideas ricas y adaptados 100% a tu vida diaria."
+    }
+  ],
+  "fecha_scouting": "2026-10-26T19:51:19.228Z"
+}

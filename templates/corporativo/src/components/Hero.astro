@@ -2,6 +2,7 @@
 import { CONTENT } from "../site";
 import Button from "./ui/Button.astro";
 
+const hero = CONTENT.hero || {};
 const prestador = CONTENT.prestador || {};
 const links = CONTENT.links || {};
 const bookingUrl = links.calendly || "#agendar";
@@ -27,10 +28,10 @@ const bajada =
         <!-- Eyebrow -->
         <div class="inline-flex items-center gap-2 mb-6">
           <span class="px-3 py-1 bg-[#141414] border border-[#2a2a2a] text-(--color-primary) text-[11px] font-sans font-bold uppercase tracking-widest rounded-xs">
-            Estrategia Corporativa B2B
+            {hero.eyebrow || "Estrategia Corporativa B2B"}
           </span>
           <span class="text-xs uppercase tracking-wider text-[#888888] font-mono">
-            Speed Chess · Finanzas de Alto Impacto
+            {hero.card_caption || "Speed Chess · Finanzas de Alto Impacto"}
           </span>
         </div>
 
@@ -53,7 +54,7 @@ const bajada =
         <!-- CTA Action Buttons -->
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-14">
           <Button href={bookingUrl} variant="primary" size="lg">
-            Agendar Llamada de Diagnóstico
+            {hero.cta_primary || "Agendar Llamada de Diagnóstico"}
           </Button>
           <Button href={whatsappUrl} variant="secondary" size="lg" target="_blank" rel="noopener noreferrer">
             Consultar por WhatsApp
@@ -66,13 +67,13 @@ const bajada =
             <svg class="w-4 h-4 text-(--color-primary)" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
             </svg>
-            <span class="text-xs text-[#888888] uppercase tracking-wider">Acuerdo NDA Estricto</span>
+            <span class="text-xs text-[#888888] uppercase tracking-wider">{hero.trust_1 || "Acuerdo NDA Estricto"}</span>
           </div>
           <div class="flex items-center gap-2">
             <svg class="w-4 h-4 text-(--color-primary)" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
             </svg>
-            <span class="text-xs text-[#888888] uppercase tracking-wider">Atención de Socio a Director</span>
+            <span class="text-xs text-[#888888] uppercase tracking-wider">{hero.trust_2 || "Atención de Socio a Director"}</span>
           </div>
         </div>
       </div>
@@ -85,35 +86,35 @@ const bajada =
           <div class="flex items-center justify-between pb-4 border-b border-[#222222] mb-5">
             <div class="flex items-center gap-2">
               <div class="w-2 h-2 rounded-full bg-(--color-primary)"></div>
-              <span class="text-xs font-mono uppercase tracking-widest text-[#a8a8a8]">Speed Chess Clock</span>
+              <span class="text-xs font-mono uppercase tracking-widest text-[#a8a8a8]">{hero.clock_title || "Speed Chess Clock"}</span>
             </div>
-            <span class="text-[11px] font-mono text-[#666666]">BLITZ ROUND 01</span>
+            <span class="text-[11px] font-mono text-[#666666]">{hero.clock_round || "BLITZ ROUND 01"}</span>
           </div>
 
           <div class="grid grid-cols-2 gap-4">
             <!-- Clock 1: Competition -->
             <div class="p-4 bg-[#0a0a0a] border border-[#1f1f1f] rounded-xs text-left">
               <div class="flex items-center justify-between mb-2">
-                <span class="text-[11px] uppercase tracking-wider text-[#777777] font-medium">Tu Competencia</span>
+                <span class="text-[11px] uppercase tracking-wider text-[#777777] font-medium">{hero.clock_left_label || "Tu Competencia"}</span>
                 <img src="/assets/pferd.svg" alt="Knight" class="w-4 h-4 filter invert opacity-60" />
               </div>
               <div class="font-mono text-3xl font-bold text-[#888888] tracking-widest">
-                05:00
+                {hero.clock_left_val || "05:00"}
               </div>
-              <span class="text-[10px] text-[#555555] block mt-1 uppercase font-mono">Tiempo Estándar</span>
+              <span class="text-[10px] text-[#555555] block mt-1 uppercase font-mono">{hero.clock_left_sub || "Tiempo Estándar"}</span>
             </div>
 
             <!-- Clock 2: Your Business with Strategy -->
             <div class="p-4 bg-[#181818] border border-(--color-primary)/40 rounded-xs text-left relative overflow-hidden">
               <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-(--color-primary)/5 rounded-full pointer-events-none"></div>
               <div class="flex items-center justify-between mb-2">
-                <span class="text-[11px] uppercase tracking-wider text-[#f4f4f4] font-medium">Tu Negocio con Plan</span>
+                <span class="text-[11px] uppercase tracking-wider text-[#f4f4f4] font-medium">{hero.clock_right_label || "Tu Negocio con Plan"}</span>
                 <img src="/assets/bauer.svg" alt="Pawn" class="w-4 h-4 filter invert opacity-90" />
               </div>
               <div class="font-mono text-3xl font-bold text-(--color-primary) tracking-widest">
-                04:28
+                {hero.clock_right_val || "04:28"}
               </div>
-              <span class="text-[10px] text-(--color-primary) block mt-1 uppercase font-mono animate-pulse">Acelerando Ejecución</span>
+              <span class="text-[10px] text-(--color-primary) block mt-1 uppercase font-mono animate-pulse">{hero.clock_right_sub || "Acelerando Ejecución"}</span>
             </div>
           </div>
         </div>
@@ -123,34 +124,34 @@ const bajada =
           
           <div class="p-5 bg-[#0e0e0e] hover:bg-[#141414] transition-colors">
             <div class="flex items-center justify-between mb-2">
-              <span class="font-display text-2xl sm:text-3xl font-bold text-[#f4f4f4] tracking-tight">+5.000</span>
+              <span class="font-display text-2xl sm:text-3xl font-bold text-[#f4f4f4] tracking-tight">{hero.stat_1_val || "+5.000"}</span>
               <img src="/assets/king.svg" alt="" class="w-4 h-4 filter invert opacity-40" />
             </div>
-            <span class="text-xs text-[#888888] uppercase tracking-wider block font-sans">Consultorías Realizadas</span>
+            <span class="text-xs text-[#888888] uppercase tracking-wider block font-sans">{hero.stat_1_label || "Consultorías Realizadas"}</span>
           </div>
 
           <div class="p-5 bg-[#121212] hover:bg-[#181818] transition-colors">
             <div class="flex items-center justify-between mb-2">
-              <span class="font-display text-2xl sm:text-3xl font-bold text-(--color-primary) tracking-tight">700+</span>
+              <span class="font-display text-2xl sm:text-3xl font-bold text-(--color-primary) tracking-tight">{hero.stat_2_val || "700+"}</span>
               <img src="/assets/springer.svg" alt="" class="w-4 h-4 filter invert opacity-40" />
             </div>
-            <span class="text-xs text-[#888888] uppercase tracking-wider block font-sans">Clientes Satisfechos</span>
+            <span class="text-xs text-[#888888] uppercase tracking-wider block font-sans">{hero.stat_2_label || "Clientes Satisfechos"}</span>
           </div>
 
           <div class="p-5 bg-[#121212] hover:bg-[#181818] transition-colors">
             <div class="flex items-center justify-between mb-2">
-              <span class="font-display text-2xl sm:text-3xl font-bold text-[#f4f4f4] tracking-tight">100%</span>
+              <span class="font-display text-2xl sm:text-3xl font-bold text-[#f4f4f4] tracking-tight">{hero.stat_3_val || "100%"}</span>
               <img src="/assets/circle-check.svg" alt="" class="w-4 h-4 filter invert opacity-40" />
             </div>
-            <span class="text-xs text-[#888888] uppercase tracking-wider block font-sans">Digital & Sin Papeles</span>
+            <span class="text-xs text-[#888888] uppercase tracking-wider block font-sans">{hero.stat_3_label || "Digital & Sin Papeles"}</span>
           </div>
 
           <div class="p-5 bg-[#0e0e0e] hover:bg-[#141414] transition-colors">
             <div class="flex items-center justify-between mb-2">
-              <span class="font-display text-2xl sm:text-3xl font-bold text-(--color-primary) tracking-tight">44%</span>
+              <span class="font-display text-2xl sm:text-3xl font-bold text-(--color-primary) tracking-tight">{hero.stat_4_val || "44%"}</span>
               <img src="/assets/coins.svg" alt="" class="w-4 h-4 filter invert opacity-40" />
             </div>
-            <span class="text-xs text-[#888888] uppercase tracking-wider block font-sans">Menos Carga Administrativa</span>
+            <span class="text-xs text-[#888888] uppercase tracking-wider block font-sans">{hero.stat_4_label || "Menos Carga Administrativa"}</span>
           </div>
 
         </div>

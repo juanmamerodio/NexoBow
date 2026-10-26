@@ -209,17 +209,25 @@ const precioStr = booking.precio_ars !== undefined ? ars(booking.precio_ars) : "
 
           <div>
             <label class="block text-xs font-semibold uppercase tracking-wider text-(--color-ink)/80">
-              Especialidad o Tratamiento de Interés
+              Especialidad o Motivo de Consulta
             </label>
             <select
               name="treatment"
               class="mt-1.5 w-full rounded-lg border border-(--color-primary)/20 bg-(--color-primary)/5 px-3.5 py-2.5 text-sm text-(--color-ink) focus:border-(--color-accent) focus:outline-hidden"
             >
-              <option value="implantes">Implantología Digital & Carga Inmediata</option>
-              <option value="full-arch">Rehabilitación Oral Completa (Full-Arch)</option>
-              <option value="estetica">Arquitectura de la Sonrisa & Carillas DSD</option>
-              <option value="diagnostico">Diagnóstico 3D & Valoración Inicial</option>
-              <option value="otro">Otra consulta clínica o quirúrgica</option>
+              {CONTENT.specialties?.items?.length ? (
+                CONTENT.specialties.items.map((sp: any, idx: number) => (
+                  <option value={`esp-${idx + 1}`}>{sp.nombre}</option>
+                ))
+              ) : (
+                <>
+                  <option value="implantes">Implantología Digital & Carga Inmediata</option>
+                  <option value="full-arch">Rehabilitación Oral Completa (Full-Arch)</option>
+                  <option value="estetica">Arquitectura de la Sonrisa & Carillas DSD</option>
+                  <option value="diagnostico">Diagnóstico 3D & Valoración Inicial</option>
+                </>
+              )}
+              <option value="otro">Otra consulta personalizada</option>
             </select>
           </div>
 

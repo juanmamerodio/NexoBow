@@ -1,0 +1,53 @@
+---
+import { CONTENT } from "../site.ts";
+import Button from "./ui/Button.astro";
+
+const { investment_process, prestador } = CONTENT;
+---
+
+<section id="proceso" class="py-20 sm:py-32 bg-[var(--color-paper)] relative border-b border-[var(--color-stone-border)]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mb-16 sm:mb-20">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-stone-200/60 border border-[var(--color-stone-border)] text-xs font-semibold uppercase tracking-wider text-stone-700 mb-4">
+        {investment_process.badge}
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-bold tracking-tight text-[var(--color-ink)] font-['Outfit']">
+        {investment_process.title}
+      </h2>
+      <p class="mt-4 text-base sm:text-lg text-stone-600 font-['Manrope']">
+        {investment_process.subtitle}
+      </p>
+    </div>
+
+    <!-- 5 Steps Timeline -->
+    <div class="space-y-6 sm:space-y-8 relative">
+      {investment_process.steps.map((st, idx) => (
+        <div class="bg-white rounded-3xl p-6 sm:p-10 border border-[var(--color-stone-border)] hover:border-stone-400 transition-all flex flex-col md:flex-row md:items-center justify-between gap-6 group">
+          <div class="flex items-start sm:items-center gap-5 sm:gap-8">
+            <span class="w-14 h-14 rounded-2xl bg-stone-100 flex items-center justify-center font-bold text-xl text-[var(--color-ink)] font-['Outfit'] shrink-0 group-hover:bg-[var(--color-primary)] group-hover:text-white transition-colors">
+              {st.step}
+            </span>
+            <div>
+              <h3 class="text-xl sm:text-2xl font-bold text-[var(--color-ink)] font-['Outfit'] mb-2">
+                {st.title}
+              </h3>
+              <p class="text-sm sm:text-base text-stone-600 font-['Manrope'] max-w-3xl leading-relaxed">
+                {st.desc}
+              </p>
+            </div>
+          </div>
+
+          <div class="hidden lg:flex items-center text-xs font-mono font-medium text-stone-400 uppercase tracking-widest shrink-0">
+            Fase {idx + 1} de 5
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-14 text-center">
+      <Button href={prestador.whatsapp} variant="primary">
+        Iniciar Proceso de Adquisición
+      </Button>
+    </div>
+  </div>
+</section>

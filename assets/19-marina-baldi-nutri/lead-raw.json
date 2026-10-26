@@ -1,0 +1,31 @@
+{
+  "id": 19,
+  "slug": "19-marina-baldi-nutri",
+  "nombre": "Baldi",
+  "mapTitle": "Licenciada en Nutrición Marina Baldi",
+  "rubro": "nutricionista",
+  "subtitulo": "Nutrición Moderna & Minuciosa",
+  "ciudad": "Belgrano, CABA",
+  "direccion": "Zapiola 2006, Belgrano, CABA",
+  "telefono": "+54 9 11 6736-8272",
+  "whatsapp": "+5491167368272",
+  "instagram": "",
+  "rating": 5,
+  "reviewsCount": 19,
+  "placeId": "3991238654956150400",
+  "reviews": [
+    {
+      "autor": "Pablo Ricardo Cortez (Google Maps)",
+      "texto": "Excelente profesional Marina! Súper minuciosa en la entrevista, te escucha con atención y te brinda soluciones modernas y prácticas para el día a día."
+    },
+    {
+      "autor": "Victoria Terribile (Google Maps)",
+      "texto": "Me encantó la consulta en Belgrano. Marina te explica todo con muchísima claridad, me despejó todas las dudas desde el primer día y el plan es re fácil de llevar."
+    },
+    {
+      "autor": "Fernando (Google Maps)",
+      "texto": "Gran nutricionista! Muy actualizada, dedicada y el plan se adapta 100% a tus objetivos específicos. Totalmente recomendable."
+    }
+  ],
+  "fecha_scouting": "2026-10-26T19:51:40.216Z"
+}

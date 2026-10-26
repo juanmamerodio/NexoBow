@@ -1,0 +1,262 @@
+{
+  "tema": {
+    "primary": "#854d0e",
+    "accent": "#e7e5e4",
+    "fondo": "#fbfbf9",
+    "tinta": "#1c1917",
+    "fuente": "Outfit",
+    "fuente_sans": "Manrope",
+    "orden_secciones": [
+      "Hero",
+      "PropertyShowcase",
+      "DevelopmentSpecs",
+      "InvestmentProcess",
+      "PrivateTourBooking"
+    ]
+  },
+  "paletas_alternativas": [
+    {
+      "nombre": "Mineral Bronze",
+      "fondo": "#fbfbf9",
+      "tinta": "#1c1917",
+      "primary": "#854d0e",
+      "accent": "#e7e5e4"
+    },
+    {
+      "nombre": "Architectural Obsidian",
+      "fondo": "#121212",
+      "tinta": "#f5f5f4",
+      "primary": "#eb663c",
+      "accent": "#262626"
+    },
+    {
+      "nombre": "Stone Minimalist",
+      "fondo": "#f4f4f5",
+      "tinta": "#18181b",
+      "primary": "#0f766e",
+      "accent": "#e4e4e7"
+    },
+    {
+      "nombre": "Nordic Oak",
+      "fondo": "#fafaf9",
+      "tinta": "#292524",
+      "primary": "#b45309",
+      "accent": "#f5f5f4"
+    }
+  ],
+  "content": {
+    "meta": {
+      "title": "Lufte Propiedades & Bienes Raíces — Arquitectura Residencial & Inversiones Exclusivas",
+      "description": "Desarrollos inmobiliarios de autor, residencias exclusivas y asesoría patrimonial integral. Coordiná tu visita guiada privada presencial o virtual.",
+      "favicon": "/icons/Logo.svg"
+    },
+    "prestador": {
+      "nombre": "Arq. Mariano Benavídez",
+      "tagline": "Desarrollos Residenciales de Autor & Real Estate Patrimonial",
+      "matricula": "CUCICBA Mat. 7.412 · CAPBA Mat. 18.940",
+      "telefono": "+54 9 11 5820-9140",
+      "whatsapp": "https://wa.me/5491158209140?text=Hola%20Mariano%2C%20quisiera%20solicitar%20el%20dossier%20privado%20y%20agendar%20una%20visita.",
+      "bookingUrl": "#visita",
+      "ubicacion": "Posadas 1480, Recoleta, Ciudad Autónoma de Buenos Aires",
+      "horarios": "Lunes a Viernes de 09:30 a 19:30 hs (Guardia de Visitas Sab. 10 a 14 hs)"
+    },
+    "hero": {
+      "badge": "ARQUITECTURA RESIDENCIAL & INVERSIONES DE ALTA GAMA",
+      "title": "Espacios Diseñados para Trascender con Precisión y Confort",
+      "subtitle": "Seleccionamos y desarrollamos residencias de vanguardia con los más altos estándares constructivos de Europa: materiales nobles, eficiencia energética Passivhaus y ubicaciones irrepetibles.",
+      "stat_1_value": "+180.000 m²",
+      "stat_1_label": "Superficie proyectada y entregada bajo estándares internacionales",
+      "stat_2_value": "98.4%",
+      "stat_2_label": "Índice de satisfacción y re-inversión de clientes patrimoniales",
+      "stat_3_value": "20+ Años",
+      "stat_3_label": "Trayectoria en estructuración de desarrollos y real estate premium",
+      "cta_primary": "Agendar Visita Privada",
+      "cta_secondary": "Explorar Residencias"
+    },
+    "property_showcase": {
+      "badge": "COLECCIÓN SELECTA",
+      "title": "Obras y Residencias Destacadas",
+      "subtitle": "Cada proyecto responde a una visión arquitectónica singular donde la luz, la nobleza de las materias y el rigor técnico se combinan armónicamente.",
+      "items": [
+        {
+          "id": "RES-01",
+          "title": "Torre Alvear Skyline",
+          "location": "Puerto Madero, CABA",
+          "type": "Penthouse Triplex · 380 m²",
+          "specs": "Triple acristalamiento acústico · Vistas panorámicas al Río de la Plata · Master suite con spa y terraza privada.",
+          "price": "$1.450.000 USD",
+          "badge": "Entrega Inmediata",
+          "tag": "Icono Urbano"
+        },
+        {
+          "id": "RES-02",
+          "title": "Villa Bellinzona",
+          "location": "San Isidro Tradicional",
+          "type": "Residencia de Autor · 520 m² en lote de 2.400 m²",
+          "specs": "Carpintería de roble europeo · Sistema geotérmico de climatización · Parque diseñado por paisajista con piscina de piedra volcánica.",
+          "price": "$2.200.000 USD",
+          "badge": "Exclusiva",
+          "tag": "Patrimonial"
+        },
+        {
+          "id": "RES-03",
+          "title": "Módulos Mansilla",
+          "location": "Palermo Chico, CABA",
+          "type": "Piso Completo · 240 m² con Terraza Jardín",
+          "specs": "Hormigón visto y perfilería oculta alemana · Domótica integral Lutron · Cocina de diseño con mármol Calacatta.",
+          "price": "$980.000 USD",
+          "badge": "Última Unidad",
+          "tag": "Diseño Puro"
+        },
+        {
+          "id": "RES-04",
+          "title": "Finca Las Cañas",
+          "location": "Pilar Golf & Polo",
+          "type": "Casa de Campo Contemporánea · 460 m²",
+          "specs": "Construcción bajo norma Passivhaus (-70% energía) · Galerías de hierro y vidrio · Cava subterránea para 800 botellas.",
+          "price": "$890.000 USD",
+          "badge": "En Pozo Avanzado",
+          "tag": "Sustentabilidad"
+        }
+      ]
+    },
+    "development_specs": {
+      "badge": "INGENIERÍA CONSTRUCTIVA",
+      "title": "Especificaciones Técnicas que Marcan la Diferencia",
+      "subtitle": "No transigimos en la calidad estructural. Cada detalle responde a criterios de durabilidad secular, confort bioclimático y silencio absoluto.",
+      "items": [
+        {
+          "num": "01",
+          "title": "Aislamiento Acústico y Confort Térmico",
+          "desc": "Perfilería de aluminio de alta gama con Rotura de Puente Térmico (RPT) y doble/triple vidriado hermético con cámara de gas argón para 42 dB de reducción de ruido."
+        },
+        {
+          "num": "02",
+          "title": "Eficiencia Bioclimática & Passivhaus",
+          "desc": "Orientación solar milimétrica, envolvente térmica continua y ventilación mecánica con recuperación de calor, logrando consumos de energía mínimos."
+        },
+        {
+          "num": "03",
+          "title": "Materiales Nobles y Proveedores Europeos",
+          "desc": "Alianzas directas con fabricantes líderes de Alemania y Austria en carpinterías, griferías empotradas y solados de madera natural estacionada."
+        },
+        {
+          "num": "04",
+          "title": "Seguridad Perimetral y Domótica Centralizada",
+          "desc": "Control inteligente de accesos biométricos, gestión de escenas de iluminación, cortinas motorizadas y monitoreo de climatización desde el móvil."
+        }
+      ]
+    },
+    "investment_process": {
+      "badge": "METODOLOGÍA DE ADQUISICIÓN",
+      "title": "El Proceso de Inversión, Paso a Paso",
+      "subtitle": "Un camino transparente, fiduciariamente blindado y con acompañamiento legal personalizado en cada instancia de la transacción.",
+      "steps": [
+        {
+          "step": "01",
+          "title": "Entrevista de Perfil y Scouting Privado",
+          "desc": "Analizamos tus requerimientos espaciales, horizonte de inversión, preferencias de radicación y confidencialidad patrimonial."
+        },
+        {
+          "step": "02",
+          "title": "Visita Guiada Exclusiva & Dossier Técnico",
+          "desc": "Recorrido presencial de obra o experiencia inmersiva 3D con planos técnicos, especificaciones de memoria descriptiva y costos asociados."
+        },
+        {
+          "step": "03",
+          "title": "Due Diligence & Blindaje Fiduciario",
+          "desc": "Revisión exhaustiva de títulos, permisos municipales, garantías constructivas y estructuración notarial segura."
+        },
+        {
+          "step": "04",
+          "title": "Personalización y Terminaciones de Autor",
+          "desc": "Reunión con nuestro equipo de arquitectura de interiores para adaptar distribuciones, solados e iluminación a tu estilo de vida."
+        },
+        {
+          "step": "05",
+          "title": "Entrega de Posesión y Gestión Post-Venta",
+          "desc": "Manual de uso del inmueble, puesta en marcha de domótica y soporte de mantenimiento preventivo durante los primeros 24 meses."
+        }
+      ]
+    },
+    "private_tour_booking": {
+      "badge": "ATENCIÓN PERSONALIZADA",
+      "title": "Agendá Tu Visita Guiada Privada",
+      "subtitle": "Coordiná una sesión individual con nuestro equipo senior de arquitectura y real estate para conocer los proyectos y evaluar alternativas a medida.",
+      "fee_badge": "SIN COSTO NI COMPROMISO",
+      "fee_title": "Visita Guiada VIP Presencial o Virtual 3D",
+      "fee_value": "$0 ARS",
+      "fee_subtext": "Atención personalizada para inversores y compradores exigentes",
+      "guarantee": "Garantía de Privacidad y Confidencialidad Absoluta bajo acuerdo NDA si el cliente lo requiere.",
+      "benefits": [
+        "Acceso exclusivo al dossier de planos y costos de desarrollo",
+        "Análisis de retorno proyectado (cap rate & revalorización)",
+        "Atención 1 a 1 directa con el director de arquitectura",
+        "Flexibilidad de horario presencial o videollamada interactiva"
+      ],
+      "cta_whatsapp": "Coordinar por WhatsApp Directo",
+      "cta_calendly": "Seleccionar Horario en Calendario"
+    },
+    "casos": [
+      {
+        "nombre": "Familia Braunstein",
+        "proyecto": "Villa Bellinzona · San Isidro",
+        "testimonio": "Buscábamos una residencia que combinara la calidez de los materiales nobles con la tecnología moderna. El asesoramiento del equipo de Mariano fue impecable desde el primer boceto.",
+        "rating": "5.0 ★★★★★"
+      },
+      {
+        "nombre": "Ignacio R. de la Torre",
+        "proyecto": "Penthouse Alvear · Puerto Madero",
+        "testimonio": "La calidad de las carpinterías y el silencio que se logra en plena ciudad es asombroso. El proceso fiduciario fue ordenado, transparente y sin sorpresas.",
+        "rating": "5.0 ★★★★★"
+      }
+    ],
+    "reviews": [
+      {
+        "author": "Dr. Fernando Morales",
+        "role": "Inversor Patrimonial",
+        "comment": "Tres operaciones concretadas con Lufte. El estándar constructivo europeo supera con creces el promedio del mercado local.",
+        "rating": 5
+      },
+      {
+        "author": "Arq. Sofía M. Guiraldes",
+        "role": "Compradora Residencial",
+        "comment": "La precisión en los detalles de entrega y la atención al cliente marcan una diferencia abismal. 100% recomendable.",
+        "rating": 5
+      }
+    ],
+    "faq": [
+      {
+        "q": "¿Cómo se coordina una visita privada a las propiedades?",
+        "a": "Podés agendarla directamente a través de WhatsApp o seleccionando un horario en nuestra agenda online. Recibirás confirmación inmediata y el dossier técnico digital previo a la visita."
+      },
+      {
+        "q": "¿Qué opciones de financiación y estructuración de pago ofrecen?",
+        "a": "En proyectos en pozo ofrecemos anticipo del 30% en USD y saldo en cuotas pesificadas ajustables por índice CAC o planes en dólares fijos sin interés. En unidades terminadas se aceptan operaciones combinadas y transferencias internacionales."
+      },
+      {
+        "q": "¿Las propiedades cuentan con garantía post-entrega?",
+        "a": "Sí. Todas nuestras residencias cuentan con 10 años de garantía estructural por ley y 24 meses de garantía integral sobre instalaciones, carpinterías europeas y equipamiento domótico."
+      },
+      {
+        "q": "¿Es posible visitar las obras en forma virtual si resido en el exterior?",
+        "a": "Absolutamente. Disponemos de gemelos digitales y recorridos inmersivos en 3D con relevamiento fotogramétrico para clientes que evalúan inversiones desde otros países o provincias."
+      },
+      {
+        "q": "¿Cómo resguardan la confidencialidad de la operación?",
+        "a": "Operamos bajo estrictos protocolos de secreto profesional y acuerdos de no divulgación (NDA). Toda información patrimonial se encuentra resguardada bajo la Ley 25.326 de Protección de Datos Personales."
+      }
+    ],
+    "final_cta": {
+      "badge": "TU PRÓXIMO ESPACIO TE ESPERA",
+      "title": "¿Listo para Experimentar la Arquitectura en su Máxima Expresión?",
+      "subtitle": "Conversá con nuestro equipo para recibir la carpeta de desarrollos disponibles y coordinar tu visita guiada exclusiva.",
+      "cta": "Solicitar Dossier & Visita Privada"
+    },
+    "footer": {
+      "certificaciones": "Certificaciones: LEED Gold · Passivhaus Institute · CUCICBA Mat. 7.412",
+      "copy": "© 2026 Lufte Propiedades & Bienes Raíces. Todos los derechos reservados.",
+      "ley": "Cumplimiento estricto con la Ley 25.326 de Protección de Datos Personales de la República Argentina."
+    }
+  }
+}

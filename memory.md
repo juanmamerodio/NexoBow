@@ -225,7 +225,16 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
     2. **Embudo para Infoproducto** (`https://juanmamerodio.github.io`): Embudo de conversión y ventas para infoproductos digitales.
     3. **Esencia Técnica** (`https://esenciatecnica.vercel.app`): E-commerce educativo con catálogo técnico.
   - **Verificación & 0-JS**: Compilación exitosa en Astro SSG con 0 scripts clientes en `web/dist/`, suite E2E ampliada en `tests/web-redesign.test.mjs` con 6 tests verdes, y auditoría visual `impeccable detect` aprobada sin animaciones decorativas engañosas.
-
-
-
-
+- [2026-10-26] **Caza de 10 Nutricionistas en CABA (Caballito, Belgrano, Palermo — IDs 14 al 23) con Templates Intercalados y Reseñas de Google Maps**:
+  - **Soporte `content_overrides` y Dinamismo Multi-Template (`scripts/build-client-site.mjs` + `/templates/`)**: Habilitado el deep-merge de `content_overrides` desde el frontmatter YAML de `clients/{slug}.md` hacia `site.json`, y parametrizados los componentes de `abogado`, `clinica`, `corporativo`, `tech`, `deportes` y `dermatologia` para adaptar 100% el speech, casos de éxito (`casos.items`), reseñas reales de Google Maps (`reviews.items`) y marca reducida (`prestador.nombre` = solo apellido o nombre del centro) a cualquier rubro sin textos residuales de otras industrias.
+  - **10 Previews Generadas, Auditadas y Desplegadas en Cloudflare Pages (`https://preview.nexobow.site/{slug}/`) e Inyectadas en Google Sheets (`B24:S33`)**:
+    1. `14-melisa-ciccioli-nutri` (`"Ciccioli"`, Caballito) — `nutricionista@1.0.0` (`editorial-classic`)
+    2. `15-centro-franco-diaz-nutri` (`"Centro Franco Díaz"`, Caballito) — `deportes@1.0.0` (`kinetic-performance`)
+    3. `16-en-cuerpo-y-alma-nutri` (`"En Cuerpo y Alma"`, Caballito) — `dermatologia@1.0.0` (`clinical-pure`)
+    4. `17-agus-taramasco-nutri` (`"Taramasco"`, Caballito) — `corporativo@2.0.0` (`high-ticket-consulting`)
+    5. `18-oh-my-nutri-nutri` (`"OH MY NUTRI"`, Belgrano) — `clinica@2.0.0` (`architectural-prestige`)
+    6. `19-marina-baldi-nutri` (`"Baldi"`, Belgrano) — `tech@1.0.0` (`tech-editorial-system`)
+    7. `20-centro-mi-nutricion-nutri` (`"Mi Nutrición"`, Belgrano) — `abogado@2.0.0` (`obsidian-authority`)
+    8. `21-gonzalez-roldan-nutri` (`"González Roldán"`, Belgrano) — `dermatologia@1.0.0` (`clinical-pure`)
+    9. `22-daniela-ramunno-nutri` (`"Ramunno"`, Palermo) — `nutricionista@1.0.0` (`editorial-classic`)
+    10. `23-mari-calcagno-nutri` (`"Calcagno"`, Palermo) — `clinica@2.0.0` (`architectural-prestige`)

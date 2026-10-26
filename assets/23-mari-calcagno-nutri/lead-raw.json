@@ -1,0 +1,31 @@
+{
+  "id": 23,
+  "slug": "23-mari-calcagno-nutri",
+  "nombre": "Calcagno",
+  "mapTitle": "Lic. Mari Calcagno Nutricionista Clínica y Deportiva - Alimentación y Mindfulnes",
+  "rubro": "nutricionista",
+  "subtitulo": "Nutrición Clínica, Deportiva & Mindfulness",
+  "ciudad": "Palermo, CABA",
+  "direccion": "Güemes 4255, Palermo, CABA",
+  "telefono": "+54 9 11 3917-4731",
+  "whatsapp": "+5491139174731",
+  "instagram": "https://www.instagram.com/nutri.maricalcagno/",
+  "rating": 5,
+  "reviewsCount": 32,
+  "placeId": "7328508460114243528",
+  "reviews": [
+    {
+      "autor": "Abi Rojo (Google Maps)",
+      "texto": "Mari me acompañó durante los 7 meses que tuve mi ileostomía y después de la cirugía reconstructiva. Su conocimiento clínico, su empatía y su dedicación me salvaron en el momento más difícil. Infinitas gracias!"
+    },
+    {
+      "autor": "Areanna Campos (Google Maps)",
+      "texto": "Es una nutri del amor! Con Mari me olvidé para siempre de las 'dietas de papel'. Me acompañó post-pandemia a escuchar mi cuerpo, disfrutar la comida y transformar mis hábitos desde la conciencia."
+    },
+    {
+      "autor": "Florencia Quirós & Dalma Belizán (Google Maps)",
+      "texto": "Hace más de 5 años que me atiendo con Mari en Palermo. Combina como nadie la nutrición clínica, deportiva y el Mindfulness. Salís de cada consulta con el alma y el cuerpo en calma."
+    }
+  ],
+  "fecha_scouting": "2026-10-26T19:53:18.944Z"
+}

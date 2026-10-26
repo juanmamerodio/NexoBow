@@ -1,0 +1,289 @@
+{
+  "capture_path": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/abogado/page.json",
+  "capture_sha256": "7279ab66256b4f1560e3def360a2f2ba94748c5db3294b762e1341adbb64993d",
+  "capture_kind": "page-inspection",
+  "source_evidence_id": "ev_5105d4f8f6e80d959fd238ce4065caba87aed2fa9aa100f6884262142406fa15",
+  "capture_completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "accessibility",
+      "console_text",
+      "json_body_shapes",
+      "metadata",
+      "resources",
+      "scripts",
+      "storage_keys",
+      "websocket_shapes"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "accessibility",
+        "reason": "not_approved",
+        "count": 2295
+      },
+      {
+        "section": "console_text",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "metadata",
+        "reason": "disallowed_origin",
+        "count": 8
+      },
+      {
+        "section": "metadata",
+        "reason": "unsupported_url",
+        "count": 6
+      },
+      {
+        "section": "resources",
+        "reason": "disallowed_origin",
+        "count": 3
+      },
+      {
+        "section": "resources",
+        "reason": "unsupported_url",
+        "count": 1
+      },
+      {
+        "section": "scripts",
+        "reason": "disallowed_origin",
+        "count": 2
+      },
+      {
+        "section": "storage_keys",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "output_directory": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/abogado/scripts",
+  "analysis_input": {
+    "input_path": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/abogado/scripts/files",
+    "format": "directory"
+  },
+  "scripts": [
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_0c73de16be777e5525a7f617fd202e0281bf03a0bab865cdbf1f7848578c0dc6",
+        "frame_id": "5B86779AF30815BD663321F3BC1FA681",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.kuemmerlein.de/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-1-2df9a443a9f9401199cb158801664bafb2557feb9a32f4d596e68c693e67c3a5.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "2409d48a810d368d250169966b7121e1c338ca2cb3425a7b8f79b00193e9f343",
+        "bytes": 26,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_0e28a3d88f03545efa0fc75691f89be7de326372de5f9c640cb051310d6a3542",
+        "frame_id": "5B86779AF30815BD663321F3BC1FA681",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.kuemmerlein.de/wp-content/themes/kuemmerlein_theme/assets/js/lazy_videos-min.js?8e8200a0a2039dff002560f0582b806c",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-2-87a3f0a2fc6d53b1ea58a1563cd0e662ba099695ed5e0a11808c900d51dbde14.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "2aa92cb1c3264f97dc3ec58eb2edb7d694d5ae5119e063ec2fc4101ac7761434",
+        "bytes": 11016,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_1afe6b8ecec591df14eee41624ed943aa3f2de4af22ff69348150ab8af3bf480",
+        "frame_id": "5B86779AF30815BD663321F3BC1FA681",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.kuemmerlein.de/wp-content/themes/kuemmerlein_theme/assets/js/jquery.js?c9771cc3e90e18f5336eedbd0fffb2cf",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-3-41641e52331047ff7baa72d69473f12c1ed050c121f4d873ac65de588a948ee5.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "3e7501d15c3630e791c8b20392eb9dee31a9f65ce3efdde76cef5c710141ab24",
+        "bytes": 87532,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_285f4b49f22ec81e24ab1ebefff350b0d9cc49c1875e5a0e0e9ed0bdccdf7d03",
+        "frame_id": "5B86779AF30815BD663321F3BC1FA681",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.kuemmerlein.de/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-4-c5a94eaca52b49fae7ecb8d3fc31dce86d1e1f979e078e2ad89b0815f8f4a194.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "5834180188657934cf7eb80d742f09b61592107c45dab876c2c23a22b58aa852",
+        "bytes": 862,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_514b9a5ab2c06335c951085d05e26f1bbf6ae7c7ea58423985839f1de29a09b5",
+        "frame_id": "5B86779AF30815BD663321F3BC1FA681",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.kuemmerlein.de/wp-content/themes/kuemmerlein_theme/assets/js/anime.iife.min.js?5184ceb82233e73dece7e74bd15823e5",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-5-fa82064ee417b3d5e468e50b4b3927d958008e2340c45e7abe6fa0541936506a.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "b084024d43e7dfb90e46a3d3721a218e9f3847dee182343f2c1245defde7d525",
+        "bytes": 76461,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_7dbfa3a3a8eeb740ecdcefcf06374cba1d1e816fb47dfad0f31f6874b808c646",
+        "frame_id": "5B86779AF30815BD663321F3BC1FA681",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.kuemmerlein.de/wp-content/themes/kuemmerlein_theme/assets/js/app-min.js?68c709a5fe04e58572a91cf7306a9c35",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-6-f8efb450369db08d0e5c187e45e3332a8ed1df87a702aa6494846edaf063819d.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "1410e1a0b08b1c08132f163f1bb2d68b70dec46838acedc0731f447df06d869e",
+        "bytes": 73527,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_8d3b6057b73b4bad1039a68531606250b1871e448cfe829beac6bdcf71948778",
+        "frame_id": "5B86779AF30815BD663321F3BC1FA681",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.kuemmerlein.de/wp-content/themes/kuemmerlein_theme/assets/js/jquery_plugins.js?98ea1d465c681c7f3c197b3ad49185f0",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-7-d25437c770442715dc37b47bff11b894fbf3f6c4c055e5e8837a93f162934e65.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "0a838ad1112e9af1247c5c24351b5c3cf71dc23595ce397ef373969f2d9b9636",
+        "bytes": 164482,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_ade182d450107c854fec6c713b6422bdd8adf5071af9e88b91b5083230be0c48",
+        "frame_id": "5B86779AF30815BD663321F3BC1FA681",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.kuemmerlein.de/wp-content/themes/kuemmerlein_theme/assets/js/lottie_svg.js?e3677a55bef4c5ba7a6c134d199c9226",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-8-d6d18621417caeac91ee60c05e38d8f85fa0e4c14821cc264d4596d2aa08b61c.js",
+        "layout": "isolated",
+        "layout_reason": "URL query, fragment, or credentials cannot select a canonical local module.",
+        "sha256": "d8ec4dea60069eff8951d79aa76755c743029363e1c1f2b32262395574226ce7",
+        "bytes": 242746,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    }
+  ],
+  "limitations": [
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+    "Only script bytes retained in this capture are exported. Sources are not refetched or executed, and a response or Debugger source does not prove execution.",
+    "Ordinary unambiguous URL paths preserve relative module layouts by origin, including case-distinct spellings. Query variants, exact path collisions, file/directory prefixes, inline sources, and unrepresentable paths are isolated. A case-distinct pair is isolated only when the destination filesystem cannot store both spellings; the record names that pair. Browser module relationships of isolated paths remain unknown.",
+    "Local JavaScript analysis does not implement browser import maps, root-relative URL resolution, remote URL loading, or browser runtime behavior. It may strip import queries and fragments; isolated variants are not canonical targets.",
+    "Source-map declarations are retained as metadata. No source maps or missing dependencies are fetched or reconstructed.",
+    "Scenario response bytes preserve the output of Playwright's Response.body() API; any source-body provenance caveat from the capture is retained in this manifest. Debugger sources are the exposed text encoded as UTF-8. Redacted bytes are exported exactly as retained, and may no longer parse as JavaScript."
+  ]
+}

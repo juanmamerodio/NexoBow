@@ -1,0 +1,416 @@
+{
+  "capture_path": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/propiedades/page.json",
+  "capture_sha256": "4b2aaa13a9aa9567f417e3eb80e45af81ec14c8503c6dc26a07a85b1ee461efb",
+  "capture_kind": "page-inspection",
+  "source_evidence_id": "ev_74fa189525fb3e839abec15a02164a082e89f4af2a02a40c39fcbad3d34639e3",
+  "capture_completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "accessibility",
+      "console_text",
+      "json_body_shapes",
+      "metadata",
+      "resources",
+      "scripts",
+      "storage_keys",
+      "websocket_shapes"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "accessibility",
+        "reason": "not_approved",
+        "count": 1205
+      },
+      {
+        "section": "console_text",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "metadata",
+        "reason": "disallowed_origin",
+        "count": 54
+      },
+      {
+        "section": "metadata",
+        "reason": "unsupported_url",
+        "count": 2
+      },
+      {
+        "section": "resources",
+        "reason": "disallowed_origin",
+        "count": 46
+      },
+      {
+        "section": "scripts",
+        "reason": "disallowed_origin",
+        "count": 11
+      },
+      {
+        "section": "storage_keys",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "output_directory": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/propiedades/scripts",
+  "analysis_input": {
+    "input_path": "/home/juanmamerodio/Desktop/NexoBow/.reports/rea/propiedades/scripts/files",
+    "format": "directory"
+  },
+  "scripts": [
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_0e6efca193a40be85d74e634550a9e83120596153f1638de9c8983a5ea77f728",
+        "frame_id": "9F537802B6BB9DD9ACDFB041B9F7A421",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.lufte.us/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-1-e098fbc531f93d0d2879f4ff3d34390de0264116a2e6b116c719f143b1d5b92a.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "c52c04dd2e2dd360f616f2eef0d2a5e44f9d62579690abbce75ae6e836f9a4dd",
+        "bytes": 2712,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_2397dd2232a6b1f25bb57cf3c44b60a16afd5158640cc77fd1e39afc38032df6",
+        "frame_id": "9F537802B6BB9DD9ACDFB041B9F7A421",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.lufte.us/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-2-6e04f3cdabddacad9b6430ed7e4cb81044ee2d4eea143944d84a62f2bc0b208b.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "9a37601d1f5a5f2fba3b000694d4bf5e035c606d5485dd94e2997cbe2efe5c26",
+        "bytes": 181,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_31beaceb187e0b85ac27a2a1c9bbe62449eaba8ff05fa07179187d7fb6547ebf",
+        "frame_id": "9F537802B6BB9DD9ACDFB041B9F7A421",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.lufte.us/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-3-5ec5ffb993783184c516e8016c035a1f912b5e3a449757cee377bd1ff5ab4186.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "08f0f267c526607345e17b1db6fe0b9d31ab88ab65e6136355edbad30b515e51",
+        "bytes": 390,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_39035089d690d993e74e837a3cd087b79dfe3bbbe3d48fd8c51ba9571dd9d257",
+        "frame_id": "9F537802B6BB9DD9ACDFB041B9F7A421",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.lufte.us/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-4-6c89a8fa66c4daff675a9c9acfb562dc509363ae1a6b4d4f45c600099cb4feb2.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "cb88fc4c8c6243e677a6af5a524b1008212600e91892b2e8d5ce602cb44dcd5b",
+        "bytes": 834,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_8b019b517870c48d93b0a7ca13456b60b7a5d178d7a0c5f7d3c64a3a318a94d6",
+        "frame_id": "9F537802B6BB9DD9ACDFB041B9F7A421",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.lufte.us/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-5-bd843d13e82e99004286e4dd0c46af2d5700a7765b8622743c3bdce7c46dd089.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "71c194f3815cf9ee15d628c321051fa5275fc9d22722000e15960e71c795acb4",
+        "bytes": 6057,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_8e1bbcf9df30aaa041c661e8d332f9a2ac92c9bc9cacdf93e4db6d86d4c3bbf2",
+        "frame_id": "9F537802B6BB9DD9ACDFB041B9F7A421",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.lufte.us/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-6-40de17666b2c7414334b72f5467a0895624b1c6680e179230fbe0ce17cdb7d01.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "3d2c5ab5abc395d227e7f816b1a207c416c75c4d72225ff06e906ea8b0868d6c",
+        "bytes": 505,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_9dd5d6b3807fe41df78e968599140415ed6c901f850186450d3deafcf705a197",
+        "frame_id": "9F537802B6BB9DD9ACDFB041B9F7A421",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.lufte.us/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-7-e8380138ad8b1f2fc922d46f5c64c35ca8866e159e180d83aedf95db155aa03e.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "81b0bed9b3efd6be1108c162fca50f3ef8fdd552e140142b99251359b610ac9f",
+        "bytes": 2203,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_a1fd24f2adf7e27b412129e15d9a343443bfbeaceb0ced55b3926a1ff60ef684",
+        "frame_id": "9F537802B6BB9DD9ACDFB041B9F7A421",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.lufte.us/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-8-462b15d83c59be9af16e095c3467a959a68eb959efb22073cb0269c21c7a4f64.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "e8dd94010f8ee6a5461a352d5a910d5bf9a6acf33a93f14feab194b8e429d447",
+        "bytes": 1012,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_a7cf1b820a0432f3226dfbdd86423c43af5daee68953046684258a7140414a0b",
+        "frame_id": "9F537802B6BB9DD9ACDFB041B9F7A421",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.lufte.us/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-9-71cd11ad82c0225b24ead5f6727da1b8717dff3de65c1b224a02021d38b18434.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "da23d27d228fb0f48152929386bac235c2d0ffbb8059cd0426f680d7368b0110",
+        "bytes": 530,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_b4a39b94ff76e4defc2463d267d37aea08f8e23303f542688157e33bd4599c44",
+        "frame_id": "9F537802B6BB9DD9ACDFB041B9F7A421",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.lufte.us/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-10-d642b763cb168ed8de3c9abfda8f7ed52e168f49e402901729e3f891039e7189.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "c2c34af46a203e438490929378386791ccd2c00ab9617264b864d528836e81ed",
+        "bytes": 891,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_c7783fefe2781997e7d82d9270130a72e8da3579afd503d2de97e18901ce9bf2",
+        "frame_id": "9F537802B6BB9DD9ACDFB041B9F7A421",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.lufte.us/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-11-87ad157751d5cb1720b1dd4e5b059d72de2b109c678e2763769e8c5425b74d88.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "144dcde755418b4d2006e026fe8399a2a420c1c353c12e09b9b78058a31c1c63",
+        "bytes": 1214,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_e239d2d60e7d7ceb3dc57b0746d0eb154f9371481fe54409370671d0dec145bf",
+        "frame_id": "9F537802B6BB9DD9ACDFB041B9F7A421",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.lufte.us/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-12-d7f2baf572de176d8c7f339204b811123688e1eaa78f36503e428fb6e2ddef26.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "9785a09878df72a70a190cb69b8b2be23cf3dd518c6d11ffbd283ca40667a499",
+        "bytes": 384,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_e83621e5b526841301ef2b867ea00be197dab7aaa5c8978def621fe8bdb06eb5",
+        "frame_id": "9F537802B6BB9DD9ACDFB041B9F7A421",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.lufte.us/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-13-ae90b81d387eb1bd4e2b5997587993fd1cfe270b0e91aec9c9149f8462ca4bc9.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "af37174a9b8036920bcf3c7fe3f439befa88237f84103c55617a5006ee8b4a5a",
+        "bytes": 1789,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    },
+    {
+      "source": {
+        "kind": "page-script",
+        "script_key": "scr_fd380f8c44d7aa4a120b29c3a18a3c24897ce473e17af802dabe9f347004ac81",
+        "frame_id": "9F537802B6BB9DD9ACDFB041B9F7A421",
+        "is_module": false,
+        "language": "JavaScript",
+        "source_map_url": null
+      },
+      "url": "https://www.lufte.us/",
+      "content": {
+        "state": "exported",
+        "relative_path": "isolated/source-14-d3e2d78fe8894d54e10141762a9aba75daa1207ff47698324ade8ecfb3969eea.js",
+        "layout": "isolated",
+        "layout_reason": "URL path is not an ordinary portable JavaScript module path.",
+        "sha256": "5996c526952f74cb2bf4d8c0bcf83cdd4db15d0c22fe22251ed8a0edf30b2328",
+        "bytes": 1244,
+        "media_type": "text/javascript",
+        "redacted": null,
+        "representation": "debugger-source-utf8"
+      }
+    }
+  ],
+  "limitations": [
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+    "Only script bytes retained in this capture are exported. Sources are not refetched or executed, and a response or Debugger source does not prove execution.",
+    "Ordinary unambiguous URL paths preserve relative module layouts by origin, including case-distinct spellings. Query variants, exact path collisions, file/directory prefixes, inline sources, and unrepresentable paths are isolated. A case-distinct pair is isolated only when the destination filesystem cannot store both spellings; the record names that pair. Browser module relationships of isolated paths remain unknown.",
+    "Local JavaScript analysis does not implement browser import maps, root-relative URL resolution, remote URL loading, or browser runtime behavior. It may strip import queries and fragments; isolated variants are not canonical targets.",
+    "Source-map declarations are retained as metadata. No source maps or missing dependencies are fetched or reconstructed.",
+    "Scenario response bytes preserve the output of Playwright's Response.body() API; any source-body provenance caveat from the capture is retained in this manifest. Debugger sources are the exposed text encoded as UTF-8. Redacted bytes are exported exactly as retained, and may no longer parse as JavaScript."
+  ]
+}

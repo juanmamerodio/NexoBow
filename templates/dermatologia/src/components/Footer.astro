@@ -20,7 +20,7 @@ const { prestador, footer } = CONTENT;
           </span>
         </div>
         <p class="text-xs sm:text-sm text-slate-400 max-w-md leading-relaxed">
-          {prestador.tagline}. Práctica clínica enfocada en el abordaje integral, diagnóstico diferencial ecográfico y tratamiento multimodal de pacientes con lipedema.
+          {footer.blurb || prestador.bio || `${prestador.tagline}. Práctica clínica enfocada en el abordaje integral y tratamiento personalizado.`}
         </p>
         <div class="text-xs text-slate-400 space-y-1">
           <div><span class="text-white font-medium">Matrícula:</span> {prestador.matricula}</div>
