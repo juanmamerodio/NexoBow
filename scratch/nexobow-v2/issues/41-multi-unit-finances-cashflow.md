@@ -4,11 +4,11 @@
 
 **Blocked by:** 39: Admin Shell, Supabase Auth & RLS Core Tracer Bullet.
 
-**Status:** ready-for-agent
+**Status:** completed
 
-- [ ] Crear migración SQL para tabla `financial_transactions` con enums (`business_unit_type`, `financial_flow_type`, `recurrence_type`, `currency_type`), relaciones opcionales y RLS estricto.
-- [ ] Desarrollar módulo de lógica contable pura en `web/src/lib/finances.ts` con funciones para balance mensual, cálculo de margen neto, conversión de divisa y filtros por unidad.
-- [ ] Construir componente `views/FinanceView.tsx` con selector de período mensual, tarjetas KPI (Ingresos Totales, Gastos Totales, Margen Neto %), gráfico de barras comparativo y tabla detallada.
-- [ ] Implementar modal/drawer interactivo para registrar nuevas transacciones con validación de inputs y selección de recurrencia.
-- [ ] Escribir suite de pruebas unitarias en `tests/admin-finances.test.mjs` validando la precisión de los cálculos, agregaciones por unidad y conversiones cambiarias.
-- [ ] Verificar que `npm test` pase 100% en verde y `npm run build` en `web/` compile sin errores.
+- [x] Crear migración SQL para tabla `financial_transactions` con enums (`business_unit_type`, `financial_flow_type`, `recurrence_type`, `currency_type`), relaciones opcionales y RLS estricto.
+- [x] Desarrollar módulo de lógica contable pura en `web/src/lib/finances.ts` con funciones para balance mensual, cálculo de margen neto, conversión de divisa y filtros por unidad.
+- [x] Construir componente `views/FinanceView.tsx` con selector de período mensual, tarjetas KPI (Ingresos Totales, Gastos Totales, Margen Neto %), gráfico de barras comparativo y tabla detallada.
+- [x] Implementar modal/drawer interactivo para registrar nuevas transacciones con validación de inputs y selección de recurrencia.
+- [x] Escribir suite de pruebas unitarias en `tests/admin-finances.test.mjs` validando la precisión de los cálculos, agregaciones por unidad y conversiones cambiarias.
+- [x] Verificar que `npm test` pase 100% en verde y `npm run build` en `web/` compile sin errores.

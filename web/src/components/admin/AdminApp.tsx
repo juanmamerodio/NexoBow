@@ -9,6 +9,7 @@ import {
 import { AdminLayout } from "./AdminLayout";
 import { LoginView } from "./LoginView";
 import { CrmView } from "./views/CrmView";
+import { FinanceView } from "./views/FinanceView";
 import {
   ShieldAlert,
   Activity,
@@ -182,6 +183,8 @@ export const AdminApp: React.FC = () => {
         <CockpitHomeView user={authorizedUser} onNavigate={navigate} />
       ) : currentPath === "/admin/crm" || currentPath === "/admin/crm/" ? (
         <CrmView onNavigate={navigate} />
+      ) : currentPath === "/admin/finances" || currentPath === "/admin/finances/" ? (
+        <FinanceView onNavigate={navigate} />
       ) : (
         <ModulePlaceholderView currentPath={currentPath} />
       )}
