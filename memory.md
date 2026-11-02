@@ -238,3 +238,9 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
     8. `21-gonzalez-roldan-nutri` (`"González Roldán"`, Belgrano) — `dermatologia@1.0.0` (`clinical-pure`)
     9. `22-daniela-ramunno-nutri` (`"Ramunno"`, Palermo) — `nutricionista@1.0.0` (`editorial-classic`)
     10. `23-mari-calcagno-nutri` (`"Calcagno"`, Palermo) — `clinica@2.0.0` (`architectural-prestige`)
+- [2026-11-02] **Ticket 39 Completado (`Frente E — Admin Shell, Supabase Auth & RLS Core Tracer Bullet`)**:
+  - **Isla React Aislada en Astro (`web/src/pages/admin/[...all].astro`)**: Montaje de SPA interactiva con `@astrojs/react` (`client:only="react"`) que genera rutas estáticas para los 6 submódulos administrativos, garantizando estrictamente **0 bytes de JS en cliente** en las landings públicas (`web/dist/index.html`).
+  - **Migración SQL y RLS Estricto (`supabase/migrations/20261102000000_admin_cockpit_init.sql`)**: Creación de tabla `public.admin_profiles`, función `is_admin_owner()` y políticas RLS restrictivas para `ADMIN_OWNER_EMAIL` (`juanma@nexobow.site`).
+  - **Seam de Autenticación & Cliente Supabase (`web/src/lib/supabase.ts`)**: Validación de email case-insensitive con trim, máquina de estado `resolveAdminRouteState` para enrutamiento protegido y fábrica resiliente `createSupabaseClient`.
+  - **Componentes UI Soft-Obsidian (`web/src/components/admin/`)**: Layout ejecutivo `AdminLayout.tsx` con sidebar colapsable, estado RLS en tiempo real, `LoginView.tsx` dual (Email/Password y Magic Link OTP) y router reactivo `AdminApp.tsx`.
+  - **Suite TDD (`tests/admin-auth-seam.test.mjs`)**: 7 pruebas unitarias y de aislamiento pasando al 100% en verde. Build de `web/` aprobado con código 0.

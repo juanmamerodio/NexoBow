@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@rive-app/canvas": "^2.45.0",
+    "@supabase/supabase-js": "^2.118.0",
     "@types/gsap": "^1.20.2",
     "@types/three": "^0.186.0",
     "gsap": "^3.15.0",

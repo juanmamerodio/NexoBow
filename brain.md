@@ -295,3 +295,10 @@ NexoBow se optimiza para **Costo Cero de Infraestructura**:
     2. **Embudo para Infoproducto** (`https://juanmamerodio.github.io`): Embudo de conversión y ventas para infoproductos digitales.
     3. **Esencia Técnica** (`https://esenciatecnica.vercel.app`): E-commerce educativo con catálogo técnico.
   - **Verificación & 0-JS**: Compilación exitosa en Astro SSG con 0 scripts clientes en `web/dist/`, suite E2E ampliada en `tests/web-redesign.test.mjs` con 6 tests verdes, y auditoría visual `impeccable detect` aprobada sin animaciones decorativas engañosas.
+- [2026-11-02] **Frente E — Admin Shell, Supabase Auth & RLS Core Tracer Bullet (Ticket 39)**:
+  - **Arquitectura de Isla React Aislada (`web/src/pages/admin/[...all].astro`)**: Enrutador SPA cliente montado con `@astrojs/react` (`client:only="react"`). Genera rutas estáticas para los 6 submódulos administrativos mientras preserva el estándar innegociable de 0 JS en cliente en la landing pública (`web/dist/index.html`).
+  - **Migración SQL y Políticas RLS Restrictivas (`supabase/migrations/20261102000000_admin_cockpit_init.sql`)**: Creación de tabla `public.admin_profiles`, función `is_admin_owner()` y políticas RLS asegurando que solo el `ADMIN_OWNER_EMAIL` (`juanma@nexobow.site`) pueda consultar y mutar registros.
+  - **Seam de Autenticación & Máquina de Estados (`web/src/lib/supabase.ts`)**: Lógica pura para resolución de rutas protegidas (`resolveAdminRouteState`), validación estricta de correo de administración (`isAuthorizedAdminEmail`) y factoría tipada `createSupabaseClient`.
+  - **Componentes UI Ejecutivos Soft-Obsidian (`web/src/components/admin/`)**: `AdminLayout.tsx` (sidebar colapsable, indicador RLS y sesión activa), `LoginView.tsx` (soporte dual Email/Password y Magic Link OTP) y `AdminApp.tsx` (orquestador del estado de autenticación y vistas del cockpit).
+  - **Verificación TDD**: 7 pruebas en `tests/admin-auth-seam.test.mjs`, build Astro código 0 y 57 tests globales 100% pasando en verde.
+

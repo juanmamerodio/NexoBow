@@ -1,0 +1,41 @@
+---
+// web/src/pages/admin/[...all].astro — Isla React Aislada para el Cockpit de Administración
+import "../../styles/global.css";
+import { AdminApp } from "../../components/admin/AdminApp";
+
+export function getStaticPaths() {
+  return [
+    { params: { all: undefined } },
+    { params: { all: "login" } },
+    { params: { all: "crm" } },
+    { params: { all: "finances" } },
+    { params: { all: "calendar" } },
+    { params: { all: "alaynow" } },
+    { params: { all: "habits" } },
+    { params: { all: "settings" } },
+  ];
+}
+---
+
+<!doctype html>
+<html lang="es-AR" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NexoBow Cockpit | Panel de Control Ejecutivo</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="theme-color" content="#040607" />
+    <meta name="color-scheme" content="dark" />
+  </head>
+  <body class="bg-[#040607] text-[#F8F6FF] min-h-screen selection:bg-[#BF40FA] selection:text-[#F8F6FF] antialiased">
+    <div id="admin-root">
+      <AdminApp client:only="react" />
+    </div>
+  </body>
+</html>
