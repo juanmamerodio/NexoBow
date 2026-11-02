@@ -56,7 +56,7 @@
 
 ## Frente E — Panel de Administración General (`/admin` Cockpit Supabase)
 - [x] [39: Admin Shell, Supabase Auth & RLS Core Tracer Bullet](./scratch/nexobow-v2/issues/39-admin-shell-supabase-auth.md) (`done`)
-- [ ] [40: CRM & Prospección: Sustitución de Sheets y Adaptador Supabase](./scratch/nexobow-v2/issues/40-crm-leads-supabase-migration.md) (`ready-for-agent`)
+- [x] [40: CRM & Prospección: Sustitución de Sheets y Adaptador Supabase](./scratch/nexobow-v2/issues/40-crm-leads-supabase-migration.md) (`done`)
 - [ ] [41: Finanzas Multi-Unidad y Cashflow Consolidado](./scratch/nexobow-v2/issues/41-multi-unit-finances-cashflow.md) (`ready-for-agent`)
 - [ ] [42: Horarios & Time-Blocking con Sincronización Calendar](./scratch/nexobow-v2/issues/42-time-blocking-calendar-schedule.md) (`ready-for-agent`)
 - [ ] [43: Videos Alaynow: Pipeline Editorial de Contenido YouTube](./scratch/nexobow-v2/issues/43-alaynow-youtube-video-pipeline.md) (`ready-for-agent`)

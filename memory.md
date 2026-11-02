@@ -244,3 +244,10 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
   - **Seam de Autenticación & Cliente Supabase (`web/src/lib/supabase.ts`)**: Validación de email case-insensitive con trim, máquina de estado `resolveAdminRouteState` para enrutamiento protegido y fábrica resiliente `createSupabaseClient`.
   - **Componentes UI Soft-Obsidian (`web/src/components/admin/`)**: Layout ejecutivo `AdminLayout.tsx` con sidebar colapsable, estado RLS en tiempo real, `LoginView.tsx` dual (Email/Password y Magic Link OTP) y router reactivo `AdminApp.tsx`.
   - **Suite TDD (`tests/admin-auth-seam.test.mjs`)**: 7 pruebas unitarias y de aislamiento pasando al 100% en verde. Build de `web/` aprobado con código 0.
+- [2026-11-02] **Ticket 40 Completado (`Frente E — CRM & Prospección: Sustitución de Sheets y Adaptador Supabase`)**:
+  - **Migración SQL (`supabase/migrations/20261102010000_crm_leads_init.sql`)**: Tabla relacional `public.leads` con enums `lead_funnel_status` (6 etapas: `1. Prospecto Identificado` a `6. Descartado`) y `lead_response_status`, RLS estricto anclado a `is_admin_owner()`, índices y ciclo TTL de 7 días.
+  - **Adaptador `createSupabaseLeadStore` (`scripts/sheets-sync.mjs`)**: Sustitución transparente de Sheets con soporte dual para el esquema canónico de 18 columnas y entidades relacionales completas, deduplicación, cálculo correlativo y extensión de TTL.
+  - **Script Idempotente de Migración (`scripts/migrate-sheets-to-supabase.mjs`)**: Mapeo y enriquecimiento desde Sheets (`fetchSheetRows`) y fichas locales (`clients/*.md`), preservando IDs enteros de Columna B.
+  - **Vista UI `CrmView.tsx` (`web/src/components/admin/views/CrmView.tsx`)**: Conmutador Kanban de 6 etapas / Data Table filtrable, drawer lateral de edición rápida `LeadDrawer`, badges de urgencia TTL (<48hs) y acciones de 1 clic (WhatsApp voseo, preview web oficial y renovación de TTL +7d).
+  - **Suite TDD & Build**: 7 pruebas en `tests/supabase-lead-store.test.mjs`, 70 pruebas globales 100% en verde y compilación estática de Astro con 0 JS cliente en la landing pública.
+

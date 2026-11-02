@@ -4,12 +4,12 @@
 
 **Blocked by:** 39: Admin Shell, Supabase Auth & RLS Core Tracer Bullet.
 
-**Status:** ready-for-agent
+**Status:** completed
 
-- [ ] Crear migración SQL para tabla `leads` con tipos enumerados `lead_funnel_status` y `lead_response_status`, índices y políticas RLS.
-- [ ] Implementar script idempotente `scripts/migrate-sheets-to-supabase.mjs` mapeando las 18 columnas canónicas y conservando los IDs enteros de Columna B.
-- [ ] Implementar adaptador `createSupabaseLeadStore` en `scripts/sheets-sync.mjs` cumpliendo la interfaz canónica de `LeadStore`.
-- [ ] Construir vista React `views/CrmView.tsx` con conmutador dual Kanban (6 etapas) y Data Table filtrable con badges de estado y TTL.
-- [ ] Implementar drawer lateral de edición rápida de prospecto y botones de acción (WhatsApp con voseo prearmado, apertura de preview web y renovación de TTL).
-- [ ] Escribir tests unitarios y de integración en `tests/supabase-lead-store.test.mjs` validando operaciones CRUD, cálculo de correlatividad y migración de datos.
-- [ ] Verificar que `npm test` pase 100% en verde y `npm run build` en `web/` compile sin errores.
+- [x] Crear migración SQL para tabla `leads` con tipos enumerados `lead_funnel_status` y `lead_response_status`, índices y políticas RLS.
+- [x] Implementar script idempotente `scripts/migrate-sheets-to-supabase.mjs` mapeando las 18 columnas canónicas y conservando los IDs enteros de Columna B.
+- [x] Implementar adaptador `createSupabaseLeadStore` en `scripts/sheets-sync.mjs` cumpliendo la interfaz canónica de `LeadStore`.
+- [x] Construir vista React `views/CrmView.tsx` con conmutador dual Kanban (6 etapas) y Data Table filtrable con badges de estado y TTL.
+- [x] Implementar drawer lateral de edición rápida de prospecto y botones de acción (WhatsApp con voseo prearmado, apertura de preview web y renovación de TTL).
+- [x] Escribir tests unitarios y de integración en `tests/supabase-lead-store.test.mjs` validando operaciones CRUD, cálculo de correlatividad y migración de datos.
+- [x] Verificar que `npm test` pase 100% en verde y `npm run build` en `web/` compile sin errores.

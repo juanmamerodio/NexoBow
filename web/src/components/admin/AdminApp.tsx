@@ -8,6 +8,7 @@ import {
 } from "../../lib/supabase";
 import { AdminLayout } from "./AdminLayout";
 import { LoginView } from "./LoginView";
+import { CrmView } from "./views/CrmView";
 import {
   ShieldAlert,
   Activity,
@@ -179,6 +180,8 @@ export const AdminApp: React.FC = () => {
       {/* Contenido según la sub-ruta */}
       {currentPath === "/admin" || currentPath === "/admin/" ? (
         <CockpitHomeView user={authorizedUser} onNavigate={navigate} />
+      ) : currentPath === "/admin/crm" || currentPath === "/admin/crm/" ? (
+        <CrmView onNavigate={navigate} />
       ) : (
         <ModulePlaceholderView currentPath={currentPath} />
       )}

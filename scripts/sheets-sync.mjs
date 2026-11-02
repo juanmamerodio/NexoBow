@@ -466,6 +466,455 @@ export function createInMemoryLeadStore({ initialRows = [], initialKpiRows = [] 
 }
 
 /**
- * Instancia por defecto conectada al Google Sheet de producción.
+ * Infiere o normaliza la ciudad a partir del texto de ubicación.
  */
-export const defaultLeadStore = createSheetsAdapter();
+export function extractCityFromLocation(loc = '') {
+  const clean = String(loc || '').toLowerCase();
+  if (clean.includes('campana')) return 'Campana';
+  if (clean.includes('zarate') || clean.includes('zárate')) return 'Zárate';
+  if (clean.includes('caballito')) return 'Caballito';
+  if (clean.includes('belgrano')) return 'Belgrano';
+  if (clean.includes('palermo')) return 'Palermo';
+  if (clean.includes('recoleta')) return 'Recoleta';
+  if (clean.includes('san isidro')) return 'San Isidro';
+  if (clean.includes('pilar')) return 'Pilar';
+  if (clean.includes('vicente lopez') || clean.includes('vicente lópez')) return 'Vicente López';
+  if (clean.includes('caba') || clean.includes('buenos aires') || clean.includes('capital federal')) return 'CABA';
+  return 'Buenos Aires';
+}
+
+/**
+ * Normaliza el estado de embudo a uno de los 6 valores de lead_funnel_status.
+ */
+export function normalizeLeadFunnelStatus(rawStatus = '') {
+  const clean = String(rawStatus || '').trim().toLowerCase();
+  if (clean.includes('descartad')) return '6. Descartado';
+  if (clean.includes('cierre') || clean.includes('negociac') || clean.includes('ganado') || clean.includes('activo') || clean.includes('cerrado')) return '5. Negociación / Cierre';
+  if (clean.includes('propuesta')) return '4. Propuesta Enviada';
+  if (clean.includes('reuni')) return '3. Reunión Agendada';
+  if (clean.includes('contactad') || clean.includes('respond')) return '2. Contactado';
+  return '1. Prospecto Identificado';
+}
+
+/**
+ * Normaliza el estado de respuesta a uno de los valores de lead_response_status.
+ */
+export function normalizeLeadResponseStatus(rawResponse = '') {
+  const clean = String(rawResponse || '').trim().toLowerCase();
+  if (clean.includes('esperando')) return 'Esperando Respuesta';
+  if (clean.includes('interesado') && !clean.includes('no')) return 'Interesado';
+  if (clean.includes('no interesad') || clean.includes('rechazad')) return 'No Interesado';
+  if (clean.includes('respond')) return 'Respondio';
+  return 'Sin Contactar';
+}
+
+/**
+ * Mapea una fila de 18 columnas canónicas al objeto de entidad relacional Lead para Supabase.
+ */
+export function safeIsoDate(val, fallback = new Date().toISOString()) {
+  if (!val) return fallback;
+  try {
+    const str = String(val).trim();
+    const dmyMatch = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+    let parsed;
+    if (dmyMatch) {
+      parsed = new Date(`${dmyMatch[3]}-${dmyMatch[2].padStart(2, '0')}-${dmyMatch[1].padStart(2, '0')}T12:00:00Z`);
+    } else if (str.length === 10 && str.includes('-')) {
+      parsed = new Date(`${str}T12:00:00Z`);
+    } else {
+      parsed = new Date(str);
+    }
+    if (!Number.isNaN(parsed.getTime())) {
+      return parsed.toISOString();
+    }
+  } catch {
+    // fallback
+  }
+  return fallback;
+}
+
+/**
+ * Mapea una fila de 18 columnas canónicas al objeto de entidad relacional Lead para Supabase.
+ */
+export function mapSheetRowToLeadEntity(row = []) {
+  if (!Array.isArray(row) || row.length === 0) return null;
+  const id = Number(String(row[0] ?? '').trim());
+  if (!Number.isFinite(id) || id <= 0) return null;
+
+  const name = String(row[1] || 'Profesional').trim();
+  const niche = String(row[2] || 'nutricionista').trim();
+  const contact_channel = String(row[3] || 'WhatsApp').trim();
+  const whatsapp_link = String(row[4] || '').trim();
+  const demo_url = String(row[5] || '').trim();
+  const social_link = String(row[6] || '').trim();
+  const location = String(row[7] || 'Buenos Aires').trim();
+  const funnel_status = normalizeLeadFunnelStatus(row[8]);
+  const first_contact_date = row[9] ? String(row[9]).trim() : new Date().toISOString().split('T')[0];
+  const last_contact_date = row[10] ? String(row[10]).trim() : null;
+  const response_status = normalizeLeadResponseStatus(row[11]);
+  const meeting_booked = Boolean(
+    row[12] === true ||
+    row[12] === 'Sí' ||
+    row[12] === 'Si' ||
+    String(row[12]).toLowerCase() === 'sí' ||
+    String(row[12]).toLowerCase() === 'si'
+  );
+  const meeting_date = row[13] ? String(row[13]).trim() : null;
+  const potential_value = String(row[14] || '$189.999 ARS').trim();
+  const business_status = String(row[15] || 'En Proceso').trim();
+  const notes = String(row[16] || '').trim();
+  const phone = normalizePhone(row[17] || '');
+
+  let slug = '';
+  if (demo_url) {
+    const m = demo_url.match(/\/([^/?#]+)\/?$/);
+    if (m && m[1]) slug = m[1];
+  }
+  if (!slug) {
+    slug = buildCorrelativeSlug({ id, displayName: name, nicho: niche });
+  }
+
+  const city = extractCityFromLocation(location);
+  const created_at = safeIsoDate(first_contact_date);
+  const last_activity_at = last_contact_date ? safeIsoDate(last_contact_date) : created_at;
+
+  const expDate = new Date(last_activity_at);
+  expDate.setDate(expDate.getDate() + 7);
+  const expires_at = expDate.toISOString();
+
+  return {
+    id,
+    slug,
+    name,
+    niche,
+    contact_channel,
+    whatsapp_link,
+    demo_url,
+    social_link,
+    location,
+    city,
+    funnel_status,
+    first_contact_date,
+    last_contact_date,
+    response_status,
+    meeting_booked,
+    meeting_date,
+    potential_value,
+    business_status,
+    notes,
+    phone,
+    created_at,
+    last_activity_at,
+    expires_at,
+    metadata: {}
+  };
+}
+
+/**
+ * Mapea una entidad relacional de Supabase a la tupla de 18 columnas canónicas.
+ */
+export function mapLeadEntityToSheetRow(lead = {}) {
+  const normPhone = normalizePhone(lead.phone || lead.nationalPhoneNumber || lead.telefono || lead.whatsapp || '');
+  return [
+    lead.id ?? 0,
+    lead.name || lead.displayName || 'Profesional',
+    lead.niche || lead.rubro || 'nutricionista',
+    lead.contact_channel || 'WhatsApp',
+    lead.whatsapp_link || '',
+    lead.demo_url || (lead.slug ? buildPreviewUrl(lead.slug) : ''),
+    lead.social_link || lead.instagram || '',
+    lead.location || lead.formattedAddress || lead.direccion || 'Buenos Aires',
+    lead.funnel_status || '1. Prospecto Identificado',
+    lead.first_contact_date || new Date().toISOString().split('T')[0],
+    lead.last_contact_date || '',
+    lead.response_status || 'Sin Contactar',
+    lead.meeting_booked ? 'Sí' : 'No',
+    lead.meeting_date || '',
+    lead.potential_value || '$189.999 ARS',
+    lead.business_status || 'En Proceso',
+    lead.notes || '',
+    normPhone
+  ];
+}
+
+/**
+ * Adaptador LeadStore respaldado por Supabase relacional (Ticket 40).
+ * Provee compatibilidad transparente con la interfaz LeadStore y operaciones nativas CRUD + TTL.
+ */
+export function createSupabaseLeadStore({
+  client = null,
+  fallbackStore = null,
+  initialRows = [],
+  initialLeads = []
+} = {}) {
+  const leadsMap = new Map();
+
+  for (const l of initialLeads) {
+    if (l && l.id) leadsMap.set(Number(l.id), { ...l });
+  }
+  for (const r of initialRows) {
+    const entity = mapSheetRowToLeadEntity(r);
+    if (entity && entity.id) leadsMap.set(entity.id, entity);
+  }
+
+  function getSortedLeads() {
+    return Array.from(leadsMap.values()).sort((a, b) => a.id - b.id);
+  }
+
+  function asRows() {
+    return getSortedLeads().map(mapLeadEntityToSheetRow);
+  }
+
+  return {
+    isSupabaseStore: true,
+    client,
+
+    readRows() {
+      if (leadsMap.size === 0 && fallbackStore) {
+        const rows = fallbackStore.readRows();
+        for (const r of rows) {
+          const entity = mapSheetRowToLeadEntity(r);
+          if (entity && entity.id) leadsMap.set(entity.id, entity);
+        }
+      }
+      return asRows();
+    },
+
+    readKpiRows() {
+      if (fallbackStore) return fallbackStore.readKpiRows();
+      return [];
+    },
+
+    appendRow(row) {
+      const entity = mapSheetRowToLeadEntity(row);
+      if (entity) {
+        leadsMap.set(entity.id, entity);
+        if (client) {
+          client.from('leads').upsert(entity).catch?.(() => {});
+        }
+      }
+    },
+
+    updateCell(cellA1, value, rowIndex, colIndex) {
+      const rows = asRows();
+      if (rowIndex !== undefined && colIndex !== undefined && rows[rowIndex]) {
+        rows[rowIndex][colIndex] = value;
+        const updatedEntity = mapSheetRowToLeadEntity(rows[rowIndex]);
+        if (updatedEntity && updatedEntity.id) {
+          leadsMap.set(updatedEntity.id, updatedEntity);
+          if (client) {
+            client.from('leads').upsert(updatedEntity).catch?.(() => {});
+          }
+        }
+      }
+    },
+
+    getExistingKeys() {
+      const keys = [];
+      for (const lead of leadsMap.values()) {
+        if (lead.name) keys.push(lead.name);
+        if (lead.phone) keys.push(lead.phone);
+      }
+      if (keys.length === 0 && fallbackStore) {
+        return fallbackStore.getExistingKeys();
+      }
+      return keys;
+    },
+
+    getNextId() {
+      let maxId = 0;
+      for (const id of leadsMap.keys()) {
+        if (id > maxId) maxId = id;
+      }
+      if (maxId === 0 && fallbackStore) {
+        return fallbackStore.getNextId();
+      }
+      return maxId + 1;
+    },
+
+    appendLead(lead = {}, optionsOrPitch = null) {
+      const isOptionsObj =
+        optionsOrPitch !== null && typeof optionsOrPitch === 'object' && !Array.isArray(optionsOrPitch);
+      const customPitchTemplate = isOptionsObj ? optionsOrPitch.pitchOverride || null : optionsOrPitch;
+      const expectedId = isOptionsObj ? optionsOrPitch.expectedId : undefined;
+      const abortOnCollision = Boolean(
+        lead.abortOnCollision || (isOptionsObj && optionsOrPitch.abortOnCollision)
+      );
+
+      let requestedId = Number(expectedId ?? lead.id ?? lead.sheet_id);
+      let collisionResolved = false;
+
+      if (!Number.isFinite(requestedId) || requestedId <= 0) {
+        requestedId = this.getNextId();
+      } else if (leadsMap.has(requestedId)) {
+        if (abortOnCollision) {
+          throw new Error(`Colisión de ID en tabla leads: el ID #${requestedId} ya existe.`);
+        }
+        requestedId = this.getNextId();
+        collisionResolved = true;
+      }
+
+      const slug =
+        !collisionResolved && lead.slug
+          ? lead.slug
+          : buildCorrelativeSlug({
+              id: requestedId,
+              displayName: lead.displayName || lead.nombre || lead.name || '',
+              nicho: lead.nicho || lead.niche || lead.rubro || 'nutricionista'
+            });
+
+      const row = formatLeadToSheetRow({ ...lead, slug }, requestedId, customPitchTemplate);
+      const entity = mapSheetRowToLeadEntity(row);
+      leadsMap.set(requestedId, entity);
+
+      if (client) {
+        client.from('leads').upsert(entity).catch?.(() => {});
+      }
+
+      return {
+        id: requestedId,
+        slug,
+        row,
+        collisionResolved,
+        collisionRetried: collisionResolved
+      };
+    },
+
+    updatePreviewUrl({ sheetId, slug, previewUrl } = {}) {
+      const cleanSlug = String(slug || '').trim().replace(/^\/+|\/+$/g, '');
+      const targetUrl = previewUrl || (cleanSlug ? buildPreviewUrl(cleanSlug) : '');
+      if (!targetUrl) return { updated: false, reason: 'missing-url' };
+
+      const targetId = Number(sheetId);
+      let foundEntity = null;
+
+      for (const entity of leadsMap.values()) {
+        if ((Number.isFinite(targetId) && targetId > 0 && entity.id === targetId) || (cleanSlug && entity.slug === cleanSlug)) {
+          foundEntity = entity;
+          break;
+        }
+      }
+
+      if (!foundEntity) {
+        if (fallbackStore) {
+          return fallbackStore.updatePreviewUrl({ sheetId, slug, previewUrl: targetUrl });
+        }
+        return { updated: false, reason: 'not-found' };
+      }
+
+      if (foundEntity.demo_url === targetUrl) {
+        return { updated: false, reason: 'unchanged', id: foundEntity.id, previewUrl: targetUrl };
+      }
+
+      foundEntity.demo_url = targetUrl;
+      foundEntity.last_activity_at = new Date().toISOString();
+      leadsMap.set(foundEntity.id, foundEntity);
+
+      if (client) {
+        client.from('leads').update({
+          demo_url: targetUrl,
+          last_activity_at: foundEntity.last_activity_at
+        }).eq('id', foundEntity.id).catch?.(() => {});
+      }
+
+      return { updated: true, id: foundEntity.id, previewUrl: targetUrl };
+    },
+
+    listLeads({ filter = null, sortBy = 'id', ascending = true } = {}) {
+      let leads = getSortedLeads();
+      if (filter && typeof filter === 'function') {
+        leads = leads.filter(filter);
+      }
+      if (sortBy) {
+        leads.sort((a, b) => {
+          const valA = a[sortBy] ?? '';
+          const valB = b[sortBy] ?? '';
+          if (valA < valB) return ascending ? -1 : 1;
+          if (valA > valB) return ascending ? 1 : -1;
+          return 0;
+        });
+      }
+      return leads;
+    },
+
+    getLeadById(id) {
+      return leadsMap.get(Number(id)) || null;
+    },
+
+    getLeadBySlug(slug) {
+      const cleanSlug = String(slug || '').trim();
+      for (const lead of leadsMap.values()) {
+        if (lead.slug === cleanSlug) return lead;
+      }
+      return null;
+    },
+
+    updateLead(id, updates = {}) {
+      const numId = Number(id);
+      const existing = leadsMap.get(numId);
+      if (!existing) return null;
+
+      const updated = {
+        ...existing,
+        ...updates,
+        id: numId,
+        updated_at: new Date().toISOString()
+      };
+      leadsMap.set(numId, updated);
+
+      if (client) {
+        client.from('leads').update(updated).eq('id', numId).catch?.(() => {});
+      }
+
+      return updated;
+    },
+
+    renewLeadTtl(id, days = 7) {
+      const numId = Number(id);
+      const existing = leadsMap.get(numId);
+      if (!existing) return null;
+
+      const now = new Date();
+      const baseExpires = existing.expires_at ? new Date(existing.expires_at) : now;
+      const baseTime = Number.isNaN(baseExpires.getTime()) || baseExpires < now ? now : baseExpires;
+      const newExpires = new Date(baseTime);
+      newExpires.setDate(newExpires.getDate() + Number(days || 7));
+
+      const updated = {
+        ...existing,
+        last_activity_at: now.toISOString(),
+        expires_at: newExpires.toISOString(),
+        updated_at: now.toISOString()
+      };
+      leadsMap.set(numId, updated);
+
+      if (client) {
+        client.from('leads').update({
+          last_activity_at: updated.last_activity_at,
+          expires_at: updated.expires_at,
+          updated_at: updated.updated_at
+        }).eq('id', numId).catch?.(() => {});
+      }
+
+      return updated;
+    },
+
+    deleteLead(id) {
+      const numId = Number(id);
+      const existed = leadsMap.delete(numId);
+      if (client && existed) {
+        client.from('leads').delete().eq('id', numId).catch?.(() => {});
+      }
+      return existed;
+    }
+  };
+}
+
+/**
+ * Instancia por defecto conectada a Google Sheets o Supabase según configuración.
+ */
+export const defaultLeadStore =
+  process.env.USE_SUPABASE_LEAD_STORE === 'true'
+    ? createSupabaseLeadStore({ fallbackStore: createSheetsAdapter() })
+    : createSheetsAdapter();
+
