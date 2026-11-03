@@ -10,6 +10,7 @@ import { AdminLayout } from "./AdminLayout";
 import { LoginView } from "./LoginView";
 import { CrmView } from "./views/CrmView";
 import { FinanceView } from "./views/FinanceView";
+import { ScheduleView } from "./views/ScheduleView";
 import {
   ShieldAlert,
   Activity,
@@ -185,6 +186,8 @@ export const AdminApp: React.FC = () => {
         <CrmView onNavigate={navigate} />
       ) : currentPath === "/admin/finances" || currentPath === "/admin/finances/" ? (
         <FinanceView onNavigate={navigate} />
+      ) : currentPath === "/admin/calendar" || currentPath === "/admin/calendar/" ? (
+        <ScheduleView onNavigate={navigate} />
       ) : (
         <ModulePlaceholderView currentPath={currentPath} />
       )}
