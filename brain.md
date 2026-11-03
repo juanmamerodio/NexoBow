@@ -317,6 +317,13 @@ NexoBow se optimiza para **Costo Cero de Infraestructura**:
   - **Vista UI `ScheduleView.tsx` (`web/src/components/admin/views/ScheduleView.tsx`)**: Matriz horaria semanal (Lunes a Domingo), tarjetas de bloques codificadas por color, toggle de cumplimiento instantáneo, barra visual de distribución de foco, modal de creación/edición con alerta de solapamiento en vivo y botón de sincronización de Google Calendar.
   - **Enrutamiento Admin**: Integrado en `web/src/components/admin/AdminApp.tsx` bajo la ruta `/admin/calendar` y re-export en `ScheduleView.tsx`.
   - **Verificación TDD & Build**: 8 pruebas en `tests/admin-schedule.test.mjs`, 85 tests de la suite completa 100% en verde, build estático de Astro código 0 y 0 scripts en la landing pública de `web/`.
+- [2026-11-02] **Frente E — Videos Alaynow: Pipeline Editorial de Contenido YouTube (Ticket 43)**:
+  - **Migración SQL (`supabase/migrations/20261102040000_alaynow_videos_init.sql`)**: Creación de tabla `public.alaynow_videos` con enum `video_production_stage` (6 etapas: `idea`, `guion`, `grabacion`, `edicion`, `programado`, `publicado`), columnas para enlaces de producción (`script_url`, `thumbnail_url`, `video_url`), patrocinios comerciales (`has_sponsor`, `sponsor_name`, `sponsor_fee`, `is_sponsor_paid`), métricas post-publicación (`views_count`, `ctr_percent`, `likes_count`, `comments_count`), índices y RLS restrictivo anclado en `is_admin_owner()`.
+  - **Lógica de Dominio Audiovisual (`web/src/lib/videos.ts`)**: Validación de etapas y transiciones (`isValidVideoStage`, `getNextStage`, `getPreviousStage`), validación estricta de contratos, cálculo de KPIs del pipeline (`computeVideoPipelineKpis`), ingresos por patrocinio en USD/ARS (`calculateSponsorRevenue`), formateo de métricas (`formatViewsCount`, `formatCtrPercent`) y repositorio Supabase con fallback a mock offline.
+  - **Componente Visual `VideosView.tsx` (`web/src/components/admin/views/VideosView.tsx`)**: Tablero Kanban interactivo con 6 columnas temáticas, tarjetas con badges de sponsor, enlaces directos a guiones y YouTube, modal completo de creación/edición, modal rápido de métricas post-lanzamiento y barra superior de KPIs ejecutivos.
+  - **Enrutamiento Admin**: Integrado en `web/src/components/admin/AdminApp.tsx` bajo la ruta `/admin/alaynow` y re-export de conveniencia en `VideosView.tsx`.
+  - **Verificación TDD & Build**: 8 pruebas en `tests/admin-videos.test.mjs`, 93 tests de la suite completa 100% en verde, build estático de Astro código 0 y 0 scripts en la landing pública de `web/`.
+
 
 
 

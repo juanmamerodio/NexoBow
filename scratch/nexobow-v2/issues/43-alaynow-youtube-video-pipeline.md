@@ -4,11 +4,11 @@
 
 **Blocked by:** 39: Admin Shell, Supabase Auth & RLS Core Tracer Bullet.
 
-**Status:** ready-for-agent
+**Status:** completed
 
-- [ ] Crear migración SQL para tabla `alaynow_videos` con enum `video_production_stage`, campos de sponsor, enlaces de producción, métricas post-lanzamiento y RLS.
-- [ ] Desarrollar lógica del pipeline audiovisual en `web/src/lib/videos.ts` con validación de transiciones de etapa, cálculo de ingresos por patrocinio y agregación de métricas.
-- [ ] Construir componente `views/VideosView.tsx` con tablero Kanban interactivo, tarjetas de contenido con badges de sponsor, modal/drawer de edición detallada y enlaces directos a recursos de producción.
-- [ ] Implementar inputs rápidos para actualizar métricas de rendimiento (vistas y CTR %) una vez publicado el video.
-- [ ] Escribir suite de pruebas unitarias en `tests/admin-videos.test.mjs` validando transiciones de estado, cálculo de ingresos y persistencia de datos.
-- [ ] Verificar que `npm test` pase 100% en verde y `npm run build` en `web/` compile sin errores.
+- [x] Crear migración SQL para tabla `alaynow_videos` con enum `video_production_stage`, campos de sponsor, enlaces de producción, métricas post-lanzamiento y RLS.
+- [x] Desarrollar lógica del pipeline audiovisual en `web/src/lib/videos.ts` con validación de transiciones de etapa, cálculo de ingresos por patrocinio y agregación de métricas.
+- [x] Construir componente `views/VideosView.tsx` con tablero Kanban interactivo, tarjetas de contenido con badges de sponsor, modal/drawer de edición detallada y enlaces directos a recursos de producción.
+- [x] Implementar inputs rápidos para actualizar métricas de rendimiento (vistas y CTR %) una vez publicado el video.
+- [x] Escribir suite de pruebas unitarias en `tests/admin-videos.test.mjs` validando transiciones de estado, cálculo de ingresos y persistencia de datos.
+- [x] Verificar que `npm test` pase 100% en verde y `npm run build` en `web/` compile sin errores.

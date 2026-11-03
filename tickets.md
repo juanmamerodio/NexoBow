@@ -59,7 +59,7 @@
 - [x] [40: CRM & Prospección: Sustitución de Sheets y Adaptador Supabase](./scratch/nexobow-v2/issues/40-crm-leads-supabase-migration.md) (`done`)
 - [x] [41: Finanzas Multi-Unidad y Cashflow Consolidado](./scratch/nexobow-v2/issues/41-multi-unit-finances-cashflow.md) (`done`)
 - [x] [42: Horarios & Time-Blocking con Sincronización Calendar](./scratch/nexobow-v2/issues/42-time-blocking-calendar-schedule.md) (`done`)
-- [ ] [43: Videos Alaynow: Pipeline Editorial de Contenido YouTube](./scratch/nexobow-v2/issues/43-alaynow-youtube-video-pipeline.md) (`ready-for-agent`)
+- [x] [43: Videos Alaynow: Pipeline Editorial de Contenido YouTube](./scratch/nexobow-v2/issues/43-alaynow-youtube-video-pipeline.md) (`done`)
 - [ ] [44: Hábitos & Disciplina: Heatmap de Consistencia y Rachas](./scratch/nexobow-v2/issues/44-habits-discipline-streak-heatmap.md) (`ready-for-agent`)
 - [ ] [45: Cockpit Diario (Home): Resumen Ejecutivo y Alertas Cruzadas](./scratch/nexobow-v2/issues/45-daily-cockpit-executive-dashboard.md) (`ready-for-agent`)
 - [ ] [46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS](./scratch/nexobow-v2/issues/46-e2e-integration-settings-0js-audit.md) (`ready-for-agent`)
