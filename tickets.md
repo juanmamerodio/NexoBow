@@ -60,7 +60,7 @@
 - [x] [41: Finanzas Multi-Unidad y Cashflow Consolidado](./scratch/nexobow-v2/issues/41-multi-unit-finances-cashflow.md) (`done`)
 - [x] [42: Horarios & Time-Blocking con Sincronización Calendar](./scratch/nexobow-v2/issues/42-time-blocking-calendar-schedule.md) (`done`)
 - [x] [43: Videos Alaynow: Pipeline Editorial de Contenido YouTube](./scratch/nexobow-v2/issues/43-alaynow-youtube-video-pipeline.md) (`done`)
-- [ ] [44: Hábitos & Disciplina: Heatmap de Consistencia y Rachas](./scratch/nexobow-v2/issues/44-habits-discipline-streak-heatmap.md) (`ready-for-agent`)
-- [ ] [45: Cockpit Diario (Home): Resumen Ejecutivo y Alertas Cruzadas](./scratch/nexobow-v2/issues/45-daily-cockpit-executive-dashboard.md) (`ready-for-agent`)
-- [ ] [46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS](./scratch/nexobow-v2/issues/46-e2e-integration-settings-0js-audit.md) (`ready-for-agent`)
+- [x] [44: Hábitos & Disciplina: Heatmap de Consistencia y Rachas](./scratch/nexobow-v2/issues/44-habits-discipline-streak-heatmap.md) (`done`)
+- [x] [45: Cockpit Diario (Home): Resumen Ejecutivo y Alertas Cruzadas](./scratch/nexobow-v2/issues/45-daily-cockpit-executive-dashboard.md) (`done`)
+- [x] [46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS](./scratch/nexobow-v2/issues/46-e2e-integration-settings-0js-audit.md) (`done`)
 

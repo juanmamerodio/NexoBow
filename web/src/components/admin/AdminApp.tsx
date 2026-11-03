@@ -13,16 +13,10 @@ import { FinanceView } from "./views/FinanceView";
 import { ScheduleView } from "./views/ScheduleView";
 import { VideosView } from "./views/VideosView";
 import { HabitsView } from "./views/HabitsView";
+import { CockpitView } from "./views/CockpitView";
+import { SettingsView } from "./views/SettingsView";
 import {
   ShieldAlert,
-  Activity,
-  Layers,
-  Database,
-  CheckCircle2,
-  Lock,
-  ArrowUpRight,
-  TrendingUp,
-  Clock,
   Sparkles,
 } from "lucide-react";
 
@@ -183,7 +177,7 @@ export const AdminApp: React.FC = () => {
     >
       {/* Contenido según la sub-ruta */}
       {currentPath === "/admin" || currentPath === "/admin/" ? (
-        <CockpitHomeView user={authorizedUser} onNavigate={navigate} />
+        <CockpitView user={authorizedUser} onNavigate={navigate} />
       ) : currentPath === "/admin/crm" || currentPath === "/admin/crm/" ? (
         <CrmView onNavigate={navigate} />
       ) : currentPath === "/admin/finances" || currentPath === "/admin/finances/" ? (
@@ -194,151 +188,12 @@ export const AdminApp: React.FC = () => {
         <VideosView onNavigate={navigate} />
       ) : currentPath === "/admin/habits" || currentPath === "/admin/habits/" ? (
         <HabitsView onNavigate={navigate} />
+      ) : currentPath === "/admin/settings" || currentPath === "/admin/settings/" ? (
+        <SettingsView user={authorizedUser} onNavigate={navigate} />
       ) : (
         <ModulePlaceholderView currentPath={currentPath} />
       )}
     </AdminLayout>
-  );
-};
-
-// Subcomponente de Home del Cockpit (Tracer Bullet 39)
-const CockpitHomeView: React.FC<{ user: AdminUser; onNavigate: (path: string) => void }> = ({
-  user,
-  onNavigate,
-}) => {
-  return (
-    <div className="space-y-8 max-w-7xl mx-auto">
-      {/* Banner de Bienvenida Ejecutivo */}
-      <div
-        className="rounded-2xl p-6 lg:p-8 border relative overflow-hidden"
-        style={{
-          backgroundColor: "#0B0D12",
-          borderColor: "rgba(191, 64, 250, 0.25)",
-          boxShadow: "0 20px 40px -15px rgba(4, 6, 7, 0.9)",
-        }}
-      >
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span
-                className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold border"
-                style={{
-                  backgroundColor: "rgba(91, 42, 98, 0.4)",
-                  borderColor: "rgba(191, 64, 250, 0.4)",
-                  color: "#E3D9FC",
-                }}
-              >
-                Tracer Bullet 39 Activo
-              </span>
-              <span className="text-zinc-500 text-xs font-mono">Supabase Auth Verified</span>
-            </div>
-            <h1 className="text-2xl lg:text-3xl font-extrabold tracking-tight">
-              Bienvenido al Panel Central, <span style={{ color: "#BF40FA" }}>Juanma</span>
-            </h1>
-            <p className="text-sm text-zinc-400 mt-1 max-w-2xl">
-              Isla interactiva React montada con éxito en Astro. Las landings públicas de NexoBow
-              mantienen exactamente 0 bytes de JavaScript en cliente.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => onNavigate("/admin/crm")}
-              className="py-2.5 px-4 rounded-xl text-xs font-semibold flex items-center gap-2 cursor-pointer transition-all"
-              style={{
-                backgroundColor: "#BF40FA",
-                color: "#FFFFFF",
-                boxShadow: "0 4px 15px rgba(191, 64, 250, 0.35)",
-              }}
-            >
-              <span>Abrir CRM</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Tarjetas de Métricas Iniciales */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          {
-            title: "Sesión Propietario",
-            value: user.email || "Conectado",
-            sub: "Nivel de Acceso RLS Owner",
-            icon: Lock,
-            color: "#10B981",
-          },
-          {
-            title: "Aislamiento JS",
-            value: "0 Scripts en /",
-            sub: "Benchmark SSG Agency Intacto",
-            icon: CheckCircle2,
-            color: "#BF40FA",
-          },
-          {
-            title: "Base de Datos",
-            value: "Supabase Relacional",
-            sub: "Migración admin_profiles OK",
-            icon: Database,
-            color: "#4928C2",
-          },
-          {
-            title: "Módulos Integrados",
-            value: "6 Sub-Sistemas",
-            sub: "CRM, Finanzas, Hábitos y más",
-            icon: Layers,
-            color: "#E3D9FC",
-          },
-        ].map((card, idx) => {
-          const Icon = card.icon;
-          return (
-            <div
-              key={idx}
-              className="p-5 rounded-2xl border transition-all"
-              style={{ backgroundColor: "#0B0D12", borderColor: "#1A1D26" }}
-            >
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs text-zinc-400 font-medium">{card.title}</span>
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center"
-                  style={{ backgroundColor: "rgba(4, 6, 7, 0.6)" }}
-                >
-                  <Icon className="w-4 h-4" style={{ color: card.color }} />
-                </div>
-              </div>
-              <p className="text-lg font-bold text-white truncate">{card.value}</p>
-              <p className="text-[11px] text-zinc-500 mt-1">{card.sub}</p>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Resumen de Próximos Pasos (Frontier) */}
-      <div
-        className="p-6 rounded-2xl border"
-        style={{ backgroundColor: "#0B0D12", borderColor: "#1A1D26" }}
-      >
-        <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400 mb-4 flex items-center gap-2">
-          <Activity className="w-4 h-4 text-purple-400" />
-          Roadmap del Cockpit (Frente E)
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-          <div className="p-4 rounded-xl border" style={{ backgroundColor: "#040607", borderColor: "#1A1D26" }}>
-            <p className="font-semibold text-white mb-1">Ticket 40: CRM & Prospección Supabase</p>
-            <p className="text-zinc-400">
-              Sustitución definitiva de Google Sheets por tabla relacional de leads con conmutador dual Kanban y Data Table.
-            </p>
-          </div>
-          <div className="p-4 rounded-xl border" style={{ backgroundColor: "#040607", borderColor: "#1A1D26" }}>
-            <p className="font-semibold text-white mb-1">Ticket 41: Finanzas & Cashflow Multi-Unidad</p>
-            <p className="text-zinc-400">
-              Control de ingresos por setups de NexoBow, suscripciones mensuales recurrentes y AlayNow.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
   );
 };
 

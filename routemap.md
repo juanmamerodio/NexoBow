@@ -225,6 +225,7 @@ Incorporando la metodología de [Cloudflare + Claude Code = Posicionamiento AEO 
 | `lead-lifecycle` | Retención & Urgencia | ✅ Activo | Gestión del ciclo TTL de 7 días, disparo de alertas de escasez (<48hs) y purga automática de **clones** vencidos. |
 | `objection-handler` | Cierre Comercial | ✅ Activo | Matriz de respuestas en voseo argentino / español neutro para rebatir objeciones de **setup**, **abono** y redes sociales. |
 | `domain-provisioner` | Handoff Post-Venta | ✅ Activo | Paso automatizado de `preview.nexobow.site/{slug}` al dominio definitivo del **prestador** en Cloudflare. |
+| `admin-cockpit` (`/admin`) | Gestión & Operaciones | ✅ Activo | Cockpit ejecutivo con 6 submódulos (CRM, Finanzas, Calendario, Videos Alaynow, Hábitos, Settings), sincronización Realtime y 0-JS. |
 | `aeo-optimizer` | **NUEVO (Fase 2)** | 🛠️ En Desarrollo | Auditoría con `isitagentready.com`, generación de `/llms.txt`, JSON-LD médico/legal y apertura a AI Crawlers. |
 | `n8n-receptionist-builder` | **NUEVO (Fase 2)** | 🛠️ En Desarrollo | Programador automático de flujos n8n (`n8n-mcp` + `n8n-skills`) que despliega el **turno automatizado** con Redis + Postgres + Chatwoot. |
 | `review-booster` | **NUEVO (Fase 2)** | 🛠️ En Desarrollo | Automatización post-**consultoría concretada** para multiplicar reseñas 5 estrellas del **prestador** en Google Maps. |
