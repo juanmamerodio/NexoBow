@@ -342,31 +342,35 @@ test("T46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS"
       "AdminApp debe enrutar /admin/settings"
     );
 
-    // Si web/dist/index.html existe, auditarlo rigurosamente
-    if (existsSync(webDistPath)) {
-      const html = readFileSync(webDistPath, "utf8");
-      const { auditHtmlDocument } = await import("../scripts/audit-site.mjs");
-      const report = auditHtmlDocument(html, {
-        mode: "web",
-        distDir: join(REPO_ROOT, "web", "dist"),
-        requireWhatsappCta: false,
-      });
-
-      assert.equal(
-        report.ok,
-        true,
-        `La landing pública web/ debe tener 0 errores de auditoría:\n${report.errors.join("\n")}`
-      );
-      assert.equal(
-        report.executableScriptCount,
-        0,
-        "La landing pública web/dist/index.html debe tener exactamente 0 scripts ejecutables en cliente"
-      );
-      assert.equal(
-        report.jsBytes,
-        0,
-        "El peso de JavaScript cliente en web/dist/index.html debe ser exactamente 0 bytes"
-      );
+    // Auditar rigurosamente web/dist/index.html (generando el build si no existiera)
+    if (!existsSync(webDistPath)) {
+      const { spawnSync } = await import("node:child_process");
+      spawnSync("npm", ["run", "build"], { cwd: join(REPO_ROOT, "web"), stdio: "pipe" });
     }
+    assert.ok(existsSync(webDistPath), "web/dist/index.html debe existir para la verificación");
+
+    const html = readFileSync(webDistPath, "utf8");
+    const { auditHtmlDocument } = await import("../scripts/audit-site.mjs");
+    const report = auditHtmlDocument(html, {
+      mode: "web",
+      distDir: join(REPO_ROOT, "web", "dist"),
+      requireWhatsappCta: false,
+    });
+
+    assert.equal(
+      report.ok,
+      true,
+      `La landing pública web/ debe tener 0 errores de auditoría:\n${report.errors.join("\n")}`
+    );
+    assert.equal(
+      report.executableScriptCount,
+      0,
+      "La landing pública web/dist/index.html debe tener exactamente 0 scripts ejecutables en cliente"
+    );
+    assert.equal(
+      report.jsBytes,
+      0,
+      "El peso de JavaScript cliente en web/dist/index.html debe ser exactamente 0 bytes"
+    );
   });
 });

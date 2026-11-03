@@ -42,6 +42,25 @@ export const DEFAULT_WATCHED_TABLES = [
 ];
 
 /**
+ * Factoría para generación de eventos simulados (DRY)
+ */
+function createSimulateEventHandler(
+  tables: string[],
+  onEvent?: (event: RealtimeChangeEvent) => void
+): (event: Partial<RealtimeChangeEvent>) => void {
+  return (event: Partial<RealtimeChangeEvent>) => {
+    const fullEvent: RealtimeChangeEvent = {
+      table: event.table || tables[0] || "leads",
+      eventType: event.eventType || "UPDATE",
+      new: event.new ?? null,
+      old: event.old ?? null,
+      timestamp: new Date().toISOString(),
+    };
+    onEvent?.(fullEvent);
+  };
+}
+
+/**
  * Crea o se suscribe a canales de Supabase Realtime escuchando mutaciones en las 6 tablas clave
  */
 export function subscribeToAdminRealtime(
@@ -77,16 +96,7 @@ export function subscribeToAdminRealtime(
         currentStatus = "CLOSED";
         options?.onStatusChange?.("CLOSED");
       },
-      simulateEvent: (event: Partial<RealtimeChangeEvent>) => {
-        const fullEvent: RealtimeChangeEvent = {
-          table: event.table || tables[0] || "leads",
-          eventType: event.eventType || "UPDATE",
-          new: event.new ?? null,
-          old: event.old ?? null,
-          timestamp: new Date().toISOString(),
-        };
-        options?.onEvent?.(fullEvent);
-      },
+      simulateEvent: createSimulateEventHandler(tables, options?.onEvent),
     };
   }
 
@@ -141,16 +151,7 @@ export function subscribeToAdminRealtime(
         }
         options?.onStatusChange?.("CLOSED");
       },
-      simulateEvent: (event: Partial<RealtimeChangeEvent>) => {
-        const fullEvent: RealtimeChangeEvent = {
-          table: event.table || tables[0] || "leads",
-          eventType: event.eventType || "UPDATE",
-          new: event.new ?? null,
-          old: event.old ?? null,
-          timestamp: new Date().toISOString(),
-        };
-        options?.onEvent?.(fullEvent);
-      },
+      simulateEvent: createSimulateEventHandler(tables, options?.onEvent),
     };
   } catch (err) {
     console.warn("Fallo suscribiendo a Supabase Realtime, activando fallback local:", err);
@@ -169,16 +170,7 @@ export function subscribeToAdminRealtime(
         currentStatus = "CLOSED";
         options?.onStatusChange?.("CLOSED");
       },
-      simulateEvent: (event: Partial<RealtimeChangeEvent>) => {
-        const fullEvent: RealtimeChangeEvent = {
-          table: event.table || tables[0] || "leads",
-          eventType: event.eventType || "UPDATE",
-          new: event.new ?? null,
-          old: event.old ?? null,
-          timestamp: new Date().toISOString(),
-        };
-        options?.onEvent?.(fullEvent);
-      },
+      simulateEvent: createSimulateEventHandler(tables, options?.onEvent),
     };
   }
 }

@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test --test-concurrency=1 tests/*.test.mjs",
     "lead-to-live": "node scripts/lead-to-live.mjs",
     "scout-lead": "node scripts/scout-lead.mjs",
     "generate-fiche": "node scripts/generate-client-fiche.mjs",
