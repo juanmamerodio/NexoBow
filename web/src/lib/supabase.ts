@@ -69,8 +69,8 @@ export function resolveAdminRouteState({
   ownerEmail: string;
   currentPath?: string;
 }): AdminRouteState {
-  const isLoginPage =
-    currentPath === "/admin/login" || currentPath === "/admin/login/";
+  const cleanPath = (currentPath || "/admin").replace(/\/+$/, "") || "/";
+  const isLoginPage = cleanPath === "/admin/login";
 
   if (!user || !user.email) {
     if (isLoginPage) {

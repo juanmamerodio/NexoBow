@@ -4,7 +4,7 @@ import { getBrowserSupabaseClient } from "../../lib/supabase";
 import { Lock, Mail, Sparkles, ArrowRight, ShieldCheck, AlertCircle } from "lucide-react";
 
 interface LoginViewProps {
-  onSuccess?: () => void;
+  onSuccess?: (user?: any) => void;
   initialError?: string;
 }
 
@@ -33,7 +33,13 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccess, initialError })
         setErrorMessage(error.message || "Error al iniciar sesión con contraseña.");
       } else if (data.session) {
         setSuccessMessage("¡Autenticación exitosa! Accediendo al Cockpit...");
-        if (onSuccess) onSuccess();
+        if (onSuccess && data.session.user) {
+          onSuccess({
+            id: data.session.user.id,
+            email: data.session.user.email,
+            user_metadata: data.session.user.user_metadata,
+          });
+        }
       }
     } catch (err: any) {
       setErrorMessage(err.message || "Ocurrió un error inesperado al conectar.");

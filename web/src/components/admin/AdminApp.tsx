@@ -126,7 +126,9 @@ export const AdminApp: React.FC = () => {
 
   // Redirecciones automáticas si corresponden
   if (routeState.redirect && typeof window !== "undefined") {
-    if (routeState.redirect !== currentPath) {
+    const cleanRedirect = routeState.redirect.replace(/\/+$/, "") || "/";
+    const cleanCurrent = currentPath.replace(/\/+$/, "") || "/";
+    if (cleanRedirect !== cleanCurrent) {
       setTimeout(() => navigate(routeState.redirect as string), 0);
     }
   }
@@ -135,7 +137,10 @@ export const AdminApp: React.FC = () => {
     return (
       <LoginView
         initialError={routeState.state === "forbidden" ? routeState.error : authError}
-        onSuccess={() => navigate("/admin")}
+        onSuccess={(authenticatedUser) => {
+          if (authenticatedUser) setUser(authenticatedUser);
+          navigate("/admin");
+        }}
       />
     );
   }
