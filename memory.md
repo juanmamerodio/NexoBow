@@ -289,6 +289,11 @@ Este repo contiene **DOS páginas web con identidades visuales TOTALMENTE DISTIN
   - **Enrutamiento Admin**: Integrado en `web/src/components/admin/AdminApp.tsx` bajo la ruta `/admin/settings` y re-export en `web/src/components/admin/SettingsView.tsx`.
   - **Suite E2E & Auditoría Estricta (`tests/admin-cockpit-e2e.test.mjs`)**: 6 pruebas exhaustivas cubriendo el ciclo completo: autenticación RLS, navegación por los 7 submódulos, mutaciones cruzadas consolidadas en el Cockpit (alertas TTL, cashflow neto, agenda diaria y completitud de hábitos), canales realtime y auditoría de aislamiento 0-JS (`web/dist/index.html` con 0 scripts clientes y bundle React confinado a `/admin`).
   - **Culminación del Frente E**: La suite global completa alcanza 116 tests unitarios y de integración 100% pasando en verde, y el build de Astro en `web/` compila 9 páginas en código 0.
+- [2026-11-03] **Puesta en Marcha de Supabase en Producción & Migración de Leads**:
+  - **Conexión Live**: Proyecto Supabase en producción conectado y validado en las 6 tablas relacionales (`leads`, `financial_transactions`, `schedule_blocks`, `alaynow_videos`, `habits`, `habit_logs`) con HTTP 200.
+  - **Migración Exitosa**: 25 prospectos migrados desde Google Sheets y fichas Markdown locales hacia la tabla relacional `leads` (`scripts/migrate-sheets-to-supabase.mjs`).
+  - **Parser Robusto de Fechas Seriales**: Soporte para fechas en formato serial de Google Sheets/Excel (ej: `46319` -> `2026-10-24`) y normalización `YYYY-MM-DD` en `scripts/sheets-sync.mjs`.
+  - **Variables y Plantillas**: `.env.example` actualizado con las variables de Supabase documentadas.
 
 
 

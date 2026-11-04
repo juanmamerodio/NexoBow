@@ -515,6 +515,14 @@ export function safeIsoDate(val, fallback = new Date().toISOString()) {
   if (!val) return fallback;
   try {
     const str = String(val).trim();
+    // Soporte para fechas en formato serial de Google Sheets / Excel (ej: 46319 -> 2026-10-24)
+    if (/^\d{4,6}(\.\d+)?$/.test(str)) {
+      const serial = parseFloat(str);
+      const parsed = new Date((serial - 25569) * 86400 * 1000);
+      if (!Number.isNaN(parsed.getTime()) && parsed.getFullYear() >= 2000 && parsed.getFullYear() <= 2100) {
+        return parsed.toISOString();
+      }
+    }
     const dmyMatch = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
     let parsed;
     if (dmyMatch) {
@@ -524,7 +532,7 @@ export function safeIsoDate(val, fallback = new Date().toISOString()) {
     } else {
       parsed = new Date(str);
     }
-    if (!Number.isNaN(parsed.getTime())) {
+    if (!Number.isNaN(parsed.getTime()) && parsed.getFullYear() >= 2000 && parsed.getFullYear() <= 2100) {
       return parsed.toISOString();
     }
   } catch {
@@ -549,8 +557,8 @@ export function mapSheetRowToLeadEntity(row = []) {
   const social_link = String(row[6] || '').trim();
   const location = String(row[7] || 'Buenos Aires').trim();
   const funnel_status = normalizeLeadFunnelStatus(row[8]);
-  const first_contact_date = row[9] ? String(row[9]).trim() : new Date().toISOString().split('T')[0];
-  const last_contact_date = row[10] ? String(row[10]).trim() : null;
+  const first_contact_date = row[9] && String(row[9]).trim() ? safeIsoDate(row[9]).split('T')[0] : new Date().toISOString().split('T')[0];
+  const last_contact_date = row[10] && String(row[10]).trim() ? safeIsoDate(row[10]).split('T')[0] : null;
   const response_status = normalizeLeadResponseStatus(row[11]);
   const meeting_booked = Boolean(
     row[12] === true ||
@@ -559,7 +567,7 @@ export function mapSheetRowToLeadEntity(row = []) {
     String(row[12]).toLowerCase() === 'sí' ||
     String(row[12]).toLowerCase() === 'si'
   );
-  const meeting_date = row[13] ? String(row[13]).trim() : null;
+  const meeting_date = row[13] && String(row[13]).trim() ? safeIsoDate(row[13]).split('T')[0] : null;
   const potential_value = String(row[14] || '$189.999 ARS').trim();
   const business_status = String(row[15] || 'En Proceso').trim();
   const notes = String(row[16] || '').trim();
