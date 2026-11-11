@@ -2,8 +2,8 @@
 sheet_id: 19
 lead_status: Sin contactar
 created_at: 2026-10-26
-last_activity_at: 2026-10-26
-expires_at: 2026-11-02
+last_activity_at: "2026-11-11"
+expires_at: "2026-11-18"
 slug: 19-marina-baldi-nutri
 nombre: Baldi
 rubro: nutricionista

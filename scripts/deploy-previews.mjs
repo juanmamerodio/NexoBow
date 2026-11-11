@@ -2,7 +2,7 @@
 // Uso: node scripts/deploy-previews.mjs [--dry-run]
 // Códigos de salida: 0 = ok · 1 = fallo técnico · 2 = parámetros o credenciales insuficientes
 
-import { existsSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readdirSync, statSync, writeFileSync, mkdirSync, cpSync } from "node:fs";
 import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
@@ -30,25 +30,62 @@ function parseArgs() {
   return flags;
 }
 
+function getWranglerBin() {
+  const localBin = join(REPO_ROOT, "node_modules", ".bin", process.platform === "win32" ? "wrangler.cmd" : "wrangler");
+  return existsSync(localBin) ? localBin : "npx";
+}
+
+function buildWranglerArgs(subArgs) {
+  const bin = getWranglerBin();
+  return bin === "npx" ? { cmd: "npx", args: ["wrangler", ...subArgs] } : { cmd: bin, args: subArgs };
+}
+
+export function bundleWebFunctions(distPreviewsDir) {
+  const webFunctionsDir = join(REPO_ROOT, "web", "functions");
+  if (!existsSync(webFunctionsDir)) return { bundled: false };
+
+  const workerOutDir = join(distPreviewsDir, "_worker.js");
+  mkdirSync(distPreviewsDir, { recursive: true });
+  const { cmd, args } = buildWranglerArgs(["pages", "functions", "build", webFunctionsDir, "--outdir", workerOutDir]);
+  const res = spawnSync(cmd, args, {
+    cwd: REPO_ROOT,
+    stdio: "inherit",
+    shell: process.platform === "win32",
+  });
+
+  if (res.status !== 0) {
+    throw new Error(`No se pudo compilar web/functions con Wrangler (código ${res.status}).`);
+  }
+
+  writeFileSync(
+    join(distPreviewsDir, "_routes.json"),
+    JSON.stringify({ version: 1, include: ["/api/*"], exclude: [] }, null, 2) + "\n",
+    "utf8"
+  );
+
+  return { bundled: true, workerOutDir };
+}
+
 async function main() {
   const flags = parseArgs();
   const isDryRun = Boolean(flags["dry-run"]);
   const distPreviewsDir = join(REPO_ROOT, "dist-previews");
+  mkdirSync(distPreviewsDir, { recursive: true });
 
   // Sincronizar automáticamente el build de web/ a la raíz de dist-previews para nexobow.site/
   const webDistDir = join(REPO_ROOT, "web", "dist");
   if (existsSync(webDistDir)) {
-    const { cpSync } = await import("node:fs");
     cpSync(webDistDir, distPreviewsDir, { recursive: true });
   }
 
   const entries = readdirSync(distPreviewsDir).filter((f) => {
-    return statSync(join(distPreviewsDir, f)).isDirectory() && f !== "_astro";
+    return statSync(join(distPreviewsDir, f)).isDirectory() && !["_astro", "_worker.js", "admin", "solicitud-enviada"].includes(f);
   });
 
   const projectName = "nexobow-previews";
   const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site";
   const customDomain = `preview.${rootDomain}`;
+  const hasFunctions = existsSync(join(REPO_ROOT, "web", "functions"));
 
   console.log(`\x1b[36m[deploy-previews]\x1b[0m Preparando despliegue de \x1b[1m${entries.length} demos\x1b[0m hacia ${projectName}...`);
 
@@ -56,11 +93,17 @@ async function main() {
     console.log(`\x1b[33m[deploy-previews DRY-RUN]\x1b[0m Modo de simulación activo.`);
     console.log(`- Proyecto Cloudflare Pages: ${projectName}`);
     console.log(`- Directorio raíz: ${distPreviewsDir}`);
+    console.log(`- Pages Functions (API Inbound): ${hasFunctions ? "web/functions -> _worker.js (/api/*)" : "no detectadas"}`);
     console.log(`- Subrutas listas: ${entries.join(", ") || "(ninguna)"}`);
     console.log(`- Dominio unificado: https://${customDomain}`);
     console.log(`- URL ejemplo: https://${customDomain}/${entries[0] || "slug-demo"}/`);
     console.log(`\x1b[32m[deploy-previews ✓]\x1b[0m Verificación dry-run exitosa.`);
     process.exit(0);
+  }
+
+  if (hasFunctions) {
+    console.log(`[deploy-previews] Compilando Pages Functions (web/functions -> _worker.js)...`);
+    bundleWebFunctions(distPreviewsDir);
   }
 
   const token = process.env.CLOUDFLARE_API_TOKEN;
@@ -71,21 +114,18 @@ async function main() {
     process.exit(2);
   }
 
-  console.log(`[deploy-previews] Ejecutando: npx wrangler pages deploy dist-previews --project-name ${projectName} ...`);
-  const deployRes = spawnSync(
-    "npx",
-    ["wrangler", "pages", "deploy", distPreviewsDir, "--project-name", projectName, "--commit-dirty=true"],
-    {
-      cwd: REPO_ROOT,
-      stdio: "inherit",
-      env: {
-        ...process.env,
-        CLOUDFLARE_API_TOKEN: token,
-        CLOUDFLARE_ACCOUNT_ID: accountId,
-      },
-      shell: process.platform === "win32",
-    }
-  );
+  console.log(`[deploy-previews] Ejecutando: wrangler pages deploy dist-previews --project-name ${projectName} ...`);
+  const { cmd, args } = buildWranglerArgs(["pages", "deploy", distPreviewsDir, "--project-name", projectName, "--commit-dirty=true"]);
+  const deployRes = spawnSync(cmd, args, {
+    cwd: REPO_ROOT,
+    stdio: "inherit",
+    env: {
+      ...process.env,
+      CLOUDFLARE_API_TOKEN: token,
+      CLOUDFLARE_ACCOUNT_ID: accountId,
+    },
+    shell: process.platform === "win32",
+  });
 
   if (deployRes.status !== 0) {
     console.error(`\x1b[31m[deploy-previews ERROR]\x1b[0m Falló el despliegue a Cloudflare Pages.`);
@@ -102,7 +142,9 @@ async function main() {
 `);
 }
 
-main().catch((err) => {
-  console.error(`\x1b[31m[deploy-previews ERROR FATAL]\x1b[0m ${err.message}`);
-  process.exit(1);
-});
+if (process.argv[1] && import.meta.url.endsWith("deploy-previews.mjs")) {
+  main().catch((err) => {
+    console.error(`\x1b[31m[deploy-previews ERROR FATAL]\x1b[0m ${err.message}`);
+    process.exit(1);
+  });
+}

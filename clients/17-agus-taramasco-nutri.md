@@ -2,8 +2,8 @@
 sheet_id: 17
 lead_status: Sin contactar
 created_at: 2026-10-26
-last_activity_at: 2026-10-26
-expires_at: 2026-11-02
+last_activity_at: "2026-11-11"
+expires_at: "2026-11-18"
 slug: 17-agus-taramasco-nutri
 nombre: Taramasco
 rubro: nutricionista

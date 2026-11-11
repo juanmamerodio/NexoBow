@@ -27,32 +27,48 @@ Toda comunicación humana, prompt de agente, **ficha de cliente** y script del r
 
 ## 💰 Tesis Económica: Por Qué $150 Setup + $10 Abono No Escala a $100k/mes (Y Cómo Destrabarlo)
 
-### 1. Diagnóstico Matemático del Modelo Actual ($150 USD Setup + $10 USD Abono)
-Cobrar **$150 USD de Setup** y **$10 USD/mes de Abono** (con el primer mes bonificado) es un **anzuelo de penetración (Trojan Horse)** imbatible para eliminar la fricción en los primeros cierres, pero presenta una trampa matemática si se mantiene como única oferta:
-* **Por vía de Abono ($10 USD/mes):** Alcanzar **$100,000 USD/mes** de ingreso recurrente mensual (MRR) exigiría mantener **10,000 prestadores activos** simultáneamente. Incluso con un churn mínimo del 5% mensual, requeriría cerrar **+500 nuevos prestadores cada mes** solo para reponer bajas.
-* **Por vía de Setup ($150 USD único):** Facturar **$100,000 USD/mes** solo con implementaciones obligaría a vender y entregar **667 nuevos embudos todos los meses** (~22 cierres diarios), destruyendo el foco operativo y saturando los canales de salida.
-* **El Principio del Cerebro NexoBow:** Como demuestran las fuentes de [Cómo Vender Páginas Web con IA a Negocios por $3,000](https://www.youtube.com/watch?v=vq6qME9Og2c) y [NO Vendas Agentes IA, Vende Sistemas IA](https://www.youtube.com/watch?v=zhu4fzty0Ms), **la landing nunca es el negocio final: es el caballo de Troya**. Al **prestador** no le importa el código; le importa **ganar plata (más consultorías agendadas)** o **ahorrar tiempo (no responder consultas repetitivas a mano)**.
+### 1. Retrospectiva Crítica de Falencias del Modelo Original
+Un análisis riguroso de arquitectura empresarial y unit economics reveló **5 falencias estructurales** en el diseño original del negocio que bloqueaban la escala a $100k/mes:
+1. **El Abono Parásito de $10 USD/mes (Fricción vs Retorno Negativo):**
+   * Cobrar $10 USD/mes genera un costo fijo de procesamiento (~$0.30 USD + 3.5% por pasarela), alto riesgo de rechazos bancarios en tarjetas locales/internacionales y fricción administrativa.
+   * **Costo de Soporte Desproporcionado:** El cliente que paga $10/mes consume exactamente la misma atención, dudas y soporte por WhatsApp que uno que paga $300/mes. Destruye el margen operativo del fundador.
+   * **Corrección:** Se erradica el abono de $10/mes. **Tier 1 (NexoBow Starter)** se comercializa a **$189 – $249 USD de Setup único** (o **$189.999 ARS**) con **1 año de hosting en Cloudflare Pages incluido** (donde el costo marginal para NexoBow es $0). Opcionalmente incluye 30 días bonificados del sistema de turnos Tier 2, pasando luego a **$197 USD/mes** o quedando en versión estática.
+2. **La Trampa de Baneos en WhatsApp (Evolution API vs WABA Oficial):**
+   * Usar scrapers o librerías no oficiales (Baileys/Evolution API) para la operación clínica garantiza el baneo definitivo del número del consultorio ante 3 quejas de pacientes.
+   * **Corrección:** Para producción en Tier 2 y Tier 3, se implementa exclusivamente la **Meta Cloud API Oficial con WABA y Embedded Signup** en Chatwoot/n8n.
+3. **Sobrecarga de Infraestructura Monolítica (Chatwoot en el mismo VPS):**
+   * Chatwoot (Ruby on Rails + Sidekiq) consume 2–3 GB de RAM y puede provocar caídas por falta de memoria (OOM) en el VPS de automatización.
+   * **Corrección:** Chatwoot se desacopla (usando Chatwoot Cloud $19/mo o una instancia satélite ligera), reservando el VPS central para n8n, Postgres, Redis y Hermes Agent.
+4. **Ceguera de Nicho de Bajo Ticket:**
+   * Prospectar nutricionistas independientes individuales genera resistencia al precio. 
+   * **Corrección:** Priorizar nichos médicos y legales de alto margen por cliente: **Dermatología, Cirugía Plástica, Odontología Implantológica, Kinesiología de Alto Rendimiento y Estudios Jurídicos Corporativos**. Un solo paciente/caso paga todo un año del sistema.
+5. **Gobernanza y Sandboxing Ausente en Agentes:**
+   * Ejecutar Hermes Agent con acceso root o montando `/var/run/docker.sock` genera riesgo de elevación de privilegios y command injection.
+   * **Corrección:** Confinamiento estricto en Docker (`cap_drop: [ALL]`, `read_only: true`, sin socket docker) y perímetro cerrado con **Tailscale Mesh VPN + Cloudflare Tunnels + CrowdSec**.
 
-### 2. La Escalera de Valor NexoBow (Value Ladder de 4 Niveles)
-Para pasar de **$0 a +$100,000 USD/mes** sin romper la simplicidad operativa, el modelo actual ($150 / $10) se conserva como **Nivel 1 (Oferta de Entrada / Tripwire)** y habilita una escalera de valor ascendente:
+---
+
+### 2. La Nueva Escalera de Valor NexoBow (Value Ladder Optimizada)
 
 | Nivel de Oferta | Nombre del Sistema | Qué Incluye el Embudo Entregado | Setup (Único) | Abono (Mensual) | Rol en la Escala a $100k/mes |
 | :--- | :--- | :--- | :---: | :---: | :--- |
-| **Tier 0 (Gancho)** | **Preview + Auditoría AEO & Maps** | **Clon** vivo 7 días (`preview.nexobow.site`) + Theme Switcher + Diagnóstico de visibilidad en IA (`isitagentready.com`) y Google Maps ([Fuente AEO](https://www.youtube.com/watch?v=upsI04_iAQ8)). | **$0 USD** | **$0 USD** | Rompehielos de respuesta masiva en frío; demuestra trabajo hecho antes de pedir un centavo ([Fuente Webs](https://www.youtube.com/watch?v=N63_Bf2LPhk)). |
-| **Tier 1 (Tripwire Actual)** | **NexoBow Starter (Landing + Link)** | **Clon** Astro SSG `<0.8s` en dominio propio + Copy Hormozi + Botón directo a Calendly + Hosting Cloudflare. *(Mes 1 de prueba sin cargo).* | **$150 USD** | **$10 USD/mes** | Liquidez inmediata para cubrir VPS/APIs, validar nichos y construir base instalada de **prestadores** con confianza ciega. |
-| **Tier 2 (Core System)** | **NexoBow Autonomous (Turno Automatizado)** | Todo Tier 1 + **Recepcionista IA 24/7 en WhatsApp/IG** (vía Chatwoot + n8n + Postgres/Redis) + Agendamiento de **consultoría gratuita** + Recordatorios 24h/1h anti-ausentismo + Automatización de reseñas en Google Maps ([Fuente Sistemas](https://www.youtube.com/watch?v=zhu4fzty0Ms)). | **$500 – $950 USD** | **$197 – $297 USD/mes** | Motor principal de MRR. Un solo **paciente** recuperado que pasa al **upsell del prestador** paga todo el año de **abono**. |
-| **Tier 3 (High-Ticket)** | **NexoBow Growth Partner (Clínicas & Centros)** | Todo Tier 2 para clínicas multi-profesional + Posicionamiento **AEO** completo (`llms.txt`, Schema médico/legal) + Creativos/Ads con IA (Claude + Higgsfield) + Reactivación de bases de **pacientes** inactivos ([Fuente 10 Habilidades](https://www.youtube.com/watch?v=89oIFpQ4yyY)). | **$1,500 – $3,000 USD** | **$500 – $1,000 USD/mes** | Acelerador de facturación B2B en mercados fuertes (España, USA Hispano, México, Chile y clínicas privadas de alto ticket). |
-| **Tier 4 (Escala 1-a-Muchos)** | **NexoBow Digital Assets / Kit Self-Serve** | Producto digital auto-entregable (*"Kit de Agenda Llena & IA para Profesionales de Salud"* + plantillas de **upsell del prestador**), vendido con tráfico pago 24/7 sin intervención humana ([Fuente Productos Digitales](https://www.youtube.com/watch?v=dnqzOcLrejs)). | **$47 – $97 USD** | **$29 USD/mes** *(Comunidad/Bot)* | Monetización masiva de los **prestadores** que no califican para High-Ticket; escala con pauta reinvertida sin techo operativo. |
+| **Tier 0 (Gancho Gratuito)** | **Preview + Auditoría AEO & Maps** | **Clon** vivo 7 días (`preview.nexobow.site`) + Theme Switcher (4 paletas) + Diagnóstico AEO (`isitagentready.com`) y Google Maps. | **$0 USD** | **$0 USD** | Rompehielos de respuesta masiva en frío ($0 presupuesto); demuestra el trabajo terminado antes de pedir un centavo. |
+| **Tier 1 (Liquidez & Entrada)** | **NexoBow Starter (Landing de Prestigio)** | **Clon** Astro SSG `<0.8s` en dominio propio + Copy Hormozi + Botón directo a Calendly/WhatsApp + Hosting Cloudflare (1 año incluido). | **$189 – $249 USD** *(o $189.999 ARS)* | **$0 USD/mes** *(1 año de hosting incl.)* | **Caja inmediata de $0 a $5k/mes** sin soporte parásito. Cubre infraestructura y valida nichos rápidamente. |
+| **Tier 2 (Core Recurrente)** | **NexoBow Autonomous (Turno Automatizado)** | Todo Tier 1 + **Recepcionista IA 24/7 en WhatsApp** (Meta Cloud API + n8n + Postgres/Redis) + Agendamiento automático + Recordatorios anti-ausentismo + Automatización de reseñas Maps. | **$500 – $950 USD** | **$197 – $297 USD/mes** | **Motor principal de MRR.** 1 a 2 pacientes recuperados pagan el abono anual del prestador. |
+| **Tier 3 (High-Ticket Clínicas)** | **NexoBow Growth Partner (Centros Médicos)** | Todo Tier 2 multi-profesional + Posicionamiento AEO médico (`llms.txt`, Schema JSON-LD) + Creativos/Ads IA (Claude + Higgsfield) + Reactivación de pacientes inactivos. | **$1,500 – $3,000 USD** | **$500 – $1,000 USD/mes** | Escala en clínicas privadas de alto ticket y arbitraje internacional (España, USA Hispano, México, Chile). |
+| **Tier 4 (Escala 1-a-Muchos)** | **NexoBow Digital Assets / Kit Self-Serve** | Infoproducto auto-entregable (*"Kit de Agenda Llena & IA para Salud"*) + plantillas de WhatsApp para el **upsell del prestador**, vendido con Meta Ads 24/7. | **$47 – $97 USD** | **$29 USD/mes** *(Comunidad)* | Monetización pasiva de leads no calificados para High-Ticket; escala sin techo operativo en Fase 4. |
 
-### 3. Ecuación Matemática de los +$100,000 USD/mes (Mix de Ingresos Meta en Fase 4)
+---
+
+### 3. Ecuación Matemática Recalculada hacia los +$100,000 USD/mes (Mix Óptimo en Fase 4)
 
 | Línea de Ingreso | Volumen Mensual Activo / Nuevo | Ticket Promedio | Facturación Mensual (USD) | Margen Neto Estimado |
 | :--- | :--- | :--- | :---: | :---: |
-| **1. Base Instalada Tier 1 (Starter)** | 300 **prestadores** en **abono** + 40 nuevos **setups**/mes | $10 Abono / $150 Setup | **$9,000 USD** | ~95% |
-| **2. Motor Recurrente Tier 2 (Autonomous)** | 180 **prestadores** en **abono** + 25 nuevos **setups**/mes | $250 Abono / $600 Setup | **$60,000 USD** | ~90% |
-| **3. Cuentas Clínicas Tier 3 (Growth Partner)** | 30 clínicas en **abono** + 6 nuevos **setups**/mes | $650 Abono / $2,000 Setup | **$31,500 USD** | ~85% |
-| **4. Activos Digitales Tier 4 (Low-Ticket IA)** | 200 ventas/mes ( ~6.6 ventas/día vía Meta Ads IA) | $67 USD promedio | **$13,400 USD** | ~65% (post-Ads) |
-| **TOTAL CONSOLIDADO NEXOBOW** | **510 Prestadores Activos + Motor Digital** | **Mix Híbrido B2B** | **$113,900 USD / mes** | **~86% (~$98k netos)** |
+| **1. Setups Tier 1 (Starter)** | 25 nuevos **setups**/mes (flujo de entrada continuo) | $200 Setup único | **$5,000 USD** | ~98% |
+| **2. Motor Recurrente Tier 2 (Autonomous)** | 200 **prestadores** en **abono** + 20 nuevos **setups**/mes | $250 Abono / $650 Setup | **$63,000 USD** | ~92% |
+| **3. Cuentas Clínicas Tier 3 (Growth Partner)** | 35 clínicas en **abono** + 6 nuevos **setups**/mes | $700 Abono / $2,000 Setup | **$36,500 USD** | ~88% |
+| **4. Activos Digitales Tier 4 (Kit IA)** | 180 ventas/mes (tráfico pago automatizado) | $67 USD promedio | **$12,060 USD** | ~65% (post-Ads) |
+| **TOTAL CONSOLIDADO NEXOBOW** | **235 Prestadores en Abono + Clientes de Setup + Digital** | **Mix Híbrido B2B** | **$116,560 USD / mes** | **~88% (~$102k netos)** |
 
 ## 🧠 Arquitectura del Cerebro NexoBow (Síntesis de "Making AI NexoBow Business")
 
@@ -168,24 +184,36 @@ Incorporando la metodología de [Cloudflare + Claude Code = Posicionamiento AEO 
 ```
 
 ### 🟢 FASE 1: Tracción Inmediata y Validación de Caja ($0 a $5,000 USD/mes — Días 1 a 30)
-> ** Principio Rector:** *"Al dinero le gusta la velocidad"* ([Fuente $22,963 en 30 días](https://www.youtube.com/watch?v=dnqzOcLrejs)). Prohibido construir nuevos **templates** antes de cerrar los primeros **prestadores** con los 4 **templates** ya terminados (`nutricionista`, `abogado`, `clinica`, `producto`).
+> **Principio Rector:** *"Al dinero le gusta la velocidad"*. Prohibido programar más código o crear nuevos templates antes de cerrar los primeros prestadores pagos. La infraestructura está 100% lista para vender hoy mismo a costo $0.
 
 - [x] Web flagship de NexoBow con 12 secciones y estándar 0 JS (`web/`).
-- [x] Motor de scouting (`scout-lead.mjs`), generador de **fichas de cliente** (`generate-client-fiche.mjs`) y compilador de **clones** (`build-client-site.mjs`) con 39 tests en verde.
-- [x] Componente `ThemeSwitcher.astro` activo en todas las previews (`preview.nexobow.site/{slug}/`).
-- [ ] **Hito 1.1 — Higiene y Telemetría Ligera:** Purgar plugins MCP irrelevantes e inyectar el ping pasivo de 1 KB (`preview-telemetry`) para recibir alerta inmediata en Telegram cuando un **prestador** abre su **clon** o cambia la paleta de colores.
-- [ ] **Hito 1.2 — Sprints de Prospección Diaria (20 Clones/día):** Ejecutar tandas en Palermo, Belgrano, Recoleta y San Isidro enfocadas 100% en **Nutricionistas, Clínicas Estéticas/Odontológicas y Estudios Jurídicos**.
-- [ ] **Hito 1.3 — Cierre Asistido (Voz + WhatsApp):** Contactar a cada prospecto que abra la preview con audio personalizado + `objection-handler`. Cerrar los primeros **15 a 20 prestadores en Tier 1 ($150 USD Setup + $10 USD Abono)** = **$2,250–$3,000 USD** en caja rápida.
-- [ ] **Hito 1.4 — Primeros 3 Pilotos de Tier 2 (Turno Automatizado):** Seleccionar a los 3 mejores **prestadores** de Tier 1, instalarles el **Agente Recepcionista de WhatsApp** (n8n + Chatwoot + Google Calendar) y documentar sus métricas reales de **consultorías agendadas / concretadas** para publicarlos como **casos de éxito** oficiales.
+- [x] Motor de scouting (`scout-lead.mjs`), generador de **fichas de cliente** (`generate-client-fiche.mjs`) y compilador de **clones** (`build-client-site.mjs`).
+- [x] Componente `ThemeSwitcher.astro` (4 paletas) activo en todas las previews (`preview.nexobow.site/{slug}/`).
+- [x] 4 Templates maestros REA de nivel internacional listos para producción (`nutricionista`, `abogado`, `clinica`, `producto`).
+- [x] **Frente E Completado:** Admin Cockpit en `/admin` con Supabase Auth, CRM Kanban, Finanzas, Calendario, Pipeline AlayNow, Hábitos y Realtime (116 tests en verde).
+- [ ] **Hito 1.1 — Protocolo de Venta Inmediata $0 Presupuesto (Días 1 a 10):**
+  * **Cero gasto inicial:** Cloudflare Pages es gratuito, la prospección en Maps es gratuita y los clones se compilan en local.
+  * **Acción diaria:** 15 a 20 prospectos diarios calificados en Palermo, Belgrano, Recoleta y San Isidro (enfoque en Odontología, Medicina Estética, Cirugía Plástica y Estudios Jurídicos).
+  * **Contacto híbrido de alto impacto:** Envío del enlace de la preview interactiva + nota de voz personalizada de 35 segundos al WhatsApp del consultorio.
+- [ ] **Hito 1.2 — Cierre Asistido con Oferta Irresistible (Tier 1):**
+  * Cerrar los primeros **10 a 15 prestadores** en **Tier 1 ($189 – $249 USD Setup único o $189.999 ARS)** con 1 año de hosting incluido y garantía de satisfacción 14 días.
+  * Generación de **$2,000 a $3,500 USD netos en caja** para financiar el VPS y las APIs sin deuda ni capital externo.
+- [ ] **Hito 1.3 — Primeros 3 Pilotos de Tier 2 (Turno Automatizado):**
+  * A los 3 mejores clientes de Tier 1, activarles la prueba de 30 días del **Agente Recepcionista de WhatsApp** (n8n + Postgres + Google Calendar) para documentar sus métricas de agendamiento y publicarlos como casos de éxito.
 
-### 🟡 FASE 2: El Giro a "Sistemas IA" y Persistencia Industrial ($5,000 a $25,000 USD/mes — Días 31 a 90)
-> **Principio Rector:** Dejar de vender "páginas web baratas" como producto final; usar la **landing** de $150 USD únicamente como puerta de entrada al **Embudo de Turno Automatizado** ($500–$950 Setup + $197–$297/mes Abono).
+### 🟡 FASE 2: El Giro a "Sistemas IA" y VPS Dedicado ($5,000 a $25,000 USD/mes — Días 31 a 90)
+> **Principio Rector:** Dejar de vender solo landings estáticas; posicionarse como socios de infraestructura IA. La landing es el caballo de Troya para cobrar **abonos de $197 a $297 USD/mes** por el agendamiento 24/7.
 
-- [ ] **Hito 2.1 — Migración a Base de Datos ACID (`SqliteLeadStore`):** Reemplazar la lógica de clave primaria en Google Sheets por SQLite/Turso local/cloud con sincronización asíncrona a `'Prospección NexoBow'!B11:S1000`.
-- [ ] **Hito 2.2 — Despliegue del Stack Recepcionista en VPS (Docker):** Levantar en VPS Hostinger/Hetzner la infraestructura multi-tenant: **n8n 2.0 + PostgreSQL (memoria por teléfono) + Redis (buffer anti-ráfagas) + Chatwoot + Evolution API / Meta Cloud API**.
-- [ ] **Hito 2.3 — Empaquetado del Producto "Auditoría AEO + Embudo":** Incorporar el escaneo `isitagentready.com` y la optimización **AEO** en cada propuesta comercial para clínicas y estudios jurídicos, justificando **setups** de **$600 a $1,500 USD**.
-- [ ] **Hito 2.4 — Automatización de Reseñas en Google Maps:** Añadir al flujo post-**consultoría concretada** un mensaje automático por WhatsApp que solicita reseña 5 estrellas en Google Maps al **paciente** satisfecho, disparando el posicionamiento orgánico del **prestador** ([Fuente Webs $3,000](https://www.youtube.com/watch?v=vq6qME9Og2c)).
-- [ ] **Meta Financiera Fase 2:** 60 **prestadores** acumulados en Tier 2 ($250/mes prom. = $15,000 MRR) + 15 nuevos **setups** mensuales ($600 prom. = $9,000) + base Tier 1 = **~$25,000 USD/mes**.
+- [x] **Persistencia Relacional ACID:** Migración exitosa de Google Sheets a Supabase PostgreSQL en producción con RLS estricto y soporte en `createSupabaseLeadStore`.
+- [ ] **Hito 2.1 — Despliegue de Infraestructura Zero-Trust en VPS Hetzner:**
+  * Levantar el stack Docker Compose aislado (`data-tier` interna sin internet): **n8n 2.0 + PostgreSQL 16 + Redis 7**.
+  * Blindaje perimetral: Cero puertos públicos expuestos, administración exclusiva por **Tailscale Mesh VPN**, webhooks de WhatsApp filtrados vía **Cloudflare Zero Trust Tunnels** y protección host con **CrowdSec + UFW**.
+  * Desacoplamiento de Chatwoot (uso de Chatwoot Cloud o instancia satélite) para proteger la RAM del VPS.
+- [ ] **Hito 2.2 — Onboarding Oficial con Meta Cloud API (WABA):**
+  * Conexión oficial de WhatsApp mediante Embedded Signup para garantizar 0% riesgo de baneo de los números de los consultorios.
+- [ ] **Hito 2.3 — Secuencia Anti-Ausentismo & Automatización de Reseñas Maps:**
+  * Recordatorios automáticos por WhatsApp a las 24h y 1h previas a la consultoría, más solicitud automática de reseña 5 estrellas en Google Maps post-atención.
+- [ ] **Meta Financiera Fase 2:** 50 prestadores acumulados en Tier 2 ($250/mes prom. = $12,500 MRR) + 15 nuevos setups mensuales ($650 prom. = $9,750) + base Tier 1 = **~$25,000 USD/mes**.
 
 ### 🟣 FASE 3: Fábrica Autónoma 24/7 con Hermes + Obsidian & Expansión Internacional ($25,000 a $60,000 USD/mes — Meses 4 a 6)
 > **Principio Rector:** Arbitraje geográfico e inteligencia colectiva. El mismo **embudo** que en Argentina se vende en Tier 1/2, en **España, Estados Unidos (Miami/Texas/California hispano), México y Chile** se comercializa entre **$1,500 y $3,000 USD de Setup** y **$500 a $1,000 USD/mes de Abono** ([Fuente Arbitraje](https://www.youtube.com/watch?v=vq6qME9Og2c)).

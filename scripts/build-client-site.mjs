@@ -36,9 +36,10 @@ export const RUBRO_TO_ARCHETYPE_MAP = {
   nutricionista: "editorial-classic",
   psicologo: "editorial-classic",
   abogado: "obsidian-authority",
-  odontologo: "editorial-classic",
-  kinesiologo: "editorial-classic",
-  estetica: "editorial-classic",
+  odontologo: "architectural-prestige",
+  kinesiologo: "kinetic-performance",
+  estetica: "clinical-pure",
+  cirugia: "clinical-pure",
   clinica: "architectural-prestige",
   corporativo: "high-ticket-consulting",
   consultor: "high-ticket-consulting",
@@ -66,11 +67,11 @@ export const RUBRO_TO_ARCHETYPE_MAP = {
 export const ARCHETYPE_ALIASES = {
   "editorial-classic": ["nutricionista", "editorial-classic"],
   "obsidian-authority": ["abogado", "obsidian-authority"],
-  "architectural-prestige": ["clinica", "architectural-prestige"],
+  "architectural-prestige": ["clinica", "odontologo", "architectural-prestige"],
   "high-ticket-consulting": ["corporativo", "consultor", "high-ticket-consulting"],
   "tech-editorial-system": ["tech", "software", "sistemas", "tech-editorial-system"],
-  "kinetic-performance": ["deportes", "gym", "entrenador", "fitness", "kinetic-performance"],
-  "clinical-pure": ["dermatologia", "medico", "dermatologo", "clinical-pure"],
+  "kinetic-performance": ["deportes", "kinesiologo", "gym", "entrenador", "fitness", "kinetic-performance"],
+  "clinical-pure": ["dermatologia", "estetica", "cirugia", "medico", "dermatologo", "clinical-pure"],
   "minimalist-hardware": ["producto", "hardware", "iluminacion", "lamparas", "equipamiento", "minimalist-hardware"],
   "industrial-authority": ["construccion", "pavimentacion", "vial", "ingenieria", "industrial-authority"],
   "minimalist-pure": ["odontologo", "minimalist-pure"],
@@ -313,7 +314,8 @@ function main() {
     }
   }
 
-  const latestVersionString = `${vertical}@${templatePkgVersion}`;
+  const templateFolderName = templateDir.split(/[\\/]/).pop() || vertical;
+  const latestVersionString = `${templateFolderName}@${templatePkgVersion}`;
   const requestedVersion = upgradeRequested
     ? latestVersionString
     : resolveTemplateVersion(fm, templatePkgVersion);
@@ -337,7 +339,7 @@ function main() {
 
   if (shouldReclone) {
     console.log(
-      `\x1b[36m[build-site]\x1b[0m Clonando templates/${vertical} (${requestedVersion}, motivo: ${reason}) → sites/${slug} ...`
+      `\x1b[36m[build-site]\x1b[0m Clonando templates/${templateFolderName} (${requestedVersion}, motivo: ${reason}) → sites/${slug} ...`
     );
     if (existsSync(siteDir)) {
       rmSync(siteDir, { recursive: true, force: true });
@@ -403,17 +405,27 @@ function main() {
       ? fm.calendly
       : `https://wa.me/${cleanPhone}?text=Hola!%20Quiero%20agendar%20mi%20primera%20consultor%C3%ADa%20gratuita`;
 
+  const phoneDisplay = fm.telefono_display || (cleanPhone ? `+${cleanPhone}` : baseSite.content?.prestador?.telefono);
+  const addressDisplay = fm.direccion || baseSite.content?.prestador?.ubicacion || baseSite.content?.footer?.direccion;
+
   const baseContentPatch = {
+    meta: {
+      title: `${fm.nombre} — ${fm.subtitulo || fm.rol || "Atención Especializada"}`,
+      description: fm.bajada || baseSite.content?.meta?.description || `${fm.nombre} · Turnos y consultoría online.`,
+    },
     prestador: {
       nombre: fm.nombre,
       rol: fm.rol || baseSite.content?.prestador?.rol || `Especialista · ${fm.subtitulo || "Atención Personalizada"}`,
-      subtitulo: fm.subtitulo || fm.rol || baseSite.content?.prestador?.subtitulo || "Nutrición Clínica & Hábitos",
-      tagline: fm.subtitulo || fm.rol || baseSite.content?.prestador?.tagline || "Nutrición Basada en Evidencia",
+      subtitulo: fm.subtitulo || fm.rol || baseSite.content?.prestador?.subtitulo || "Atención Especializada & Turnos",
+      tagline: fm.tagline || fm.subtitulo || fm.rol || baseSite.content?.prestador?.tagline || "Atención Basada en Evidencia",
       titulo: fm.titulo || baseSite.content.prestador.titulo,
       bajada: fm.bajada || baseSite.content.prestador.bajada,
       bio: sectionText(body, "Bio") || baseSite.content.prestador.bio,
       enfoque: sectionText(body, "Enfoque") || baseSite.content.prestador.enfoque,
       whatsapp: waLink,
+      telefono: phoneDisplay,
+      ubicacion: addressDisplay,
+      bookingUrl,
     },
     problema: {
       ...baseSite.content.problema,
@@ -426,8 +438,9 @@ function main() {
       blurb:
         fm.tagline ||
         sectionText(body, "Footer") ||
-        baseSite.content?.footer?.blurb ||
-        `${fm.nombre} · Atención profesional y consultorías de alta calidad.`,
+        `${fm.nombre} · ${fm.rol || fm.subtitulo || "Atención profesional y consultorías de alta calidad."}`,
+      direccion: addressDisplay,
+      telefono: phoneDisplay,
       credit: "Landing por NexoBow",
     },
     reviews: {

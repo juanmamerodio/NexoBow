@@ -198,3 +198,14 @@ test("T-ARC-03: resolveTemplateVersion soporta tanto versión de arquetipo como 
     "nutricionista@1.0.0"
   );
 });
+
+test("T-ARC-04: rubros high-ticket (odontologo, estetica, cirugia, kinesiologo) mapean a sus templates REA dedicados", () => {
+  assert.equal(resolveTemplateArchetype({ rubro: "odontologo" }), "architectural-prestige");
+  assert.equal(resolveTemplateArchetype({ rubro: "estetica" }), "clinical-pure");
+  assert.equal(resolveTemplateArchetype({ rubro: "cirugia" }), "clinical-pure");
+  assert.equal(resolveTemplateArchetype({ rubro: "kinesiologo" }), "kinetic-performance");
+
+  assert.ok(resolveTemplateSourceDirectory("architectural-prestige").endsWith("templates/clinica"));
+  assert.ok(resolveTemplateSourceDirectory("clinical-pure").endsWith("templates/dermatologia"));
+  assert.ok(resolveTemplateSourceDirectory("kinetic-performance").endsWith("templates/deportes"));
+});

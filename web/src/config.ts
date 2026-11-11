@@ -9,12 +9,13 @@ export const SITE = {
     "https://wa.me/5493489536088?text=Hola%20Juanma!%20Vi%20la%20web%20de%20NexoBow%20y%20quiero%20implementar%20el%20sistema%20en%20mi%20negocio.",
   afterbowUrl: "https://www.afterbow.com",
   founderCvUrl: "https://juanmamerodio.github.io/cv",
-  demoLiveUrl: "https://preview.nexobow.site/demo-nutri-sofia/",
+  demoLiveUrl: "https://demo-nutri-sofia.pages.dev/",
   setupPrice: "$189.999 ARS",
   setupOldPrice: "$260.000 ARS",
-  monthlyPrice: "$12.259 ARS",
-  clinicSetupPrice: "$329.999 ARS",
-  clinicMonthlyPrice: "$19.899 ARS",
+  monthlyPrice: "$0 ARS/mes",
+  tier1HostingNote: "1 año de hosting Cloudflare incluido",
+  clinicSetupPrice: "$549.999 ARS",
+  clinicMonthlyPrice: "$229.999 ARS",
   demoExpirationDays: 7,
   caseStudies: [
     {
@@ -83,10 +84,10 @@ export const SITE = {
     },
     {
       number: "Bono #3",
-      title: "Primer Mes de Mantenimiento 100% Bonificado + Garantía <1s",
+      title: "30 Días de Prueba del Turno Automatizado IA (Tier 2) + Garantía <1s",
       description:
-        "No pagás el abono de $12.259 ARS durante los primeros 30 días. Y si tu página no carga en menos de 1 segundo, no pagás el setup.",
-      value: "$12.259 ARS",
+        "Probás sin cargo nuestra Recepcionista IA 24/7 en WhatsApp durante 30 días. Y si tu landing no carga en menos de 1 segundo, no pagás el setup.",
+      value: "$229.999 ARS",
     },
   ],
   templateCatalog: [
@@ -97,6 +98,7 @@ export const SITE = {
       palette: ["#fcf3ed", "#35221a", "#e70025"],
       status: "En Vivo (Demo)",
       description: "Tipografía serif Fraunces + sans Archivo, calidez editorial europea y alta lectura clínica.",
+      demoUrl: "https://demo-nutri-sofia.pages.dev/",
     },
     {
       id: "02",

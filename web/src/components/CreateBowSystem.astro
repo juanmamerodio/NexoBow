@@ -2,41 +2,138 @@
 import { SITE } from "../config";
 ---
 
-<section id="crea-tu-sistema-bow" class="relative mx-auto max-w-6xl px-6 py-24">
+<section id="crea-tu-sistema-bow" class="relative mx-auto max-w-6xl px-6 py-24 scroll-mt-16">
   <div class="relative overflow-hidden rounded-3xl border border-[#4928C2]/50 bg-gradient-to-br from-[#0B0D12] via-[#040607] to-[#5B2A62]/25 p-8 sm:p-12 shadow-[0_20px_60px_rgba(4,6,7,0.9)]">
-    <div class="grid items-center gap-10 lg:grid-cols-12">
-      <!-- Left Copy -->
+    <!-- Ambient Light Accent -->
+    <div class="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-[#BF40FA]/10 blur-3xl"></div>
+
+    <div class="grid items-start gap-12 lg:grid-cols-12">
+      <!-- Left: Inbound Preview Form -->
       <div class="lg:col-span-7">
         <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-[#4928C2]/50 bg-[#4928C2]/15 px-3.5 py-1 text-xs font-bold tracking-wider text-[#E3D9FC] uppercase">
-          <span class="h-2 w-2 rounded-full bg-[#BF40FA]"></span>
-          <span>PRÓXIMAMENTE EN FASE 2 · ARQUITECTURA AUTÓNOMA</span>
+          <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+          <span>SOLICITUD INBOUND · ENTREGA EN &lt; 24 HORAS</span>
         </div>
 
         <h2 class="font-outfit text-3xl font-extrabold tracking-tight text-[#F8F6FF] sm:text-4xl">
-          CREÁ TU SISTEMA BOW: <span class="text-[#BF40FA]">Tu infraestructura generada en vivo vía API</span>
+          CREÁ TU SISTEMA BOW: <span class="text-[#BF40FA]">Pedí tu preview gratuita en vivo</span>
         </h2>
 
         <p class="mt-4 text-base leading-relaxed text-[#E3D9FC]/85">
-          Estamos construyendo el primer motor autoservicio donde ingresás el link de Google Maps de tu consultorio y nuestra API agéntica ensambla tu landing, redacta tu oferta y conecta tu WhatsApp en menos de 90 segundos.
+          Completá los datos de tu consultorio o estudio. Nuestro sistema registra tu ficha en Supabase, te notifica por email y te armamos una propuesta interactiva en vivo con 4 paletas de color en menos de 24 horas, sin costo ni compromiso.
         </p>
 
-        <div class="mt-8 flex flex-wrap items-center gap-4">
+        <!-- Formulario Inbound 0-JS -->
+        <form
+          action="/api/v1/bow-system/create"
+          method="POST"
+          class="mt-8 space-y-4 rounded-2xl border border-[#4928C2]/35 bg-[#040607]/80 p-6 shadow-inner"
+        >
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="lead-nombre" class="block text-xs font-semibold text-[#E3D9FC]/90 mb-1.5">
+                Nombre y Apellido *
+              </label>
+              <input
+                type="text"
+                id="lead-nombre"
+                name="name"
+                required
+                placeholder="Ej: Dra. Sofía Martínez"
+                class="w-full rounded-xl border border-[#4928C2]/40 bg-[#0B0D12] px-3.5 py-2.5 text-xs text-[#F8F6FF] placeholder-[#E3D9FC]/60 outline-none transition-all focus:border-[#BF40FA] focus:ring-1 focus:ring-[#BF40FA]"
+              />
+            </div>
+
+            <div>
+              <label for="lead-rubro" class="block text-xs font-semibold text-[#E3D9FC]/90 mb-1.5">
+                Especialidad o Rubro *
+              </label>
+              <select
+                id="lead-rubro"
+                name="rubro"
+                required
+                class="w-full rounded-xl border border-[#4928C2]/40 bg-[#0B0D12] px-3.5 py-2.5 text-xs text-[#F8F6FF] outline-none transition-all focus:border-[#BF40FA] focus:ring-1 focus:ring-[#BF40FA]"
+              >
+                <option value="Medicina Estética & Dermatología">Medicina Estética &amp; Dermatología</option>
+                <option value="Odontología & Estética Dental">Odontología &amp; Estética Dental</option>
+                <option value="Cirugía Plástica & Reparadora">Cirugía Plástica &amp; Reparadora</option>
+                <option value="Nutrición Funcional & Deportiva">Nutrición Funcional &amp; Deportiva</option>
+                <option value="Estudio Jurídico & Abogacía">Estudio Jurídico &amp; Abogacía</option>
+                <option value="Kinesiología & Alto Rendimiento">Kinesiología &amp; Alto Rendimiento</option>
+                <option value="Clínica / Centro Médico">Clínica / Centro Médico</option>
+                <option value="Otro Servicio Profesional">Otro Servicio Profesional</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="lead-maps" class="block text-xs font-semibold text-[#E3D9FC]/90 mb-1.5">
+              Link de Google Maps, Instagram o Web actual
+            </label>
+            <input
+              type="text"
+              id="lead-maps"
+              name="maps_url"
+              placeholder="https://maps.app.goo.gl/... o @tu_consultorio"
+              class="w-full rounded-xl border border-[#4928C2]/40 bg-[#0B0D12] px-3.5 py-2.5 text-xs text-[#F8F6FF] placeholder-[#E3D9FC]/60 outline-none transition-all focus:border-[#BF40FA] focus:ring-1 focus:ring-[#BF40FA]"
+            />
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="lead-whatsapp" class="block text-xs font-semibold text-[#E3D9FC]/90 mb-1.5">
+                WhatsApp de Contacto *
+              </label>
+              <input
+                type="tel"
+                id="lead-whatsapp"
+                name="whatsapp"
+                required
+                placeholder="+54 9 11 1234-5678"
+                class="w-full rounded-xl border border-[#4928C2]/40 bg-[#0B0D12] px-3.5 py-2.5 text-xs text-[#F8F6FF] placeholder-[#E3D9FC]/60 outline-none transition-all focus:border-[#BF40FA] focus:ring-1 focus:ring-[#BF40FA]"
+              />
+            </div>
+
+            <div>
+              <label for="lead-email" class="block text-xs font-semibold text-[#E3D9FC]/90 mb-1.5">
+                Email para recibir la demo *
+              </label>
+              <input
+                type="email"
+                id="lead-email"
+                name="email"
+                required
+                placeholder="doctora@tudominio.com"
+                class="w-full rounded-xl border border-[#4928C2]/40 bg-[#0B0D12] px-3.5 py-2.5 text-xs text-[#F8F6FF] placeholder-[#E3D9FC]/60 outline-none transition-all focus:border-[#BF40FA] focus:ring-1 focus:ring-[#BF40FA]"
+              />
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button
+              type="submit"
+              class="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#BF40FA] to-[#4928C2] px-6 py-3.5 text-xs font-extrabold uppercase tracking-wider text-[#F8F6FF] transition-all duration-300 hover:brightness-110 shadow-[0_0_25px_rgba(191,64,250,0.35)] cursor-pointer"
+            >
+              <span>⚡ Solicitar Mi Preview Gratuita (Demora &lt; 24hs)</span>
+              <span>→</span>
+            </button>
+          </div>
+        </form>
+
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-[#E3D9FC]/70">
+          <span>🔒 Cero spam · Cumplimiento Ley 25.326</span>
           <a
             href={SITE.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-3 rounded-full border border-[#BF40FA]/60 bg-[#5B2A62]/30 px-6 py-3.5 text-sm font-bold text-[#F8F6FF] transition-all duration-200 hover:bg-[#BF40FA]"
+            class="font-semibold text-emerald-400 hover:underline"
           >
-            <span>Pedir acceso anticipado por WhatsApp</span>
-            <span>→</span>
+            ¿Querés pedirla por WhatsApp directo? +54 9 3489 53-6088 →
           </a>
-          <span class="text-xs text-[#E3D9FC]/70">
-            Prioridad de acceso para clientes activos del Plan Core y Clínica.
-          </span>
         </div>
       </div>
 
-      <!-- Right API Console Mockup -->
+      <!-- Right: Real-time API & Supabase Architecture Console -->
       <div class="lg:col-span-5">
         <div class="rounded-2xl border border-[#4928C2]/45 bg-[#040607] p-5 font-mono text-xs text-[#E3D9FC] shadow-inner">
           <div class="flex items-center justify-between border-b border-[#4928C2]/25 pb-3 mb-3">
@@ -49,15 +146,31 @@ import { SITE } from "../config";
           </div>
 
           <div class="space-y-2 text-[11px] leading-relaxed">
-            <p class="text-[#E3D9FC]/60">// 1. Input desde Google Maps</p>
-            <p><span class="text-[#BF40FA]">"place_url"</span>: <span class="text-emerald-300">"maps.google.com/?cid=consultorio"</span>,</p>
-            <p><span class="text-[#BF40FA]">"style_preset"</span>: <span class="text-emerald-300">"01-editorial-delta"</span>,</p>
-            <p><span class="text-[#BF40FA]">"whatsapp_sync"</span>: <span class="text-emerald-300">true</span></p>
-            <div class="my-2 border-t border-[#4928C2]/20 pt-2">
-              <p class="text-emerald-400">✓ Astro SSG compiled (0 KB JS · 0.6s LCP)</p>
-              <p class="text-emerald-400">✓ Edge CDN deployed &amp; SSL active</p>
+            <p class="text-[#E3D9FC]/60">// Flujo Inbound Automatizado NexoBow</p>
+            <p><span class="text-[#BF40FA]">"lead_source"</span>: <span class="text-emerald-300">"inbound_web"</span>,</p>
+            <p><span class="text-[#BF40FA]">"database"</span>: <span class="text-emerald-300">"Supabase PostgreSQL (ACID)"</span>,</p>
+            <p><span class="text-[#BF40FA]">"notification"</span>: <span class="text-emerald-300">"Juanma Merodio (+54 9 3489 53-6088)"</span>,</p>
+            <p><span class="text-[#BF40FA]">"compiler"</span>: <span class="text-emerald-300">"Astro SSG Engine &lt;0.8s"</span>,</p>
+            <p><span class="text-[#BF40FA]">"theme_switcher"</span>: <span class="text-emerald-300">"4 paletas interactivas"</span>,</p>
+            <p><span class="text-[#BF40FA]">"delivery_channel"</span>: <span class="text-emerald-300">"WhatsApp + Email"</span></p>
+            
+            <div class="my-3 border-t border-[#4928C2]/20 pt-2.5 space-y-1">
+              <p class="text-emerald-400 font-bold">✓ Lead registrado en tabla CRM</p>
+              <p class="text-emerald-400 font-bold">✓ Alerta en tiempo real disparada</p>
+              <p class="text-emerald-400 font-bold">✓ Preview lista en preview.nexobow.site</p>
             </div>
           </div>
+        </div>
+
+        <!-- Phone & Direct Contact Badge -->
+        <div class="mt-4 rounded-2xl border border-emerald-500/30 bg-emerald-950/20 p-4 text-xs text-[#E3D9FC]">
+          <div class="flex items-center gap-2 font-bold text-emerald-300 mb-1">
+            <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+            <span>Atención Personalizada del Fundador</span>
+          </div>
+          <p class="text-[11px] leading-relaxed text-[#E3D9FC]/80">
+            Cada solicitud es revisada personalmente por <strong>Juanma Merodio</strong> al WhatsApp <strong>+54 9 3489 53-6088</strong> para asegurar que tu diseño refleje la categoría de tu consultorio.
+          </p>
         </div>
       </div>
     </div>

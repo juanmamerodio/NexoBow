@@ -1,0 +1,48 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE } from "../config";
+---
+
+<Layout
+  title="Solicitud Recibida | NexoBow Systems"
+  description="Tu solicitud de preview gratuita fue registrada correctamente. Juanma Merodio se pondrá en contacto por WhatsApp."
+>
+  <Header />
+  <main class="mx-auto max-w-3xl px-6 py-28 text-center">
+    <div class="rounded-3xl border border-emerald-500/40 bg-gradient-to-b from-emerald-950/25 via-[#0B0D12] to-[#040607] p-10 sm:p-14 shadow-[0_20px_60px_rgba(4,6,7,0.9)]">
+      <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-500/50 bg-emerald-500/15 text-2xl text-emerald-400">
+        ✓
+      </div>
+      <p class="text-xs font-bold uppercase tracking-widest text-emerald-400">
+        Solicitud Registrada en NexoBow CRM
+      </p>
+      <h1 class="mt-3 font-outfit text-3xl font-extrabold tracking-tight text-[#F8F6FF] sm:text-4xl">
+        ¡Listo! Ya recibimos los datos de tu consultorio.
+      </h1>
+      <p class="mt-4 text-base leading-relaxed text-[#E3D9FC]/85">
+        Tu ficha ingresó a nuestro sistema. En menos de 24 horas hábiles armamos tu preview interactiva con 4 paletas de color y te la enviamos por WhatsApp o email.
+      </p>
+
+      <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a
+          href={SITE.whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-3 rounded-full bg-emerald-500 px-6 py-3.5 text-sm font-bold text-[#040607] transition-all hover:bg-emerald-400 shadow-[0_0_25px_rgba(16,185,129,0.35)]"
+        >
+          <span>Acelerar por WhatsApp ({SITE.phone})</span>
+          <span>→</span>
+        </a>
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 rounded-full border border-[#4928C2]/50 bg-[#0B0D12] px-6 py-3.5 text-sm font-semibold text-[#E3D9FC] transition-colors hover:border-[#BF40FA] hover:text-[#F8F6FF]"
+        >
+          <span>← Volver a NexoBow</span>
+        </a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

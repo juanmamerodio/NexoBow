@@ -2,8 +2,8 @@
 sheet_id: 15
 lead_status: Sin contactar
 created_at: 2026-10-26
-last_activity_at: 2026-10-26
-expires_at: 2026-11-02
+last_activity_at: "2026-11-11"
+expires_at: "2026-11-18"
 slug: 15-centro-franco-diaz-nutri
 nombre: Centro Franco Díaz
 rubro: nutricionista

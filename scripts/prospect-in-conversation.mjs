@@ -13,6 +13,8 @@ import {
   filterEligiblePlaces,
   formatLeadToSheetRow,
   buildCorrelativeSlug,
+  mapSheetRowToLeadEntity,
+  normalizePhone,
   DEFAULT_SPREADSHEET_ID
 } from './sheets-sync.mjs';
 
@@ -22,13 +24,13 @@ export function resolveRubroFromLead(nichoOrQuery = '') {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
   if (clean.includes('psic')) return 'psicologo';
-  if (clean.includes('abog') || clean.includes('jurid')) return 'abogado';
+  if (clean.includes('abog') || clean.includes('jurid') || clean.includes('legal')) return 'abogado';
   if (clean.includes('odont') || clean.includes('dent')) return 'odontologo';
   if (clean.includes('kines') || clean.includes('fisio')) return 'kinesiologo';
-  if (clean.includes('estet') || clean.includes('derma')) return 'estetica';
-  if (clean.includes('vet')) return 'veterinaria';
-  if (clean.includes('conta')) return 'contador';
-  if (clean.includes('arqu')) return 'arquitecto';
+  if (clean.includes('cirug') || clean.includes('plast')) return 'cirugia';
+  if (clean.includes('derma')) return 'dermatologia';
+  if (clean.includes('estet')) return 'estetica';
+  if (clean.includes('clin') || clean.includes('medic')) return 'clinica';
   if (clean.includes('nutri')) return 'nutricionista';
   const slugified = clean.replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
   return slugified && slugified !== 'servicios-profesionales' ? slugified : 'nutricionista';
@@ -238,10 +240,31 @@ async function main() {
     console.log(`- Fuente de datos: Google Maps Platform (Places API New)`);
   }
 
-  // 1. Obtener prospectos existentes en el Google Sheet para deduplicación
-  console.log(`\n1. Verificando prospectos existentes en Google Sheet (${DEFAULT_SPREADSHEET_ID})...`);
+  // 1. Obtener prospectos existentes en Google Sheet + Supabase para deduplicación e ID único
+  console.log(`\n1. Verificando prospectos existentes en Google Sheet (${DEFAULT_SPREADSHEET_ID}) y Supabase...`);
   const existingKeys = defaultLeadStore.getExistingKeys();
-  console.log(`✓ ${existingKeys.length} registros existentes identificados para deduplicación.`);
+  let supabaseClient = null;
+  let supabaseMaxId = 0;
+
+  const supabaseUrl = process.env.PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.PUBLIC_SUPABASE_ANON_KEY;
+  if (!isMock && supabaseUrl && supabaseKey) {
+    try {
+      const { createClient } = await import('@supabase/supabase-js');
+      supabaseClient = createClient(supabaseUrl, supabaseKey);
+      const { data: sbRows } = await supabaseClient.from('leads').select('id, name, phone');
+      if (Array.isArray(sbRows)) {
+        for (const r of sbRows) {
+          if (r.id > supabaseMaxId) supabaseMaxId = Number(r.id);
+          if (r.name) existingKeys.push(String(r.name));
+          if (r.phone) existingKeys.push(normalizePhone(r.phone));
+        }
+      }
+    } catch (sbErr) {
+      console.warn(`[AVISO] No se pudo consultar Supabase para deduplicación (${sbErr.message}).`);
+    }
+  }
+  console.log(`✓ ${existingKeys.length} claves existentes identificadas para deduplicación.`);
 
   // 2. Extraer prospectos candidatos
   let candidatePlaces = [];
@@ -271,26 +294,40 @@ async function main() {
 
   console.log(`✓ ${candidatePlaces.length} candidatos encontrados en la zona.`);
 
-  const nonRelevantWords = ['omnilife', 'seytu', 'cosme', 'amway', 'herbalife', 'belleza', 'uñas', 'depilacion'];
+  const nonRelevantWords = ['omnilife', 'seytu', 'cosme', 'amway', 'herbalife', 'belleza', 'uñas', 'depilacion', 'peluqueria', 'barberia'];
   const filteredCandidates = candidatePlaces.filter(p => {
     const t = (p.displayName || '').toLowerCase();
-    return !nonRelevantWords.some(w => t.includes(w));
+    if (nonRelevantWords.some(w => t.includes(w))) return false;
+    if (!isMock) {
+      const digits = String(p.nationalPhoneNumber || '').replace(/\D/g, '');
+      if (digits.length < 10) return false;
+    }
+    return true;
   });
 
-  // 3. Filtrar candidatos (sin web corporativa + sin duplicados + tope 10)
+  if (!isMock) {
+    // Priorizar celulares argentinos (54911[23567]...) por sobre líneas fijas (549114...) para mayor tasa de WhatsApp activo
+    filteredCandidates.sort((a, b) => {
+      const isMobile = (p) => /^\+54911[23567]/.test(String(p.nationalPhoneNumber || ''));
+      return Number(isMobile(b)) - Number(isMobile(a));
+    });
+  }
+
+  // 3. Filtrar candidatos (sin web corporativa + sin duplicados + tope limit)
   const eligibleLeads = filterEligiblePlaces(filteredCandidates, existingKeys, limit);
 
   if (eligibleLeads.length === 0) {
     console.log(`\n\x1b[33m[AVISO] No se encontraron prospectos nuevos sin web en la zona especificada.\x1b[0m`);
-    console.log(`Posibles motivos: todos los encontrados ya están en el Sheet o ya disponen de sitio web corporativo propio.`);
+    console.log(`Posibles motivos: todos los encontrados ya están cargados o ya disponen de sitio web corporativo propio.`);
     return;
   }
 
   console.log(`\n3. Prospectos elegibles filtrados (sin web y sin duplicar): ${eligibleLeads.length}`);
 
-  // 4. Formatear e insertar en Google Sheets mediante defaultLeadStore
-  const startIndex = defaultLeadStore.getNextId();
+  // 4. Formatear e insertar en Google Sheets + Supabase + generar ficha y landing
+  const startIndex = Math.max(defaultLeadStore.getNextId(), supabaseMaxId + 1);
   const addedLeads = [];
+  const supabaseRecordsToUpsert = [];
   const leadRubro = resolveRubroFromLead(flags.rubro || nicho || query);
 
   for (let i = 0; i < eligibleLeads.length; i++) {
@@ -311,9 +348,9 @@ async function main() {
     let row = formatLeadToSheetRow(leadFormatted, rowId, flags.pitch || null);
 
     if (dryRun) {
-      console.log(`[DRY-RUN] Fila preparada para ${leadFormatted.displayName}`);
+      console.log(`[DRY-RUN] Fila preparada (#${rowId}) para ${leadFormatted.displayName} → ${itemSlug}`);
     } else {
-      console.log(`Guardando en Google Sheets: ${leadFormatted.displayName}...`);
+      console.log(`Guardando en Google Sheets (#${rowId}): ${leadFormatted.displayName}...`);
       try {
         const appended = defaultLeadStore.appendLead(leadFormatted, {
           pitchOverride: flags.pitch || null,
@@ -330,8 +367,6 @@ async function main() {
       try {
         console.log(`[prospect] Generando ficha y sitio para ${itemSlug}...`);
         const { spawnSync } = await import('node:child_process');
-        
-        // 1. Guardar lead-raw.json
         const { writeFileSync, mkdirSync } = await import('node:fs');
         const assetDir = join(REPO_ROOT, 'assets', itemSlug);
         mkdirSync(assetDir, { recursive: true });
@@ -344,13 +379,14 @@ async function main() {
           rubro: leadRubro,
           direccion: item.formattedAddress,
           telefono: item.nationalPhoneNumber,
+          telefonoFormato: item.nationalPhoneNumber,
+          website: item.websiteUri || '',
           rating: item.rating || 5,
           userRatingCount: item.userRatingCount || 0,
           reviews: item.reviews || []
         };
         writeFileSync(join(assetDir, 'lead-raw.json'), JSON.stringify(rawPayload, null, 2), 'utf8');
 
-        // 2. Generar ficha con generate-client-fiche
         const ficheRes = spawnSync('node', ['scripts/generate-client-fiche.mjs', `assets/${itemSlug}/lead-raw.json`], {
           cwd: REPO_ROOT,
           shell: process.platform === 'win32',
@@ -360,7 +396,6 @@ async function main() {
           throw new Error(`generate-client-fiche falló con código ${ficheRes.status}`);
         }
 
-        // 3. Compilar sitio con build-client-site (auto-sincroniza con dist-previews/{slug}/)
         const buildRes = spawnSync('node', ['scripts/build-client-site.mjs', `clients/${itemSlug}.md`], {
           cwd: REPO_ROOT,
           shell: process.platform === 'win32',
@@ -373,9 +408,24 @@ async function main() {
       } catch (buildErr) {
         console.warn(`[prospect] Advertencia al generar landing para ${itemSlug}: ${buildErr.message}`);
       }
+
+      const entity = mapSheetRowToLeadEntity(row);
+      if (entity && entity.id > 0) {
+        entity.slug = itemSlug;
+        entity.metadata = {
+          ...(entity.metadata || {}),
+          rubro: leadRubro,
+          source: 'prospect-in-conversation',
+          rating: item.rating || 5,
+          reviews_count: item.userRatingCount || 0
+        };
+        supabaseRecordsToUpsert.push(entity);
+      }
     }
 
     addedLeads.push({
+      id: rowId,
+      slug: itemSlug,
       nombre: leadFormatted.displayName,
       telefono: leadFormatted.nationalPhoneNumber,
       ubicacion: leadFormatted.formattedAddress,
@@ -385,8 +435,19 @@ async function main() {
     });
   }
 
-  // Si no es dry-run y se generaron leads, desplegar automáticamente a Cloudflare Pages
-  if (!dryRun && addedLeads.length > 0) {
+  if (!dryRun && supabaseClient && supabaseRecordsToUpsert.length > 0) {
+    const { error: sbUpsertErr } = await supabaseClient
+      .from('leads')
+      .upsert(supabaseRecordsToUpsert, { onConflict: 'id' });
+    if (sbUpsertErr) {
+      console.warn(`[prospect AVISO] Error al sincronizar nuevos leads a Supabase: ${sbUpsertErr.message}`);
+    } else {
+      console.log(`\x1b[32m[prospect] ✓\x1b[0m ${supabaseRecordsToUpsert.length} leads sincronizados en tiempo real con Supabase (/admin/crm).`);
+    }
+  }
+
+  // Si no es dry-run y se generaron leads (y no se pasó --no-deploy), desplegar hacia Cloudflare Pages
+  if (!dryRun && addedLeads.length > 0 && !flags['no-deploy']) {
     console.log(`\n\x1b[36m[prospect] Desplegando demos actualizadas hacia Cloudflare Pages...\x1b[0m`);
     const { spawnSync } = await import('node:child_process');
     spawnSync('npm', ['run', 'deploy-previews'], {
@@ -397,11 +458,12 @@ async function main() {
   }
 
   console.log(`\n\x1b[32m=======================================================`);
-  console.log(`✓ ${addedLeads.length} PROSPECTOS AGREGADOS CON ÉXITO AL GOOGLE SHEET`);
+  console.log(`✓ ${addedLeads.length} PROSPECTOS AGREGADOS CON ÉXITO AL CRM`);
   console.log(`=======================================================\x1b[0m\n`);
 
   addedLeads.forEach((l, idx) => {
     console.log(`${idx + 1}. \x1b[1m${l.nombre}\x1b[0m (${l.telefono || 'Sin tel'})`);
+    console.log(`   - Preview: ${l.demoUrl}`);
     console.log(`   - Ubicación: ${l.ubicacion}`);
     console.log(`   - WhatsApp Directo: ${l.waLink}`);
   });

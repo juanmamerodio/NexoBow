@@ -3,8 +3,8 @@ id: 10
 sheet_id: 10
 lead_status: "1. Prospecto Identificado"
 created_at: "2026-10-24"
-last_activity_at: "2026-10-24"
-expires_at: "2026-10-31"
+last_activity_at: "2026-11-11"
+expires_at: "2026-11-18"
 rubro: nutricionista
 template_archetype: "editorial-classic"
 template_version: "nutricionista@1.0.0"

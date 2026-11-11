@@ -5,6 +5,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname, resolve, basename } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { stringify as stringifyYaml } from "yaml";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -330,20 +331,380 @@ export const CONTEXTUAL_BRANDING_PALETTES = [
   },
 ];
 
+export const RUBRO_COPY_PACKS = {
+  odontologo: [
+    {
+      id: "odonto-precision",
+      label: "Odontología Estética & Implantología Sin Dolor",
+      build(nombre) {
+        return {
+          rol: "Odontología Digital, Implantología & Estética Dental",
+          subtitulo: "Odontología Digital & Estética Dental",
+          tagline: "Recuperá tu sonrisa con planificación 3D, presupuesto cerrado y cero sorpresas",
+          titulo: "Odontología digital e implantes de alta precisión para recuperar tu *sonrisa sin dolor*",
+          bajada: "Valoración diagnóstica inicial con planificación digital y presupuesto cerrado por escrito. Turnos ágiles y atención personalizada sin esperas interminables.",
+          bio: `${nombre} integra odontología digital, rehabilitación estética e implantología guiada con foco en el confort del paciente y tratamientos predecibles desde la primera visita.`,
+          enfoque: `Trabajamos con diagnóstico claro y tiempos optimizados: conocés cada etapa de tu tratamiento, las opciones estéticas y el arancel cerrado antes de empezar.`,
+          problema: `Muchos pacientes postergan años arreglarse la boca por miedo al dolor, presupuestos opacos que cambian a mitad de camino o turnos que se estiran meses.`,
+          casos: [
+            {
+              titulo: "Implantología Guiada & Carga Rápida",
+              descripcion: "Rehabilitación de piezas ausentes con planificación digital y mínima invasión quirúrgica.",
+              resultado: "Recuperación funcional y estética natural con reincorporación laboral en 48 hs.",
+            },
+            {
+              titulo: "Estética Dental & Carillas Biomiméticas",
+              descripcion: "Diseño digital armónico respetando la anatomía facial y el esmalte natural.",
+              resultado: "Sonrisa renovada en pocas sesiones con acabado completamente natural.",
+            },
+          ],
+          faq: [
+            {
+              q: "¿Cómo es la primera consulta de valoración?",
+              a: "Evaluamos tu caso en detalle, revisamos estudios previos y te entregamos un plan de tratamiento claro con tiempos y presupuesto cerrado.",
+            },
+            {
+              q: "¿Los procedimientos generan dolor?",
+              a: "Aplicamos protocolos mínimamente invasivos y técnicas de anestesia indolora para que vivas la atención con total tranquilidad.",
+            },
+            {
+              q: "¿Qué modalidades de pago y reintegro manejan?",
+              a: "Aceptamos cuotas, transferencias y emitimos factura electrónica oficial apta para gestión de reintegros en prepagas.",
+            },
+            {
+              q: "¿Cómo reservo un turno prioritario?",
+              a: "Tocá el botón de WhatsApp o agenda online y coordinamos el horario que mejor se adapte a tu semana sin demoras.",
+            },
+          ],
+        };
+      },
+    },
+  ],
+  estetica: [
+    {
+      id: "estetica-clinica",
+      label: "Medicina Estética & Dermatología Clínica",
+      build(nombre) {
+        return {
+          rol: "Medicina Estética, Dermatología & Rejuvenecimiento Natural",
+          subtitulo: "Medicina Estética & Dermatología",
+          tagline: "Resultados armónicos y naturales con respaldo médico real, sin exageraciones",
+          titulo: "Medicina estética de precisión para realzar tu rostro y piel con *resultados naturales*",
+          bajada: "Evaluación médica personalizada, protocolos dermatológicos seguros e insumos certificados de primera línea. Sin resultados artificiales ni promesas vacías.",
+          bio: `${nombre} combina criterio médico dermatológico y estética facial avanzada para acompañar a cada paciente con protocolos seguros, graduales y totalmente personalizados.`,
+          enfoque: `Cada rostro y cada piel tienen necesidades distintas. Priorizamos la armonía natural, la bioseguridad médica y un seguimiento cercano post-aplicación.`,
+          problema: `El mayor temor hoy en estética es caer en centros no médicos con resultados artificiales, productos sin trazabilidad o recomendaciones estandarizadas que no respetan tus rasgos.`,
+          casos: [
+            {
+              titulo: "Bioestimulación & Calidad de Piel",
+              descripcion: "Protocolo combinado de bioestimuladores de colágeno y láser dermatológico según diagnóstico clínico.",
+              resultado: "Piel más firme, luminosa y uniforme sin tiempo de recuperación prolongado.",
+            },
+            {
+              titulo: "Armonización Facial Conservadora",
+              descripcion: "Reposición sutil de volúmenes y toxina botulínica aplicada con criterio anatómico.",
+              resultado: "Expresión descansada y natural manteniendo tus facciones intactas.",
+            },
+          ],
+          faq: [
+            {
+              q: "¿La evaluación inicial la realiza un médico especialista?",
+              a: "Sí, cada diagnóstico y aplicación está 100% a cargo de profesionales médicos habilitados, evaluando tu historia clínica previa.",
+            },
+            {
+              q: "¿Los resultados se ven naturales o exagerados?",
+              a: "Nuestro criterio clínico prioriza la armonía y la frescura: nadie nota qué te hiciste, pero te ven descansada y luminosa.",
+            },
+            {
+              q: "¿Cuánto tiempo lleva la recuperación?",
+              a: "La mayoría de los procedimientos son ambulatorios e indoloros, permitiéndote retomar tu rutina habitual el mismo día.",
+            },
+            {
+              q: "¿Cómo reservo mi consulta de valoración?",
+              a: "Podés solicitar tu turno directamente por WhatsApp o agenda digital en menos de un minuto.",
+            },
+          ],
+        };
+      },
+    },
+  ],
+  abogado: [
+    {
+      id: "abogado-estrategico",
+      label: "Estrategia Legal & Defensa Patrimonial",
+      build(nombre) {
+        return {
+          rol: "Estudio Jurídico · Asesoramiento Estratégico, Contratos & Litigios",
+          subtitulo: "Estudio Jurídico & Estrategia Legal",
+          tagline: "Defensa técnica precisa, claridad en honorarios y resolución rápida sin vueltas",
+          titulo: "Protegé tu patrimonio y resolvé tu conflicto con *estrategia jurídica real*",
+          bajada: "Sesión diagnóstica inicial para analizar tu documentación, medir riesgos concretos y trazar un plan de acción con honorarios claros desde el día uno.",
+          bio: `${nombre} brinda asesoramiento jurídico de alto nivel a particulares, empresarios y pymes, combinando solidez técnica en tribunales con velocidad en negociaciones estratégicas.`,
+          enfoque: `Convertimos conflictos complejos en hojas de ruta claras: evaluamos probabilidades reales, evitamos juicios innecesarios cuando conviene negociar y litigamos con firmeza cuando hace falta.`,
+          problema: `Demorar una consulta legal o recibir respuestas llenas de tecnicismos sin soluciones prácticas termina costando tiempo, dinero y tranquilidad familiar o empresarial.`,
+          casos: [
+            {
+              titulo: "Acuerdo Extrajudicial de Alto Impacto",
+              descripcion: "Negociación técnica respaldada por auditoría documental y estrategia cautelar previa.",
+              resultado: "Resolución definitiva en semanas evitando años de desgaste judicial.",
+            },
+            {
+              titulo: "Blindaje Contractual & Preventivo",
+              descripcion: "Revisión integral de acuerdos comerciales, societarios y patrimoniales con cláusulas de resguardo.",
+              resultado: "Eliminación de contingencias y previsibilidad operativa total.",
+            },
+          ],
+          faq: [
+            {
+              q: "¿Cómo funciona la primera consulta diagnóstica?",
+              a: "Revisamos tu caso y la documentación clave, te explicamos tus opciones reales en lenguaje claro y definimos los próximos pasos.",
+            },
+            {
+              q: "¿Cómo se fijan los honorarios del estudio?",
+              a: "Trabajamos con presupuestos transparentes por etapa o gestión, acordados por escrito antes de iniciar cualquier trámite.",
+            },
+            {
+              q: "¿Atienden de manera presencial y online?",
+              a: "Sí, coordinamos reuniones presenciales en el estudio o videollamada confidencial para agilizar tus tiempos.",
+            },
+            {
+              q: "¿Garantizan confidencialidad absoluta?",
+              a: "Toda consulta y documentación recibida está protegida por estricto secreto profesional y cumplimiento de la Ley 25.326.",
+            },
+          ],
+        };
+      },
+    },
+  ],
+  clinica: [
+    {
+      id: "clinica-integral",
+      label: "Centro Médico & Diagnóstico de Alta Complejidad",
+      build(nombre) {
+        return {
+          rol: "Centro Médico Especializado · Diagnóstico & Tratamientos Integrales",
+          subtitulo: "Centro Médico de Alta Complejidad",
+          tagline: "Especialistas acreditados, diagnóstico preciso y turnos sin demoras interminables",
+          titulo: "Medicina especializada y diagnóstico integral con *precisión y calidez humana*",
+          bajada: "Turnos ágiles, equipo médico multidisciplinario y seguimiento cercano desde tu primera valoración diagnóstica hasta el alta clínica.",
+          bio: `${nombre} reúne profesionales especializados y tecnología diagnóstica actualizada para ofrecer respuestas médicas concretas, sin derivaciones dispersas ni esperas eternas.`,
+          enfoque: `Centralizamos tu evaluación, los estudios complementarios y el seguimiento en un protocolo claro con presupuestos transparentes y acompañamiento directo.`,
+          problema: `Conseguir un turno médico serio suele significar semanas de espera, consultas apuradas de 10 minutos y falta de seguimiento claro entre estudios.`,
+          casos: [
+            {
+              titulo: "Diagnóstico Temprano & Plan Unificado",
+              descripcion: "Evaluación interdisciplinaria con informe clínico completo en una sola jornada.",
+              resultado: "Inicio rápido del tratamiento indicado sin perder semanas entre derivaciones.",
+            },
+            {
+              titulo: "Seguimiento Post-Tratamiento 24/7",
+              descripcion: "Acompañamiento médico directo por WhatsApp y controles programados de evolución.",
+              resultado: "Alta adherencia clínica y tranquilidad total para el paciente y su familia.",
+            },
+          ],
+          faq: [
+            {
+              q: "¿Cómo agendo una consulta inicial?",
+              a: "Tocá el botón de WhatsApp o calendario online, elegí tu disponibilidad y nuestro equipo te confirma el turno en el acto.",
+            },
+            {
+              q: "¿Emiten factura para reintegros en prepagas?",
+              a: "Sí, entregamos factura e informe médico detallado para que gestiones el reintegro correspondiente ante tu cobertura.",
+            },
+            {
+              q: "¿Atienden casos complejos o segundas opiniones?",
+              a: "Sí, realizamos valoraciones integrales revisando tus estudios previos para darte una segunda opinión fundada.",
+            },
+            {
+              q: "¿Cómo protegen mi historia clínica?",
+              a: "Todo contacto e historial médico se resguarda bajo secreto profesional y la Ley 25.326 de Protección de Datos.",
+            },
+          ],
+        };
+      },
+    },
+  ],
+};
+
+export function resolveCanonicalTemplateForRubro(vertical = "nutricionista") {
+  const clean = String(vertical || "nutricionista").toLowerCase().trim();
+  if (["clinica", "odontologo"].includes(clean)) {
+    return { archetype: "architectural-prestige", templateVersion: "clinica@2.0.0", folder: "clinica" };
+  }
+  if (["dermatologia", "estetica", "cirugia", "medico", "dermatologo"].includes(clean)) {
+    return { archetype: "clinical-pure", templateVersion: "dermatologia@1.0.0", folder: "dermatologia" };
+  }
+  if (clean === "abogado") {
+    return { archetype: "obsidian-authority", templateVersion: "abogado@2.0.0", folder: "abogado" };
+  }
+  if (["deportes", "kinesiologo", "gym", "entrenador", "fitness"].includes(clean)) {
+    return { archetype: "kinetic-performance", templateVersion: "deportes@1.0.0", folder: "deportes" };
+  }
+  if (["corporativo", "consultor"].includes(clean)) {
+    return { archetype: "high-ticket-consulting", templateVersion: "corporativo@2.0.0", folder: "corporativo" };
+  }
+  if (["tech", "software", "sistemas"].includes(clean)) {
+    return { archetype: "tech-editorial-system", templateVersion: "tech@1.0.0", folder: "tech" };
+  }
+  if (["producto", "hardware", "iluminacion", "lamparas", "equipamiento"].includes(clean)) {
+    return { archetype: "minimalist-hardware", templateVersion: "producto@1.0.0", folder: "producto" };
+  }
+  if (["construccion", "pavimentacion", "vial", "ingenieria"].includes(clean)) {
+    return { archetype: "industrial-authority", templateVersion: "construccion@1.0.0", folder: "construccion" };
+  }
+  return { archetype: "editorial-classic", templateVersion: "nutricionista@1.0.0", folder: "nutricionista" };
+}
+
 export const RUBRO_BRANDING_MAP = {
   nutricionista: [CONTEXTUAL_BRANDING_PALETTES[0], CONTEXTUAL_BRANDING_PALETTES[1], CONTEXTUAL_BRANDING_PALETTES[2], CONTEXTUAL_BRANDING_PALETTES[3]],
   psicologo: [CONTEXTUAL_BRANDING_PALETTES[2], CONTEXTUAL_BRANDING_PALETTES[1], CONTEXTUAL_BRANDING_PALETTES[3], CONTEXTUAL_BRANDING_PALETTES[0]],
-  abogado: [CONTEXTUAL_BRANDING_PALETTES[3], CONTEXTUAL_BRANDING_PALETTES[0], CONTEXTUAL_BRANDING_PALETTES[2], CONTEXTUAL_BRANDING_PALETTES[1]],
-  odontologo: [CONTEXTUAL_BRANDING_PALETTES[3], CONTEXTUAL_BRANDING_PALETTES[1], CONTEXTUAL_BRANDING_PALETTES[0], CONTEXTUAL_BRANDING_PALETTES[2]],
-  kinesiologo: [CONTEXTUAL_BRANDING_PALETTES[1], CONTEXTUAL_BRANDING_PALETTES[3], CONTEXTUAL_BRANDING_PALETTES[0], CONTEXTUAL_BRANDING_PALETTES[2]],
-  estetica: [CONTEXTUAL_BRANDING_PALETTES[2], CONTEXTUAL_BRANDING_PALETTES[0], CONTEXTUAL_BRANDING_PALETTES[1], CONTEXTUAL_BRANDING_PALETTES[3]],
+  abogado: [
+    {
+      name: "Kümmerlein Classic (Original)",
+      primary: "#f7f788",
+      accent: "#686155",
+      fondo: "#f6f6f4",
+      tinta: "#111111",
+      fuente: "Space Grotesk",
+      fuente_sans: "Inter",
+    },
+    {
+      name: "Obsidian Authority",
+      primary: "#f7f788",
+      accent: "#D97706",
+      fondo: "#090D16",
+      tinta: "#F1F5F9",
+      fuente: "Space Grotesk",
+      fuente_sans: "Inter",
+    },
+    CONTEXTUAL_BRANDING_PALETTES[3],
+    CONTEXTUAL_BRANDING_PALETTES[2],
+  ],
+  odontologo: [
+    {
+      name: "Stone Emerald",
+      primary: "#003934",
+      accent: "#1a9e8f",
+      fondo: "#e8e7e5",
+      tinta: "#0f172a",
+      fuente: "Plus Jakarta Sans",
+      fuente_sans: "Inter",
+    },
+    {
+      name: "Dark Obsidian Teal",
+      primary: "#1a9e8f",
+      accent: "#4db6ac",
+      fondo: "#003934",
+      tinta: "#e8e7e5",
+      fuente: "Plus Jakarta Sans",
+      fuente_sans: "Inter",
+    },
+    CONTEXTUAL_BRANDING_PALETTES[3],
+    CONTEXTUAL_BRANDING_PALETTES[1],
+  ],
+  kinesiologo: [
+    {
+      name: "Kinetic Emerald",
+      primary: "#10b981",
+      accent: "#ffffff",
+      fondo: "#0f1419",
+      tinta: "#ffffff",
+      fuente: "display",
+      fuente_sans: "diatype",
+    },
+    CONTEXTUAL_BRANDING_PALETTES[3],
+    CONTEXTUAL_BRANDING_PALETTES[1],
+    CONTEXTUAL_BRANDING_PALETTES[0],
+  ],
+  estetica: [
+    {
+      name: "Clinical Pure",
+      primary: "#0284c7",
+      accent: "#e0f2fe",
+      fondo: "#f8fafc",
+      tinta: "#0f172a",
+      fuente: "GothicCompact",
+      fuente_sans: "GroteskText",
+    },
+    {
+      name: "Lipedema Warm Clinic",
+      primary: "#c25e68",
+      accent: "#efe1d4",
+      fondo: "#fbf2e9",
+      tinta: "#372426",
+      fuente: "GothicCompact",
+      fuente_sans: "GroteskText",
+    },
+    {
+      name: "Dermato Teal",
+      primary: "#0d9488",
+      accent: "#ccfbf1",
+      fondo: "#f0fdfa",
+      tinta: "#134e4a",
+      fuente: "GothicCompact",
+      fuente_sans: "GroteskText",
+    },
+    {
+      name: "Obsidian Clinical",
+      primary: "#38bdf8",
+      accent: "#1e293b",
+      fondo: "#0b1120",
+      tinta: "#f8fafc",
+      fuente: "GothicCompact",
+      fuente_sans: "GroteskText",
+    },
+  ],
+  dermatologia: [
+    {
+      name: "Clinical Pure",
+      primary: "#0284c7",
+      accent: "#e0f2fe",
+      fondo: "#f8fafc",
+      tinta: "#0f172a",
+      fuente: "GothicCompact",
+      fuente_sans: "GroteskText",
+    },
+    {
+      name: "Dermato Teal",
+      primary: "#0d9488",
+      accent: "#ccfbf1",
+      fondo: "#f0fdfa",
+      tinta: "#134e4a",
+      fuente: "GothicCompact",
+      fuente_sans: "GroteskText",
+    },
+    CONTEXTUAL_BRANDING_PALETTES[2],
+    CONTEXTUAL_BRANDING_PALETTES[3],
+  ],
+  cirugia: [
+    {
+      name: "Clinical Pure",
+      primary: "#0284c7",
+      accent: "#e0f2fe",
+      fondo: "#f8fafc",
+      tinta: "#0f172a",
+      fuente: "GothicCompact",
+      fuente_sans: "GroteskText",
+    },
+    {
+      name: "Dermato Teal",
+      primary: "#0d9488",
+      accent: "#ccfbf1",
+      fondo: "#f0fdfa",
+      tinta: "#134e4a",
+      fuente: "GothicCompact",
+      fuente_sans: "GroteskText",
+    },
+    CONTEXTUAL_BRANDING_PALETTES[2],
+    CONTEXTUAL_BRANDING_PALETTES[3],
+  ],
   clinica: [
     {
       name: "Stone Emerald",
       primary: "#003934",
       accent: "#1a9e8f",
       fondo: "#e8e7e5",
-      tinta: "#001e1b",
+      tinta: "#0f172a",
       fuente: "Plus Jakarta Sans",
       fuente_sans: "Inter",
     },
@@ -563,10 +924,13 @@ function normalizeRubroKey(raw = "") {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
   if (clean.includes("psic")) return "psicologo";
-  if (clean.includes("abog") || clean.includes("jurid")) return "abogado";
+  if (clean.includes("abog") || clean.includes("jurid") || clean.includes("legal")) return "abogado";
   if (clean.includes("odont") || clean.includes("dent")) return "odontologo";
   if (clean.includes("kines") || clean.includes("fisio")) return "kinesiologo";
-  if (clean.includes("estet") || clean.includes("derma")) return "estetica";
+  if (clean.includes("cirug") || clean.includes("plast")) return "cirugia";
+  if (clean.includes("derma")) return "dermatologia";
+  if (clean.includes("estet")) return "estetica";
+  if (clean.includes("clin") || clean.includes("medic")) return "clinica";
   if (clean.includes("deport") || clean.includes("gym") || clean.includes("entrena") || clean.includes("fit")) return "deportes";
   if (clean.includes("nutri")) return "nutricionista";
   const slugified = clean.replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
@@ -587,9 +951,25 @@ function resolveDeterministicIndex(lead = {}, length = 4) {
 }
 
 export function selectCopyAngle(lead = {}) {
+  const rubroKey = normalizeRubroKey(lead.rubro || lead.nicho || lead.query || lead.slug || "nutricionista");
+  const packGroup =
+    RUBRO_COPY_PACKS[rubroKey] ||
+    (rubroKey === "dermatologia" || rubroKey === "cirugia" ? RUBRO_COPY_PACKS.estetica : null);
+
+  const providerName = lead.nombre || lead.displayName || "Profesional";
+
+  if (packGroup && packGroup.length > 0) {
+    const idx = resolveDeterministicIndex(lead, packGroup.length);
+    const angle = packGroup[idx];
+    return {
+      angleId: angle.id,
+      angleLabel: angle.label,
+      ...angle.build(providerName),
+    };
+  }
+
   const idx = resolveDeterministicIndex(lead, HORMOZI_PAIN_ANGLES.length);
   const angle = HORMOZI_PAIN_ANGLES[idx];
-  const providerName = lead.nombre || lead.displayName || "Profesional";
   return {
     angleId: angle.id,
     angleLabel: angle.label,
@@ -619,6 +999,231 @@ export function selectContextualBranding(lead = {}) {
     fuente_sans: lead.tema?.fuente_sans || chosen.fuente_sans,
     orden_secciones: lead.tema?.orden_secciones || defaultOrder,
   };
+}
+
+export function buildContentOverridesForRubro({
+  vertical,
+  nombre,
+  direccion,
+  phoneDisplay,
+  copy,
+  rating,
+  userRatingCount,
+}) {
+  const addr = direccion || "Ciudad Autónoma de Buenos Aires";
+  const ratingStr = `${rating || "4.9"}★ (${userRatingCount || 15}+ reseñas)`;
+
+  if (vertical === "odontologo" || vertical === "clinica") {
+    const isOdonto = vertical === "odontologo";
+    return {
+      hero: {
+        eyebrow: `${copy.subtitulo || "Especialidades Médicas"} · ${addr}`,
+        tagline: `${copy.tagline || "Diagnóstico preciso y turnos sin esperas"} →`,
+        card_caption: `Valoración diagnóstica integral en ${nombre}`,
+        card_footer: "Turnos confirmados en el día, presupuesto cerrado y seguimiento cercano por WhatsApp.",
+        stats: [
+          { val: ratingStr, lbl: "Reputación verificada" },
+          { val: "En el día", lbl: "Respuesta por WhatsApp" },
+          { val: "100%", lbl: "Presupuesto cerrado" },
+          { val: "Ley 25.326", lbl: "Privacidad clínica" },
+        ],
+      },
+      marquee: {
+        items: isOdonto
+          ? [
+              "Odontología Digital & Precisión",
+              "Implantología & Estética Dental",
+              "Presupuesto Cerrado por Escrito",
+              "Turnos Prioritarios sin Demoras",
+              "Apto Reintegro Prepagas",
+              "Atención Personalizada",
+            ]
+          : [
+              "Diagnóstico Médico de Precisión",
+              "Turnos Ágiles sin Esperas",
+              "Presupuesto Transparente",
+              "Especialistas Acreditados",
+              "Apto Reintegro Prepagas",
+              "Seguimiento por WhatsApp",
+            ],
+      },
+      team: {
+        tag: "03 · DIRECCIÓN Y EQUIPO",
+        titulo: `Atención directa y *respaldo profesional* en ${nombre}`,
+        bajada: `Cada consulta es evaluada personalmente con criterios clínicos actualizados y trato humano en ${addr}.`,
+        members: [
+          {
+            nombre,
+            cargo: copy.rol || "Dirección Clínica & Atención Personalizada",
+            matricula: "Matrícula Nacional / Provincial Verificada",
+            especialidad: copy.subtitulo || "Especialidad Clínica",
+            resumen: copy.bio,
+          },
+        ],
+      },
+      booking: {
+        tag: "07 · SOLICITUD DE TURNO",
+        titulo: `Reservá tu valoración inicial en *${nombre}*`,
+        bajada: copy.bajada,
+        plan: "Primera Consulta de Valoración & Diagnóstico",
+        precio_ars: 0,
+        precio_label: "Coordinación directa por WhatsApp o agenda digital · Sin vueltas",
+        precio_sub: `Consultorio ubicado en ${addr}. Atención ágil y confirmación inmediata de horario.`,
+      },
+      final_cta: {
+        titulo: `Cuidá tu ${isOdonto ? "sonrisa" : "salud"} con *respaldo real en ${nombre}*`,
+        bajada: "Coordiná hoy tu consulta diagnóstica por WhatsApp y despejá todas tus dudas antes de avanzar.",
+      },
+      footer: {
+        blurb: `${nombre} · ${copy.rol || "Atención Médica Especializada"} · ${addr}.`,
+        direccion: addr,
+        telefono: phoneDisplay,
+      },
+    };
+  }
+
+  if (vertical === "estetica" || vertical === "dermatologia" || vertical === "cirugia") {
+    return {
+      hero: {
+        badge: `${copy.subtitulo || "MEDICINA ESTÉTICA & DERMATOLOGÍA"} · ${addr}`.toUpperCase(),
+        title: (copy.titulo || "").replace(/\*/g, ""),
+        subtitle: copy.bajada,
+        stat_1_value: `${rating || "4.9"}★`,
+        stat_1_label: "Calificación verificada de pacientes reales en Google Maps",
+        stat_2_value: "100%",
+        stat_2_label: "Evaluación y seguimiento médico directo con protocolo seguro",
+        cta_primary: "Solicitar Valoración por WhatsApp",
+        cta_secondary: "Ver Protocolos",
+      },
+      symptom_assessment: {
+        badge: "ENFOQUE CLÍNICO & VALORACIÓN",
+        title: "En qué te ayudamos en consulta",
+        subtitle: copy.problema,
+        items: [
+          { id: "01", title: "Evaluación Médica Personalizada", desc: "Diagnóstico facial y corporal detallado respetando tus facciones y prioridades." },
+          { id: "02", title: "Protocolos Seguros & Trazables", desc: "Insumos médicos aprobados, dosis precisas y criterios de bioseguridad estricta." },
+          { id: "03", title: "Resultados Naturales y Armónicos", desc: "Realzamos tu frescura y calidad de piel sin exageraciones ni rostros rígidos." },
+          { id: "04", title: "Seguimiento Post-Tratamiento", desc: "Acompañamiento directo por WhatsApp para resolver cualquier duda tras la sesión." },
+        ],
+      },
+      treatment_protocol: {
+        badge: "INSTANCIAS DE ATENCIÓN",
+        title: `Cómo trabajamos en ${nombre}`,
+        subtitle: copy.enfoque,
+        plans: [
+          {
+            id: "valoracion",
+            name: "Consulta de Valoración & Diagnóstico Médico",
+            price: "Turnos Directos",
+            duration: "Atención personalizada · Presencial",
+            desc: "Evaluamos tu piel, analizamos objetivos y armamos un plan gradual a tu medida.",
+            features: [
+              "Diagnóstico clínico médico completo",
+              "Plan de sesiones claro y sin sorpresas",
+              "Indicaciones previas y cuidados domiciliarios",
+            ],
+            cta: "Consultar Disponibilidad",
+            popular: true,
+          },
+          {
+            id: "protocolo",
+            name: "Protocolo Combinado & Seguimiento",
+            price: "Plan a Medida",
+            duration: "Control evolutivo por WhatsApp",
+            desc: "Aplicación médica combinada de procedimientos mínimamente invasivos con control cercano.",
+            features: [
+              "Insumos médicos certificados y trazables",
+              "Retorno rápido a tu rutina habitual",
+              "Control post-aplicación incluido",
+            ],
+            cta: "Agendar por WhatsApp",
+            popular: false,
+          },
+        ],
+      },
+      clinical_outcomes: {
+        badge: "POR QUÉ ELEGIRNOS",
+        title: `Confianza médica y criterio estético en ${nombre}`,
+        subtitle: copy.tagline,
+        advantages: [
+          { icon: "/icons/Group-10.svg", title: "Criterio Médico Real", desc: "Diagnóstico clínico honesto realizado por profesionales matriculados." },
+          { icon: "/icons/Group-12.svg", title: "Protocolos Personalizados", desc: "Cada rostro y piel requieren dosis, técnicas y tiempos propios." },
+          { icon: "/icons/Group-2564.svg", title: "Tecnología & Bioseguridad", desc: "Insumos médicos aprobados con trazabilidad y estándares clínicos estrictos." },
+          { icon: "/icons/Group-2565.svg", title: "Resultados Naturales", desc: "Realzamos tu frescura y armonía sin exageraciones ni apariencias artificiales." },
+          { icon: "/icons/Group-2566.svg", title: "Seguimiento Cercano", desc: "Acompañamiento directo por WhatsApp antes y después de cada sesión." },
+        ],
+        testimonials: [
+          {
+            nombre: "Paciente Verificada",
+            edad: "Google Maps",
+            estadio: "Atención en consultorio",
+            texto: `Excelente atención en ${nombre}. Me explicaron cada paso con calidez, puntualidad y resultados súper naturales.`,
+            rating: 5,
+          },
+        ],
+      },
+      faq: {
+        tag: "PREGUNTAS FRECUENTES",
+        titulo: "Dudas habituales sobre tu consulta",
+        bajada: `Respuestas claras sobre diagnóstico médico, protocolos estéticos y turnos en ${nombre}.`,
+      },
+      medical_booking: {
+        badge: "TURNOS & VALORACIÓN",
+        title: `Reservá tu consulta en ${nombre}`,
+        subtitle: `Atención en ${addr}. Escribinos directo por WhatsApp para coordinar el mejor día y horario.`,
+        garantia: "Claridad total desde el primer minuto: conocemos tus objetivos, revisamos tu historia clínica y te indicamos únicamente lo que realmente te favorece.",
+        direct_whatsapp: "Consultar Turnos por WhatsApp",
+        direct_calendar: "Agendar Online",
+      },
+      final_cta: {
+        badge: "CUIDADO MÉDICO & ARMONÍA",
+        title: "¿Querés una evaluación médica honesta para tu piel?",
+        subtitle: `Escribinos hoy a ${nombre} (${addr}) y coordiná tu consulta personalizada sin vueltas.`,
+        btn: "Solicitar Turno por WhatsApp",
+      },
+      cta: {
+        titulo: "¿Querés una evaluación médica honesta para tu piel?",
+        subtitulo: `Escribinos hoy a ${nombre} (${addr}) y coordiná tu consulta personalizada.`,
+        boton: "Solicitar Turno por WhatsApp",
+      },
+      footer: {
+        legal: `${nombre} · Medicina Estética y Atención Especializada. La información publicada es orientativa y no reemplaza la consulta médica presencial.`,
+        compliance: "Cumplimiento Ley 25.326 de Protección de Datos Personales de la República Argentina.",
+        direccion: addr,
+        horario: "Turnos con reserva previa por WhatsApp",
+      },
+    };
+  }
+
+  if (vertical === "abogado") {
+    return {
+      hero: {
+        eyebrow: `${copy.subtitulo || "Estudio Jurídico"} · ${addr}`,
+        card_caption: `Estrategia legal clara en ${nombre}`,
+        card_footer: "Evaluamos tu caso en profundidad, medimos riesgos reales y actuamos con celeridad.",
+      },
+      attorneys: {
+        tag: "DIRECCIÓN LEGAL",
+        titulo: `Respaldo directo de *${nombre}* en cada etapa`,
+        bajada: `Atención confidencial y seguimiento ejecutivo en ${addr}.`,
+        members: [
+          {
+            nombre,
+            cargo: copy.rol || "Socio Director · Estrategia Legal",
+            credencial: "Matrícula Profesional Verificada",
+            iniciales: nombre.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]?.toUpperCase() || "A").join(""),
+          },
+        ],
+      },
+      footer: {
+        blurb: `${nombre} · ${copy.rol || "Estudio Jurídico"} · ${addr}.`,
+        direccion: addr,
+        telefono: phoneDisplay,
+      },
+    };
+  }
+
+  return null;
 }
 
 async function main() {
@@ -658,7 +1263,9 @@ async function main() {
   const expiresAt = rawData.expires_at || addDaysToIsoDate(lastActivityAt, 7);
   const leadStatus = rawData.lead_status || "1. Prospecto Identificado";
   const vertical = normalizeRubroKey(rawData.rubro || rawData.nicho || rawData.query || slug);
-  const templateVersion = rawData.template_version || `${vertical}@1.0.0`;
+  const canonicalTemplate = resolveCanonicalTemplateForRubro(vertical);
+  const templateVersion = rawData.template_version || canonicalTemplate.templateVersion;
+  const templateArchetype = rawData.template_archetype || canonicalTemplate.archetype;
 
   // Fallback inteligente para agendamiento: si no tiene Calendly, apuntar el CTA a WhatsApp con mensaje predeterminado
   const fallbackWaBooking = cleanPhone
@@ -668,7 +1275,7 @@ async function main() {
     ? rawData.website
     : fallbackWaBooking;
 
-  console.log(`\x1b[36m[generate-fiche]\x1b[0m Redactando ficha para ${rawData.nombre} (Slug: ${slug}, Sheet ID: ${sheetId})...`);
+  console.log(`\x1b[36m[generate-fiche]\x1b[0m Redactando ficha para ${rawData.nombre} (Slug: ${slug}, Sheet ID: ${sheetId}, Template: ${templateVersion})...`);
 
   let copy = null;
   const geminiKey = process.env.GEMINI_API_KEY;
@@ -678,17 +1285,29 @@ async function main() {
   }
 
   if (!copy) {
-    copy = selectCopyAngle({ ...rawData, sheet_id: sheetId, slug });
+    copy = selectCopyAngle({ ...rawData, rubro: vertical, sheet_id: sheetId, slug });
   }
 
   const branding = selectContextualBranding({ ...rawData, rubro: vertical, sheet_id: sheetId, slug });
+  const phoneDisplay = rawData.telefonoFormato || (cleanPhone ? `+${cleanPhone}` : "");
+  const contentOverrides =
+    rawData.content_overrides ||
+    buildContentOverridesForRubro({
+      vertical,
+      nombre: rawData.nombre,
+      direccion: rawData.direccion,
+      phoneDisplay,
+      copy,
+      rating: rawData.rating,
+      userRatingCount: rawData.userRatingCount,
+    });
 
   // Reseñas oficiales atribuidas a Google Maps
   const reviewsMarkdown = (rawData.reviews && rawData.reviews.length > 0)
     ? rawData.reviews
         .map((r) => `- **${r.author} (Google Maps)**: "${r.text.replace(/\r?\n/g, ' ')}"`)
         .join("\n")
-    : `- **Paciente Verificado (Google Maps)**: "Excelente atención y seguimiento. Muy profesional y con planes realistas."`;
+    : `- **Paciente Verificado (Google Maps)**: "Excelente atención, calidez profesional y seguimiento claro desde la primera consulta."`;
 
   const casesMarkdown = copy.casos
     .map((c) => `- **${c.titulo}**: ${c.descripcion}. Resultado: ${c.resultado}`)
@@ -698,54 +1317,68 @@ async function main() {
     .map((f) => `- **${f.q}**: ${f.a}`)
     .join("\n");
 
-  const templateArchetype = rawData.template_archetype || "editorial-classic";
   const alternativePalettes = generateAlternativePalettes(branding);
+  const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site";
+  const escYaml = (v) => JSON.stringify(String(v ?? ""));
 
   const formatPalettesYaml = (pals) => {
     return pals
       .map(
-        (p) => `  - nombre: "${p.nombre}"
-    fondo: "${p.fondo}"
-    tinta: "${p.tinta}"
-    primary: "${p.primary}"
-    accent: "${p.accent}"`
+        (p) => `  - nombre: ${escYaml(p.nombre)}
+    fondo: ${escYaml(p.fondo)}
+    tinta: ${escYaml(p.tinta)}
+    primary: ${escYaml(p.primary)}
+    accent: ${escYaml(p.accent)}`
       )
       .join("\n");
   };
 
-  const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site";
+  const extraFieldsLines = [
+    copy.rol ? `rol: ${escYaml(copy.rol)}` : null,
+    copy.subtitulo ? `subtitulo: ${escYaml(copy.subtitulo)}` : null,
+    copy.tagline ? `tagline: ${escYaml(copy.tagline)}` : null,
+    copy.titulo ? `titulo: ${escYaml(copy.titulo)}` : null,
+    copy.bajada ? `bajada: ${escYaml(copy.bajada)}` : null,
+    rawData.direccion ? `direccion: ${escYaml(rawData.direccion)}` : null,
+    phoneDisplay ? `telefono_display: ${escYaml(phoneDisplay)}` : null,
+  ].filter(Boolean);
+
+  const overridesBlock = contentOverrides
+    ? stringifyYaml({ content_overrides: contentOverrides }, { lineWidth: 0 }).trimEnd()
+    : "";
+
   const clientMdContent = `---
 id: ${sheetId || Date.now().toString().slice(-4)}
 sheet_id: ${sheetId}
-lead_status: "${leadStatus}"
-created_at: "${createdAt}"
-last_activity_at: "${lastActivityAt}"
-expires_at: "${expiresAt}"
+lead_status: ${escYaml(leadStatus)}
+created_at: ${escYaml(createdAt)}
+last_activity_at: ${escYaml(lastActivityAt)}
+expires_at: ${escYaml(expiresAt)}
 rubro: ${vertical}
-template_archetype: "${templateArchetype}"
-template_version: "${templateVersion}"
-nombre: "${rawData.nombre}"
-slug: "${slug}"
+template_archetype: ${escYaml(templateArchetype)}
+template_version: ${escYaml(templateVersion)}
+nombre: ${escYaml(rawData.nombre)}
+${extraFieldsLines.length > 0 ? extraFieldsLines.join("\n") + "\n" : ""}slug: ${escYaml(slug)}
 estado: prospecto
-subdominio: "preview.${rootDomain}/${slug}/"
-whatsapp: "${cleanPhone || "5491100000000"}"
-calendly: "${calendlyUrl}"
-google_maps: "${rawData.website || "https://maps.google.com/?cid=gmp-" + (rawData.placeId || slug)}"
-instagram: "${rawData.website || ""}"
+subdominio: ${escYaml(`preview.${rootDomain}/${slug}/`)}
+whatsapp: ${escYaml(cleanPhone || "5491100000000")}
+calendly: ${escYaml(calendlyUrl)}
+google_maps: ${escYaml(rawData.website || `https://maps.google.com/?cid=gmp-${rawData.placeId || slug}`)}
+instagram: ${escYaml(rawData.website || "")}
 tema:
-  nombre: "${branding.paletteName || "Original"}"
-  primary: "${branding.primary}"
-  accent: "${branding.accent}"
-  fondo: "${branding.fondo}"
-  tinta: "${branding.tinta}"
-  fuente: "${branding.fuente}"
-  fuente_sans: "${branding.fuente_sans}"
+  nombre: ${escYaml(branding.paletteName || "Original")}
+  primary: ${escYaml(branding.primary)}
+  accent: ${escYaml(branding.accent)}
+  fondo: ${escYaml(branding.fondo)}
+  tinta: ${escYaml(branding.tinta)}
+  fuente: ${escYaml(branding.fuente)}
+  fuente_sans: ${escYaml(branding.fuente_sans)}
   orden_secciones: ${JSON.stringify(branding.orden_secciones)}
 paletas_alternativas:
 ${formatPalettesYaml(alternativePalettes)}
-consentimiento_testimonios: false
+${overridesBlock ? overridesBlock + "\n" : ""}consentimiento_testimonios: false
 setup_ars: 189999
-abono_ars: 12259
+abono_ars: 0
 mes_de_prueba: true
 metricas:
   agendadas_mes: 0
@@ -787,6 +1420,7 @@ ${faqMarkdown}
 ✓ FICHA GENERADA CON ÉXITO: clients/${slug}.md
 =======================================================\x1b[0m
 - Cliente: \x1b[1m${rawData.nombre}\x1b[0m (Sheet ID: ${sheetId})
+- Template: ${templateVersion} (${templateArchetype})
 - Vigencia Demo (7d): ${createdAt} → ${expiresAt}
 - WhatsApp: ${cleanPhone || "Requerido"}
 - CTA Agendamiento: ${calendlyUrl}

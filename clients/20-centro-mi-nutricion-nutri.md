@@ -2,8 +2,8 @@
 sheet_id: 20
 lead_status: Sin contactar
 created_at: 2026-10-26
-last_activity_at: 2026-10-26
-expires_at: 2026-11-02
+last_activity_at: "2026-11-11"
+expires_at: "2026-11-18"
 slug: 20-centro-mi-nutricion-nutri
 nombre: Mi Nutrición
 rubro: nutricionista

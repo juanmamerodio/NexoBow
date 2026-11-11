@@ -21,6 +21,8 @@ import {
 import {
   selectCopyAngle,
   selectContextualBranding,
+  resolveCanonicalTemplateForRubro,
+  buildContentOverridesForRubro,
   HORMOZI_PAIN_ANGLES,
   RUBRO_BRANDING_MAP
 } from '../scripts/generate-client-fiche.mjs';
@@ -259,4 +261,35 @@ test('T02.8 - Motor de Copywriting Multivariante rota de forma determinista por 
   assert.notEqual(bNutriLow.primary, '#BF40FA', 'Nunca debe usar el acento de NexoBow');
   assert.notDeepEqual(bNutriLow, bNutriHigh, 'La reputación de Maps debe variar la paleta y el orden de secciones');
   assert.notEqual(bNutriLow.primary, bAbogado.primary, 'Distintos rubros deben mapear a paletas iniciales distintas');
+});
+
+test('T02.9 - Copy y template_version se adaptan a odontologo, estetica y abogado sin copy residual de nutricion', () => {
+  const odontoCopy = selectCopyAngle({ slug: '30-claudia-odonto', nombre: 'Dra. Claudia Gómez', rubro: 'odontologo' });
+  const esteticaCopy = selectCopyAngle({ slug: '31-estetica-belgrano', nombre: 'Centro Aura Estética', rubro: 'estetica' });
+  const abogadoCopy = selectCopyAngle({ slug: '32-estudio-paz-abogado', nombre: 'Estudio Paz', rubro: 'abogado' });
+
+  assert.doesNotMatch(odontoCopy.bio, /nutrici[oó]n|dieta|comida/i);
+  assert.match(odontoCopy.bio, /odontolog/i);
+  assert.doesNotMatch(esteticaCopy.bio, /nutrici[oó]n|dieta|comida/i);
+  assert.match(esteticaCopy.bio, /est[eé]tica|dermatol/i);
+  assert.doesNotMatch(abogadoCopy.bio, /nutrici[oó]n|dieta|comida/i);
+  assert.match(abogadoCopy.bio, /jur[ií]dic|tribunal/i);
+
+  assert.equal(resolveCanonicalTemplateForRubro('odontologo').templateVersion, 'clinica@2.0.0');
+  assert.equal(resolveCanonicalTemplateForRubro('estetica').templateVersion, 'dermatologia@1.0.0');
+  assert.equal(resolveCanonicalTemplateForRubro('abogado').templateVersion, 'abogado@2.0.0');
+
+  const esteticaOverrides = buildContentOverridesForRubro({
+    vertical: 'estetica',
+    nombre: 'Centro Aura Estética',
+    direccion: 'Av. Cabildo 1800, Belgrano',
+    phoneDisplay: '+54 9 11 4444-5555',
+    copy: esteticaCopy,
+    rating: 4.9,
+    userRatingCount: 40
+  });
+  const serialized = JSON.stringify(esteticaOverrides);
+  assert.doesNotMatch(serialized, /Valentina Morales|Lipedema|SkyClinics/i);
+  assert.match(serialized, /Centro Aura Estética/);
+  assert.match(serialized, /Av\. Cabildo 1800, Belgrano/);
 });

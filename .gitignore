@@ -15,10 +15,11 @@ sites/
 .env.*
 !.env.example
 
-# OS / Editor
+# OS / Editor / Local Tool Caches
 .DS_Store
 Thumbs.db
 *.log
 .idea/
 .vscode/
+.wrangler/
 
