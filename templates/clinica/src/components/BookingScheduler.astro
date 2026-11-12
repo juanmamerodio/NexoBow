@@ -7,13 +7,14 @@ const whatsappUrl = CONTENT.links.whatsapp || "https://wa.me/5491155550000";
 const calendlyUrl = CONTENT.links.calendly || "#";
 
 const waMessage = encodeURIComponent(
-  `Hola! Me comunico desde la web de ${prestador.nombre || "SkyClinics"} para agendar mi primera consulta diagnóstica con escaneo 3D.`
+  booking.whatsapp_prefill ||
+    `Hola! Me comunico desde la web de ${prestador.nombre || "SkyClinics"} para consultar disponibilidad para una primera consulta.`
 );
 const waLink = `${whatsappUrl}?text=${waMessage}`;
 
 const beneficios = booking.beneficios || booking.incluido || [
-  "Evaluación médica presencial u online con especialista director",
-  "Escaneo óptico intraoral 3D de cortesía durante la consulta",
+  "Evaluación médica con especialista director",
+  "Escaneo óptico intraoral 3D durante la consulta",
   "Plan de tratamiento digitalizado con fechas de intervención cerradas",
   "Presupuesto cerrado con garantía escrita (apto reintegro en prepagas)",
   "Opciones de financiación y plan de pagos por etapa clínica",
@@ -32,7 +33,12 @@ const formattedTitle = formatEmphasis(
     "Iniciá tu camino hacia una *salud bucal definitiva y sin dolor*"
 );
 
-const precioStr = booking.precio_ars !== undefined ? ars(booking.precio_ars) : "$0 ARS";
+const precioStr =
+  booking.precio_ars && Number(booking.precio_ars) > 0
+    ? ars(booking.precio_ars)
+    : booking.tipo_consulta === "gratuita"
+      ? "$0 ARS"
+      : (booking.precio_texto || "Valoración Inicial");
 ---
 
 <section
@@ -88,7 +94,7 @@ const precioStr = booking.precio_ars !== undefined ? ars(booking.precio_ars) : "
           </div>
 
           <p class="mt-2 text-xs text-(--color-ink)/70">
-            {booking.precio_label || "Evaluación con especialista · 45 minutos presencial u online"}
+            {booking.precio_label || "Atención personalizada en consultorio · Coordinación directa"}
           </p>
 
           <div class="mt-6 border-t border-(--color-primary)/10 pt-6">

@@ -3,7 +3,7 @@ import Button from "./ui/Button.astro";
 import Lead from "./ui/Lead.astro";
 import { CONTENT } from "../site";
 
-const { prestador, pasos, links, hero, marquee } = CONTENT;
+const { prestador, pasos, links, hero, marquee, pricing } = CONTENT as any;
 ---
 
 <section id="inicio" class="relative">
@@ -28,15 +28,14 @@ const { prestador, pasos, links, hero, marquee } = CONTENT;
         </p>
 
         <div class="mt-10 flex flex-wrap items-center gap-4">
-          <Button href={links.calendly} label="Agendá tu consultoría gratuita" external={true} />
+          <Button href={links.calendly} label={pricing?.cta || hero?.cta_primary || "Consultar disponibilidad de turno"} external={true} />
           <Button href={links.whatsapp} label="Escribime por WhatsApp" variant="outline" external={true} />
         </div>
 
         <p
           class="mt-10 border-t border-(--color-ink)/10 pt-6 text-sm text-(--color-ink)/60"
         >
-          Consultoría gratuita · 20 minutos · Online — sin cargo y sin
-          compromiso.
+          {hero?.microcopy_agenda || "Atención personalizada · Presencial y Online · Coordinación ágil por WhatsApp."}
         </p>
       </div>
 

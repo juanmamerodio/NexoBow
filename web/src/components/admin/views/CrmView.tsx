@@ -1,4 +1,4 @@
-// web/src/components/admin/views/CrmView.tsx — Vista de CRM & Prospección con Kanban y Data Table
+// web/src/components/admin/views/CrmView.tsx — Vista de CRM & Prospección con Kanban, Data Table y WhatsApp Táctico
 import React, { useState, useEffect, useMemo } from "react";
 import {
   getBrowserSupabaseClient,
@@ -7,23 +7,17 @@ import {
   Columns,
   Table as TableIcon,
   Search,
-  Filter,
   ExternalLink,
   Clock,
   RotateCw,
   X,
-  Phone,
   AlertTriangle,
-  Building2,
   Save,
-  CheckCircle2,
   Trash2,
   MessageCircle,
-  TrendingUp,
-  MapPin,
-  Calendar,
-  DollarSign,
   Sparkles,
+  Plus,
+  Globe,
 } from "lucide-react";
 
 export interface LeadEntity {
@@ -53,6 +47,30 @@ export interface LeadEntity {
   metadata?: Record<string, any>;
 }
 
+export type WhatsAppScriptMode = "initial" | "objecion_presencial" | "objecion_arancelada";
+
+export function resolveLeadMetadata(lead: Partial<LeadEntity> = {}): {
+  modalidad: "presencial" | "online" | "mixto";
+  tipo_consulta: "consultar" | "arancelada" | "gratuita";
+  canal_agenda: "whatsapp_secretaria" | "calendly" | "google_calendar";
+  source?: string;
+  [key: string]: any;
+} {
+  const rawMeta = lead.metadata && typeof lead.metadata === "object" ? lead.metadata : {};
+  const niche = String(lead.niche || "").toLowerCase();
+  const isPresencial = ["odontologo", "clinica", "estetica", "dermatologia", "cirugia", "kinesiologo"].some((k) =>
+    niche.includes(k)
+  );
+  const isLegal = ["abogado", "juridico", "legal", "contador"].some((k) => niche.includes(k));
+
+  return {
+    ...rawMeta,
+    modalidad: rawMeta.modalidad || (isPresencial ? "presencial" : "mixto"),
+    tipo_consulta: rawMeta.tipo_consulta || (isLegal ? "arancelada" : "consultar"),
+    canal_agenda: rawMeta.canal_agenda || "whatsapp_secretaria",
+  };
+}
+
 export const KANBAN_STAGES = [
   { id: "1. Prospecto Identificado", label: "1. Identificado", color: "#6366F1", bg: "rgba(99, 102, 241, 0.1)" },
   { id: "2. Contactado", label: "2. Contactado", color: "#3B82F6", bg: "rgba(59, 130, 246, 0.1)" },
@@ -70,8 +88,8 @@ export const RESPONSE_STATUSES = [
   "Respondio",
 ];
 
-// Leads iniciales de muestra basados en las fichas reales
-const INITIAL_DEMO_LEADS: LeadEntity[] = [
+// Leads iniciales de muestra basados en las fichas reales (solo para modo offline o carga explícita)
+export const INITIAL_DEMO_LEADS: LeadEntity[] = [
   {
     id: 23,
     slug: "23-mari-calcagno-nutri",
@@ -91,6 +109,7 @@ const INITIAL_DEMO_LEADS: LeadEntity[] = [
     phone: "+5491124908956",
     notes: "Especialista en nutrición deportiva y funcional.",
     expires_at: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000).toISOString(),
+    metadata: { modalidad: "mixto", tipo_consulta: "consultar", canal_agenda: "whatsapp_secretaria" },
   },
   {
     id: 22,
@@ -110,87 +129,8 @@ const INITIAL_DEMO_LEADS: LeadEntity[] = [
     business_status: "En Proceso",
     phone: "+5491124908956",
     notes: "Educación alimentaria sin juicios con marcas de súper.",
-    expires_at: new Date(Date.now() + 1.5 * 24 * 60 * 60 * 1000).toISOString(), // Urgente <48h
-  },
-  {
-    id: 20,
-    slug: "20-centro-mi-nutricion-nutri",
-    name: "Centro Mi Nutrición",
-    niche: "nutricionista",
-    contact_channel: "WhatsApp",
-    whatsapp_link: "https://wa.me/5491138401928",
-    demo_url: "https://preview.nexobow.site/20-centro-mi-nutricion-nutri/",
-    location: "Belgrano, CABA",
-    city: "Belgrano",
-    funnel_status: "3. Reunión Agendada",
-    first_contact_date: "2026-10-26",
-    response_status: "Interesado",
-    meeting_booked: true,
-    potential_value: "$329.999 ARS",
-    business_status: "En Proceso",
-    phone: "+5491138401928",
-    notes: "Clínica de 4 consultorios interesada en Plan Pro.",
-    expires_at: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: 15,
-    slug: "15-centro-franco-diaz-nutri",
-    name: "Centro Franco Díaz",
-    niche: "nutricionista",
-    contact_channel: "WhatsApp",
-    whatsapp_link: "https://wa.me/5491158932014",
-    demo_url: "https://preview.nexobow.site/15-centro-franco-diaz-nutri/",
-    location: "Caballito, CABA",
-    city: "Caballito",
-    funnel_status: "4. Propuesta Enviada",
-    first_contact_date: "2026-10-26",
-    response_status: "Respondio",
-    meeting_booked: true,
-    potential_value: "$189.999 ARS",
-    business_status: "En Proceso",
-    phone: "+5491158932014",
-    notes: "Revisando propuesta con bonos de AfterBow.",
-    expires_at: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: 10,
-    slug: "10-lucila-fagnani-nutri",
-    name: "Lic. Lucila Fagnani",
-    niche: "nutricionista",
-    contact_channel: "WhatsApp",
-    whatsapp_link: "https://wa.me/5493489501234",
-    demo_url: "https://preview.nexobow.site/10-lucila-fagnani-nutri/",
-    location: "Campana, Buenos Aires",
-    city: "Campana",
-    funnel_status: "5. Negociación / Cierre",
-    first_contact_date: "2026-10-23",
-    response_status: "Interesado",
-    meeting_booked: true,
-    potential_value: "$189.999 ARS",
-    business_status: "En Proceso",
-    phone: "+5493489501234",
-    notes: "Acordando fecha de onboarding y sesión de fotos.",
-    expires_at: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: 9,
-    slug: "9-lucia-vega-nutri",
-    name: "Lic. Lucía Vega",
-    niche: "nutricionista",
-    contact_channel: "WhatsApp",
-    whatsapp_link: "https://wa.me/5493489512345",
-    demo_url: "https://preview.nexobow.site/9-lucia-vega-nutri/",
-    location: "Zárate, Buenos Aires",
-    city: "Zárate",
-    funnel_status: "2. Contactado",
-    first_contact_date: "2026-10-23",
-    response_status: "Esperando Respuesta",
-    meeting_booked: false,
-    potential_value: "$189.999 ARS",
-    business_status: "En Proceso",
-    phone: "+5493489512345",
-    notes: "Vio la demo por Instagram y pidió link de WhatsApp.",
-    expires_at: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+    expires_at: new Date(Date.now() + 1.5 * 24 * 60 * 60 * 1000).toISOString(),
+    metadata: { modalidad: "mixto", tipo_consulta: "consultar", canal_agenda: "whatsapp_secretaria" },
   },
   {
     id: 55,
@@ -206,31 +146,12 @@ const INITIAL_DEMO_LEADS: LeadEntity[] = [
     first_contact_date: "2026-10-22",
     response_status: "Sin Contactar",
     meeting_booked: false,
-    potential_value: "$249.999 ARS",
+    potential_value: "$549.999 ARS",
     business_status: "En Proceso",
     phone: "+5491148209123",
     notes: "Estudio societario y contractual de alta gama.",
     expires_at: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: 42,
-    slug: "42-dr-lucas-vazquez-clinica",
-    name: "Dr. Lucas Vázquez - Clínica",
-    niche: "clinica",
-    contact_channel: "WhatsApp",
-    whatsapp_link: "https://wa.me/5491149201020",
-    demo_url: "https://preview.nexobow.site/42-dr-lucas-vazquez-clinica/",
-    location: "Pilar, Buenos Aires",
-    city: "Pilar",
-    funnel_status: "2. Contactado",
-    first_contact_date: "2026-10-21",
-    response_status: "Sin Contactar",
-    meeting_booked: false,
-    potential_value: "$329.999 ARS",
-    business_status: "En Proceso",
-    phone: "+5491149201020",
-    notes: "Centro médico con quirófano ambulatorio.",
-    expires_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // Vencido
+    metadata: { modalidad: "mixto", tipo_consulta: "arancelada", canal_agenda: "whatsapp_secretaria" },
   },
 ];
 
@@ -265,29 +186,63 @@ export function calculateDaysRemaining(expiresAt?: string | null): {
   return { days, hours, isExpired: false, isUrgent: false, label: `${days} días` };
 }
 
-export function buildVoseoWhatsAppUrl(lead: LeadEntity): string {
-  const digits = String(lead.phone || "").replace(/[^\d]/g, "");
+export function buildVoseoWhatsAppUrl(
+  lead: LeadEntity,
+  mode: WhatsAppScriptMode = "initial"
+): string {
+  const digits = String(lead.phone || lead.whatsapp_link || "").replace(/[^\d]/g, "");
   const demoUrl = lead.demo_url || `https://preview.nexobow.site/${lead.slug}/`;
-  const name = lead.name.replace(/^(Lic\.|Dr\.|Dra\.|Mg\.)\s*/i, "").trim();
+  const name = (lead.name || "Profesional").replace(/^(Lic\.|Dr\.|Dra\.|Mg\.|Abog\.)\s*/i, "").trim();
+  const city = lead.city || lead.location || "tu zona";
+  const niche = String(lead.niche || "").toLowerCase();
+  const isLegal = ["abogado", "juridico", "legal", "estudio"].some((k) => niche.includes(k));
 
-  const message = `Hola ${name}! Te escribo de NexoBow. Preparé una propuesta para tu consultorio para agendar consultas sin depender de secretaría ni perder pacientes: ${demoUrl}. ¿Cuándo tendrías 10 minutos para revisarla?`;
+  let message = "";
+  if (mode === "objecion_presencial") {
+    message = `Totalmente ${name}, por eso configuramos la web como vidriera profesional de tu consultorio presencial en ${city}, con mapa interactivo y botón directo al WhatsApp de tu secretaría para coordinar turnos sin intermediarios.`;
+  } else if (mode === "objecion_arancelada") {
+    message = `Exacto ${name}, eliminamos cualquier mención a consulta sin cargo: la web presenta tu trayectoria, filtra curiosos y deja claro que la primera consulta de valoración es arancelada antes de pasar al WhatsApp.`;
+  } else if (isLegal) {
+    message = `Hola ${name}! Vi la presencia de tu estudio jurídico en ${city} y armé una propuesta de sitio web profesional pensado para filtrar consultas calificadas y coordinar reuniones directo por WhatsApp: ${demoUrl} ¿Te parece si la vemos 5 minutos?`;
+  } else {
+    message = `Hola ${name}! Vi el perfil de tu consultorio en ${city} y te armé una muestra de cómo quedaría tu web profesional optimizada para que los pacientes consulten disponibilidad y reserven turno directo con vos o tu secretaría por WhatsApp: ${demoUrl} ¿Qué te parece el diseño?`;
+  }
 
   return digits ? `https://wa.me/${digits}?text=${encodeURIComponent(message)}` : "";
 }
 
+function buildCanonicalSlug(id: number, name: string, niche: string): string {
+  const cleanName = name
+    .replace(/^(Lic\.|Dr\.|Dra\.|Mg\.|Abog\.)\s*/i, "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+  const cleanNiche = niche
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-");
+  return `${id}-${cleanName || "profesional"}-${cleanNiche || "salud"}`;
+}
+
 export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => {
-  const [leads, setLeads] = useState<LeadEntity[]>(INITIAL_DEMO_LEADS);
-  const [loading, setLoading] = useState(false);
+  const [leads, setLeads] = useState<LeadEntity[]>([]);
+  const [isOffline, setIsOffline] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState<"kanban" | "table">("kanban");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedNiche, setSelectedNiche] = useState<string>("all");
   const [selectedCity, setSelectedCity] = useState<string>("all");
   const [selectedFunnel, setSelectedFunnel] = useState<string>("all");
   const [filterUrgentOnly, setFilterUrgentOnly] = useState(false);
+  const [filterInboundOnly, setFilterInboundOnly] = useState(false);
   const [selectedLead, setSelectedLead] = useState<LeadEntity | null>(null);
+  const [showNewLeadModal, setShowNewLeadModal] = useState(false);
   const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
 
-  // Cargar prospectos desde Supabase con fallback a demo
+  // Cargar prospectos desde Supabase (Single Source of Truth)
   useEffect(() => {
     let mounted = true;
     const fetchLeads = async () => {
@@ -300,12 +255,19 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
           .order("id", { ascending: false });
 
         if (mounted) {
-          if (!error && data && data.length > 0) {
-            setLeads(data as LeadEntity[]);
+          if (error) {
+            setLeads(INITIAL_DEMO_LEADS);
+            setIsOffline(true);
+          } else {
+            setLeads((data as LeadEntity[]) || []);
+            setIsOffline(false);
           }
         }
-      } catch (err) {
-        console.warn("Utilizando catálogo local de prospectos (modo offline/demo)");
+      } catch {
+        if (mounted) {
+          setLeads(INITIAL_DEMO_LEADS);
+          setIsOffline(true);
+        }
       } finally {
         if (mounted) setLoading(false);
       }
@@ -320,6 +282,65 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
   const showNotification = (msg: string) => {
     setFeedbackMsg(msg);
     setTimeout(() => setFeedbackMsg(null), 3000);
+  };
+
+  const handleCreateLead = async (newLeadInput: {
+    name: string;
+    niche: string;
+    city: string;
+    phone: string;
+    potential_value: string;
+    modalidad: "presencial" | "online" | "mixto";
+    tipo_consulta: "consultar" | "arancelada" | "gratuita";
+    canal_agenda: "whatsapp_secretaria" | "calendly" | "google_calendar";
+  }) => {
+    const nextId =
+      leads.length > 0 ? Math.max(...leads.map((l) => Number(l.id) || 0)) + 1 : 1;
+    const slug = buildCanonicalSlug(nextId, newLeadInput.name, newLeadInput.niche);
+    const now = new Date();
+    const expires = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+    const cleanDigits = newLeadInput.phone.replace(/\D/g, "");
+
+    const created: LeadEntity = {
+      id: nextId,
+      slug,
+      name: newLeadInput.name.trim(),
+      niche: newLeadInput.niche.trim().toLowerCase(),
+      contact_channel: "WhatsApp",
+      whatsapp_link: cleanDigits ? `https://wa.me/${cleanDigits}` : null,
+      demo_url: `https://preview.nexobow.site/${slug}/`,
+      location: newLeadInput.city.trim(),
+      city: newLeadInput.city.trim(),
+      funnel_status: "1. Prospecto Identificado",
+      first_contact_date: now.toISOString().split("T")[0],
+      response_status: "Sin Contactar",
+      meeting_booked: false,
+      potential_value: newLeadInput.potential_value || "$189.999 ARS",
+      business_status: "En Proceso",
+      phone: newLeadInput.phone.trim(),
+      notes: "Creado desde Admin CRM.",
+      created_at: now.toISOString(),
+      last_activity_at: now.toISOString(),
+      expires_at: expires.toISOString(),
+      metadata: {
+        source: "manual_crm",
+        modalidad: newLeadInput.modalidad,
+        tipo_consulta: newLeadInput.tipo_consulta,
+        canal_agenda: newLeadInput.canal_agenda,
+      },
+    };
+
+    setLeads((prev) => [created, ...prev]);
+    setShowNewLeadModal(false);
+
+    try {
+      const supabase = getBrowserSupabaseClient();
+      await supabase.from("leads").upsert(created);
+    } catch {
+      // Fallback local
+    }
+
+    showNotification(`✓ Prospecto #${created.id} (${created.slug}) creado en Supabase`);
   };
 
   // Acciones de 1 Clic
@@ -432,34 +453,31 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
   // Filtrado reactivo de leads
   const filteredLeads = useMemo(() => {
     return leads.filter((lead) => {
-      // Búsqueda por texto libre
       if (searchTerm) {
         const term = searchTerm.toLowerCase();
         const matchName = lead.name.toLowerCase().includes(term);
         const matchPhone = (lead.phone || "").toLowerCase().includes(term);
         const matchSlug = lead.slug.toLowerCase().includes(term);
-        const matchLocation = lead.location.toLowerCase().includes(term);
+        const matchLocation = (lead.location || "").toLowerCase().includes(term);
         if (!matchName && !matchPhone && !matchSlug && !matchLocation) return false;
       }
 
-      // Filtro de Nicho
       if (selectedNiche !== "all" && lead.niche !== selectedNiche) return false;
-
-      // Filtro de Ciudad
       if (selectedCity !== "all" && lead.city !== selectedCity) return false;
-
-      // Filtro de Funnel
       if (selectedFunnel !== "all" && lead.funnel_status !== selectedFunnel) return false;
 
-      // Filtro de Urgencia TTL (<48h o Vencido)
       if (filterUrgentOnly) {
         const ttl = calculateDaysRemaining(lead.expires_at);
         if (!ttl.isUrgent && !ttl.isExpired) return false;
       }
 
+      if (filterInboundOnly) {
+        if (lead.metadata?.source !== "inbound_web") return false;
+      }
+
       return true;
     });
-  }, [leads, searchTerm, selectedNiche, selectedCity, selectedFunnel, filterUrgentOnly]);
+  }, [leads, searchTerm, selectedNiche, selectedCity, selectedFunnel, filterUrgentOnly, filterInboundOnly]);
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
@@ -484,22 +502,44 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
           <div className="flex items-center gap-2 mb-1">
             <span
               className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider"
-              style={{ backgroundColor: "rgba(191, 64, 250, 0.15)", color: "#BF40FA" }}
+              style={{
+                backgroundColor: isOffline ? "rgba(245, 158, 11, 0.15)" : "rgba(16, 185, 129, 0.15)",
+                color: isOffline ? "#F59E0B" : "#10B981",
+              }}
             >
-              Supabase Pipeline
+              {isOffline
+                ? "Modo Offline (Demo)"
+                : leads.length === 0
+                ? "Supabase Live (0 registros)"
+                : "Supabase Live"}
             </span>
-            <span className="text-zinc-500 text-xs font-mono">{filteredLeads.length} leads activos</span>
+            <span className="text-zinc-500 text-xs font-mono">
+              {loading ? "Sincronizando..." : `${filteredLeads.length} leads activos`}
+            </span>
           </div>
           <h1 className="text-2xl font-black tracking-tight text-white flex items-center gap-2">
             CRM & Prospección Comercial
           </h1>
           <p className="text-xs text-zinc-400">
-            Sustitución definitiva de Google Sheets: embudo en 6 etapas con control TTL de 7 días y WhatsApp 1-clic.
+            Sustitución definitiva de Google Sheets: embudo en 6 etapas con control TTL de 7 días y WhatsApp táctico 1-clic.
           </p>
         </div>
 
-        {/* Conmutador Dual Kanban vs Data Table */}
+        {/* Botón + Nuevo Prospecto & Conmutador Dual Kanban vs Data Table */}
         <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setShowNewLeadModal(true)}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-white transition-all cursor-pointer"
+            style={{
+              backgroundColor: "#BF40FA",
+              boxShadow: "0 4px 14px rgba(191, 64, 250, 0.3)",
+            }}
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>+ Nuevo Prospecto</span>
+          </button>
+
           <div
             className="flex items-center p-1 rounded-xl border"
             style={{ backgroundColor: "#0B0D12", borderColor: "#1A1D26" }}
@@ -537,7 +577,6 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
         className="p-4 rounded-2xl border flex flex-wrap items-center gap-3"
         style={{ backgroundColor: "#0B0D12", borderColor: "#1A1D26" }}
       >
-        {/* Buscador */}
         <div className="flex-1 min-w-[220px] relative">
           <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
@@ -549,7 +588,6 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
           />
         </div>
 
-        {/* Filtro por Nicho */}
         <select
           value={selectedNiche}
           onChange={(e) => setSelectedNiche(e.target.value)}
@@ -564,7 +602,6 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
           ))}
         </select>
 
-        {/* Filtro por Ciudad */}
         <select
           value={selectedCity}
           onChange={(e) => setSelectedCity(e.target.value)}
@@ -579,7 +616,6 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
           ))}
         </select>
 
-        {/* Filtro por Etapa */}
         <select
           value={selectedFunnel}
           onChange={(e) => setSelectedFunnel(e.target.value)}
@@ -593,6 +629,20 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
             </option>
           ))}
         </select>
+
+        {/* Toggle Inbound Web */}
+        <button
+          type="button"
+          onClick={() => setFilterInboundOnly(!filterInboundOnly)}
+          className={`flex items-center gap-1.5 py-2 px-3 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+            filterInboundOnly
+              ? "bg-purple-500/20 text-purple-300 border-purple-500/50"
+              : "bg-black/40 text-zinc-400 border-zinc-800 hover:text-zinc-200"
+          }`}
+        >
+          <Globe className="w-3.5 h-3.5 text-purple-400" />
+          <span>Inbound Web</span>
+        </button>
 
         {/* Toggle de Urgencia TTL */}
         <button
@@ -623,7 +673,6 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
                   borderColor: "#1A1D26",
                 }}
               >
-                {/* Columna Header */}
                 <div
                   className="p-3 border-b flex items-center justify-between"
                   style={{ borderColor: "#1A1D26" }}
@@ -643,11 +692,11 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
                   </span>
                 </div>
 
-                {/* Tarjetas de Prospectos */}
                 <div className="p-2 space-y-2.5 flex-1 overflow-y-auto max-h-[70vh]">
                   {stageLeads.map((lead) => {
                     const ttl = calculateDaysRemaining(lead.expires_at);
-                    const waUrl = buildVoseoWhatsAppUrl(lead);
+                    const waUrl = buildVoseoWhatsAppUrl(lead, "initial");
+                    const isInbound = lead.metadata?.source === "inbound_web";
 
                     return (
                       <div
@@ -658,18 +707,24 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
                           borderColor: ttl.isUrgent ? "rgba(245, 158, 11, 0.4)" : "#1A1D26",
                         }}
                       >
-                        {/* Top Badges */}
                         <div className="flex items-center justify-between gap-1 mb-2">
-                          <span
-                            className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border"
-                            style={{
-                              backgroundColor: "rgba(91, 42, 98, 0.3)",
-                              borderColor: "rgba(191, 64, 250, 0.3)",
-                              color: "#E3D9FC",
-                            }}
-                          >
-                            #{lead.id}
-                          </span>
+                          <div className="flex items-center gap-1">
+                            <span
+                              className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border"
+                              style={{
+                                backgroundColor: "rgba(91, 42, 98, 0.3)",
+                                borderColor: "rgba(191, 64, 250, 0.3)",
+                                color: "#E3D9FC",
+                              }}
+                            >
+                              #{lead.id}
+                            </span>
+                            {isInbound && (
+                              <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                                Inbound Web
+                              </span>
+                            )}
+                          </div>
                           <span
                             className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-medium flex items-center gap-1 ${
                               ttl.isExpired
@@ -684,7 +739,6 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
                           </span>
                         </div>
 
-                        {/* Nombre y Especialidad */}
                         <h4
                           onClick={() => setSelectedLead(lead)}
                           className="font-bold text-xs text-white group-hover:text-purple-300 cursor-pointer transition-colors truncate mb-1"
@@ -697,15 +751,12 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
                           <span className="truncate">{lead.city}</span>
                         </div>
 
-                        {/* Valor Potencial */}
                         <div className="text-[11px] font-mono text-zinc-400 flex items-center justify-between mb-3 pt-2 border-t border-zinc-900">
                           <span>Potencial:</span>
                           <span className="text-white font-semibold">{lead.potential_value}</span>
                         </div>
 
-                        {/* Acciones de 1 Clic */}
                         <div className="flex items-center gap-1.5 pt-1">
-                          {/* Botón WhatsApp Voseo */}
                           {waUrl && (
                             <a
                               href={waUrl}
@@ -724,7 +775,6 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
                             </a>
                           )}
 
-                          {/* Botón Web Preview */}
                           {lead.demo_url && (
                             <a
                               href={lead.demo_url}
@@ -737,7 +787,6 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
                             </a>
                           )}
 
-                          {/* Botón Renovar TTL +7 días */}
                           <button
                             type="button"
                             onClick={() => handleRenewTtl(lead.id)}
@@ -787,7 +836,8 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
               <tbody className="divide-y divide-zinc-900 text-zinc-300">
                 {filteredLeads.map((lead) => {
                   const ttl = calculateDaysRemaining(lead.expires_at);
-                  const waUrl = buildVoseoWhatsAppUrl(lead);
+                  const waUrl = buildVoseoWhatsAppUrl(lead, "initial");
+                  const isInbound = lead.metadata?.source === "inbound_web";
 
                   return (
                     <tr
@@ -797,8 +847,13 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
                     >
                       <td className="py-3 px-4 font-mono font-bold text-purple-400">#{lead.id}</td>
                       <td className="py-3 px-4">
-                        <div className="font-bold text-white group-hover:text-purple-300 transition-colors">
-                          {lead.name}
+                        <div className="font-bold text-white group-hover:text-purple-300 transition-colors flex items-center gap-1.5">
+                          <span>{lead.name}</span>
+                          {isInbound && (
+                            <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                              Inbound Web
+                            </span>
+                          )}
                         </div>
                         <div className="text-[11px] text-zinc-500 font-mono">{lead.phone || "Sin tel"}</div>
                       </td>
@@ -875,6 +930,14 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
         </div>
       )}
 
+      {/* MODAL + NUEVO PROSPECTO */}
+      {showNewLeadModal && (
+        <NewLeadModal
+          onClose={() => setShowNewLeadModal(false)}
+          onCreate={handleCreateLead}
+        />
+      )}
+
       {/* DRAWER LATERAL DE EDICIÓN RÁPIDA */}
       {selectedLead && (
         <LeadDrawer
@@ -889,7 +952,183 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
   );
 };
 
-// Subcomponente Drawer Lateral de Edición y Acciones
+interface NewLeadModalProps {
+  onClose: () => void;
+  onCreate: (data: {
+    name: string;
+    niche: string;
+    city: string;
+    phone: string;
+    potential_value: string;
+    modalidad: "presencial" | "online" | "mixto";
+    tipo_consulta: "consultar" | "arancelada" | "gratuita";
+    canal_agenda: "whatsapp_secretaria" | "calendly" | "google_calendar";
+  }) => void;
+}
+
+const NewLeadModal: React.FC<NewLeadModalProps> = ({ onClose, onCreate }) => {
+  const [name, setName] = useState("");
+  const [niche, setNiche] = useState("odontologo");
+  const [city, setCity] = useState("CABA");
+  const [phone, setPhone] = useState("");
+  const [potentialValue, setPotentialValue] = useState("$189.999 ARS");
+  const [modalidad, setModalidad] = useState<"presencial" | "online" | "mixto">("presencial");
+  const [tipoConsulta, setTipoConsulta] = useState<"consultar" | "arancelada" | "gratuita">("consultar");
+  const [canalAgenda, setCanalAgenda] = useState<"whatsapp_secretaria" | "calendly" | "google_calendar">("whatsapp_secretaria");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim()) return;
+    onCreate({
+      name,
+      niche,
+      city,
+      phone,
+      potential_value: potentialValue,
+      modalidad,
+      tipo_consulta: tipoConsulta,
+      canal_agenda: canalAgenda,
+    });
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+      <div
+        className="w-full max-w-md rounded-2xl border p-6 shadow-2xl space-y-4"
+        style={{ backgroundColor: "#0B0D12", borderColor: "#1A1D26" }}
+      >
+        <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: "#1A1D26" }}>
+          <h3 className="text-base font-bold text-white">+ Nuevo Prospecto Comercial</h3>
+          <button type="button" onClick={onClose} className="text-zinc-400 hover:text-white cursor-pointer">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <div>
+            <label className="block text-[11px] font-semibold text-zinc-400 mb-1">Nombre / Consultorio / Estudio</label>
+            <input
+              type="text"
+              required
+              placeholder="Ej: Dra. Valeria Gómez"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full py-2 px-3 rounded-xl text-xs bg-black/40 border border-zinc-800 text-white"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-[11px] font-semibold text-zinc-400 mb-1">Rubro</label>
+              <select
+                value={niche}
+                onChange={(e) => setNiche(e.target.value)}
+                className="w-full py-2 px-3 rounded-xl text-xs bg-black/40 border border-zinc-800 text-white"
+              >
+                <option value="odontologo">Odontología</option>
+                <option value="clinica">Clínica / Medicina</option>
+                <option value="estetica">Estética / Dermatología</option>
+                <option value="nutricionista">Nutrición</option>
+                <option value="psicologo">Psicología</option>
+                <option value="abogado">Estudio Jurídico</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-[11px] font-semibold text-zinc-400 mb-1">Ciudad / Barrio</label>
+              <input
+                type="text"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                className="w-full py-2 px-3 rounded-xl text-xs bg-black/40 border border-zinc-800 text-white"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-[11px] font-semibold text-zinc-400 mb-1">WhatsApp</label>
+              <input
+                type="text"
+                placeholder="+54911..."
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full py-2 px-3 rounded-xl text-xs bg-black/40 border border-zinc-800 text-white font-mono"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-semibold text-zinc-400 mb-1">Tier / Valor Potencial</label>
+              <select
+                value={potentialValue}
+                onChange={(e) => setPotentialValue(e.target.value)}
+                className="w-full py-2 px-3 rounded-xl text-xs bg-black/40 border border-zinc-800 text-white font-mono"
+              >
+                <option value="$189.999 ARS">Tier 1 Starter ($189.999 ARS)</option>
+                <option value="$549.999 ARS">Tier 2 Autonomous ($549.999 ARS)</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2 pt-1">
+            <div>
+              <label className="block text-[10px] font-semibold text-zinc-400 mb-1">Modalidad</label>
+              <select
+                value={modalidad}
+                onChange={(e) => setModalidad(e.target.value as any)}
+                className="w-full py-1.5 px-2 rounded-lg text-[11px] bg-black/40 border border-zinc-800 text-white"
+              >
+                <option value="presencial">Presencial</option>
+                <option value="mixto">Mixto</option>
+                <option value="online">Online</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-[10px] font-semibold text-zinc-400 mb-1">Consulta</label>
+              <select
+                value={tipoConsulta}
+                onChange={(e) => setTipoConsulta(e.target.value as any)}
+                className="w-full py-1.5 px-2 rounded-lg text-[11px] bg-black/40 border border-zinc-800 text-white"
+              >
+                <option value="consultar">A coordinar</option>
+                <option value="arancelada">Arancelada</option>
+                <option value="gratuita">Gratuita</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-[10px] font-semibold text-zinc-400 mb-1">Canal Agenda</label>
+              <select
+                value={canalAgenda}
+                onChange={(e) => setCanalAgenda(e.target.value as any)}
+                className="w-full py-1.5 px-2 rounded-lg text-[11px] bg-black/40 border border-zinc-800 text-white"
+              >
+                <option value="whatsapp_secretaria">WA Secretaría</option>
+                <option value="calendly">Calendly</option>
+                <option value="google_calendar">Google Calendar</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="flex justify-end gap-2 pt-3 border-t" style={{ borderColor: "#1A1D26" }}>
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 rounded-xl text-xs font-bold text-white cursor-pointer"
+              style={{ backgroundColor: "#BF40FA" }}
+            >
+              Crear Prospecto
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
 interface LeadDrawerProps {
   lead: LeadEntity;
   onClose: () => void;
@@ -905,12 +1144,28 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
   onRenewTtl,
   onUpdateStage,
 }) => {
-  const [formData, setFormData] = useState<LeadEntity>({ ...lead });
+  const initialMeta = resolveLeadMetadata(lead);
+  const [formData, setFormData] = useState<LeadEntity>({
+    ...lead,
+    metadata: initialMeta,
+  });
   const ttl = calculateDaysRemaining(formData.expires_at);
-  const waUrl = buildVoseoWhatsAppUrl(formData);
+  const waUrlInitial = buildVoseoWhatsAppUrl(formData, "initial");
+  const waUrlPresencial = buildVoseoWhatsAppUrl(formData, "objecion_presencial");
+  const waUrlArancelada = buildVoseoWhatsAppUrl(formData, "objecion_arancelada");
 
   const handleChange = (field: keyof LeadEntity, val: any) => {
     setFormData((prev) => ({ ...prev, [field]: val }));
+  };
+
+  const handleMetaChange = (metaField: "modalidad" | "tipo_consulta" | "canal_agenda", val: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      metadata: {
+        ...resolveLeadMetadata(prev),
+        [metaField]: val,
+      },
+    }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -918,13 +1173,14 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
     onSave(formData);
   };
 
+  const currentMeta = resolveLeadMetadata(formData);
+
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-fade-in">
       <div
         className="w-full max-w-lg h-full flex flex-col border-l shadow-2xl p-6 overflow-y-auto"
         style={{ backgroundColor: "#0B0D12", borderColor: "#1A1D26" }}
       >
-        {/* Encabezado Drawer */}
         <div className="flex items-center justify-between pb-4 border-b" style={{ borderColor: "#1A1D26" }}>
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -942,7 +1198,7 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
           </button>
         </div>
 
-        {/* Toolbar de Acciones Rápidas */}
+        {/* Toolbar de Acciones Rápidas & Objeciones WhatsApp */}
         <div className="my-5 p-3 rounded-xl border space-y-3" style={{ backgroundColor: "#040607", borderColor: "#1A1D26" }}>
           <div className="flex items-center justify-between">
             <span className="text-xs text-zinc-400 font-medium">Ciclo TTL 7 Días:</span>
@@ -960,15 +1216,15 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            {waUrl && (
+            {waUrlInitial && (
               <a
-                href={waUrl}
+                href={waUrlInitial}
                 target="_blank"
                 rel="noreferrer"
                 className="py-2 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20"
               >
                 <MessageCircle className="w-3.5 h-3.5" />
-                <span>WhatsApp Voseo</span>
+                <span>WhatsApp Inicial</span>
               </a>
             )}
 
@@ -981,6 +1237,28 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
               <span>Renovar +7 Días</span>
             </button>
           </div>
+
+          {/* Botones Tácticos Anti-Objeción */}
+          {waUrlInitial && (
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              <a
+                href={waUrlPresencial}
+                target="_blank"
+                rel="noreferrer"
+                className="py-1.5 px-2.5 rounded-lg text-[11px] font-medium flex items-center justify-center gap-1 text-zinc-300 bg-zinc-900 border border-zinc-800 hover:border-emerald-500/40 hover:text-emerald-300"
+              >
+                <span>Objeción: Solo Presencial</span>
+              </a>
+              <a
+                href={waUrlArancelada}
+                target="_blank"
+                rel="noreferrer"
+                className="py-1.5 px-2.5 rounded-lg text-[11px] font-medium flex items-center justify-center gap-1 text-zinc-300 bg-zinc-900 border border-zinc-800 hover:border-emerald-500/40 hover:text-emerald-300"
+              >
+                <span>Objeción: Consulta Arancelada</span>
+              </a>
+            </div>
+          )}
 
           {formData.demo_url && (
             <a
@@ -995,7 +1273,6 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
           )}
         </div>
 
-        {/* Formulario de Edición */}
         <form onSubmit={handleSubmit} className="space-y-4 flex-1">
           <div>
             <label className="block text-[11px] font-semibold text-zinc-400 mb-1">Nombre / Razón Social</label>
@@ -1025,6 +1302,51 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
                 onChange={(e) => handleChange("city", e.target.value)}
                 className="w-full py-2 px-3 rounded-xl text-xs bg-black/40 border border-zinc-800 text-white focus:outline-none focus:border-purple-500"
               />
+            </div>
+          </div>
+
+          {/* Selectores de Embudo Realista (Modalidad, Tipo Consulta, Canal Agenda) */}
+          <div className="p-3 rounded-xl border border-zinc-800/80 bg-black/30 space-y-2.5">
+            <span className="block text-[10px] font-mono uppercase tracking-wider text-purple-300 font-bold">
+              Configuración de Embudo y Turnos
+            </span>
+            <div className="grid grid-cols-3 gap-2">
+              <div>
+                <label className="block text-[10px] text-zinc-400 mb-1">Modalidad</label>
+                <select
+                  value={currentMeta.modalidad}
+                  onChange={(e) => handleMetaChange("modalidad", e.target.value)}
+                  className="w-full py-1.5 px-2 rounded-lg text-[11px] bg-black/60 border border-zinc-800 text-white"
+                >
+                  <option value="presencial">Presencial</option>
+                  <option value="mixto">Mixto</option>
+                  <option value="online">Online</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-[10px] text-zinc-400 mb-1">Tipo Consulta</label>
+                <select
+                  value={currentMeta.tipo_consulta}
+                  onChange={(e) => handleMetaChange("tipo_consulta", e.target.value)}
+                  className="w-full py-1.5 px-2 rounded-lg text-[11px] bg-black/60 border border-zinc-800 text-white"
+                >
+                  <option value="consultar">A coordinar</option>
+                  <option value="arancelada">Arancelada</option>
+                  <option value="gratuita">Gratuita</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-[10px] text-zinc-400 mb-1">Canal Agenda</label>
+                <select
+                  value={currentMeta.canal_agenda}
+                  onChange={(e) => handleMetaChange("canal_agenda", e.target.value)}
+                  className="w-full py-1.5 px-2 rounded-lg text-[11px] bg-black/60 border border-zinc-800 text-white"
+                >
+                  <option value="whatsapp_secretaria">WA Secretaría</option>
+                  <option value="calendly">Calendly</option>
+                  <option value="google_calendar">Google Calendar</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -1093,7 +1415,6 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
             />
           </div>
 
-          {/* Botones de Pie */}
           <div className="pt-4 border-t flex items-center justify-between gap-3" style={{ borderColor: "#1A1D26" }}>
             <button
               type="button"

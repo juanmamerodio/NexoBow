@@ -22,6 +22,8 @@ import {
   saveScheduleBlock,
   toggleScheduleBlockCompletion,
   deleteScheduleBlock,
+  SCHOOL_AND_PROSPECTING_PRESET,
+  seedSchoolAndProspectingSchedule,
 } from "../../../lib/schedule.ts";
 import {
   Calendar,
@@ -49,229 +51,14 @@ interface ScheduleViewProps {
   onNavigate?: (path: string) => void;
 }
 
-// Semilla inicial representativa de la semana ideal del fundador
-const INITIAL_SCHEDULE_BLOCKS: ScheduleBlock[] = [
-  // Lunes (1)
-  {
-    id: 1,
-    title: "Prospección Fría: Nutricionistas & Abogados",
-    description: "Scouting con Maps Platform y envío de notas personalizadas por WhatsApp",
-    category: "prospeccion",
-    day_of_week: 1,
-    start_time: "08:30",
-    end_time: "10:30",
-    is_completed: true,
-    is_recurring: true,
-  },
-  {
-    id: 2,
-    title: "Deep Work: Arquitectura & Templates REA",
-    description: "Desarrollo de componentes Astro, ingeniería inversa y 0-JS",
-    category: "desarrollo",
-    day_of_week: 1,
-    start_time: "11:00",
-    end_time: "14:00",
-    is_completed: true,
-    is_recurring: true,
-  },
-  {
-    id: 3,
-    title: "Revisión Pipeline & Demos Cloudflare",
-    description: "Auditoría dual-viewport y sincronización de previsualizaciones",
-    category: "desarrollo",
-    day_of_week: 1,
-    start_time: "15:00",
-    end_time: "16:30",
-    is_completed: false,
-    is_recurring: true,
-  },
-  {
-    id: 4,
-    title: "Entrenamiento & Gimnasio",
-    description: "Sesión de fuerza y acondicionamiento",
-    category: "personal",
-    day_of_week: 1,
-    start_time: "18:00",
-    end_time: "19:30",
-    is_completed: false,
-    is_recurring: true,
-  },
-  // Martes (2)
-  {
-    id: 5,
-    title: "AlayNow: Grabación Videos YouTube",
-    description: "Rodaje con setup AfterBow en alta resolución",
-    category: "alaynow_grabacion",
-    day_of_week: 2,
-    start_time: "09:00",
-    end_time: "12:00",
-    is_completed: false,
-    is_recurring: true,
-  },
-  {
-    id: 6,
-    title: "AlayNow: Edición & Guiones Audiovisuales",
-    description: "Montaje, miniaturas y estructuración de ganchos",
-    category: "alaynow_grabacion",
-    day_of_week: 2,
-    start_time: "13:00",
-    end_time: "15:30",
-    is_completed: false,
-    is_recurring: true,
-  },
-  {
-    id: 7,
-    title: "Follow-up WhatsApp & Objeciones",
-    description: "Manejo de objeciones comerciales con skill objection-handler",
-    category: "prospeccion",
-    day_of_week: 2,
-    start_time: "16:00",
-    end_time: "17:30",
-    is_completed: false,
-    is_recurring: true,
-  },
-  // Miércoles (3)
-  {
-    id: 8,
-    title: "Scouting Masivo: Places API & Fichas",
-    description: "Generación de fichas con voseo argentino y dolores Hormozi",
-    category: "prospeccion",
-    day_of_week: 3,
-    start_time: "09:00",
-    end_time: "11:30",
-    is_completed: false,
-    is_recurring: true,
-  },
-  {
-    id: 9,
-    title: "Desarrollo: Nuevos Arquetipos Visuales",
-    description: "ThemeSwitcher y desacoplamiento de branding",
-    category: "desarrollo",
-    day_of_week: 3,
-    start_time: "12:00",
-    end_time: "14:30",
-    is_completed: false,
-    is_recurring: true,
-  },
-  {
-    id: 10,
-    title: "Reunión de Cierre / Demo con Prospectos",
-    description: "Videollamada de presentación de landing y propuesta B2B",
-    category: "reunion",
-    day_of_week: 3,
-    start_time: "15:30",
-    end_time: "17:00",
-    is_completed: false,
-    is_recurring: true,
-  },
-  // Jueves (4)
-  {
-    id: 11,
-    title: "AlayNow: Grabación & Shorts",
-    description: "Batching de contenido vertical para YouTube y redes",
-    category: "alaynow_grabacion",
-    day_of_week: 4,
-    start_time: "09:00",
-    end_time: "11:30",
-    is_completed: false,
-    is_recurring: true,
-  },
-  {
-    id: 12,
-    title: "Deep Work: Módulos Cockpit Supabase",
-    description: "Desarrollo de CRM, finanzas, horarios y hábitos",
-    category: "desarrollo",
-    day_of_week: 4,
-    start_time: "12:30",
-    end_time: "15:30",
-    is_completed: false,
-    is_recurring: true,
-  },
-  {
-    id: 13,
-    title: "Calls de Calificación & Onboarding",
-    description: "Reunión de setup con cliente nuevo",
-    category: "reunion",
-    day_of_week: 4,
-    start_time: "16:00",
-    end_time: "17:30",
-    is_completed: false,
-    is_recurring: true,
-  },
-  // Viernes (5)
-  {
-    id: 14,
-    title: "Cierre Semanal de Prospección & WhatsApp",
-    description: "Consolidación de respuestas y agendamientos",
-    category: "prospeccion",
-    day_of_week: 5,
-    start_time: "09:00",
-    end_time: "11:00",
-    is_completed: false,
-    is_recurring: true,
-  },
-  {
-    id: 15,
-    title: "Auditoría de Sitios & QA Playwright",
-    description: "Verificación de 0-JS en web/ y presupuesto de JS en templates",
-    category: "desarrollo",
-    day_of_week: 5,
-    start_time: "11:30",
-    end_time: "14:00",
-    is_completed: false,
-    is_recurring: true,
-  },
-  {
-    id: 16,
-    title: "Revisión de Finanzas & Cashflow Mensual",
-    description: "Balance de ingresos, gastos fijos y conversiones",
-    category: "desarrollo",
-    day_of_week: 5,
-    start_time: "15:00",
-    end_time: "16:30",
-    is_completed: false,
-    is_recurring: true,
-  },
-  {
-    id: 17,
-    title: "Reunión de Planificación Estratégica",
-    description: "Alineación de objetivos de la próxima semana",
-    category: "reunion",
-    day_of_week: 5,
-    start_time: "17:00",
-    end_time: "18:30",
-    is_completed: false,
-    is_recurring: true,
-  },
-  // Sábado (6)
-  {
-    id: 18,
-    title: "Planificación & Revisión Semanal Founder",
-    description: "Retrospectiva de hábitos y prioridades de crecimiento",
-    category: "personal",
-    day_of_week: 6,
-    start_time: "10:00",
-    end_time: "12:00",
-    is_completed: false,
-    is_recurring: true,
-  },
-  // Domingo (7)
-  {
-    id: 19,
-    title: "Preparación de la Semana Ideal & Agenda",
-    description: "Ajuste de bloques y objetivos clave",
-    category: "personal",
-    day_of_week: 7,
-    start_time: "18:00",
-    end_time: "19:30",
-    is_completed: false,
-    is_recurring: true,
-  },
-];
+// Semilla base sincronizada con la rutina de Cursada Escuela + Sprint Prospección
+const INITIAL_SCHEDULE_BLOCKS: ScheduleBlock[] = SCHOOL_AND_PROSPECTING_PRESET;
 
 export const ScheduleView: React.FC<ScheduleViewProps> = ({ onNavigate }) => {
   const [blocks, setBlocks] = useState<ScheduleBlock[]>(INITIAL_SCHEDULE_BLOCKS);
   const [loading, setLoading] = useState(false);
+  const [isOffline, setIsOffline] = useState(false);
+  const [isSeedingPreset, setIsSeedingPreset] = useState(false);
   const [isSyncingGcal, setIsSyncingGcal] = useState(false);
   const [gcalSyncedCount, setGcalSyncedCount] = useState<number>(0);
   const [notification, setNotification] = useState<{ type: "success" | "error"; message: string } | null>(null);
@@ -294,17 +81,22 @@ export const ScheduleView: React.FC<ScheduleViewProps> = ({ onNavigate }) => {
   const [formIsRecurring, setFormIsRecurring] = useState(true);
   const [formError, setFormError] = useState("");
 
-  // Carga inicial desde Supabase
+  // Carga inicial desde Supabase (Single Source of Truth)
   useEffect(() => {
     let mounted = true;
     const loadFromSupabase = async () => {
       setLoading(true);
       try {
-        const data = await fetchScheduleBlocks();
-        if (mounted && data.length > 0) {
-          setBlocks(data);
+        const res = await fetchScheduleBlocks();
+        if (mounted) {
+          setIsOffline(Boolean(res.isOffline));
+          setBlocks(res);
         }
       } catch (err) {
+        if (mounted) {
+          setIsOffline(true);
+          setBlocks(INITIAL_SCHEDULE_BLOCKS);
+        }
         console.warn("Supabase schedule_blocks offline, utilizando datos locales precalibrados.");
       } finally {
         if (mounted) setLoading(false);
@@ -508,6 +300,29 @@ export const ScheduleView: React.FC<ScheduleViewProps> = ({ onNavigate }) => {
     }
   };
 
+  // Carga 1-clic del Preset de Rutina Escuela + Prospección
+  const handleSeedSchoolRoutine = async () => {
+    setIsSeedingPreset(true);
+    try {
+      const res = await seedSchoolAndProspectingSchedule();
+      const refreshed = await fetchScheduleBlocks();
+      if (!refreshed.isOffline && refreshed.length > 0) {
+        setBlocks(refreshed);
+      } else {
+        setBlocks(SCHOOL_AND_PROSPECTING_PRESET);
+      }
+      showToast(
+        "success",
+        `Rutina Escuela (07:30–13:00) + Prospección (17:00–17:45) cargada (${res.insertedCount} bloques nuevos).`
+      );
+    } catch (err: any) {
+      setBlocks(SCHOOL_AND_PROSPECTING_PRESET);
+      showToast("error", `Error persistiendo rutina en Supabase: ${err.message}`);
+    } finally {
+      setIsSeedingPreset(false);
+    }
+  };
+
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-16">
       {/* Toast de notificación */}
@@ -551,6 +366,20 @@ export const ScheduleView: React.FC<ScheduleViewProps> = ({ onNavigate }) => {
                 <Sparkles className="w-3 h-3 text-[#BF40FA]" />
                 Semana Ideal Activa
               </span>
+              <span
+                className="px-2.5 py-0.5 rounded-full text-[10px] font-mono border"
+                style={{
+                  backgroundColor: isOffline ? "rgba(245, 158, 11, 0.12)" : "rgba(16, 185, 129, 0.12)",
+                  borderColor: isOffline ? "rgba(245, 158, 11, 0.35)" : "rgba(16, 185, 129, 0.35)",
+                  color: isOffline ? "#FBBF24" : "#34D399",
+                }}
+              >
+                {isOffline
+                  ? "Modo Offline (Demo)"
+                  : blocks.length === 0
+                  ? "Supabase Live (0 bloques)"
+                  : `Supabase Live (${blocks.length} bloques)`}
+              </span>
               <span className="text-zinc-500 text-xs font-mono">Time-Blocking & Foco</span>
               {gcalSyncedCount > 0 && (
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-blue-500/10 text-blue-400 border border-blue-500/30">
@@ -568,6 +397,25 @@ export const ScheduleView: React.FC<ScheduleViewProps> = ({ onNavigate }) => {
           </div>
 
           <div className="flex items-center gap-3 flex-wrap">
+            <button
+              type="button"
+              onClick={handleSeedSchoolRoutine}
+              disabled={isSeedingPreset}
+              className="py-2.5 px-4 rounded-xl text-xs font-semibold flex items-center gap-2 cursor-pointer transition-all border disabled:opacity-50"
+              style={{
+                backgroundColor: "rgba(16, 185, 129, 0.12)",
+                borderColor: "rgba(16, 185, 129, 0.4)",
+                color: "#34D399",
+              }}
+            >
+              <Zap className={`w-3.5 h-3.5 ${isSeedingPreset ? "animate-pulse" : ""}`} />
+              <span>
+                {isSeedingPreset
+                  ? "Cargando rutina..."
+                  : "Cargar Rutina Escuela (07:30–13:00) + Prospección (17:00–17:45)"}
+              </span>
+            </button>
+
             <button
               type="button"
               onClick={handleSyncGoogleCalendar}

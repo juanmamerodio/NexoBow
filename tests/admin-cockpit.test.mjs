@@ -359,4 +359,70 @@ test("T45: Cockpit Diario (Home): Resumen Ejecutivo y Alertas Cruzadas", async (
       );
     }
   );
+
+  // --- SEAM 4: TICKET #48 — SUSTANTIVO POR RUBRO Y ENDPOINT CREATE.TS ---
+  await t.test(
+    "10. Ticket #48: buildUrgentWhatsAppUrl adapta sustantivo ('tu estudio' / 'tu centro' / 'tu consultorio') y create.ts apunta al proyecto Supabase unificado",
+    () => {
+      const { buildUrgentWhatsAppUrl } = cockpitModule;
+      assert.equal(typeof buildUrgentWhatsAppUrl, "function");
+
+      const urlAbogado = decodeURIComponent(
+        buildUrgentWhatsAppUrl({
+          id: 10,
+          slug: "10-benitez-abogado",
+          name: "Dr. Gonzalo Benítez",
+          niche: "abogado",
+          phone: "+5491144556677",
+        })
+      );
+      assert.ok(urlAbogado.includes("tu estudio"), "Para abogado debe decir 'tu estudio'");
+
+      const urlClinica = decodeURIComponent(
+        buildUrgentWhatsAppUrl({
+          id: 11,
+          slug: "11-vazquez-clinica",
+          name: "Dr. Lucas Vázquez",
+          niche: "clinica",
+          phone: "+5491144556677",
+        })
+      );
+      assert.ok(urlClinica.includes("tu centro"), "Para clínica/estética debe decir 'tu centro'");
+
+      const urlNutri = decodeURIComponent(
+        buildUrgentWhatsAppUrl({
+          id: 12,
+          slug: "12-calcagno-nutri",
+          name: "Lic. Mari Calcagno",
+          niche: "nutricionista",
+          phone: "+5491144556677",
+        })
+      );
+      assert.ok(urlNutri.includes("tu consultorio"), "Para salud/nutrición/odontología debe decir 'tu consultorio'");
+
+      const createEndpointPath = join(
+        REPO_ROOT,
+        "web",
+        "functions",
+        "api",
+        "v1",
+        "bow-system",
+        "create.ts"
+      );
+      const createSource = readFileSync(createEndpointPath, "utf8");
+      assert.ok(
+        createSource.includes("https://henpyuwguwvflhgbxmvn.supabase.co"),
+        "create.ts debe usar https://henpyuwguwvflhgbxmvn.supabase.co como fallback URL"
+      );
+      assert.ok(
+        !createSource.includes("bcfhwwqkgmwboflytmtm"),
+        "create.ts no debe contener el proyecto viejo bcfhwwqkgmwboflytmtm"
+      );
+      assert.ok(
+        createSource.includes("whatsapp_secretaria"),
+        "create.ts debe inicializar metadata con canal_agenda: 'whatsapp_secretaria'"
+      );
+    }
+  );
 });
+

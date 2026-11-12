@@ -1226,6 +1226,235 @@ export function buildContentOverridesForRubro({
   return null;
 }
 
+export function resolveLeadMetadata(lead = {}) {
+  const rawMeta = lead.metadata && typeof lead.metadata === "object" ? lead.metadata : {};
+  const vertical = normalizeRubroKey(lead.rubro || lead.niche || lead.nicho || lead.query || lead.slug || "nutricionista");
+
+  const isPresencialVertical = ["odontologo", "clinica", "estetica", "dermatologia", "cirugia", "kinesiologo"].includes(vertical);
+  const isLegalVertical = ["abogado", "corporativo", "consultor"].includes(vertical);
+
+  const defaultModalidad = isPresencialVertical ? "presencial" : "mixto";
+  const defaultTipoConsulta = isLegalVertical ? "arancelada" : "consultar";
+  const defaultCanalAgenda = "whatsapp_secretaria";
+
+  return {
+    ...rawMeta,
+    modalidad: lead.modalidad || rawMeta.modalidad || defaultModalidad,
+    tipo_consulta: lead.tipo_consulta || rawMeta.tipo_consulta || defaultTipoConsulta,
+    canal_agenda: lead.canal_agenda || rawMeta.canal_agenda || defaultCanalAgenda,
+    arancel_consulta_ars: Number(lead.arancel_consulta_ars ?? rawMeta.arancel_consulta_ars ?? 0),
+  };
+}
+
+export function resolveBookingConfig(leadOrFm = {}) {
+  const meta = resolveLeadMetadata(leadOrFm);
+  const modalidad = meta.modalidad;
+  const tipo_consulta = meta.tipo_consulta;
+  const canal_agenda = meta.canal_agenda;
+  const arancel_consulta_ars = meta.arancel_consulta_ars;
+  const ubicacion = String(leadOrFm.ubicacion || leadOrFm.direccion || leadOrFm.ciudad || leadOrFm.city || "").trim();
+
+  let cta_primary = "Consultar Disponibilidad de Turno";
+  if (tipo_consulta === "gratuita") {
+    cta_primary = "Agendar Consultoría Gratuita";
+  } else if (canal_agenda === "calendly" || canal_agenda === "google_calendar") {
+    cta_primary = "Agendar Turno Online";
+  }
+
+  const whatsapp_prefill =
+    tipo_consulta === "gratuita"
+      ? "Hola! Quiero agendar mi primera consultoría gratuita"
+      : "Hola! Vi su web y quería consultar disponibilidad para agendar una primera consulta.";
+
+  let precio_texto = "Valoración Inicial Personalizada";
+  if (arancel_consulta_ars > 0) {
+    precio_texto = `$${arancel_consulta_ars.toLocaleString("es-AR")} ARS`;
+  } else if (tipo_consulta === "gratuita") {
+    precio_texto = "$0 ARS";
+  } else if (tipo_consulta === "arancelada") {
+    precio_texto = "Consulta Profesional Arancelada";
+  }
+
+  let badge_modalidad = "Atención Personalizada · Presencial y Online";
+  if (modalidad === "presencial") {
+    badge_modalidad = ubicacion
+      ? `Atención Presencial en ${ubicacion}`
+      : "Atención Médica Personalizada en Consultorio";
+  } else if (modalidad === "online") {
+    badge_modalidad = "Atención 100% Online por Videollamada";
+  } else {
+    badge_modalidad = ubicacion
+      ? `Atención Presencial en ${ubicacion} y Online`
+      : "Atención Personalizada · Presencial y Online";
+  }
+
+  let microcopy_agenda = "Atención personalizada · Presencial y Online · Coordinación ágil por WhatsApp.";
+  if (tipo_consulta === "gratuita") {
+    microcopy_agenda = "Sin cargo · 20 minutos · Cupos limitados por semana.";
+  } else if (modalidad === "presencial") {
+    microcopy_agenda = "Atención personalizada en consultorio · Coordinación ágil por WhatsApp.";
+  }
+
+  return {
+    modalidad,
+    tipo_consulta,
+    canal_agenda,
+    arancel_consulta_ars,
+    cta_primary,
+    whatsapp_prefill,
+    precio_texto,
+    badge_modalidad,
+    microcopy_agenda,
+  };
+}
+
+export function buildFicheMarkdown(rawData = {}, flags = {}, copyOverride = null) {
+  const fullName = rawData.nombre && rawData.apellido
+    ? `${rawData.nombre} ${rawData.apellido}`.trim()
+    : (rawData.nombre || "Profesional");
+  const vertical = normalizeRubroKey(rawData.rubro || rawData.nicho || rawData.query || rawData.slug || "nutricionista");
+  const slug =
+    rawData.slug ||
+    `${rawData.id || rawData.sheet_id || 1}-${fullName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-")}-${vertical}`.replace(/--+/g, "-");
+  const cleanPhone = String(rawData.telefono || rawData.whatsapp || "").replace(/\D/g, "");
+
+  const slugIdMatch = slug.match(/^(\d+)-/);
+  const sheetId = Number(
+    flags["sheet-id"] ??
+      rawData.sheet_id ??
+      rawData.sheetId ??
+      (slugIdMatch ? slugIdMatch[1] : rawData.id ?? 0)
+  );
+  const todayStr = new Date().toISOString().split("T")[0];
+  const createdAt = rawData.created_at || todayStr;
+  const lastActivityAt = rawData.last_activity_at || createdAt;
+  const expiresAt = rawData.expires_at || addDaysToIsoDate(lastActivityAt, 7);
+  const leadStatus = rawData.lead_status || "1. Prospecto Identificado";
+  const canonicalTemplate = resolveCanonicalTemplateForRubro(vertical);
+  const templateVersion = rawData.template_version || canonicalTemplate.templateVersion;
+  const templateArchetype = rawData.template_archetype || canonicalTemplate.archetype;
+
+  const direccion = rawData.direccion || rawData.ciudad || rawData.ubicacion || "";
+  const bookingCfg = resolveBookingConfig({
+    ...rawData,
+    rubro: vertical,
+    ubicacion: direccion,
+  });
+
+  const encodedPrefill = encodeURIComponent(bookingCfg.whatsapp_prefill);
+  const fallbackWaBooking = cleanPhone
+    ? `https://wa.me/${cleanPhone}?text=${encodedPrefill}`
+    : "";
+  const calendlyUrl = (rawData.website && rawData.website.includes("calendly.com"))
+    ? rawData.website
+    : fallbackWaBooking;
+
+  const copy = copyOverride || selectCopyAngle({ ...rawData, nombre: fullName, rubro: vertical, sheet_id: sheetId, slug });
+  const branding = selectContextualBranding({ ...rawData, nombre: fullName, rubro: vertical, sheet_id: sheetId, slug });
+  const phoneDisplay = rawData.telefonoFormato || (cleanPhone ? `+${cleanPhone}` : "");
+  const contentOverrides =
+    rawData.content_overrides ||
+    buildContentOverridesForRubro({
+      vertical,
+      nombre: fullName,
+      direccion,
+      phoneDisplay,
+      copy,
+      rating: rawData.rating,
+      userRatingCount: rawData.userRatingCount,
+    });
+
+  const reviewsMarkdown = (rawData.reviews && rawData.reviews.length > 0)
+    ? rawData.reviews
+        .map((r) => `- **${r.author} (Google Maps)**: "${r.text.replace(/\r?\n/g, " ")}"`)
+        .join("\n")
+    : `- **Paciente Verificado (Google Maps)**: "Excelente atención, calidez profesional y seguimiento claro desde la primera consulta."`;
+
+  const casesMarkdown = copy.casos
+    .map((c) => `- **${c.titulo}**: ${c.descripcion}. Resultado: ${c.resultado}`)
+    .join("\n");
+
+  const faqMarkdown = copy.faq
+    .map((f) => `- **${f.q}**: ${f.a}`)
+    .join("\n");
+
+  const alternativePalettes = generateAlternativePalettes(branding);
+  const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site";
+  const escYaml = (v) => JSON.stringify(String(v ?? ""));
+
+  const formatPalettesYaml = (pals) => {
+    return pals
+      .map(
+        (p) => `  - nombre: ${escYaml(p.nombre)}
+    fondo: ${escYaml(p.fondo)}
+    tinta: ${escYaml(p.tinta)}
+    primary: ${escYaml(p.primary)}
+    accent: ${escYaml(p.accent)}`
+      )
+      .join("\n");
+  };
+
+  const extraFieldsLines = [
+    copy.rol ? `rol: ${escYaml(copy.rol)}` : null,
+    copy.subtitulo ? `subtitulo: ${escYaml(copy.subtitulo)}` : null,
+    copy.tagline ? `tagline: ${escYaml(copy.tagline)}` : null,
+    copy.titulo ? `titulo: ${escYaml(copy.titulo)}` : null,
+    copy.bajada ? `bajada: ${escYaml(copy.bajada)}` : null,
+    direccion ? `direccion: ${escYaml(direccion)}` : null,
+    phoneDisplay ? `telefono_display: ${escYaml(phoneDisplay)}` : null,
+  ].filter(Boolean);
+
+  const overridesBlock = contentOverrides
+    ? stringifyYaml({ content_overrides: contentOverrides }, { lineWidth: 0 }).trimEnd()
+    : "";
+
+  return `---
+id: ${sheetId || Date.now().toString().slice(-4)}
+sheet_id: ${sheetId}
+lead_status: ${escYaml(leadStatus)}
+created_at: ${escYaml(createdAt)}
+last_activity_at: ${escYaml(lastActivityAt)}
+expires_at: ${escYaml(expiresAt)}
+rubro: ${vertical}
+template_archetype: ${escYaml(templateArchetype)}
+template_version: ${escYaml(templateVersion)}
+modalidad: ${escYaml(bookingCfg.modalidad)}
+tipo_consulta: ${escYaml(bookingCfg.tipo_consulta)}
+canal_agenda: ${escYaml(bookingCfg.canal_agenda)}
+arancel_consulta_ars: ${bookingCfg.arancel_consulta_ars}
+nombre: ${escYaml(fullName)}
+${extraFieldsLines.length > 0 ? extraFieldsLines.join("\n") + "\n" : ""}slug: ${escYaml(slug)}
+estado: prospecto
+subdominio: ${escYaml(`preview.${rootDomain}/${slug}/`)}
+whatsapp: ${escYaml(cleanPhone || "5491100000000")}
+calendly: ${escYaml(calendlyUrl)}
+google_maps: ${escYaml(rawData.website || `https://maps.google.com/?cid=gmp-${rawData.placeId || slug}`)}
+instagram: ${escYaml(rawData.website || "")}
+tema:
+  nombre: ${escYaml(branding.paletteName || "Original")}
+  primary: ${escYaml(branding.primary)}
+  accent: ${escYaml(branding.accent)}
+  fondo: ${escYaml(branding.fondo)}
+  tinta: ${escYaml(branding.tinta)}
+  fuente: ${escYaml(branding.fuente)}
+  fuente_sans: ${escYaml(branding.fuente_sans)}
+  orden_secciones: ${JSON.stringify(branding.orden_secciones)}
+paletas_alternativas:
+${formatPalettesYaml(alternativePalettes)}
+${overridesBlock ? overridesBlock + "\n" : ""}consentimiento_testimonios: false
+setup_ars: 189999
+abono_ars: 0
+mes_de_prueba: true
+metricas:
+  agendadas_mes: 0
+  concretadas_mes: 0
+---
+
+## Bio
+${copy.bio}
+`;
+}
+
 async function main() {
   const { rawJsonPath, flags } = parseArgs();
 
@@ -1267,9 +1496,15 @@ async function main() {
   const templateVersion = rawData.template_version || canonicalTemplate.templateVersion;
   const templateArchetype = rawData.template_archetype || canonicalTemplate.archetype;
 
+  const bookingCfg = resolveBookingConfig({
+    ...rawData,
+    rubro: vertical,
+    ubicacion: rawData.direccion,
+  });
+
   // Fallback inteligente para agendamiento: si no tiene Calendly, apuntar el CTA a WhatsApp con mensaje predeterminado
   const fallbackWaBooking = cleanPhone
-    ? `https://wa.me/${cleanPhone}?text=Hola!%20Quiero%20agendar%20mi%20primera%20consultor%C3%ADa%20gratuita`
+    ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(bookingCfg.whatsapp_prefill)}`
     : "";
   const calendlyUrl = (rawData.website && rawData.website.includes("calendly.com"))
     ? rawData.website
@@ -1357,6 +1592,10 @@ expires_at: ${escYaml(expiresAt)}
 rubro: ${vertical}
 template_archetype: ${escYaml(templateArchetype)}
 template_version: ${escYaml(templateVersion)}
+modalidad: ${escYaml(bookingCfg.modalidad)}
+tipo_consulta: ${escYaml(bookingCfg.tipo_consulta)}
+canal_agenda: ${escYaml(bookingCfg.canal_agenda)}
+arancel_consulta_ars: ${bookingCfg.arancel_consulta_ars}
 nombre: ${escYaml(rawData.nombre)}
 ${extraFieldsLines.length > 0 ? extraFieldsLines.join("\n") + "\n" : ""}slug: ${escYaml(slug)}
 estado: prospecto
@@ -1387,6 +1626,7 @@ metricas:
 
 ## Bio
 ${copy.bio}
+
 
 ## Enfoque
 ${copy.enfoque}

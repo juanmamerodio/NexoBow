@@ -56,7 +56,7 @@ const INITIAL_TRANSACTIONS: FinancialTransaction[] = [
     id: 1,
     business_unit: "nexobow",
     flow_type: "ingreso",
-    category: "Setup Web ($189.999 ARS)",
+    category: "Tier 1 · Setup Starter ($189.999 ARS · $0/mes Año 1)",
     description: "Setup Inicial Landing + Embudo Lic. Mari Calcagno",
     amount: 189999,
     currency: "ARS",
@@ -69,9 +69,9 @@ const INITIAL_TRANSACTIONS: FinancialTransaction[] = [
     id: 2,
     business_unit: "nexobow",
     flow_type: "ingreso",
-    category: "Abono Mensual ($12.259 ARS)",
-    description: "Mantenimiento & Hosting Lic. Sofía Ramos",
-    amount: 12259,
+    category: "Tier 2 · Abono Mensual Autonomous ($229.999 ARS/mes)",
+    description: "Abono Autonomous IA & Agenda Lic. Sofía Ramos",
+    amount: 229999,
     currency: "ARS",
     exchange_rate: 1250,
     recurrence: "mensual",
@@ -156,12 +156,11 @@ const INITIAL_TRANSACTIONS: FinancialTransaction[] = [
     transaction_date: "2026-11-04",
     status: "completado",
   },
-  // Transacciones de Octubre para comparativa histórica
   {
     id: 9,
     business_unit: "nexobow",
     flow_type: "ingreso",
-    category: "Setup Web ($189.999 ARS)",
+    category: "Tier 1 · Setup Starter ($189.999 ARS · $0/mes Año 1)",
     description: "Setup Inicial Dr. Javier Gómez Abogado",
     amount: 189999,
     currency: "ARS",
@@ -186,8 +185,9 @@ const INITIAL_TRANSACTIONS: FinancialTransaction[] = [
 ];
 
 export const FinanceView: React.FC<FinanceViewProps> = ({ onNavigate }) => {
-  const [transactions, setTransactions] = useState<FinancialTransaction[]>(INITIAL_TRANSACTIONS);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [transactions, setTransactions] = useState<FinancialTransaction[]>([]);
+  const [isOffline, setIsOffline] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [selectedPeriod, setSelectedPeriod] = useState<string>("2026-11");
   const [globalExchangeRate, setGlobalExchangeRate] = useState<number>(DEFAULT_USD_EXCHANGE_RATE);
   const [unitFilter, setUnitFilter] = useState<BusinessUnit | "all">("all");
@@ -210,18 +210,28 @@ export const FinanceView: React.FC<FinanceViewProps> = ({ onNavigate }) => {
   const [formDate, setFormDate] = useState<string>(new Date().toISOString().slice(0, 10));
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
-  // Cargar transacciones desde Supabase al montar
+  // Cargar transacciones desde Supabase al montar (Single Source of Truth)
   useEffect(() => {
     let mounted = true;
     const loadData = async () => {
       setLoading(true);
       try {
-        const data = await fetchFinancialTransactions();
-        if (mounted && data.length > 0) {
-          setTransactions(data);
+        const res = await fetchFinancialTransactions();
+        if (mounted) {
+          if (res.isOffline) {
+            setTransactions(INITIAL_TRANSACTIONS);
+            setIsOffline(true);
+          } else {
+            setTransactions(res.data);
+            setIsOffline(false);
+          }
         }
       } catch (err) {
         console.error("Error al cargar finanzas:", err);
+        if (mounted) {
+          setTransactions(INITIAL_TRANSACTIONS);
+          setIsOffline(true);
+        }
       } finally {
         if (mounted) setLoading(false);
       }
@@ -391,7 +401,7 @@ export const FinanceView: React.FC<FinanceViewProps> = ({ onNavigate }) => {
       {/* Header Superior y Controles de Período */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800/80 pb-6">
         <div>
-          <div className="flex items-center gap-3 mb-1">
+          <div className="flex items-center flex-wrap gap-2 mb-1">
             <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
               <DollarSign className="w-6 h-6 text-purple-400" />
               Finanzas Multi-Unidad & Cashflow Consolidado
@@ -399,6 +409,28 @@ export const FinanceView: React.FC<FinanceViewProps> = ({ onNavigate }) => {
             <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-purple-500/10 text-purple-300 border border-purple-500/30">
               Multi-Moneda ARS / USD
             </span>
+            <span
+              className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold ${
+                isOffline
+                  ? "bg-amber-500/15 text-amber-300 border border-amber-500/30"
+                  : "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30"
+              }`}
+            >
+              {isOffline
+                ? "Modo Offline (Demo)"
+                : transactions.length === 0
+                ? "Supabase Live (0 registros)"
+                : "Supabase Live"}
+            </span>
+            {!isOffline && transactions.length === 0 && (
+              <button
+                type="button"
+                onClick={() => setTransactions(INITIAL_TRANSACTIONS)}
+                className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-700 cursor-pointer"
+              >
+                Cargar ejemplos de prueba
+              </button>
+            )}
           </div>
           <p className="text-xs text-zinc-400">
             Control integral de ingresos, costos fijos vs variables y flujo de caja neto para NexoBow, AlayNow y Finanzas Personales.

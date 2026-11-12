@@ -499,31 +499,115 @@ export function mergeScheduleWithExternalEvents(
 }
 
 // -------------------------------------------------------------
+// Preset Oficial: Rutina Escuela (07:30–13:00) + Prospección (17:00–17:45)
+// -------------------------------------------------------------
+
+export const SCHOOL_AND_PROSPECTING_PRESET: ScheduleBlock[] = ([1, 2, 3, 4, 5] as DayOfWeek[]).flatMap(
+  (day, idx) => [
+    {
+      id: idx * 2 + 1,
+      title: "Cursada Escuela (Mañana)",
+      description: "Bloque fijo de cursada escolar matutina (Lunes a Viernes 07:30 a 13:00).",
+      category: "personal" as ScheduleCategory,
+      day_of_week: day,
+      start_time: "07:30",
+      end_time: "13:00",
+      is_completed: false,
+      is_recurring: true,
+    },
+    {
+      id: idx * 2 + 2,
+      title: "Sprint Prospección NexoBow (45m)",
+      description: "Sprint enfocado de prospección comercial B2B y seguimiento WhatsApp (17:00 a 17:45).",
+      category: "prospeccion" as ScheduleCategory,
+      day_of_week: day,
+      start_time: "17:00",
+      end_time: "17:45",
+      is_completed: false,
+      is_recurring: true,
+    },
+  ]
+);
+
+// -------------------------------------------------------------
 // Persistencia Supabase para Bloques de Horario
 // -------------------------------------------------------------
 
-export async function fetchScheduleBlocks(): Promise<ScheduleBlock[]> {
-  const supabase = getBrowserSupabaseClient();
-  const { data, error } = await supabase
-    .from("schedule_blocks")
-    .select("*")
-    .order("day_of_week", { ascending: true })
-    .order("start_time", { ascending: true });
+export async function fetchScheduleBlocks(
+  customClient?: any
+): Promise<ScheduleBlock[] & { data: ScheduleBlock[]; isOffline: boolean }> {
+  try {
+    const supabase = customClient || getBrowserSupabaseClient();
+    const { data, error } = await supabase
+      .from("schedule_blocks")
+      .select("*")
+      .order("day_of_week", { ascending: true })
+      .order("start_time", { ascending: true });
 
-  if (error) {
-    console.error("Error consultando schedule_blocks de Supabase:", error);
-    return [];
+    if (error) {
+      console.error("Error consultando schedule_blocks de Supabase:", error);
+      const fallback: ScheduleBlock[] = [];
+      return Object.assign(fallback, { data: fallback, isOffline: true });
+    }
+
+    const rows: ScheduleBlock[] = (data || []).map((row: any) => ({
+      ...row,
+      day_of_week: Number(row.day_of_week) as DayOfWeek,
+      start_time: normalizeTimeString(row.start_time),
+      end_time: normalizeTimeString(row.end_time),
+      is_completed: Boolean(row.is_completed),
+      is_recurring: Boolean(row.is_recurring),
+      is_external: Boolean(row.is_external),
+    }));
+    return Object.assign(rows, { data: rows, isOffline: false });
+  } catch (err) {
+    console.error("Excepción consultando schedule_blocks:", err);
+    const fallback: ScheduleBlock[] = [];
+    return Object.assign(fallback, { data: fallback, isOffline: true });
   }
+}
 
-  return (data || []).map((row: any) => ({
-    ...row,
-    day_of_week: Number(row.day_of_week) as DayOfWeek,
-    start_time: normalizeTimeString(row.start_time),
-    end_time: normalizeTimeString(row.end_time),
-    is_completed: Boolean(row.is_completed),
-    is_recurring: Boolean(row.is_recurring),
-    is_external: Boolean(row.is_external),
-  }));
+export async function seedSchoolAndProspectingSchedule(
+  customClient?: any
+): Promise<{ ok: boolean; data: ScheduleBlock[]; error?: string }> {
+  try {
+    const supabase = customClient || getBrowserSupabaseClient();
+    const payload = SCHOOL_AND_PROSPECTING_PRESET.map((b) => ({
+      title: b.title,
+      description: b.description || "",
+      category: b.category,
+      day_of_week: b.day_of_week,
+      start_time: normalizeTimeString(b.start_time),
+      end_time: normalizeTimeString(b.end_time),
+      is_completed: false,
+      is_recurring: true,
+      is_external: false,
+      metadata: { preset: "school_and_prospecting" },
+    }));
+
+    const { data, error } = await supabase
+      .from("schedule_blocks")
+      .insert(payload)
+      .select();
+
+    if (error) {
+      return { ok: false, data: SCHOOL_AND_PROSPECTING_PRESET, error: error.message };
+    }
+
+    const mapped: ScheduleBlock[] = ((data as any[]) || SCHOOL_AND_PROSPECTING_PRESET).map((row, idx) => ({
+      ...row,
+      id: row.id ?? idx + 1,
+      day_of_week: Number(row.day_of_week) as DayOfWeek,
+      start_time: normalizeTimeString(row.start_time),
+      end_time: normalizeTimeString(row.end_time),
+      is_completed: Boolean(row.is_completed),
+      is_recurring: Boolean(row.is_recurring ?? true),
+    }));
+
+    return { ok: true, data: mapped };
+  } catch (err: any) {
+    return { ok: false, data: SCHOOL_AND_PROSPECTING_PRESET, error: err?.message || "Offline fallback" };
+  }
 }
 
 export async function saveScheduleBlock(
@@ -605,3 +689,4 @@ export async function deleteScheduleBlock(
   if (error) return { ok: false, error: error.message };
   return { ok: true };
 }
+

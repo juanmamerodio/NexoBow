@@ -515,4 +515,53 @@ test("T41: Finanzas Multi-Unidad y Cashflow Consolidado", async (t) => {
       );
     }
   );
+
+  // --- SEAM 7: TICKET #48 — ROUTEMAP TIERS Y SINGLE SOURCE OF TRUTH ---
+  await t.test(
+    "7. Ticket #48: CATEGORIES_BY_UNIT.nexobow alinea Tiers de routemap.md y fetchFinancialTransactions respeta 0 filas en Supabase",
+    async () => {
+      const { CATEGORIES_BY_UNIT, fetchFinancialTransactions } = await import(FINANCES_LIB);
+
+      assert.ok(
+        CATEGORIES_BY_UNIT.nexobow.includes("Tier 1 · Setup Starter ($189.999 ARS · $0/mes Año 1)"),
+        "Debe incluir Tier 1 Starter"
+      );
+      assert.ok(
+        CATEGORIES_BY_UNIT.nexobow.includes("Tier 2 · Setup Autonomous ($549.999 ARS)"),
+        "Debe incluir Tier 2 Setup Autonomous"
+      );
+      assert.ok(
+        CATEGORIES_BY_UNIT.nexobow.includes("Tier 2 · Abono Mensual Autonomous ($229.999 ARS/mes)"),
+        "Debe incluir Tier 2 Abono Mensual Autonomous"
+      );
+      assert.ok(
+        !CATEGORIES_BY_UNIT.nexobow.includes("Abono Mensual ($12.259 ARS)"),
+        "No debe incluir el abono legacy de $12.259 ARS como categoría principal"
+      );
+
+      // Mock Supabase client returning 0 rows without error
+      const mockOnlineEmptyClient = {
+        from: () => ({
+          select: () => ({
+            order: async () => ({ data: [], error: null }),
+          }),
+        }),
+      };
+
+      const res = await fetchFinancialTransactions(mockOnlineEmptyClient);
+      assert.equal(res.length, 0, "Con 0 filas y error===null debe devolver 0 transacciones sin inyectar mocks");
+      assert.equal(res.isOffline, false, "Debe indicar isOffline: false");
+
+      const viewContent = readFileSync(FINANCE_VIEW_FILE, "utf8");
+      assert.ok(
+        viewContent.includes("Supabase Live (0 registros)"),
+        "FinanceView debe mostrar badge 'Supabase Live (0 registros)' cuando está vacío y online"
+      );
+      assert.ok(
+        viewContent.includes("Cargar ejemplos de prueba"),
+        "FinanceView debe ofrecer botón 'Cargar ejemplos de prueba'"
+      );
+    }
+  );
 });
+

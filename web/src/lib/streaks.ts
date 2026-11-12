@@ -644,20 +644,35 @@ export function validateHabitPayload(habit: Partial<Habit>): {
 // -------------------------------------------------------------
 // Seam de Persistencia Supabase con Fallback a Mock Offline
 // -------------------------------------------------------------
-export async function fetchHabits(client = getBrowserSupabaseClient()): Promise<Habit[]> {
+export async function fetchHabits(
+  client = getBrowserSupabaseClient()
+): Promise<Habit[] & { data: Habit[]; isOffline: boolean }> {
   try {
-    const { data, error } = await client
-      .from("habits")
-      .select("*")
-      .order("position", { ascending: true })
-      .order("created_at", { ascending: true });
-
-    if (error || !data || data.length === 0) {
-      return INITIAL_MOCK_HABITS;
+    let query: any = client.from("habits").select("*");
+    if (typeof query.eq === "function") {
+      const maybeEq = query.eq("is_archived", false);
+      if (maybeEq) query = maybeEq;
     }
-    return data as Habit[];
+    if (typeof query.order === "function") {
+      const maybeOrder = query.order("position", { ascending: true });
+      if (maybeOrder && typeof maybeOrder.order === "function") {
+        query = maybeOrder.order("created_at", { ascending: true });
+      } else if (maybeOrder) {
+        query = maybeOrder;
+      }
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      const fallback = [...INITIAL_MOCK_HABITS];
+      return Object.assign(fallback, { data: fallback, isOffline: true });
+    }
+    const rows = (data as Habit[]) || [];
+    return Object.assign(rows, { data: rows, isOffline: false });
   } catch (_err) {
-    return INITIAL_MOCK_HABITS;
+    const fallback = [...INITIAL_MOCK_HABITS];
+    return Object.assign(fallback, { data: fallback, isOffline: true });
   }
 }
 
@@ -665,20 +680,54 @@ export async function fetchHabitLogs(
   client = getBrowserSupabaseClient(),
   startDate?: string,
   endDate?: string
-): Promise<HabitLog[]> {
+): Promise<HabitLog[] & { data: HabitLog[]; isOffline: boolean }> {
   try {
-    let query = client.from("habit_logs").select("*");
-    if (startDate) query = query.gte("completed_date", startDate);
-    if (endDate) query = query.lte("completed_date", endDate);
+    let query: any = client.from("habit_logs").select("*");
+    if (startDate && typeof query.gte === "function") query = query.gte("completed_date", startDate);
+    if (endDate && typeof query.lte === "function") query = query.lte("completed_date", endDate);
+    if (typeof query.order === "function") {
+      query = query.order("completed_date", { ascending: false });
+    }
 
     const { data, error } = await query;
-    if (error || !data || data.length === 0) {
-      return INITIAL_MOCK_LOGS;
+    if (error) {
+      const fallback = [...INITIAL_MOCK_LOGS];
+      return Object.assign(fallback, { data: fallback, isOffline: true });
     }
-    return data as HabitLog[];
+    // Si error === null y data === [], devolver [] (0 días de racha inicial sin mocks fantasma)
+    const rows = (data as HabitLog[]) || [];
+    return Object.assign(rows, { data: rows, isOffline: false });
   } catch (_err) {
-    return INITIAL_MOCK_LOGS;
+    const fallback = [...INITIAL_MOCK_LOGS];
+    return Object.assign(fallback, { data: fallback, isOffline: true });
   }
+}
+
+export async function restoreDefaultHabitsPack(
+  client = getBrowserSupabaseClient(),
+  existingHabits: Habit[] = []
+): Promise<Habit[]> {
+  const existingTitles = new Set(existingHabits.map((h) => h.title.trim().toLowerCase()));
+  const missing = INITIAL_MOCK_HABITS.filter(
+    (h) => !existingTitles.has(h.title.trim().toLowerCase())
+  );
+
+  if (missing.length === 0) return existingHabits;
+
+  const created: Habit[] = [];
+  for (const h of missing) {
+    const saved = await saveHabit(client, {
+      title: h.title,
+      description: h.description,
+      pillar: h.pillar,
+      icon: h.icon,
+      target_frequency_per_week: h.target_frequency_per_week,
+      color_hex: h.color_hex,
+      position: h.position,
+    });
+    created.push(saved);
+  }
+  return [...existingHabits, ...created];
 }
 
 export async function saveHabit(

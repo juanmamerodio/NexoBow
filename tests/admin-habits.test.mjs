@@ -412,4 +412,49 @@ test("T44: Hábitos & Disciplina: Heatmap de Consistencia y Rachas", async (t) =
       );
     }
   );
+
+  // --- SEAM 7: TICKET #48 — RACHAS EN 0 DÍAS SIN MOCKS FANTASMA Y RESTAURACIÓN DE PACK ---
+  await t.test(
+    "7. Ticket #48: fetchHabitLogs devuelve [] cuando Supabase devuelve 0 filas sin error y HabitsView incluye botón 'Restaurar pack de 6 hábitos base'",
+    async () => {
+      const { fetchHabitLogs, fetchHabits, restoreDefaultHabitsPack } = await import(STREAKS_LIB);
+      assert.equal(typeof restoreDefaultHabitsPack, "function", "Debe exportar restoreDefaultHabitsPack");
+
+      const mockOnlineEmptyLogsClient = {
+        from: () => ({
+          select: () => ({
+            order: async () => ({ data: [], error: null }),
+          }),
+        }),
+      };
+
+      const logsRes = await fetchHabitLogs(mockOnlineEmptyLogsClient);
+      assert.equal(logsRes.length, 0, "Con 0 filas en habit_logs y error===null debe devolver [] (racha inicial 0 días)");
+      assert.equal(logsRes.isOffline, false, "Debe indicar isOffline: false");
+
+      const mockOnlinePartialHabitsClient = {
+        from: () => ({
+          select: () => ({
+            eq: () => ({
+              order: async () => ({
+                data: [{ id: 1, title: "Entrenamiento de Fuerza", pillar: "salud", target_frequency_per_week: 5, color_hex: "#10B981", is_active: true }],
+                error: null,
+              }),
+            }),
+          }),
+        }),
+      };
+
+      const habitsRes = await fetchHabits(mockOnlinePartialHabitsClient);
+      assert.equal(habitsRes.length, 1, "Debe respetar exactamente la fila devuelta por Supabase");
+      assert.equal(habitsRes.isOffline, false);
+
+      const viewCode = readFileSync(HABITS_VIEW_FILE, "utf8");
+      assert.ok(
+        viewCode.includes("Restaurar pack de 6 hábitos base"),
+        "HabitsView debe ofrecer botón 'Restaurar pack de 6 hábitos base' cuando hay menos de 6 hábitos"
+      );
+    }
+  );
 });
+

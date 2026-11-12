@@ -19,6 +19,7 @@ import {
   validateHabitPayload,
   fetchHabits,
   fetchHabitLogs,
+  restoreDefaultHabitsPack,
   saveHabit,
   deleteHabit,
   logHabitCompletion,
@@ -74,9 +75,10 @@ const AVAILABLE_ICONS: Record<string, React.ElementType> = {
 };
 
 export const HabitsView: React.FC<HabitsViewProps> = ({ onNavigate }) => {
-  const [habits, setHabits] = useState<Habit[]>(INITIAL_MOCK_HABITS);
-  const [logs, setLogs] = useState<HabitLog[]>(INITIAL_MOCK_LOGS);
-  const [loading, setLoading] = useState(false);
+  const [habits, setHabits] = useState<Habit[]>([]);
+  const [logs, setLogs] = useState<HabitLog[]>([]);
+  const [isOffline, setIsOffline] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedPillar, setSelectedPillar] = useState<HabitPillar | "all">("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [heatmapDaysSpan, setHeatmapDaysSpan] = useState<90 | 365>(90);
@@ -92,7 +94,7 @@ export const HabitsView: React.FC<HabitsViewProps> = ({ onNavigate }) => {
   const [formErrors, setFormErrors] = useState<string[]>([]);
   const [isSaving, setIsSaving] = useState(false);
 
-  // Carga inicial desde Supabase con fallback a mock
+  // Carga inicial desde Supabase (Single Source of Truth)
   useEffect(() => {
     let mounted = true;
     const loadData = async () => {
@@ -103,11 +105,17 @@ export const HabitsView: React.FC<HabitsViewProps> = ({ onNavigate }) => {
           fetchHabitLogs(),
         ]);
         if (mounted) {
-          if (loadedHabits && loadedHabits.length > 0) setHabits(loadedHabits);
-          if (loadedLogs && loadedLogs.length > 0) setLogs(loadedLogs);
+          setHabits(loadedHabits);
+          setLogs(loadedLogs);
+          setIsOffline(Boolean(loadedHabits.isOffline || loadedLogs.isOffline));
         }
       } catch (err) {
         console.error("Error cargando hábitos de Supabase:", err);
+        if (mounted) {
+          setHabits(INITIAL_MOCK_HABITS);
+          setLogs(INITIAL_MOCK_LOGS);
+          setIsOffline(true);
+        }
       } finally {
         if (mounted) setLoading(false);
       }
@@ -117,6 +125,16 @@ export const HabitsView: React.FC<HabitsViewProps> = ({ onNavigate }) => {
       mounted = false;
     };
   }, []);
+
+  const handleRestoreDefaultPack = async () => {
+    setLoading(true);
+    try {
+      const updated = await restoreDefaultHabitsPack(undefined, habits);
+      setHabits(updated);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // KPIs de Disciplina
   const kpis = useMemo(() => {
@@ -223,7 +241,7 @@ export const HabitsView: React.FC<HabitsViewProps> = ({ onNavigate }) => {
       {/* 1. Header Ejecutivo & Controles Rápidos */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex items-center flex-wrap gap-2 mb-1">
             <span
               className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border flex items-center gap-1.5"
               style={{
@@ -234,6 +252,19 @@ export const HabitsView: React.FC<HabitsViewProps> = ({ onNavigate }) => {
             >
               <Flame className="w-3.5 h-3.5" />
               Disciplina & Consistencia
+            </span>
+            <span
+              className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full border ${
+                isOffline
+                  ? "bg-amber-500/15 text-amber-300 border-amber-500/30"
+                  : "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
+              }`}
+            >
+              {isOffline
+                ? "Modo Offline (Demo)"
+                : habits.length === 0
+                ? "Supabase Live (0 registros)"
+                : `Supabase Live (${habits.length} hábitos)`}
             </span>
             <span className="text-xs text-zinc-500 font-mono">
               Fecha: {activeDate === todayStr ? "Hoy (En Curso)" : activeDate}
@@ -248,7 +279,17 @@ export const HabitsView: React.FC<HabitsViewProps> = ({ onNavigate }) => {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center flex-wrap gap-3">
+          {habits.length < 6 && (
+            <button
+              type="button"
+              onClick={handleRestoreDefaultPack}
+              className="flex items-center gap-1.5 py-2.5 px-3.5 rounded-xl font-semibold text-xs cursor-pointer transition-all border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>Restaurar pack de 6 hábitos base</span>
+            </button>
+          )}
           <button
             type="button"
             onClick={handleOpenCreateModal}

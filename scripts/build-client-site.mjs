@@ -9,6 +9,9 @@ import { spawnSync } from "node:child_process";
 import { parse as parseYaml } from "yaml";
 import { defaultLeadStore, buildPreviewUrl } from "./sheets-sync.mjs";
 import { auditVisualLanding } from "./screenshot-qa.mjs";
+import { resolveBookingConfig, resolveLeadMetadata } from "./generate-client-fiche.mjs";
+
+export { resolveBookingConfig, resolveLeadMetadata };
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -400,13 +403,18 @@ function main() {
     ? fm.whatsapp
     : `https://wa.me/${cleanPhone}`;
 
+  const phoneDisplay = fm.telefono_display || (cleanPhone ? `+${cleanPhone}` : baseSite.content?.prestador?.telefono);
+  const addressDisplay = fm.direccion || baseSite.content?.prestador?.ubicacion || baseSite.content?.footer?.direccion;
+
+  const bookingCfg = resolveBookingConfig({
+    ...fm,
+    ubicacion: addressDisplay,
+  });
+
   const bookingUrl =
     fm.calendly && String(fm.calendly).trim() !== ""
       ? fm.calendly
-      : `https://wa.me/${cleanPhone}?text=Hola!%20Quiero%20agendar%20mi%20primera%20consultor%C3%ADa%20gratuita`;
-
-  const phoneDisplay = fm.telefono_display || (cleanPhone ? `+${cleanPhone}` : baseSite.content?.prestador?.telefono);
-  const addressDisplay = fm.direccion || baseSite.content?.prestador?.ubicacion || baseSite.content?.footer?.direccion;
+      : `https://wa.me/${cleanPhone}?text=${encodeURIComponent(bookingCfg.whatsapp_prefill)}`;
 
   const baseContentPatch = {
     meta: {
@@ -426,6 +434,35 @@ function main() {
       telefono: phoneDisplay,
       ubicacion: addressDisplay,
       bookingUrl,
+    },
+    hero: {
+      ...(baseSite.content?.hero || {}),
+      cta_primary: bookingCfg.cta_primary,
+      microcopy_agenda: bookingCfg.microcopy_agenda,
+      modalidad: bookingCfg.modalidad,
+    },
+    pricing: {
+      ...(baseSite.content?.pricing || {}),
+      cta: bookingCfg.cta_primary,
+      precio_ars: bookingCfg.arancel_consulta_ars,
+      precio_texto: bookingCfg.precio_texto,
+      tipo_consulta: bookingCfg.tipo_consulta,
+    },
+    booking: {
+      ...(baseSite.content?.booking || {}),
+      precio_ars: bookingCfg.arancel_consulta_ars,
+      precio_texto: bookingCfg.precio_texto,
+      tipo_consulta: bookingCfg.tipo_consulta,
+      modalidad: bookingCfg.modalidad,
+      canal_agenda: bookingCfg.canal_agenda,
+      whatsapp_prefill: bookingCfg.whatsapp_prefill,
+      badge_modalidad: bookingCfg.badge_modalidad,
+    },
+    medical_booking: {
+      ...(baseSite.content?.medical_booking || {}),
+      badge_modalidad: bookingCfg.badge_modalidad,
+      modalidad: bookingCfg.modalidad,
+      tipo_consulta: bookingCfg.tipo_consulta,
     },
     problema: {
       ...baseSite.content.problema,

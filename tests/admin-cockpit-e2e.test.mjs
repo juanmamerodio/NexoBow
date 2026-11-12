@@ -373,4 +373,60 @@ test("T46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS"
       "El peso de JavaScript cliente en web/dist/index.html debe ser exactamente 0 bytes"
     );
   });
+
+  // -------------------------------------------------------------
+  // 6. Frente F E2E: Rutina Escuela + Prospección, Tiers Routemap y Sustantivo por Rubro
+  // -------------------------------------------------------------
+  await t.test("6. Frente F E2E: SCHOOL_AND_PROSPECTING_PRESET se refleja en Cockpit Diario junto con Tiers y alertas contextuales", async () => {
+    const { SCHOOL_AND_PROSPECTING_PRESET } = await import(
+      join(REPO_ROOT, "web", "src", "lib", "schedule.ts")
+    );
+    const { CATEGORIES_BY_UNIT } = await import(
+      join(REPO_ROOT, "web", "src", "lib", "finances.ts")
+    );
+    const { aggregateCockpitData } = await import(
+      join(REPO_ROOT, "web", "src", "lib", "cockpit.ts")
+    );
+
+    const monday = new Date("2026-11-02T12:00:00Z"); // Lunes = 1
+    const summary = aggregateCockpitData({
+      leads: [
+        {
+          id: 55,
+          slug: "55-benitez-abogado",
+          name: "Dr. Gonzalo Benítez",
+          niche: "abogado",
+          phone: "+5491148209123",
+          funnel_status: "1. Prospecto Identificado",
+          expires_at: new Date(monday.getTime() + 18 * 60 * 60 * 1000).toISOString(),
+        },
+      ],
+      habits: [],
+      habitLogs: [],
+      scheduleBlocks: SCHOOL_AND_PROSPECTING_PRESET,
+      videos: [],
+      transactions: [
+        {
+          id: 1,
+          business_unit: "nexobow",
+          flow_type: "ingreso",
+          category: CATEGORIES_BY_UNIT.nexobow[1], // Tier 2 · Setup Autonomous ($549.999 ARS)
+          description: "Setup Autonomous Estudio Benítez",
+          amount: 549999,
+          currency: "ARS",
+          exchange_rate: 1250,
+          recurrence: "unico",
+          transaction_date: "2026-11-02",
+        },
+      ],
+      today: monday,
+    });
+
+    assert.equal(summary.todayBlocks.length, 2, "El lunes debe tener 2 bloques (Escuela + Prospección)");
+    assert.equal(summary.todayBlocks[0].title, "Cursada Escuela (Mañana)");
+    assert.equal(summary.todayBlocks[1].title, "Sprint Prospección NexoBow (45m)");
+    assert.equal(summary.cashflow.netCashflowArs, 549999);
+    assert.ok(decodeURIComponent(summary.ttlAlerts[0].whatsappUrl).includes("tu estudio"));
+  });
 });
+

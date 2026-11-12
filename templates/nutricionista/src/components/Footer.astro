@@ -2,7 +2,7 @@
 import { CONTENT } from "../site";
 import { SECTION_NAV } from "../sections";
 
-const { prestador, links, footer } = CONTENT;
+const { prestador, links, footer, pricing, hero } = CONTENT as any;
 const year = new Date().getFullYear();
 ---
 
@@ -50,7 +50,7 @@ const year = new Date().getFullYear();
             rel="noopener"
             class="text-sm font-medium text-(--color-primary) underline-offset-4 hover:underline"
           >
-            Agendá tu consultoría gratuita
+            {pricing?.cta || hero?.cta_primary || "Consultar disponibilidad de turno"}
           </a>
         </li>
         <li>

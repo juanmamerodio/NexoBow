@@ -101,12 +101,12 @@ export const BUSINESS_UNITS: Array<{
 
 export const CATEGORIES_BY_UNIT: Record<BusinessUnit, string[]> = {
   nexobow: [
-    "Setup Web ($189.999 ARS)",
-    "Abono Mensual ($12.259 ARS)",
-    "Clínica Pro ($329.999 ARS)",
-    "Plan Full Growth AfterBow",
-    "Adicional Dominio / SSL",
-    "Consultoría Personalizada",
+    "Tier 1 · Setup Starter ($189.999 ARS · $0/mes Año 1)",
+    "Tier 2 · Setup Autonomous ($549.999 ARS)",
+    "Tier 2 · Abono Mensual Autonomous ($229.999 ARS/mes)",
+    "Alianza Audiovisual AfterBow",
+    "Adicional Dominio (.com.ar / .com)",
+    "Renovación Anual Starter",
     "Otros Ingresos Agencia",
   ],
   alaynow: [
@@ -316,22 +316,32 @@ export function computeMultiMonthCashflowTrends(
 // Adaptador de Persistencia Supabase para Transacciones
 // -------------------------------------------------------------
 
-export async function fetchFinancialTransactions(): Promise<FinancialTransaction[]> {
-  const supabase = getBrowserSupabaseClient();
-  const { data, error } = await supabase
-    .from("financial_transactions")
-    .select("*")
-    .order("transaction_date", { ascending: false });
+export async function fetchFinancialTransactions(
+  customClient?: any
+): Promise<FinancialTransaction[] & { data: FinancialTransaction[]; isOffline: boolean }> {
+  try {
+    const supabase = customClient || getBrowserSupabaseClient();
+    const { data, error } = await supabase
+      .from("financial_transactions")
+      .select("*")
+      .order("transaction_date", { ascending: false });
 
-  if (error) {
-    console.error("Error consultando financial_transactions de Supabase:", error);
-    return [];
+    if (error) {
+      console.error("Error consultando financial_transactions de Supabase:", error);
+      const fallback: FinancialTransaction[] = [];
+      return Object.assign(fallback, { data: fallback, isOffline: true });
+    }
+    const rows: FinancialTransaction[] = (data || []).map((row: any) => ({
+      ...row,
+      amount: Number(row.amount),
+      exchange_rate: Number(row.exchange_rate || DEFAULT_USD_EXCHANGE_RATE),
+    }));
+    return Object.assign(rows, { data: rows, isOffline: false });
+  } catch (err) {
+    console.error("Excepción consultando financial_transactions:", err);
+    const fallback: FinancialTransaction[] = [];
+    return Object.assign(fallback, { data: fallback, isOffline: true });
   }
-  return (data || []).map((row: any) => ({
-    ...row,
-    amount: Number(row.amount),
-    exchange_rate: Number(row.exchange_rate || DEFAULT_USD_EXCHANGE_RATE),
-  }));
 }
 
 export async function saveFinancialTransaction(

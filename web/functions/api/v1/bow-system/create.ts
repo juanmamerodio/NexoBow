@@ -47,7 +47,7 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       email = String(formData.get("email") || "").trim();
     }
 
-    const supabaseUrl = env.PUBLIC_SUPABASE_URL || "https://bcfhwwqkgmwboflytmtm.supabase.co";
+    const supabaseUrl = env.PUBLIC_SUPABASE_URL || "https://henpyuwguwvflhgbxmvn.supabase.co";
     const supabaseKey = env.SUPABASE_SERVICE_ROLE_KEY || env.PUBLIC_SUPABASE_ANON_KEY || "";
 
     if (supabaseUrl && supabaseKey && (name || whatsapp || email)) {
@@ -100,6 +100,9 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
           source: "inbound_web",
           email: email || null,
           maps_url: mapsUrl || null,
+          modalidad: "presencial",
+          tipo_consulta: "consultar",
+          canal_agenda: "whatsapp_secretaria",
         },
       };
 

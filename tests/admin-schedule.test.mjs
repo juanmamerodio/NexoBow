@@ -516,4 +516,99 @@ test("T42: Horarios & Time-Blocking con Sincronización Calendar", async (t) => 
       );
     }
   );
+
+  // --- SEAM 8: TICKET #49 — PRESET ESCUELA (07:30-13:00) + PROSPECCIÓN (17:00-17:45) ---
+  await t.test(
+    "8. Ticket #49: SCHOOL_AND_PROSPECTING_PRESET (10 bloques L-V sin colisiones), seedSchoolAndProspectingSchedule y ScheduleView 1-clic",
+    async () => {
+      const {
+        SCHOOL_AND_PROSPECTING_PRESET,
+        seedSchoolAndProspectingSchedule,
+        fetchScheduleBlocks,
+        findOverlappingBlocks,
+        calculateBlockDurationMinutes,
+      } = await import(SCHEDULE_LIB);
+
+      assert.ok(Array.isArray(SCHOOL_AND_PROSPECTING_PRESET), "Debe exportar SCHOOL_AND_PROSPECTING_PRESET");
+      assert.equal(SCHOOL_AND_PROSPECTING_PRESET.length, 10, "Debe contener exactamente 10 bloques recurrentes Lunes a Viernes");
+
+      const schoolBlocks = SCHOOL_AND_PROSPECTING_PRESET.filter((b) =>
+        b.title.includes("Cursada Escuela (Mañana)")
+      );
+      const prospectingBlocks = SCHOOL_AND_PROSPECTING_PRESET.filter((b) =>
+        b.title.includes("Sprint Prospección NexoBow (45m)")
+      );
+
+      assert.equal(schoolBlocks.length, 5);
+      assert.equal(prospectingBlocks.length, 5);
+
+      for (let day = 1; day <= 5; day++) {
+        const sBlock = schoolBlocks.find((b) => b.day_of_week === day);
+        const pBlock = prospectingBlocks.find((b) => b.day_of_week === day);
+        assert.ok(sBlock, `Debe existir bloque de escuela para día ${day}`);
+        assert.equal(sBlock.start_time, "07:30");
+        assert.equal(sBlock.end_time, "13:00");
+        assert.equal(sBlock.category, "personal");
+        assert.equal(calculateBlockDurationMinutes(sBlock.start_time, sBlock.end_time), 330);
+
+        assert.ok(pBlock, `Debe existir bloque de prospección para día ${day}`);
+        assert.equal(pBlock.start_time, "17:00");
+        assert.equal(pBlock.end_time, "17:45");
+        assert.equal(pBlock.category, "prospeccion");
+        assert.equal(calculateBlockDurationMinutes(pBlock.start_time, pBlock.end_time), 45);
+
+        // Verificar 0 colisiones con findOverlappingBlocks
+        const overlaps = findOverlappingBlocks([sBlock], pBlock);
+        assert.equal(overlaps.length, 0, "No debe haber solapamiento entre escuela y prospección");
+      }
+
+      // Verificar fetchScheduleBlocks con 0 filas en Supabase
+      const mockEmptyScheduleClient = {
+        from: () => ({
+          select: () => ({
+            order: () => ({
+              order: async () => ({ data: [], error: null }),
+            }),
+          }),
+        }),
+      };
+
+      const emptyRes = await fetchScheduleBlocks(mockEmptyScheduleClient);
+      assert.equal(emptyRes.length, 0, "Con 0 filas y error===null debe devolver []");
+      assert.equal(emptyRes.isOffline, false, "Debe indicar isOffline: false");
+
+      // Verificar seedSchoolAndProspectingSchedule
+      assert.equal(typeof seedSchoolAndProspectingSchedule, "function");
+      let insertedPayload = null;
+      const mockInsertClient = {
+        from: () => ({
+          insert: (rows) => {
+            insertedPayload = rows;
+            return {
+              select: async () => ({
+                data: rows.map((r, i) => ({ id: i + 1, ...r })),
+                error: null,
+              }),
+            };
+          },
+        }),
+      };
+
+      const seeded = await seedSchoolAndProspectingSchedule(mockInsertClient);
+      assert.equal(seeded.ok, true);
+      assert.equal(insertedPayload.length, 10);
+      assert.equal(seeded.data.length, 10);
+
+      const viewContent = readFileSync(SCHEDULE_VIEW_FILE, "utf8");
+      assert.ok(
+        viewContent.includes("Supabase Live (0 bloques)"),
+        "ScheduleView debe mostrar 'Supabase Live (0 bloques)' cuando la tabla está vacía y online"
+      );
+      assert.ok(
+        viewContent.includes("Cargar Rutina Escuela (07:30–13:00) + Prospección (17:00–17:45)"),
+        "ScheduleView debe incluir el botón 1-clic de la rutina Escuela + Prospección"
+      );
+    }
+  );
 });
+

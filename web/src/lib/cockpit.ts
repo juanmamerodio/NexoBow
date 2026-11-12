@@ -165,9 +165,17 @@ export function getTodayDayOfWeek(date?: Date): DayOfWeek {
 export function buildUrgentWhatsAppUrl(lead: LeadEntity): string {
   const digits = (lead.phone || "").replace(/\D/g, "");
   const demoUrl = lead.demo_url || `https://preview.nexobow.site/${lead.slug}/`;
-  const name = (lead.name || "").replace(/^(Lic\.|Dr\.|Dra\.|Mg\.)\s*/i, "").trim();
+  const name = (lead.name || "").replace(/^(Lic\.|Dr\.|Dra\.|Mg\.|Abog\.)\s*/i, "").trim();
+  const niche = String(lead.niche || "").toLowerCase();
 
-  const message = `Hola ${name}! Te aviso de NexoBow que en 48 hs el sistema da de baja la demo que armé para tu consultorio (${demoUrl}) para liberar espacio en el servidor. ¿Querés que la mantengamos activa para agendar pacientes?`;
+  let noun = "tu consultorio";
+  if (["abogado", "juridico", "legal", "contador", "estudio"].some((k) => niche.includes(k))) {
+    noun = "tu estudio";
+  } else if (["clinica", "estetica", "centro"].some((k) => niche.includes(k))) {
+    noun = "tu centro";
+  }
+
+  const message = `Hola ${name}! Te aviso de NexoBow que en 48 hs el sistema da de baja la demo que armé para ${noun} (${demoUrl}) para liberar espacio en el servidor. ¿Querés que la mantengamos activa?`;
 
   return digits ? `https://wa.me/${digits}?text=${encodeURIComponent(message)}` : "";
 }
@@ -465,24 +473,23 @@ export function aggregateCockpitData(params: {
 // Seam de Persistencia & Consulta Reactiva para Cockpit
 // -------------------------------------------------------------
 
-export async function fetchDailyCockpitSummary(today?: Date): Promise<CockpitSummary> {
-  const supabase = getBrowserSupabaseClient();
+export async function fetchDailyCockpitSummary(today?: Date, customClient?: any): Promise<CockpitSummary> {
+  const supabase = customClient || getBrowserSupabaseClient();
   const currentDate = today || new Date();
 
   let leads: LeadEntity[] = [];
-  let habits: Habit[] = INITIAL_MOCK_HABITS;
+  let habits: Habit[] = [];
   let habitLogs: HabitLog[] = [];
   let blocks: ScheduleBlock[] = [];
-  let videos: AlaynowVideo[] = DEFAULT_MOCK_VIDEOS;
+  let videos: AlaynowVideo[] = [];
   let transactions: FinancialTransaction[] = [];
 
   try {
-    // 1. Leads
     const { data: leadsData } = await supabase
       .from("leads")
       .select("*")
       .order("id", { ascending: false });
-    if (leadsData && leadsData.length > 0) {
+    if (leadsData) {
       leads = leadsData as LeadEntity[];
     }
   } catch (err) {
@@ -490,19 +497,17 @@ export async function fetchDailyCockpitSummary(today?: Date): Promise<CockpitSum
   }
 
   try {
-    // 2. Hábitos
-    const remoteHabits = await fetchHabits();
-    if (remoteHabits && remoteHabits.length > 0) {
+    const remoteHabits = await fetchHabits(supabase);
+    if (remoteHabits) {
       habits = remoteHabits;
     }
   } catch (err) {
-    console.warn("Cockpit: usando fallback offline para hábitos");
+    habits = INITIAL_MOCK_HABITS;
   }
 
   try {
-    // 3. Habit Logs
-    const remoteLogs = await fetchHabitLogs();
-    if (remoteLogs && remoteLogs.length > 0) {
+    const remoteLogs = await fetchHabitLogs(supabase);
+    if (remoteLogs) {
       habitLogs = remoteLogs;
     }
   } catch (err) {
@@ -510,9 +515,8 @@ export async function fetchDailyCockpitSummary(today?: Date): Promise<CockpitSum
   }
 
   try {
-    // 4. Bloques de agenda
     const remoteBlocks = await fetchScheduleBlocks();
-    if (remoteBlocks && remoteBlocks.length > 0) {
+    if (remoteBlocks) {
       blocks = remoteBlocks;
     }
   } catch (err) {
@@ -520,22 +524,20 @@ export async function fetchDailyCockpitSummary(today?: Date): Promise<CockpitSum
   }
 
   try {
-    // 5. Videos Alaynow
     const remoteVideos = await fetchAlaynowVideos();
-    if (remoteVideos && remoteVideos.length > 0) {
+    if (remoteVideos) {
       videos = remoteVideos;
     }
   } catch (err) {
-    console.warn("Cockpit: usando fallback offline para videos");
+    videos = DEFAULT_MOCK_VIDEOS;
   }
 
   try {
-    // 6. Finanzas
     const { data: txsData } = await supabase
       .from("financial_transactions")
       .select("*")
       .order("transaction_date", { ascending: false });
-    if (txsData && txsData.length > 0) {
+    if (txsData) {
       transactions = txsData as FinancialTransaction[];
     }
   } catch (err) {

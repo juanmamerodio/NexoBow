@@ -64,3 +64,8 @@
 - [x] [45: Cockpit Diario (Home): Resumen Ejecutivo y Alertas Cruzadas](./scratch/nexobow-v2/issues/45-daily-cockpit-executive-dashboard.md) (`done`)
 - [x] [46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS](./scratch/nexobow-v2/issues/46-e2e-integration-settings-0js-audit.md) (`done`)
 
+## Frente F — Alineación Comercial & Verdad Única en `/admin` (`spec-admin-alignment.md`)
+- [x] [47: Embudos Flexibles (Presencial / Consulta Paga / Turnero o Secretaría) y CRM Táctico](./scratch/nexobow-v2/issues/47-flexible-booking-funnels-crm-tactical.md) (`done`)
+- [x] [48: Verdad Única en `/admin` (0 Datos Fantasma) y Alineación de Tiers `routemap.md`](./scratch/nexobow-v2/issues/48-admin-single-truth-and-routemap-tiers.md) (`done`)
+- [x] [49: Onboarding de Rutina Real Escuela + Prospección en `/admin/calendar` y Verificación E2E](./scratch/nexobow-v2/issues/49-school-prospecting-schedule-preset.md) (`done`)
+
