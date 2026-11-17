@@ -424,5 +424,87 @@ test("T45: Cockpit Diario (Home): Resumen Ejecutivo y Alertas Cruzadas", async (
       );
     }
   );
+
+  // --- SEAM 5: TICKET #53 — HOT-LEADS EN VIVO (/api/ping) EN COCKPIT ---
+  await t.test(
+    "11. Ticket #53: extractHotLeads y aggregateCockpitData exponen Hot-Leads recientes y CockpitView los renderiza junto a alertas TTL <48h",
+    () => {
+      const { extractHotLeads, aggregateCockpitData } = cockpitModule;
+      assert.equal(typeof extractHotLeads, "function", "cockpit.ts debe exportar extractHotLeads");
+
+      const now = new Date("2026-11-17T12:00:00Z");
+      const mockLeads = [
+        {
+          id: 24,
+          slug: "24-centro-odonto-palermo",
+          name: "Centro Odonto Palermo",
+          niche: "odontologo",
+          phone: "+5491160001111",
+          funnel_status: "2. Contactado",
+          demo_url: "https://preview.nexobow.site/24-centro-odonto-palermo/",
+          expires_at: new Date(now.getTime() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+          metadata: {
+            email: "turnos@centropalermo.com.ar",
+            email_outreach: { status: "sent", provider: "zoho_mail" },
+            telemetry: {
+              views_count: 3,
+              cta_clicks: 1,
+              selected_theme: "Obsidian Gold",
+              last_event: "theme_switch",
+              last_viewed_at: "2026-11-17T11:50:00Z",
+              is_hot_lead: true,
+            },
+          },
+        },
+        {
+          id: 25,
+          slug: "25-descartado-hot",
+          name: "Lead Descartado",
+          niche: "clinica",
+          phone: "+5491160002222",
+          funnel_status: "6. Descartado",
+          metadata: {
+            telemetry: { views_count: 2, is_hot_lead: true },
+          },
+        },
+        {
+          id: 26,
+          slug: "26-sin-vistas",
+          name: "Lead Sin Vistas",
+          niche: "nutricionista",
+          phone: "+5491160003333",
+          funnel_status: "1. Prospecto Identificado",
+          metadata: {},
+        },
+      ];
+
+      const hotLeads = extractHotLeads(mockLeads);
+      assert.equal(hotLeads.length, 1, "Solo debe incluir leads activos con actividad Hot-Lead");
+      assert.equal(hotLeads[0].id, 24);
+      assert.equal(hotLeads[0].viewsCount, 3);
+      assert.equal(hotLeads[0].ctaClicks, 1);
+      assert.equal(hotLeads[0].selectedTheme, "Obsidian Gold");
+      assert.equal(hotLeads[0].zohoStatus, "sent");
+      assert.ok(hotLeads[0].whatsappUrl.includes("wa.me/5491160001111"));
+      assert.ok(decodeURIComponent(hotLeads[0].whatsappUrl).includes("Obsidian Gold"));
+
+      const summary = aggregateCockpitData({
+        leads: mockLeads,
+        habits: [],
+        habitLogs: [],
+        scheduleBlocks: [],
+        videos: [],
+        transactions: [],
+        today: now,
+      });
+
+      assert.equal(summary.hotLeadsCount, 1);
+      assert.equal(summary.hotLeads.length, 1);
+      assert.equal(summary.hotLeads[0].selectedTheme, "Obsidian Gold");
+
+      const viewCode = readFileSync(COCKPIT_VIEW_FILE, "utf8");
+      assert.match(viewCode, /Hot-Lead/i, "CockpitView.tsx debe renderizar la sección Hot-Leads");
+    }
+  );
 });
 

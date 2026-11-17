@@ -1226,6 +1226,59 @@ export function buildContentOverridesForRubro({
   return null;
 }
 
+const CUBETA_A_HOST_FRAGMENTS = [
+  "instagram.com",
+  "facebook.com",
+  "fb.com",
+  "linktr.ee",
+  "doctoralia.com",
+  "wa.me",
+  "whatsapp.com",
+  "google.com",
+  "maps.google.com",
+  "maps.app.goo.gl",
+  "goo.gl",
+  "linkedin.com",
+  "tiktok.com",
+  "youtube.com",
+  "beacons.ai",
+  "taplink.cc",
+];
+
+function inferWebsiteBucketFromUrl(websiteUrl = "") {
+  const clean = String(websiteUrl || "").trim();
+  if (!clean) return "cubeta_a";
+  try {
+    const parsed = new URL(clean.startsWith("http") ? clean : `https://${clean}`);
+    const host = parsed.hostname.toLowerCase();
+    const isSocialOrDir = CUBETA_A_HOST_FRAGMENTS.some((d) => host === d || host.endsWith(`.${d}`));
+    return isSocialOrDir ? "cubeta_a" : "cubeta_b";
+  } catch {
+    return "cubeta_a";
+  }
+}
+
+function buildDefaultAudioScript35s(lead = {}, websiteBucket = "cubeta_a") {
+  const rawName = String(lead.nombre || lead.displayName || lead.name || "Colega")
+    .replace(/^(Lic\.|Dr\.|Dra\.|Mg\.|Abog\.)\s*/i, "")
+    .trim() || "Colega";
+  const slug = String(lead.slug || "").trim();
+  const previewUrl =
+    lead.demo_url ||
+    lead.previewUrl ||
+    (slug ? `https://preview.nexobow.site/${slug}/` : "https://preview.nexobow.site/");
+  const bucketHook =
+    websiteBucket === "cubeta_b"
+      ? "Vi tu web actual y noté que quien entra desde el celular no tiene un embudo directo para coordinar turno al instante."
+      : "Vi tu ficha en Google Maps con muy buenas referencias, pero sin una página propia para convertir esas búsquedas en turnos.";
+  return (
+    `[GUION AUDIO 35s] "Hola ${rawName}, ¿cómo estás? Te habla Juanma de NexoBow, te grabo este audio rápido para no robarte tiempo. ` +
+    `${bucketHook} Por eso te armé un prototipo real en ${previewUrl} enfocado en el sistema Anti-Silla Vacía & Cero-Secretaria: ` +
+    `ordena las consultas de Maps o Instagram, filtra antes de agendar y confirma turnos para evitar huecos en tu agenda. ` +
+    `Chusmealo tranquilo desde el celu y contame qué paleta te gustó más."`
+  );
+}
+
 export function resolveLeadMetadata(lead = {}) {
   const rawMeta = lead.metadata && typeof lead.metadata === "object" ? lead.metadata : {};
   const vertical = normalizeRubroKey(lead.rubro || lead.niche || lead.nicho || lead.query || lead.slug || "nutricionista");
@@ -1237,12 +1290,125 @@ export function resolveLeadMetadata(lead = {}) {
   const defaultTipoConsulta = isLegalVertical ? "arancelada" : "consultar";
   const defaultCanalAgenda = "whatsapp_secretaria";
 
+  const emailRaw = lead.email ?? rawMeta.email ?? null;
+  const email = emailRaw ? String(emailRaw).trim().toLowerCase() : null;
+
+  const mapsUrlRaw = lead.maps_url ?? rawMeta.maps_url ?? lead.google_maps ?? null;
+  const maps_url = mapsUrlRaw ? String(mapsUrlRaw).trim() : null;
+
+  const websiteUrlRaw = lead.website_url ?? rawMeta.website_url ?? lead.website ?? lead.social_link ?? null;
+  const website_url = websiteUrlRaw ? String(websiteUrlRaw).trim() : null;
+
+  const rawBucket = lead.website_bucket ?? rawMeta.website_bucket;
+  const website_bucket =
+    rawBucket === "cubeta_b" || rawBucket === "cubeta_a"
+      ? rawBucket
+      : inferWebsiteBucketFromUrl(website_url || "");
+
+  const rawAudit =
+    (lead.website_audit && typeof lead.website_audit === "object" ? lead.website_audit : null) ||
+    (rawMeta.website_audit && typeof rawMeta.website_audit === "object" ? rawMeta.website_audit : {});
+  const website_audit = {
+    has_https:
+      rawAudit.has_https !== undefined
+        ? Boolean(rawAudit.has_https)
+        : Boolean(website_url && String(website_url).toLowerCase().startsWith("https://")),
+    has_mobile_viewport:
+      rawAudit.has_mobile_viewport !== undefined ? Boolean(rawAudit.has_mobile_viewport) : true,
+    signals: Array.isArray(rawAudit.signals) ? [...rawAudit.signals] : [],
+  };
+
+  const ratingRaw = lead.rating ?? rawMeta.rating;
+  const rating =
+    ratingRaw !== undefined && ratingRaw !== null && Number.isFinite(Number(ratingRaw))
+      ? Number(ratingRaw)
+      : null;
+
+  const reviewsCountRaw = lead.reviews_count ?? rawMeta.reviews_count ?? lead.userRatingCount ?? 0;
+  const reviews_count = Number.isFinite(Number(reviewsCountRaw)) ? Number(reviewsCountRaw) : 0;
+
+  const rawReviewsSummary = lead.reviews_summary ?? rawMeta.reviews_summary ?? lead.reviews;
+  const reviews_summary = Array.isArray(rawReviewsSummary)
+    ? rawReviewsSummary.map((r) => ({
+        author: String(r?.author || "Google Maps").trim(),
+        rating: r?.rating !== undefined ? Number(r.rating) : undefined,
+        text: String(r?.text || "").trim(),
+      }))
+    : [];
+
+  const rawQual =
+    (lead.qualification && typeof lead.qualification === "object" ? lead.qualification : null) ||
+    (rawMeta.qualification && typeof rawMeta.qualification === "object" ? rawMeta.qualification : {});
+  const score = Number.isFinite(Number(rawQual.score)) ? Number(rawQual.score) : 0;
+  const grade =
+    rawQual.grade === "A" || rawQual.grade === "B" || rawQual.grade === "C"
+      ? rawQual.grade
+      : score >= 75
+        ? "A"
+        : score >= 50
+          ? "B"
+          : "C";
+  const recommended_tier =
+    rawQual.recommended_tier ||
+    (String(lead.potential_value || "").includes("549.999") ? "tier_2_autonomous" : "tier_1_starter");
+  const qualification = {
+    score,
+    grade,
+    recommended_tier,
+    reasons: Array.isArray(rawQual.reasons) ? [...rawQual.reasons] : [],
+  };
+
+  const rawOutreach =
+    (lead.email_outreach && typeof lead.email_outreach === "object" ? lead.email_outreach : null) ||
+    (rawMeta.email_outreach && typeof rawMeta.email_outreach === "object" ? rawMeta.email_outreach : {});
+  const email_outreach = {
+    status: rawOutreach.status || (email ? "pending" : "skipped_no_email"),
+    provider: rawOutreach.provider || "zoho_mail",
+    sent_at: rawOutreach.sent_at ?? null,
+    message_id: rawOutreach.message_id ?? null,
+    subject: rawOutreach.subject ?? null,
+    error: rawOutreach.error ?? null,
+  };
+
+  const rawTel =
+    (lead.telemetry && typeof lead.telemetry === "object" ? lead.telemetry : null) ||
+    (rawMeta.telemetry && typeof rawMeta.telemetry === "object" ? rawMeta.telemetry : {});
+  const views_count = Number.isFinite(Number(rawTel.views_count)) ? Number(rawTel.views_count) : 0;
+  const cta_clicks = Number.isFinite(Number(rawTel.cta_clicks)) ? Number(rawTel.cta_clicks) : 0;
+  const selected_theme = rawTel.selected_theme ? String(rawTel.selected_theme) : null;
+  const telemetry = {
+    views_count,
+    last_event: rawTel.last_event ?? null,
+    last_viewed_at: rawTel.last_viewed_at ?? null,
+    selected_theme,
+    cta_clicks,
+    is_hot_lead: Boolean(rawTel.is_hot_lead || views_count > 0 || cta_clicks > 0 || selected_theme),
+  };
+
+  const rawAudio = lead.audio_script_35s ?? rawMeta.audio_script_35s;
+  const audio_script_35s =
+    typeof rawAudio === "string" && rawAudio.trim()
+      ? rawAudio.trim()
+      : buildDefaultAudioScript35s(lead, website_bucket);
+
   return {
     ...rawMeta,
     modalidad: lead.modalidad || rawMeta.modalidad || defaultModalidad,
     tipo_consulta: lead.tipo_consulta || rawMeta.tipo_consulta || defaultTipoConsulta,
     canal_agenda: lead.canal_agenda || rawMeta.canal_agenda || defaultCanalAgenda,
     arancel_consulta_ars: Number(lead.arancel_consulta_ars ?? rawMeta.arancel_consulta_ars ?? 0),
+    email,
+    maps_url,
+    website_url,
+    website_bucket,
+    website_audit,
+    rating,
+    reviews_count,
+    reviews_summary,
+    qualification,
+    email_outreach,
+    telemetry,
+    audio_script_35s,
   };
 }
 
@@ -1366,7 +1532,13 @@ export function buildFicheMarkdown(rawData = {}, flags = {}, copyOverride = null
 
   const reviewsMarkdown = (rawData.reviews && rawData.reviews.length > 0)
     ? rawData.reviews
-        .map((r) => `- **${r.author} (Google Maps)**: "${r.text.replace(/\r?\n/g, " ")}"`)
+        .map((r) => {
+          const authorLabel = String(r.author || "Paciente Verificado").trim();
+          const attributed = /\(google maps\)/i.test(authorLabel)
+            ? authorLabel
+            : `${authorLabel} (Google Maps)`;
+          return `- **${attributed}**: "${String(r.text || "").replace(/\r?\n/g, " ")}"`;
+        })
         .join("\n")
     : `- **Paciente Verificado (Google Maps)**: "Excelente atención, calidez profesional y seguimiento claro desde la primera consulta."`;
 
@@ -1394,6 +1566,26 @@ export function buildFicheMarkdown(rawData = {}, flags = {}, copyOverride = null
       .join("\n");
   };
 
+  const gate0Payload = {};
+  if (rawData.website_audit && typeof rawData.website_audit === "object") {
+    gate0Payload.website_audit = rawData.website_audit;
+  }
+  if (rawData.qualification && typeof rawData.qualification === "object") {
+    gate0Payload.qualification = rawData.qualification;
+  }
+  const gate0YamlBlock = Object.keys(gate0Payload).length > 0
+    ? stringifyYaml(gate0Payload, { lineWidth: 0 }).trimEnd()
+    : "";
+
+  const websiteUrlVal = rawData.website_url ?? rawData.website ?? null;
+  const mapsUrlVal =
+    rawData.maps_url ||
+    rawData.google_maps ||
+    (rawData.website && String(rawData.website).includes("google.com/maps")
+      ? rawData.website
+      : `https://maps.google.com/?cid=gmp-${rawData.placeId || slug}`);
+  const instagramVal = rawData.instagram || (rawData.website && String(rawData.website).includes("instagram.com") ? rawData.website : rawData.website || "");
+
   const extraFieldsLines = [
     copy.rol ? `rol: ${escYaml(copy.rol)}` : null,
     copy.subtitulo ? `subtitulo: ${escYaml(copy.subtitulo)}` : null,
@@ -1402,6 +1594,15 @@ export function buildFicheMarkdown(rawData = {}, flags = {}, copyOverride = null
     copy.bajada ? `bajada: ${escYaml(copy.bajada)}` : null,
     direccion ? `direccion: ${escYaml(direccion)}` : null,
     phoneDisplay ? `telefono_display: ${escYaml(phoneDisplay)}` : null,
+    rawData.email ? `email: ${escYaml(rawData.email)}` : null,
+    rawData.maps_url ? `maps_url: ${escYaml(rawData.maps_url)}` : null,
+    websiteUrlVal ? `website_url: ${escYaml(websiteUrlVal)}` : null,
+    rawData.website_bucket ? `website_bucket: ${escYaml(rawData.website_bucket)}` : null,
+    rawData.rating !== undefined && rawData.rating !== null ? `rating: ${Number(rawData.rating)}` : null,
+    rawData.reviews_count !== undefined || rawData.userRatingCount !== undefined
+      ? `reviews_count: ${Number(rawData.reviews_count ?? rawData.userRatingCount ?? 0)}`
+      : null,
+    rawData.audio_script_35s ? `audio_script_35s: ${escYaml(rawData.audio_script_35s)}` : null,
   ].filter(Boolean);
 
   const overridesBlock = contentOverrides
@@ -1426,10 +1627,10 @@ nombre: ${escYaml(fullName)}
 ${extraFieldsLines.length > 0 ? extraFieldsLines.join("\n") + "\n" : ""}slug: ${escYaml(slug)}
 estado: prospecto
 subdominio: ${escYaml(`preview.${rootDomain}/${slug}/`)}
-whatsapp: ${escYaml(cleanPhone || "5491100000000")}
+whatsapp: ${escYaml(cleanPhone || "5493489536088")}
 calendly: ${escYaml(calendlyUrl)}
-google_maps: ${escYaml(rawData.website || `https://maps.google.com/?cid=gmp-${rawData.placeId || slug}`)}
-instagram: ${escYaml(rawData.website || "")}
+google_maps: ${escYaml(mapsUrlVal)}
+instagram: ${escYaml(instagramVal)}
 tema:
   nombre: ${escYaml(branding.paletteName || "Original")}
   primary: ${escYaml(branding.primary)}
@@ -1441,9 +1642,9 @@ tema:
   orden_secciones: ${JSON.stringify(branding.orden_secciones)}
 paletas_alternativas:
 ${formatPalettesYaml(alternativePalettes)}
-${overridesBlock ? overridesBlock + "\n" : ""}consentimiento_testimonios: false
-setup_ars: 189999
-abono_ars: 0
+${gate0YamlBlock ? gate0YamlBlock + "\n" : ""}${overridesBlock ? overridesBlock + "\n" : ""}consentimiento_testimonios: false
+setup_ars: ${rawData.qualification?.recommended_tier === "tier_2_autonomous" ? 549999 : 189999}
+abono_ars: ${rawData.qualification?.recommended_tier === "tier_2_autonomous" ? 229999 : 0}
 mes_de_prueba: true
 metricas:
   agendadas_mes: 0
@@ -1452,6 +1653,29 @@ metricas:
 
 ## Bio
 ${copy.bio}
+
+## Enfoque
+${copy.enfoque}
+
+## Problema
+${copy.problema}
+
+## Reseñas
+${reviewsMarkdown}
+
+## Casos de éxito
+${casesMarkdown}
+
+## Preguntas frecuentes
+${faqMarkdown}
+
+## Notas internas
+- Lead generado automáticamente por pipeline NexoBow vía ${rawData.source || "scout-lead"}.
+- Correlatividad Google Sheets: Fila ID #${sheetId} (${leadStatus}).
+- Vigencia de servidor activo: vence el ${expiresAt} (7 días desde última actividad).
+- Origen de datos: ${rawData.source || "Google Maps Platform (Places API New)"}.
+- Rating detectado: ${rawData.rating ?? "N/A"}★ (${rawData.reviews_count ?? rawData.userRatingCount ?? 0} opiniones públicas).
+- Fallback de agendamiento: ${calendlyUrl.includes("wa.me") ? "WhatsApp directo con mensaje de reserva" : "Calendly detectado"}.
 `;
 }
 
@@ -1478,7 +1702,6 @@ async function main() {
     console.warn(`\x1b[33m[generate-fiche AVISO]\x1b[0m El lead no tiene teléfono detectado. Se requerirá completar WhatsApp.`);
   }
 
-  // Correlatividad con Google Sheets (sheet_id) y metadatos de ciclo de vida (TTL 7 días)
   const slugIdMatch = slug.match(/^(\d+)-/);
   const sheetId = Number(
     flags["sheet-id"] ??
@@ -1490,7 +1713,6 @@ async function main() {
   const createdAt = rawData.created_at || todayStr;
   const lastActivityAt = rawData.last_activity_at || createdAt;
   const expiresAt = rawData.expires_at || addDaysToIsoDate(lastActivityAt, 7);
-  const leadStatus = rawData.lead_status || "1. Prospecto Identificado";
   const vertical = normalizeRubroKey(rawData.rubro || rawData.nicho || rawData.query || slug);
   const canonicalTemplate = resolveCanonicalTemplateForRubro(vertical);
   const templateVersion = rawData.template_version || canonicalTemplate.templateVersion;
@@ -1502,7 +1724,6 @@ async function main() {
     ubicacion: rawData.direccion,
   });
 
-  // Fallback inteligente para agendamiento: si no tiene Calendly, apuntar el CTA a WhatsApp con mensaje predeterminado
   const fallbackWaBooking = cleanPhone
     ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(bookingCfg.whatsapp_prefill)}`
     : "";
@@ -1519,138 +1740,7 @@ async function main() {
     copy = await enhanceWithGemini(rawData, geminiKey);
   }
 
-  if (!copy) {
-    copy = selectCopyAngle({ ...rawData, rubro: vertical, sheet_id: sheetId, slug });
-  }
-
-  const branding = selectContextualBranding({ ...rawData, rubro: vertical, sheet_id: sheetId, slug });
-  const phoneDisplay = rawData.telefonoFormato || (cleanPhone ? `+${cleanPhone}` : "");
-  const contentOverrides =
-    rawData.content_overrides ||
-    buildContentOverridesForRubro({
-      vertical,
-      nombre: rawData.nombre,
-      direccion: rawData.direccion,
-      phoneDisplay,
-      copy,
-      rating: rawData.rating,
-      userRatingCount: rawData.userRatingCount,
-    });
-
-  // Reseñas oficiales atribuidas a Google Maps
-  const reviewsMarkdown = (rawData.reviews && rawData.reviews.length > 0)
-    ? rawData.reviews
-        .map((r) => `- **${r.author} (Google Maps)**: "${r.text.replace(/\r?\n/g, ' ')}"`)
-        .join("\n")
-    : `- **Paciente Verificado (Google Maps)**: "Excelente atención, calidez profesional y seguimiento claro desde la primera consulta."`;
-
-  const casesMarkdown = copy.casos
-    .map((c) => `- **${c.titulo}**: ${c.descripcion}. Resultado: ${c.resultado}`)
-    .join("\n");
-
-  const faqMarkdown = copy.faq
-    .map((f) => `- **${f.q}**: ${f.a}`)
-    .join("\n");
-
-  const alternativePalettes = generateAlternativePalettes(branding);
-  const rootDomain = process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site";
-  const escYaml = (v) => JSON.stringify(String(v ?? ""));
-
-  const formatPalettesYaml = (pals) => {
-    return pals
-      .map(
-        (p) => `  - nombre: ${escYaml(p.nombre)}
-    fondo: ${escYaml(p.fondo)}
-    tinta: ${escYaml(p.tinta)}
-    primary: ${escYaml(p.primary)}
-    accent: ${escYaml(p.accent)}`
-      )
-      .join("\n");
-  };
-
-  const extraFieldsLines = [
-    copy.rol ? `rol: ${escYaml(copy.rol)}` : null,
-    copy.subtitulo ? `subtitulo: ${escYaml(copy.subtitulo)}` : null,
-    copy.tagline ? `tagline: ${escYaml(copy.tagline)}` : null,
-    copy.titulo ? `titulo: ${escYaml(copy.titulo)}` : null,
-    copy.bajada ? `bajada: ${escYaml(copy.bajada)}` : null,
-    rawData.direccion ? `direccion: ${escYaml(rawData.direccion)}` : null,
-    phoneDisplay ? `telefono_display: ${escYaml(phoneDisplay)}` : null,
-  ].filter(Boolean);
-
-  const overridesBlock = contentOverrides
-    ? stringifyYaml({ content_overrides: contentOverrides }, { lineWidth: 0 }).trimEnd()
-    : "";
-
-  const clientMdContent = `---
-id: ${sheetId || Date.now().toString().slice(-4)}
-sheet_id: ${sheetId}
-lead_status: ${escYaml(leadStatus)}
-created_at: ${escYaml(createdAt)}
-last_activity_at: ${escYaml(lastActivityAt)}
-expires_at: ${escYaml(expiresAt)}
-rubro: ${vertical}
-template_archetype: ${escYaml(templateArchetype)}
-template_version: ${escYaml(templateVersion)}
-modalidad: ${escYaml(bookingCfg.modalidad)}
-tipo_consulta: ${escYaml(bookingCfg.tipo_consulta)}
-canal_agenda: ${escYaml(bookingCfg.canal_agenda)}
-arancel_consulta_ars: ${bookingCfg.arancel_consulta_ars}
-nombre: ${escYaml(rawData.nombre)}
-${extraFieldsLines.length > 0 ? extraFieldsLines.join("\n") + "\n" : ""}slug: ${escYaml(slug)}
-estado: prospecto
-subdominio: ${escYaml(`preview.${rootDomain}/${slug}/`)}
-whatsapp: ${escYaml(cleanPhone || "5491100000000")}
-calendly: ${escYaml(calendlyUrl)}
-google_maps: ${escYaml(rawData.website || `https://maps.google.com/?cid=gmp-${rawData.placeId || slug}`)}
-instagram: ${escYaml(rawData.website || "")}
-tema:
-  nombre: ${escYaml(branding.paletteName || "Original")}
-  primary: ${escYaml(branding.primary)}
-  accent: ${escYaml(branding.accent)}
-  fondo: ${escYaml(branding.fondo)}
-  tinta: ${escYaml(branding.tinta)}
-  fuente: ${escYaml(branding.fuente)}
-  fuente_sans: ${escYaml(branding.fuente_sans)}
-  orden_secciones: ${JSON.stringify(branding.orden_secciones)}
-paletas_alternativas:
-${formatPalettesYaml(alternativePalettes)}
-${overridesBlock ? overridesBlock + "\n" : ""}consentimiento_testimonios: false
-setup_ars: 189999
-abono_ars: 0
-mes_de_prueba: true
-metricas:
-  agendadas_mes: 0
-  concretadas_mes: 0
----
-
-## Bio
-${copy.bio}
-
-
-## Enfoque
-${copy.enfoque}
-
-## Problema
-${copy.problema}
-
-## Reseñas
-${reviewsMarkdown}
-
-## Casos de éxito
-${casesMarkdown}
-
-## Preguntas frecuentes
-${faqMarkdown}
-
-## Notas internas
-- Lead generado automáticamente por pipeline NexoBow vía scout-lead.
-- Correlatividad Google Sheets: Fila ID #${sheetId} (${leadStatus}).
-- Vigencia de servidor activo: vence el ${expiresAt} (7 días desde última actividad).
-- Origen de datos: ${rawData.source || "Google Maps Platform (Places API New)"}.
-- Rating detectado: ${rawData.rating}★ (${rawData.userRatingCount} opiniones públicas).
-- Fallback de agendamiento: ${calendlyUrl.includes("wa.me") ? "WhatsApp directo con mensaje de reserva" : "Calendly detectado"}.
-`;
+  const clientMdContent = buildFicheMarkdown({ ...rawData, slug }, flags, copy);
 
   const clientFilePath = join(REPO_ROOT, "clients", `${slug}.md`);
   writeFileSync(clientFilePath, clientMdContent, "utf8");

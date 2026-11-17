@@ -14,6 +14,8 @@
     "prospect-batch": "node scripts/prospect-batch.mjs",
     "deploy-previews": "node scripts/deploy-previews.mjs",
     "prospect": "node scripts/prospect-in-conversation.mjs",
+    "intake-maps": "node scripts/intake-maps-batch.mjs",
+    "send-zoho": "node scripts/send-zoho-outreach.mjs",
     "lead-lifecycle": "node scripts/lead-lifecycle.mjs",
     "continuous-improvement": "node scripts/continuous-improvement.mjs",
     "rea-inspect": "node scripts/rea-inspect.mjs"

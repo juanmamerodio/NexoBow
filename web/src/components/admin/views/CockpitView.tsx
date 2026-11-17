@@ -207,6 +207,14 @@ export const CockpitView: React.FC<CockpitViewProps> = ({ user, onNavigate }) =>
               Tenés{" "}
               <span
                 className={`font-semibold ${
+                  summary.hotLeadsCount > 0 ? "text-orange-400" : "text-zinc-300"
+                }`}
+              >
+                {summary.hotLeadsCount} {summary.hotLeadsCount === 1 ? "Hot-Lead" : "Hot-Leads"}
+              </span>
+              ,{" "}
+              <span
+                className={`font-semibold ${
                   summary.urgentAlertsCount > 0 ? "text-amber-400" : "text-emerald-400"
                 }`}
               >
@@ -380,6 +388,133 @@ export const CockpitView: React.FC<CockpitViewProps> = ({ user, onNavigate }) =>
                     rel="noopener noreferrer"
                     className="p-1.5 rounded-lg border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white transition-all"
                     title="Ver preview web"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* 1B. WIDGET DE HOT-LEADS EN VIVO (/api/ping) */}
+      <div
+        className="p-6 rounded-2xl border"
+        style={{
+          backgroundColor: "#0B0D12",
+          borderColor: summary.hotLeadsCount > 0 ? "rgba(249, 115, 22, 0.35)" : "#1A1D26",
+        }}
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+          <div className="flex items-center gap-2.5">
+            <div
+              className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                summary.hotLeadsCount > 0
+                  ? "bg-orange-500/15 text-orange-400"
+                  : "bg-zinc-800 text-zinc-400"
+              }`}
+            >
+              <Flame className="w-4 h-4" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+                🔥 Hot-Leads Recientes (<span className="text-orange-400">/api/ping</span>)
+              </h2>
+              <p className="text-xs text-zinc-400">
+                Prospectos que acaban de abrir su preview 10x o probaron una paleta en vivo.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span
+              className={`text-xs px-2.5 py-1 rounded-full font-semibold border ${
+                summary.hotLeadsCount > 0
+                  ? "bg-orange-500/10 text-orange-300 border-orange-500/30"
+                  : "bg-zinc-900 text-zinc-400 border-zinc-800"
+              }`}
+            >
+              {summary.hotLeadsCount > 0
+                ? `${summary.hotLeadsCount} vistos en vivo`
+                : "Sin vistas recientes"}
+            </span>
+            <button
+              type="button"
+              onClick={() => onNavigate("/admin/crm")}
+              className="text-xs text-purple-400 hover:text-purple-300 flex items-center gap-1 font-medium transition-colors"
+            >
+              <span>Abrir CRM</span>
+              <ArrowRight className="w-3 h-3" />
+            </button>
+          </div>
+        </div>
+
+        {summary.hotLeads.length === 0 ? (
+          <div
+            className="py-6 px-4 rounded-xl text-center border"
+            style={{ backgroundColor: "#040607", borderColor: "#1A1D26" }}
+          >
+            <p className="text-xs font-semibold text-zinc-300">
+              Todavía no se registraron aperturas de preview en esta sesión
+            </p>
+            <p className="text-[11px] text-zinc-500 max-w-md mx-auto mt-1">
+              Cuando un profesional abra su link en preview.nexobow.site o cambie de paleta, aparecerá aquí al instante para hacer seguimiento por WhatsApp.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {summary.hotLeads.map((hot) => (
+              <div
+                key={hot.id}
+                className="p-4 rounded-xl border flex flex-col justify-between transition-all"
+                style={{
+                  backgroundColor: "#040607",
+                  borderColor: "rgba(249, 115, 22, 0.35)",
+                }}
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded uppercase font-semibold bg-zinc-800 text-zinc-300">
+                      {hot.niche}
+                    </span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/40">
+                      🔥 {hot.viewsCount} vista(s) · {hot.ctaClicks} clic(s)
+                    </span>
+                  </div>
+
+                  <h3 className="text-sm font-bold text-white mb-1 truncate">{hot.name}</h3>
+                  <p className="text-xs text-zinc-400 mb-2 truncate">{hot.location}</p>
+
+                  <div className="flex items-center justify-between text-[11px] text-zinc-400 mb-3">
+                    <span>
+                      Paleta: <strong className="text-purple-300">{hot.selectedTheme}</strong>
+                    </span>
+                    <span className="font-mono text-[10px] text-zinc-500">
+                      Zoho: {hot.zohoStatus === "sent" ? "✉️ Enviado" : hot.zohoStatus}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 pt-3 border-t border-zinc-800/80">
+                  {hot.whatsappUrl && (
+                    <a
+                      href={hot.whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white transition-all cursor-pointer"
+                      title="Enviar seguimiento Hot-Lead por WhatsApp"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5" />
+                      <span>Follow-up Hot WA</span>
+                    </a>
+                  )}
+                  <a
+                    href={hot.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 rounded-lg border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white transition-all"
+                    title="Abrir preview"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>

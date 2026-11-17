@@ -1,5 +1,5 @@
 ---
-// ThemeSwitcher.astro — NexoBow: Selector de paletas interactivo anti-rebote para previews
+// ThemeSwitcher.astro — NexoBow Preview Studio HUD 10x: Marco 20% vs 10x, Simulador IA, Paletas y WhatsApp
 import { PALETAS_ALTERNATIVAS, THEME } from "../site";
 
 interface Palette {
@@ -22,114 +22,246 @@ const palettes: Palette[] = (PALETAS_ALTERNATIVAS && PALETAS_ALTERNATIVAS.length
   ? (PALETAS_ALTERNATIVAS as Palette[])
   : [defaultOriginal];
 
-const juanmaWaPhone = "5491100000000"; // fallback Juanma Merodio NexoBow
+const juanmaWaPhone = "5493489536088";
+const initialThemeName = palettes[0]?.nombre || "Tactical Onyx (Vetter)";
+const initialWaText = encodeURIComponent(
+  `Hola Juanma! Estuve viendo la web demo y me encantó la combinación ${initialThemeName}. ¿Cómo seguimos para activarla?`
+);
 ---
 
 <aside
   id="nexobow-theme-switcher"
-  aria-label="Selector de temas NexoBow"
-  class="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2 text-xs font-sans select-none"
+  aria-label="NexoBow Preview Studio HUD"
+  class="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-50 flex flex-col items-end gap-2 text-xs font-sans select-none max-w-[calc(100vw-1.5rem)]"
 >
   <div
     id="theme-panel"
-    class="flex flex-col gap-2 rounded-2xl bg-[#121212]/95 p-3 text-slate-100 shadow-2xl backdrop-blur-md border border-(--color-primary)/40 transition-all duration-300"
+    class="w-[min(22rem,calc(100vw-1.5rem))] flex flex-col gap-3 rounded-2xl bg-[#0B0D12]/95 p-4 text-slate-100 shadow-2xl backdrop-blur-md border border-slate-700/75"
   >
-    <div class="flex items-center justify-between gap-3 border-b border-white/10 pb-2">
-      <span class="font-semibold text-slate-200 flex items-center gap-1.5">
-        <span class="inline-block h-2 w-2 rounded-full bg-(--color-primary)"></span>
-        Paleta en vivo
-      </span>
-      <span id="active-theme-name" class="text-[11px] font-medium text-slate-300">
-        {palettes[0]?.nombre || "Tactical Onyx"}
-      </span>
+    <!-- Bloque 1: Dock discreto NexoBow Preview Studio HUD (20% + TTL 7 días) -->
+    <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-800">
+      <div class="flex flex-col gap-1 min-w-0">
+        <span class="inline-flex w-fit items-center rounded-full bg-amber-400/15 px-2.5 py-0.5 text-xs font-bold tracking-wide text-amber-300">
+          PROTOTIPO CONCEPTUAL · 20%
+        </span>
+        <div class="flex items-center gap-1.5 text-xs text-slate-300">
+          <span class="font-semibold text-white truncate">NexoBow Preview Studio HUD</span>
+          <span class="text-slate-500">·</span>
+          <span class="text-emerald-300 font-medium whitespace-nowrap">Reservado 7 días (TTL)</span>
+        </div>
+      </div>
+      <button
+        id="hud-toggle-btn"
+        type="button"
+        aria-expanded="true"
+        aria-controls="hud-body"
+        title="Minimizar o expandir panel"
+        aria-label="Minimizar o expandir panel de preview"
+        class="shrink-0 rounded-lg bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 hover:bg-slate-700 transition-colors cursor-pointer"
+      >
+        HUD
+      </button>
     </div>
 
-    <!-- Swatches -->
-    <div class="flex items-center gap-2 pt-1">
-      {palettes.map((pal) => (
+    <div id="hud-body" class="flex flex-col gap-3">
+      <!-- Bloque 2: Aviso contextual sobre fotos ilustrativas -->
+      <p class="border-l-2 border-amber-400/70 pl-3 py-0.5 text-xs leading-relaxed text-slate-300">
+        📸 Foto ilustrativa de prototipo — Se reemplaza por fotos reales de tu consultorio y equipo
+      </p>
+
+      <!-- Bloques 3 y 4: Triggers Comparativo 20% vs 10x y Mini-Simulador Recepcionista IA -->
+      <div class="flex flex-col gap-2">
         <button
+          id="hud-compare-btn"
           type="button"
-          class="theme-swatch-btn group relative flex h-7 w-7 items-center justify-center rounded-full p-0.5 border border-white/20 transition-transform hover:scale-110 focus:outline-hidden focus:ring-2 focus:ring-offset-1 focus:ring-white/40"
-          style={`background: linear-gradient(135deg, ${pal.fondo} 50%, ${pal.primary} 50%);`}
-          data-theme={JSON.stringify(pal)}
-          data-name={pal.nombre}
-          title={pal.nombre}
-          aria-label={`Activar paleta ${pal.nombre}`}
+          class="flex items-center justify-between gap-2 rounded-xl bg-violet-500/20 px-3 py-2 text-left text-xs font-semibold text-violet-100 hover:bg-violet-500/30 transition-colors cursor-pointer"
         >
-          <span class="sr-only">{pal.nombre}</span>
+          <span>✨ Preview (20%) vs. Tu Sistema Final (10x)</span>
+          <span aria-hidden="true" class="text-violet-300">→</span>
         </button>
-      ))}
-    </div>
 
-    <!-- Botón CTA WhatsApp -->
-    <a
-      id="theme-wa-btn"
-      href={`https://wa.me/${juanmaWaPhone}?text=${encodeURIComponent(`Hola Juanma! Estuve viendo la web demo y me encantó la combinación ${palettes[0]?.nombre || "Tactical Onyx"}. ¿Cómo seguimos para activarla?`)}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="mt-1 flex items-center justify-center gap-1.5 rounded-lg bg-(--color-primary) px-3 py-1.5 font-bold text-[#090909] transition-all hover:brightness-110 hover:shadow-lg active:scale-95"
-    >
-      <span>Pedir esta versión</span>
-      <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
-        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.838.814 2.796.814 3.183 0 5.769-2.588 5.77-5.767 0-3.18-2.587-5.769-5.77-5.769zm0-2.172c4.381 0 7.937 3.556 7.938 7.938 0 4.382-3.556 7.939-7.938 7.939-1.332 0-2.593-.338-3.714-.949l-4.317 1.132 1.152-4.208c-.708-1.189-1.059-2.529-1.059-3.914 0-4.382 3.556-7.938 7.938-7.938z"/>
-      </svg>
-    </a>
+        <button
+          id="hud-sim-btn"
+          type="button"
+          aria-expanded="false"
+          aria-controls="hud-sim-panel"
+          class="flex items-center justify-between gap-2 rounded-xl bg-emerald-500/20 px-3 py-2 text-left text-xs font-semibold text-emerald-100 hover:bg-emerald-500/30 transition-colors cursor-pointer"
+        >
+          <span>🤖 Probar cómo atiende tu Recepcionista IA</span>
+          <span aria-hidden="true" class="text-emerald-300">▾</span>
+        </button>
+      </div>
+
+      <!-- Bloque 4 (Panel interactivo del Mini-Simulador en voseo argentino) -->
+      <div
+        id="hud-sim-panel"
+        class="hidden space-y-2.5 pt-1 text-xs leading-relaxed"
+      >
+        <div class="border-l-2 border-slate-600 pl-3 text-slate-200">
+          <span class="block text-xs font-bold text-slate-400">Paciente · WhatsApp</span>
+          🎤 Audio (0:14): "Hola! ¿Tenés turno esta semana a la tarde? Quería saber cómo trabajan."
+        </div>
+        <div class="border-l-2 border-emerald-400 pl-3 text-emerald-100">
+          <span class="block text-xs font-bold text-emerald-300">Recepcionista IA 24/7 · Respuesta inmediata</span>
+          "¡Hola! Te transcribí el audio al instante. Tengo lugar este jueves 17:00 hs o viernes 11:00 hs. ¿Cuál te queda más cómodo para agendarte?"
+        </div>
+        <p class="text-xs font-semibold text-emerald-300">
+          ✅ Turno automatizado confirmado · Protocolo Anti-Silla Vacía (24h/2h) activado.
+        </p>
+      </div>
+
+      <!-- Bloque 5: Selector de 4 paletas + CTA WhatsApp -->
+      <div class="border-t border-slate-800 pt-3 flex flex-col gap-2.5">
+        <div class="flex items-center justify-between gap-2">
+          <span class="font-semibold text-slate-200 flex items-center gap-1.5 text-xs">
+            <span class="inline-block h-2 w-2 rounded-full bg-emerald-400"></span>
+            Paleta en vivo
+          </span>
+          <span id="active-theme-name" class="text-xs font-medium text-slate-300 truncate max-w-[11rem]">
+            {initialThemeName}
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          {palettes.map((pal) => (
+            <button
+              type="button"
+              class="theme-swatch-btn group relative flex h-7 w-7 items-center justify-center rounded-full p-0.5 border border-slate-500 transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-slate-300 cursor-pointer"
+              style={`background: linear-gradient(135deg, ${pal.fondo} 50%, ${pal.primary} 50%);`}
+              data-theme={JSON.stringify(pal)}
+              data-name={pal.nombre}
+              title={pal.nombre}
+              aria-label={`Activar paleta ${pal.nombre}`}
+            >
+              <span class="sr-only">{pal.nombre}</span>
+            </button>
+          ))}
+        </div>
+
+        <a
+          id="theme-wa-btn"
+          href={`https://wa.me/${juanmaWaPhone}?text=${initialWaText}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center justify-center gap-1.5 rounded-xl bg-emerald-500 px-3 py-2 text-xs font-bold text-[#040607] transition-all hover:bg-emerald-400 hover:shadow-lg active:scale-95"
+        >
+          <span>Pedir esta versión</span>
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.838.814 2.796.814 3.183 0 5.769-2.588 5.77-5.767 0-3.18-2.587-5.769-5.77-5.769zm0-2.172c4.381 0 7.937 3.556 7.938 7.938 0 4.382-3.556 7.939-7.938 7.939-1.332 0-2.593-.338-3.714-.949l-4.317 1.132 1.152-4.208c-.708-1.189-1.059-2.529-1.059-3.914 0-4.382 3.556-7.938 7.938-7.938z" />
+          </svg>
+        </a>
+      </div>
+    </div>
   </div>
+
+  <!-- Bloque 3 (Modal nativo comparativo 20% vs 10x) -->
+  <dialog
+    id="hud-compare-dialog"
+    closedby="any"
+    aria-labelledby="hud-compare-title"
+    class="nx-hud-dialog m-auto w-[min(92vw,38rem)] max-w-2xl rounded-2xl border border-slate-700/80 bg-[#0B0D12] p-5 sm:p-6 text-slate-100 shadow-2xl"
+  >
+    <div class="space-y-5">
+      <div class="flex items-start justify-between gap-4 pb-3 border-b border-slate-800">
+        <div>
+          <p class="text-xs font-bold text-violet-300">NexoBow Preview Studio HUD</p>
+          <h2 id="hud-compare-title" class="mt-1 text-base sm:text-lg font-bold text-white">
+            ✨ Preview (20%) vs. Tu Sistema Final (10x)
+          </h2>
+        </div>
+        <form method="dialog">
+          <button
+            type="submit"
+            autofocus
+            aria-label="Cerrar comparativa"
+            class="rounded-lg bg-slate-800 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:bg-slate-700 cursor-pointer"
+          >
+            Cerrar
+          </button>
+        </form>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm">
+        <div class="border-l-2 border-amber-400/70 pl-4 space-y-2">
+          <p class="font-bold text-amber-300 text-xs uppercase tracking-wide">
+            Prototipo Rápido (20%)
+          </p>
+          <ul class="space-y-2 text-slate-300 leading-relaxed">
+            <li>• Subdominio temporal (preview.nexobow.site, Reservado 7 días)</li>
+            <li>• Datos públicos extraídos de Google Maps</li>
+            <li>• Fotos ilustrativas referenciales</li>
+          </ul>
+        </div>
+
+        <div class="border-l-2 border-emerald-400 pl-4 space-y-2">
+          <p class="font-bold text-emerald-300 text-xs uppercase tracking-wide">
+            Tu Sistema Final (10x)
+          </p>
+          <ul class="space-y-2 text-slate-100 leading-relaxed">
+            <li>• Dominio propio .com.ar / .com con SSL incluido</li>
+            <li>• Curaduría de fotos reales de tu consultorio y copy afinado</li>
+            <li>• <strong>Recepcionista IA 24/7</strong> en WhatsApp que transcribe audios</li>
+            <li>• <strong>Protocolo Anti-Silla Vacía</strong> 24h/2h con lista de espera</li>
+            <li>• <strong>Posicionamiento AEO</strong> en ChatGPT y Google Maps</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-end gap-2 pt-2">
+        <a
+          href={`https://wa.me/${juanmaWaPhone}?text=${encodeURIComponent("Hola Juanma! Vi la comparativa 20% vs 10x en mi preview y quiero activar mi Sistema Final.")}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-4 py-2.5 text-xs font-bold text-[#040607] hover:bg-emerald-400 transition-colors"
+        >
+          Activar mi Sistema Final por WhatsApp →
+        </a>
+      </div>
+    </div>
+  </dialog>
 </aside>
 
+<style>
+  .nx-hud-dialog:modal {
+    overscroll-behavior: contain;
+  }
+  .nx-hud-dialog::backdrop {
+    background-color: rgba(4, 6, 7, 0.72);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    overflow: hidden;
+    overscroll-behavior: contain;
+  }
+</style>
+
 <script is:inline>
-  (function () {
-    const STORAGE_KEY = "nexobow_theme";
-    const JUANMA_PHONE = "5491100000000";
-
-    function applyTheme(pal) {
-      if (!pal) return;
-      const root = document.documentElement;
-      if (pal.primary) root.style.setProperty("--color-primary", pal.primary);
-      if (pal.accent) root.style.setProperty("--color-accent", pal.accent);
-      if (pal.fondo) {
-        root.style.setProperty("--color-paper", pal.fondo);
-        root.style.setProperty("--color-bg", pal.fondo);
-      }
-      if (pal.tinta) {
-        root.style.setProperty("--color-ink", pal.tinta);
-      }
-
-      const activeNameLabel = document.getElementById("active-theme-name");
-      if (activeNameLabel) activeNameLabel.textContent = pal.nombre || "Elegida";
-
-      const waBtn = document.getElementById("theme-wa-btn");
-      if (waBtn) {
-        const msg = `Hola Juanma! Estuve viendo la web demo y me encantó la combinación ${pal.nombre || ""}. ¿Cómo seguimos para activarla?`;
-        waBtn.href = `https://wa.me/${JUANMA_PHONE}?text=${encodeURIComponent(msg)}`;
-      }
-    }
-
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        applyTheme(parsed);
-      }
-    } catch (e) {
-      // Ignorar fallo de parse o privacidad
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      const buttons = document.querySelectorAll(".theme-swatch-btn");
-      buttons.forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          try {
-            const raw = btn.getAttribute("data-theme");
-            if (!raw) return;
-            const pal = JSON.parse(raw);
-            applyTheme(pal);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(pal));
-          } catch (err) {
-            console.error("ThemeSwitcher error:", err);
-          }
-        });
-      });
+(function(){
+  const STORAGE_KEY="nexobow_theme",JUANMA_PHONE="5493489536088";
+  const $=function(id){return document.getElementById(id);};
+  function applyTheme(pal,emit){
+    if(!pal)return;
+    const s=document.documentElement.style;
+    if(pal.primary)s.setProperty("--color-primary",pal.primary);
+    if(pal.accent)s.setProperty("--color-accent",pal.accent);
+    if(pal.fondo){s.setProperty("--color-paper",pal.fondo);s.setProperty("--color-bg",pal.fondo);}
+    if(pal.tinta){s.setProperty("--color-ink",pal.tinta);s.setProperty("--color-stone-border",pal.tinta==="#1c1917"?"rgba(28,25,23,0.12)":"rgba(255,255,255,0.15)");}
+    const l=$("active-theme-name");if(l)l.textContent=pal.nombre||"Elegida";
+    const w=$("theme-wa-btn");if(w){w.href="https://wa.me/"+JUANMA_PHONE+"?text="+encodeURIComponent("Hola Juanma! Estuve viendo la web demo y me encantó la combinación "+(pal.nombre||"")+". ¿Cómo seguimos para activarla?");}
+    if(emit)window.dispatchEvent(new CustomEvent("theme-switched",{detail:{theme:pal.nombre||"Original"}}));
+  }
+  try{const sv=localStorage.getItem(STORAGE_KEY);if(sv)applyTheme(JSON.parse(sv),false);}catch(e){}
+  document.addEventListener("DOMContentLoaded",function(){
+    document.querySelectorAll(".theme-swatch-btn").forEach(function(b){
+      b.addEventListener("click",function(){try{const p=JSON.parse(b.getAttribute("data-theme")||"");applyTheme(p,true);localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}catch(e){}});
     });
-  })();
+    const d=$("hud-compare-dialog"),o=$("hud-compare-btn");
+    if(d&&o){
+      o.addEventListener("click",function(){d.showModal?d.showModal():d.setAttribute("open","");});
+      if(!("closedBy" in HTMLDialogElement.prototype))d.addEventListener("click",function(e){if(e.target!==d)return;const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();});
+    }
+    const sb=$("hud-sim-btn"),sp=$("hud-sim-panel"),tb=$("hud-toggle-btn"),hb=$("hud-body");
+    if(sb&&sp)sb.addEventListener("click",function(){sb.setAttribute("aria-expanded",String(!sp.classList.toggle("hidden")));});
+    if(tb&&hb)tb.addEventListener("click",function(){tb.setAttribute("aria-expanded",String(!hb.classList.toggle("hidden")));});
+  });
+})();
 </script>

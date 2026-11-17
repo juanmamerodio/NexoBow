@@ -79,6 +79,22 @@ export interface CockpitTtlAlert {
   potentialValue: string;
 }
 
+export interface CockpitHotLead {
+  id: number;
+  slug: string;
+  name: string;
+  niche: string;
+  location: string;
+  viewsCount: number;
+  ctaClicks: number;
+  selectedTheme: string;
+  lastEvent: string;
+  lastViewedAt: string | null;
+  zohoStatus: string;
+  whatsappUrl: string;
+  demoUrl: string;
+}
+
 export interface CockpitTodayHabit {
   id: number | string;
   title: string;
@@ -136,6 +152,8 @@ export interface CockpitSummary {
   greeting: string;
   ttlAlerts: CockpitTtlAlert[];
   urgentAlertsCount: number;
+  hotLeads: CockpitHotLead[];
+  hotLeadsCount: number;
   todayHabits: CockpitTodayHabit[];
   habitsTodayProgress: number; // 0..100
   habitsCompletedCount: number;
@@ -144,6 +162,7 @@ export interface CockpitSummary {
   todayBlocksCount: number;
   activeVideo: CockpitActiveVideo | null;
   cashflow: CockpitCashflowSummary;
+  isOffline: boolean;
 }
 
 // -------------------------------------------------------------
@@ -235,6 +254,78 @@ export function filterUrgentTtlLeads(
 
   // Ordenar: primero los más críticos (vencidos primero, luego menor tiempo restante)
   return alerts.sort((a, b) => a.hoursRemaining - b.hoursRemaining);
+}
+
+/**
+ * Genera enlace de WhatsApp de seguimiento inmediato para Hot-Leads que abrieron la preview (/api/ping).
+ */
+export function buildHotFollowupWhatsAppUrl(
+  lead: LeadEntity,
+  selectedTheme?: string | null
+): string {
+  const digits = (lead.phone || lead.whatsapp_link || "").replace(/\D/g, "");
+  const demoUrl = lead.demo_url || `https://preview.nexobow.site/${lead.slug}/`;
+  const name = (lead.name || "").replace(/^(Lic\.|Dr\.|Dra\.|Mg\.|Abog\.)\s*/i, "").trim() || "Colega";
+  const niche = String(lead.niche || "").toLowerCase();
+
+  let noun = "tu consultorio";
+  if (["abogado", "juridico", "legal", "contador", "estudio"].some((k) => niche.includes(k))) {
+    noun = "tu estudio jurídico";
+  } else if (["clinica", "estetica", "centro"].some((k) => niche.includes(k))) {
+    noun = "tu centro";
+  }
+
+  const themeLabel = selectedTheme || "Original";
+  const message = `Hola ${name}! Soy Juanma de NexoBow. Vi que recién estuviste chusmeando la demo de ${noun} y probaste la paleta "${themeLabel}". ¿Qué te pareció el sistema Anti-Silla Vacía & Cero-Secretaria? (${demoUrl})`;
+
+  return digits ? `https://wa.me/${digits}?text=${encodeURIComponent(message)}` : "";
+}
+
+/**
+ * Extrae y ordena los Hot-Leads detectados por /api/ping (sin incluir descartados).
+ */
+export function extractHotLeads(leads: LeadEntity[]): CockpitHotLead[] {
+  const hot: CockpitHotLead[] = [];
+
+  for (const lead of leads) {
+    if (lead.funnel_status === "6. Descartado") continue;
+    const meta = lead.metadata && typeof lead.metadata === "object" ? lead.metadata : {};
+    const tel = meta.telemetry && typeof meta.telemetry === "object" ? meta.telemetry : {};
+    const viewsCount = Number(tel.views_count || 0);
+    const ctaClicks = Number(tel.cta_clicks || 0);
+    const selectedTheme = tel.selected_theme ? String(tel.selected_theme) : null;
+    const isHot = Boolean(tel.is_hot_lead || viewsCount > 0 || ctaClicks > 0 || selectedTheme);
+
+    if (!isHot) continue;
+
+    const zohoStatus = String(
+      meta.email_outreach?.status || (meta.email ? "pending" : "skipped_no_email")
+    );
+
+    hot.push({
+      id: lead.id,
+      slug: lead.slug,
+      name: lead.name,
+      niche: lead.niche,
+      location: lead.location || lead.city || "Buenos Aires",
+      viewsCount,
+      ctaClicks,
+      selectedTheme: selectedTheme || "Original",
+      lastEvent: String(tel.last_event || "preview_view"),
+      lastViewedAt: tel.last_viewed_at ? String(tel.last_viewed_at) : null,
+      zohoStatus,
+      whatsappUrl:
+        buildHotFollowupWhatsAppUrl(lead, selectedTheme) || lead.whatsapp_link || "",
+      demoUrl: lead.demo_url || `https://preview.nexobow.site/${lead.slug}/`,
+    });
+  }
+
+  return hot.sort((a, b) => {
+    const tA = a.lastViewedAt ? new Date(a.lastViewedAt).getTime() : 0;
+    const tB = b.lastViewedAt ? new Date(b.lastViewedAt).getTime() : 0;
+    if (tB !== tA) return tB - tA;
+    return b.viewsCount - a.viewsCount;
+  });
 }
 
 /**
@@ -401,6 +492,7 @@ export function aggregateCockpitData(params: {
   transactions: FinancialTransaction[];
   today?: Date;
   exchangeRate?: number;
+  isOffline?: boolean;
 }): CockpitSummary {
   const today = params.today || new Date();
   const todayDateStr = today.toISOString().substring(0, 10);
@@ -421,6 +513,9 @@ export function aggregateCockpitData(params: {
 
   // Alertas TTL
   const ttlAlerts = filterUrgentTtlLeads(params.leads, 48, today);
+
+  // Hot-Leads detectados por /api/ping
+  const hotLeads = extractHotLeads(params.leads);
 
   // Hábitos de hoy
   const todayHabits = mapTodayHabits(params.habits, params.habitLogs, todayDateStr);
@@ -458,6 +553,8 @@ export function aggregateCockpitData(params: {
     greeting,
     ttlAlerts,
     urgentAlertsCount: ttlAlerts.length,
+    hotLeads,
+    hotLeadsCount: hotLeads.length,
     todayHabits,
     habitsTodayProgress,
     habitsCompletedCount,
@@ -466,6 +563,7 @@ export function aggregateCockpitData(params: {
     todayBlocksCount: todayBlocks.length,
     activeVideo,
     cashflow,
+    isOffline: Boolean(params.isOffline),
   };
 }
 
@@ -477,6 +575,7 @@ export async function fetchDailyCockpitSummary(today?: Date, customClient?: any)
   const supabase = customClient || getBrowserSupabaseClient();
   const currentDate = today || new Date();
 
+  let anyOffline = false;
   let leads: LeadEntity[] = [];
   let habits: Habit[] = [];
   let habitLogs: HabitLog[] = [];
@@ -485,62 +584,91 @@ export async function fetchDailyCockpitSummary(today?: Date, customClient?: any)
   let transactions: FinancialTransaction[] = [];
 
   try {
-    const { data: leadsData } = await supabase
+    const { data: leadsData, error: leadsError } = await supabase
       .from("leads")
       .select("*")
       .order("id", { ascending: false });
-    if (leadsData) {
+    if (leadsError) {
+      anyOffline = true;
+    } else if (leadsData) {
       leads = leadsData as LeadEntity[];
     }
   } catch (err) {
+    anyOffline = true;
     console.warn("Cockpit: usando fallback offline para leads");
   }
 
   try {
     const remoteHabits = await fetchHabits(supabase);
     if (remoteHabits) {
-      habits = remoteHabits;
+      if (remoteHabits.isOffline) anyOffline = true;
+      habits = remoteHabits.data || remoteHabits;
     }
   } catch (err) {
+    anyOffline = true;
     habits = INITIAL_MOCK_HABITS;
   }
 
   try {
     const remoteLogs = await fetchHabitLogs(supabase);
     if (remoteLogs) {
-      habitLogs = remoteLogs;
+      if (remoteLogs.isOffline) anyOffline = true;
+      habitLogs = remoteLogs.data || remoteLogs;
     }
   } catch (err) {
+    anyOffline = true;
     console.warn("Cockpit: usando fallback offline para logs de hábitos");
   }
 
   try {
-    const remoteBlocks = await fetchScheduleBlocks();
+    const remoteBlocks = await fetchScheduleBlocks(supabase);
     if (remoteBlocks) {
-      blocks = remoteBlocks;
+      if (remoteBlocks.isOffline) anyOffline = true;
+      blocks = remoteBlocks.data || remoteBlocks;
     }
   } catch (err) {
+    anyOffline = true;
     console.warn("Cockpit: usando fallback offline para horarios");
   }
 
   try {
-    const remoteVideos = await fetchAlaynowVideos();
-    if (remoteVideos) {
-      videos = remoteVideos;
+    const { data: videosData, error: videosError } = await supabase
+      .from("alaynow_videos")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (videosError) {
+      anyOffline = true;
+      videos = DEFAULT_MOCK_VIDEOS;
+    } else if (videosData) {
+      videos = (videosData as any[]).map((row) => ({
+        ...row,
+        views_count: Number(row.views_count) || 0,
+        ctr_percent: Number(row.ctr_percent) || 0,
+        likes_count: Number(row.likes_count) || 0,
+        comments_count: Number(row.comments_count) || 0,
+        sponsor_fee: Number(row.sponsor_fee) || 0,
+        has_sponsor: Boolean(row.has_sponsor),
+        is_sponsor_paid: Boolean(row.is_sponsor_paid),
+        tags: Array.isArray(row.tags) ? row.tags : [],
+      }));
     }
   } catch (err) {
+    anyOffline = true;
     videos = DEFAULT_MOCK_VIDEOS;
   }
 
   try {
-    const { data: txsData } = await supabase
+    const { data: txsData, error: txsError } = await supabase
       .from("financial_transactions")
       .select("*")
       .order("transaction_date", { ascending: false });
-    if (txsData) {
+    if (txsError) {
+      anyOffline = true;
+    } else if (txsData) {
       transactions = txsData as FinancialTransaction[];
     }
   } catch (err) {
+    anyOffline = true;
     console.warn("Cockpit: usando fallback offline para finanzas");
   }
 
@@ -552,5 +680,6 @@ export async function fetchDailyCockpitSummary(today?: Date, customClient?: any)
     videos,
     transactions,
     today: currentDate,
+    isOffline: anyOffline,
   });
 }

@@ -1,0 +1,23 @@
+# 50: NexoBow Preview Studio HUD 10x + Fix WhatsApp 5493489536088 en 10 Templates
+
+**What to build:** Todo prestador que abre su preview en `https://preview.nexobow.site/{slug}/` ve un entorno interactivo **`NexoBow Preview Studio HUD`** en reemplazo de la píldora pasiva anterior, y su botón de WhatsApp apunta al número oficial de Juanma Merodio (`5493489536088`) en los 10 `templates` (`abogado`, `clinica`, `construccion`, `corporativo`, `deportes`, `dermatologia`, `nutricionista`, `producto`, `propiedades`, `tech`) sin ninguna ocurrencia residual de `"5491100000000"`. El HUD encapsula el marco psicológico 10x: (1) barra/dock discreta con badge `PROTOTIPO CONCEPTUAL · 20%` e indicador real `Reservado 7 días (TTL)`, (2) aviso contextual `"📸 Foto ilustrativa de prototipo — Se reemplaza por fotos reales de tu consultorio y equipo"` sobre imágenes ilustrativas, (3) modal/drawer comparativo `"✨ Preview (20%) vs. Tu Sistema Final (10x)"` contraponiendo el prototipo rápido (subdominio temporal, datos públicos de Maps, fotos ilustrativas) contra el sistema definitivo (dominio `.com.ar`/`.com` con SSL, curaduría de fotos reales, copy afinado, Recepcionista IA 24/7 en WhatsApp que transcribe audios, Protocolo Anti-Silla Vacía 24h/2h con lista de espera y Posicionamiento AEO en ChatGPT y Google Maps), (4) mini-simulador interactivo `"🤖 Probar cómo atiende tu Recepcionista IA"` en voseo argentino (audio/consulta de un paciente → respuesta inmediata → turno automatizado confirmado), y (5) selector de 4 paletas con persistencia en `localStorage("nexobow_theme")`, actualización dinámica del botón de WhatsApp y emisión de `CustomEvent("theme-switched", { detail: { theme } })`. Además, `build-client-site` inyecta automáticamente en los clones compilados de `/sites/{slug}/dist/` el snippet pasivo `< 1 KB` (`0` cookies, Ley 25.326) apuntando a `/api/ping`, manteniendo intacta la regla estricta de `0` etiquetas `<script>` ejecutables en `web/dist/index.html`.
+
+**Blocked by:** None (can start immediately).
+
+**Status:** done
+
+## Seams Under Test (`/tdd`)
+
+- **Seam 1 (`Phone & HUD Markup` en los 10 `templates/*/src/components/ThemeSwitcher.astro`):**
+  - *Qué atrapa:* Ausencia total del placeholder `"5491100000000"` (`0` ocurrencias), presencia consistente de `5493489536088` en HTML y script cliente, renderizado de los elementos del `NexoBow Preview Studio HUD` (`PROTOTIPO CONCEPTUAL · 20%`, `Reservado 7 días (TTL)`, aviso de foto ilustrativa, modal comparativo `20%` vs `10x`, mini-simulador `"🤖 Probar cómo atiende tu Recepcionista IA"`), persistencia en `localStorage("nexobow_theme")` y despacho de `window.dispatchEvent(new CustomEvent("theme-switched", ...))`.
+  - *Qué omite:* Interacción gráfica en navegador real y cálculo de layout CSS.
+- **Seam 2 (`Telemetry Snippet Injection` en `scripts/build-client-site.mjs` & Guardrail `0-JS` en `web/`):**
+  - *Qué atrapa:* Inyección del snippet `< 1 KB` (`getTelemetryClientSnippet` con endpoint `/api/ping`) dentro del HTML compilado de un clon en `/sites/{slug}/dist/`, cumplimiento de 0 cookies / Ley 25.326, y verificación estricta de `0` etiquetas `<script>` ejecutables en `web/dist/index.html` tras `npm --prefix web run build`.
+  - *Qué omite:* Envío de red real hacia Cloudflare Worker.
+
+## Acceptance Criteria
+
+- [x] **[RED]** Ampliar `tests/theme-switcher.test.mjs` y `tests/preview-telemetry.test.mjs` exigiendo `0` ocurrencias de `5491100000000` y presencia de `5493489536088` en los 10 templates, los 5 bloques del `NexoBow Preview Studio HUD`, el despacho de `theme-switched`, y la inyección del snippet `< 1 KB` hacia `/api/ping` en el build del clon sin tocar el 0-JS de `web/`; confirmar que las pruebas fallen antes de implementar.
+- [x] **[GREEN]** Reemplazar `"5491100000000"` por `"5493489536088"` y evolucionar `ThemeSwitcher.astro` a `NexoBow Preview Studio HUD` en los 10 `templates/` (`abogado`, `clinica`, `construccion`, `corporativo`, `deportes`, `dermatologia`, `nutricionista`, `producto`, `propiedades`, `tech`), manteniendo compatibilidad con props y las variables CSS `--color-primary`, `--color-accent`, `--color-paper`/`--color-bg` y `--color-ink`.
+- [x] **[GREEN]** Integrar en `scripts/build-client-site.mjs` y `scripts/preview-telemetry.mjs` la inyección automática del snippet `< 1 KB` hacia `/api/ping` en los clones compilados, dejando intactos `web/dist/index.html` y `/solicitud-enviada/` con `0` `<script>` ejecutables.
+- [x] **[VERIFY]** Ejecutar `node --test tests/theme-switcher.test.mjs tests/preview-telemetry.test.mjs && npm test && npm --prefix web run build` con 0 errores y 0 etiquetas `<script>` ejecutables en `web/dist/index.html`.

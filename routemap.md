@@ -1,8 +1,24 @@
-# 🗺️ NexoBow System — Master RouteMap & Estrategia de Escala ($0 a +$100,000 USD/mes)
+# 🗺️ NexoBow System — Master RouteMap v3.0 & Estrategia de Escala ($0 a +$100,000 USD/mes)
 
-> **Misión Core**: Transformar el tráfico frío y las consultas dispersas de **prestadores** de servicios profesionales y de salud (nutricionistas, psicólogos, abogados, médicos, clínicas) en **consultorías gratuitas agendadas y concretadas** mediante **embudos** "Bow" (su **landing** estática ultra-rápida `<0.8s`, copywriting de alivio Hormozi, posicionamiento AEO y **turno automatizado** por WhatsApp + agenda), operando el 100% del ciclo comercial, técnico y legal con agentes autónomos a costo marginal cercano a cero.
+> **Misión Core**: Devolverle al **prestador** de salud y servicios profesionales **+10 horas libres por semana** y erradicar el **ausentismo ("silla vacía")**, transformando el tráfico disperso de Google Maps, Instagram y WhatsApp en **consultorías agendadas y concretadas** mediante **embudos** "Bow" (su **landing** estática ultra-rápida `<0.8s`, posicionamiento AEO en ChatGPT/Maps y **turno automatizado** 24/7 con confirmación anti-ausentismo).
 >
-> **Visión**: Convertir a **NexoBow Systems** ([Making AI NexoBow Business](https://gemini.google.com/notebook/217f92c4-b853-48b8-846f-9f77e0d897f0)) en una fábrica autónoma B2B 24/7 centralizada en un VPS con **Hermes Agent**, **n8n** y segundo cerebro en **Obsidian**, capaz de prospectar, auditar AEO, compilar **clones** personalizados en vivo, gestionar **turnos automatizados** multicanal y escalar la facturación recurrente de **$0 a +$100,000 USD/mes** combinando volumen Low-Ticket con expansión Mid/High-Ticket y productos digitales.
+> **Visión**: Convertir a **NexoBow Systems** en una fábrica autónoma B2B operando sobre un sistema operativo agéntico de 5 capas (**Obsidian** + **Hermes Agent** + **Treg.to** + **Jev** + **n8n 2.0**) activado estrictamente por **Gates de Facturación** (cero gasto fijo antes de validar caja real), para escalar de **$0 a +$100,000 USD/mes** combinando volumen Low/Mid-Ticket, retención High-Ticket en clínicas e infoproductos digitales.
+
+---
+
+## 🎯 El Factor Diferencial Real: Por Qué Nos Eligen ("Salvarles la Vida")
+
+Ningún odontólogo, médico estético, nutricionista o abogado se despierta deseando comprar *"una landing en Astro SSG"*. Su verdadero infierno diario tiene tres caras concretas que destruyen su rentabilidad y su paz mental:
+
+| Infierno Actual del Prestador | Pérdida Real Hoy | Mecanismo NexoBow (**"Anti-Silla Vacía & Cero-Secretaria"**) | Resultado Cuantificable |
+| :--- | :--- | :--- | :--- |
+| **1. Esclavitud del WhatsApp a las 22 hs** | Responde manualmente 40 mensajes/audios por día tipo *"hola, precio"* y pierde pacientes frente al que contesta en <2 min. | **Landing Filtro `<0.8s` + Recepcionista IA Multimodal (n8n + Redis + Postgres)** que transcribe audios de pacientes, responde dudas frecuentes y agenda en el acto 24/7. | **+10 horas libres por semana** y respuesta inmediata en <15 segundos. |
+| **2. El Lucro Cesante de la "Silla Vacía"** | Entre un **20% y 35%** de los pacientes que reservan faltan sin avisar, dejando un hueco imposible de llenar (`$100.000 – $300.000 ARS/semana` perdidos). | **Protocolo Anti-Ausentismo Activo**: recordatorios interactivos 24h y 2h antes (`[Confirmar / Reprogramar]`). Si cancela, el sistema ofrece el hueco automáticamente a la lista de espera. | **Reducción drástica del ausentismo** y agenda cubierta sin secretarias extra. |
+| **3. Invisibilidad frente a la Competencia en Maps e IA** | Tiene 0 web o una web lenta de WordPress que ni Google ni ChatGPT saben leer; depende 100% del boca en boca o del algoritmo de Instagram. | **Motor de Reseñas 5★ en Maps + Posicionamiento AEO** (`/llms.txt` + JSON-LD médico/legal) para que ChatGPT, Perplexity y Gemini lo recomienden primero en su zona. | Flujo predecible de **consultorías concretadas** de alto valor sin depender de subir Reels todos los días. |
+
+> **Tesis Central de Posicionamiento:** NexoBow no vende "diseño web". Vende **tiempo de vida recuperado y facturación salvada**. Con evitar apenas 2 sillas vacías al mes, el sistema se paga solo varias veces.
+
+---
 
 ## 📖 Ontología y Reglas del Lenguaje Oficial (`GLOSSARY.md`)
 
@@ -10,253 +26,315 @@ Toda comunicación humana, prompt de agente, **ficha de cliente** y script del r
 
 | Término Oficial | Definición Operativa en NexoBow | Términos Prohibidos (_Avoid_) |
 | :--- | :--- | :--- |
-| **Prestador** | Profesional de la salud o servicios que contrata NexoBow (rubro inicial: nutricionista). | Cliente (ambiguo con paciente), usuario |
+| **Prestador** | Profesional de la salud o servicios que contrata NexoBow (nutricionista, odontólogo, médico estético, abogado, clínica). | Cliente (ambiguo con paciente), usuario |
 | **Paciente** | Persona que consulta al **prestador** y reserva un turno. | Cliente, lead (salvo antes de reservar) |
-| **Turno automatizado** | Reserva de una **consultoría gratuita** que el **paciente** concreta por WhatsApp y queda en la agenda sin intervención del **prestador**. Único turno que agenda NexoBow. | Cita, reserva manual |
-| **Consultoría gratuita** | Llamada del **prestador** con un **paciente**, agendada como gratuita, donde el **prestador** vende su servicio pago. | Demo, reunión |
-| **Upsell del prestador** | Paso de la **consultoría gratuita** a la consulta personalizada paga (resuelto por el **prestador**, no por NexoBow). | Conversión (ambiguo) |
+| **Turno automatizado** | Reserva de una **consultoría** que el **paciente** concreta por WhatsApp/agenda sin intervención manual del **prestador**. | Cita, reserva manual |
+| **Consultoría** | Llamada o entrevista inicial del **prestador** con un **paciente** (puede configurarse como `gratuita`, `arancelada` o `consultar` según `tipo_consulta` en la ficha). | Demo, reunión |
+| **Upsell del prestador** | Paso de la **consultoría** inicial al tratamiento o servicio completo pago (resuelto por el **prestador**, no por NexoBow). | Conversión (ambiguo) |
 | **Setup** | Cobro único por implementar el **embudo** completo a un **prestador**. | Instalación, pago único |
-| **Abono** | Cobro mensual recurrente por mantener y operar el sistema (el primer mes es de prueba y no se paga en el Tier Base). | Mensualidad, fee, suscripción |
+| **Abono** | Cobro mensual recurrente por mantener y operar el sistema de **turno automatizado** IA (Tier 2 / Tier 3). | Mensualidad, fee, suscripción |
 | **Caso de éxito** | Resultado comprobable de un **prestador**, publicado en la web de NexoBow o en su **landing**. | Testimonio |
-| **Embudo** | Recorrido completo que lleva al **paciente** desde Google Maps, WhatsApp o Instagram hasta una **consultoría gratuita** agendada. Es lo que vende NexoBow. | Sistema de turnos, bot, Calendly |
-| **Landing** | Página propia del **prestador**, núcleo del **embudo**, con sus **casos de éxito**, reseñas e información de confianza. Su botón principal lleva a agendar. | Sitio web, embed |
-| **Consultoría agendada / concretada** | Métrica reina del **embudo**: **consultorías gratuitas** reservadas por mes y cuántas de ellas se realizaron efectivamente. | Lead, conversión |
-| **Ficha de cliente** | Archivo Markdown (`N-rubro-nombre.md`) con datos, branding, contenido y estado de un **prestador**. Única fuente de verdad para generar su **landing**. | `client.json`, perfil |
-| **Template** | Proyecto Astro base por rubro/arquetipo que se clona para cada **prestador**. | Plantilla, theme |
+| **Embudo** | Recorrido completo que lleva al **paciente** desde Google Maps, WhatsApp o Instagram hasta una **consultoría agendada**. Es lo que vende NexoBow. | Sistema de turnos, bot, Calendly |
+| **Landing** | Página propia del **prestador**, núcleo del **embudo**, con sus **casos de éxito**, reseñas e información de confianza. | Sitio web, embed |
+| **Consultoría agendada / concretada** | Métrica reina del **embudo**: **consultorías** reservadas por mes y cuántas de ellas se realizaron efectivamente (control de silla vacía). | Lead, conversión |
+| **Ficha de cliente** | Archivo Markdown (`{id}-{nombre}-{apellido}-{rubro}.md`) con datos, branding, contenido y estado de un **prestador**. Única fuente de verdad para generar su **landing**. | `client.json`, perfil |
+| **Template** | Proyecto Astro base por rubro/arquetipo duplicado vía REA que se clona para cada **prestador**. | Plantilla, theme |
 | **Clon** | Copia del **template** adaptada automáticamente con la **ficha de cliente** de un **prestador**. Se genera, no se edita a mano. | Fork, sitio |
-
-## 💰 Tesis Económica: Por Qué $150 Setup + $10 Abono No Escala a $100k/mes (Y Cómo Destrabarlo)
-
-### 1. Retrospectiva Crítica de Falencias del Modelo Original
-Un análisis riguroso de arquitectura empresarial y unit economics reveló **5 falencias estructurales** en el diseño original del negocio que bloqueaban la escala a $100k/mes:
-1. **El Abono Parásito de $10 USD/mes (Fricción vs Retorno Negativo):**
-   * Cobrar $10 USD/mes genera un costo fijo de procesamiento (~$0.30 USD + 3.5% por pasarela), alto riesgo de rechazos bancarios en tarjetas locales/internacionales y fricción administrativa.
-   * **Costo de Soporte Desproporcionado:** El cliente que paga $10/mes consume exactamente la misma atención, dudas y soporte por WhatsApp que uno que paga $300/mes. Destruye el margen operativo del fundador.
-   * **Corrección:** Se erradica el abono de $10/mes. **Tier 1 (NexoBow Starter)** se comercializa a **$189 – $249 USD de Setup único** (o **$189.999 ARS**) con **1 año de hosting en Cloudflare Pages incluido** (donde el costo marginal para NexoBow es $0). Opcionalmente incluye 30 días bonificados del sistema de turnos Tier 2, pasando luego a **$197 USD/mes** o quedando en versión estática.
-2. **La Trampa de Baneos en WhatsApp (Evolution API vs WABA Oficial):**
-   * Usar scrapers o librerías no oficiales (Baileys/Evolution API) para la operación clínica garantiza el baneo definitivo del número del consultorio ante 3 quejas de pacientes.
-   * **Corrección:** Para producción en Tier 2 y Tier 3, se implementa exclusivamente la **Meta Cloud API Oficial con WABA y Embedded Signup** en Chatwoot/n8n.
-3. **Sobrecarga de Infraestructura Monolítica (Chatwoot en el mismo VPS):**
-   * Chatwoot (Ruby on Rails + Sidekiq) consume 2–3 GB de RAM y puede provocar caídas por falta de memoria (OOM) en el VPS de automatización.
-   * **Corrección:** Chatwoot se desacopla (usando Chatwoot Cloud $19/mo o una instancia satélite ligera), reservando el VPS central para n8n, Postgres, Redis y Hermes Agent.
-4. **Ceguera de Nicho de Bajo Ticket:**
-   * Prospectar nutricionistas independientes individuales genera resistencia al precio. 
-   * **Corrección:** Priorizar nichos médicos y legales de alto margen por cliente: **Dermatología, Cirugía Plástica, Odontología Implantológica, Kinesiología de Alto Rendimiento y Estudios Jurídicos Corporativos**. Un solo paciente/caso paga todo un año del sistema.
-5. **Gobernanza y Sandboxing Ausente en Agentes:**
-   * Ejecutar Hermes Agent con acceso root o montando `/var/run/docker.sock` genera riesgo de elevación de privilegios y command injection.
-   * **Corrección:** Confinamiento estricto en Docker (`cap_drop: [ALL]`, `read_only: true`, sin socket docker) y perímetro cerrado con **Tailscale Mesh VPN + Cloudflare Tunnels + CrowdSec**.
 
 ---
 
-### 2. La Nueva Escalera de Valor NexoBow (Value Ladder Optimizada)
+## 💰 Tesis Económica & Escalera de Valor (Alineada a `web/src/config.ts`)
+
+### 1. Retrospectiva Crítica de Falencias Ya Corregidas
+1. **Erradicación del Abono Parásito de $10 USD/mes:** Un abono micro de $10/mes genera comisiones altas de pasarela y exactamente el mismo soporte por WhatsApp que un cliente de $250/mes. **Solución vigente:** Tier 1 cobra un **Setup único (`$189.999 ARS` / `$189–$249 USD`) con `$0 ARS/mes` por 1 año de hosting en Cloudflare Pages** (costo marginal $0). El **abono** mensual nace recién en **Tier 2** cuando opera la Recepcionista IA y la infraestructura VPS.
+2. **Prohibición de WhatsApp No Oficial en Producción:** Baileys / Evolution API en producción clínica arriesga el baneo del número del consultorio. En Fase 1 se contacta de forma semi-asistida (humana desde `/admin/crm`) y en Tier 2/3 productivo se opera exclusivamente sobre **Meta Cloud API Oficial (WABA + Embedded Signup)**.
+3. **Desacople de RAM en VPS:** Chatwoot (Rails + Sidekiq) consume 2–3 GB de RAM; se mantiene desacoplado (Chatwoot Cloud o instancia satélite) para blindar el VPS de n8n + Postgres + Redis + Hermes.
+4. **Prioridad de Nichos de Alto Margen:** Priorizar **Odontología Implantológica, Medicina Estética/Dermatología, Cirugía, Kinesiología y Estudios Jurídicos** junto con nutrición de alto ticket. Un solo tratamiento recupera el año completo del sistema.
+5. **Gobernanza & Sandboxing Zero-Trust:** Hermes corre sin root ni acceso a `/var/run/docker.sock` (`cap_drop: [ALL]`, `read_only: true`), detrás de **Tailscale Mesh VPN + Cloudflare Tunnels + CrowdSec**.
+
+### 2. La Escalera de Valor Oficial NexoBow (Value Ladder)
 
 | Nivel de Oferta | Nombre del Sistema | Qué Incluye el Embudo Entregado | Setup (Único) | Abono (Mensual) | Rol en la Escala a $100k/mes |
 | :--- | :--- | :--- | :---: | :---: | :--- |
-| **Tier 0 (Gancho Gratuito)** | **Preview + Auditoría AEO & Maps** | **Clon** vivo 7 días (`preview.nexobow.site`) + Theme Switcher (4 paletas) + Diagnóstico AEO (`isitagentready.com`) y Google Maps. | **$0 USD** | **$0 USD** | Rompehielos de respuesta masiva en frío ($0 presupuesto); demuestra el trabajo terminado antes de pedir un centavo. |
-| **Tier 1 (Liquidez & Entrada)** | **NexoBow Starter (Landing de Prestigio)** | **Clon** Astro SSG `<0.8s` en dominio propio + Copy Hormozi + Botón directo a Calendly/WhatsApp + Hosting Cloudflare (1 año incluido). | **$189 – $249 USD** *(o $189.999 ARS)* | **$0 USD/mes** *(1 año de hosting incl.)* | **Caja inmediata de $0 a $5k/mes** sin soporte parásito. Cubre infraestructura y valida nichos rápidamente. |
-| **Tier 2 (Core Recurrente)** | **NexoBow Autonomous (Turno Automatizado)** | Todo Tier 1 + **Recepcionista IA 24/7 en WhatsApp** (Meta Cloud API + n8n + Postgres/Redis) + Agendamiento automático + Recordatorios anti-ausentismo + Automatización de reseñas Maps. | **$500 – $950 USD** | **$197 – $297 USD/mes** | **Motor principal de MRR.** 1 a 2 pacientes recuperados pagan el abono anual del prestador. |
-| **Tier 3 (High-Ticket Clínicas)** | **NexoBow Growth Partner (Centros Médicos)** | Todo Tier 2 multi-profesional + Posicionamiento AEO médico (`llms.txt`, Schema JSON-LD) + Creativos/Ads IA (Claude + Higgsfield) + Reactivación de pacientes inactivos. | **$1,500 – $3,000 USD** | **$500 – $1,000 USD/mes** | Escala en clínicas privadas de alto ticket y arbitraje internacional (España, USA Hispano, México, Chile). |
-| **Tier 4 (Escala 1-a-Muchos)** | **NexoBow Digital Assets / Kit Self-Serve** | Infoproducto auto-entregable (*"Kit de Agenda Llena & IA para Salud"*) + plantillas de WhatsApp para el **upsell del prestador**, vendido con Meta Ads 24/7. | **$47 – $97 USD** | **$29 USD/mes** *(Comunidad)* | Monetización pasiva de leads no calificados para High-Ticket; escala sin techo operativo en Fase 4. |
+| **Tier 0 (Gancho Gratuito)** | **Preview Studio 10x + Auditoría Maps/AEO** | **Clon** vivo 7 días (`preview.nexobow.site/{slug}/`) con **Preview Studio HUD** (selector de 4 paletas, comparador *20% vs. 10x*, simulador de Turno IA) + diagnóstico Maps/AEO. | **$0** | **$0** | Rompehielos de altísima respuesta: muestra el trabajo funcionando antes de pedir un peso. |
+| **Tier 1 (Liquidez & Entrada)** | **NexoBow Starter (Landing de Prestigio)** | **Clon** Astro SSG `<0.8s` en dominio propio + Copy Hormozi + WhatsApp/Agenda + Hosting Cloudflare (1 año incluido) + **30 días de prueba del Turno IA**. | **$189.999 ARS** *(o $189–$249 USD)* | **$0 ARS/mes** *(Año 1 incluido)* | **Caja rápida ($0 → $5k/mes)** sin soporte parásito. Valida la oferta y financia el VPS. |
+| **Tier 2 (Core Recurrente)** | **NexoBow Autonomous (Anti-Silla Vacía IA)** | Todo Tier 1 + **Recepcionista IA 24/7 en WhatsApp** (audios + texto, Meta Cloud API + n8n + Redis + Postgres) + Confirmaciones anti-ausentismo + Reseñas 5★ en Maps. | **$549.999 ARS** *(o $500–$950 USD)* | **$229.999 ARS/mes** *(o $197–$297 USD/m)* | **Motor principal de MRR.** Evitar 2 sillas vacías al mes paga todo el abono. |
+| **Tier 3 (High-Ticket Clínicas)** | **NexoBow Growth Partner (+ AfterBow)** | Todo Tier 2 multi-profesional + Posicionamiento AEO completo (`llms.txt`, JSON-LD) + **Producción Audiovisual (AfterBow)** + Reactivación de pacientes inactivos. | **$1,500 – $3,000 USD** *(o plan a medida)* | **$500 – $1,000 USD/mes** | Escala en centros médicos, clínicas privadas y arbitraje internacional (ES/USA/MX/CL). |
+| **Tier 4 (Escala 1-a-Muchos)** | **NexoBow Digital Assets / Kit Self-Serve** | Infoproducto auto-entregable (*"Kit Agenda Llena & Anti-Silla Vacía"*) + plantillas de WhatsApp para el **upsell del prestador**, escalado con Meta Ads. | **$47 – $97 USD** | **$29 USD/mes** *(Comunidad)* | Monetización pasiva de profesionales que no califican para High-Ticket (Fase 4). |
+
+### 3. Ecuación Matemática hacia +$100,000 USD/mes (Mix Objetivo en Fase 4)
+
+| Línea de Ingreso | Volumen Objetivo | Ticket Promedio | Facturación Mensual (USD) | Margen Neto Estimado |
+| :--- | :--- | :--- | :---: | :---: |
+| **1. Setups Tier 1 (Starter)** | 25 nuevos **setups**/mes (flujo continuo de entrada) | $200 Setup único | **$5,000 USD** | ~98% |
+| **2. Motor Recurrente Tier 2 (Autonomous)** | 200 **prestadores** en **abono** + 20 nuevos **setups**/mes | $250 Abono / $650 Setup | **$63,000 USD** | ~92% |
+| **3. Clínicas Tier 3 (Growth Partner)** | 35 clínicas en **abono** + 6 nuevos **setups**/mes | $700 Abono / $2,000 Setup | **$36,500 USD** | ~88% |
+| **4. Activos Digitales Tier 4 (Kit IA)** | 180 ventas/mes (Meta Ads automatizados) | $67 USD promedio | **$12,060 USD** | ~65% (post-Ads) |
+| **TOTAL CONSOLIDADO NEXOBOW** | **235 Prestadores en Abono + Setups + Digital** | **Mix Híbrido B2B** | **$116,560 USD / mes** | **~88% (~$102k netos)** |
 
 ---
 
-### 3. Ecuación Matemática Recalculada hacia los +$100,000 USD/mes (Mix Óptimo en Fase 4)
+## ✨ Arquitectura de Conversión de Previews: "Efecto 10x" (`NexoBow Preview Studio HUD`)
 
-| Línea de Ingreso | Volumen Mensual Activo / Nuevo | Ticket Promedio | Facturación Mensual (USD) | Margen Neto Estimado |
-| :--- | :--- | :--- | :---: | :---: |
-| **1. Setups Tier 1 (Starter)** | 25 nuevos **setups**/mes (flujo de entrada continuo) | $200 Setup único | **$5,000 USD** | ~98% |
-| **2. Motor Recurrente Tier 2 (Autonomous)** | 200 **prestadores** en **abono** + 20 nuevos **setups**/mes | $250 Abono / $650 Setup | **$63,000 USD** | ~92% |
-| **3. Cuentas Clínicas Tier 3 (Growth Partner)** | 35 clínicas en **abono** + 6 nuevos **setups**/mes | $700 Abono / $2,000 Setup | **$36,500 USD** | ~88% |
-| **4. Activos Digitales Tier 4 (Kit IA)** | 180 ventas/mes (tráfico pago automatizado) | $67 USD promedio | **$12,060 USD** | ~65% (post-Ads) |
-| **TOTAL CONSOLIDADO NEXOBOW** | **235 Prestadores en Abono + Clientes de Setup + Digital** | **Mix Híbrido B2B** | **$116,560 USD / mes** | **~88% (~$102k netos)** |
+### Diagnóstico del Problema Actual
+Cuando hoy un **prestador** abre `https://preview.nexobow.site/{slug}/`, corre dos riesgos mortales de conversión:
+1. **Cree que la preview es la web final:** Si ve fotos ilustrativas del rubro, copy generado automáticamente o secciones genéricas sin sus datos internos, asume *"eso es todo lo que entregan"* y no percibe el salto de calidad de contratar el sistema completo.
+2. **Bug Crítico Detectado en Código (2026-11-17):** En los 10 `templates/*/src/components/ThemeSwitcher.astro` sigue hardcodeado el teléfono placeholder `"5491100000000"` dentro de `JUANMA_PHONE` (y en 5 templates también en `juanmaWaPhone`), en lugar del número oficial de Juanma (`5493489536088` de `web/src/config.ts`). **Debe corregirse antes de enviar las 29 previews.**
 
-## 🧠 Arquitectura del Cerebro NexoBow (Síntesis de "Making AI NexoBow Business")
+### Solución: Evolución a `NexoBow Preview Studio HUD`
+Reemplazar la píldora pasiva de `ThemeSwitcher.astro` por un **HUD interactivo de prototipo** que encapsule el marco psicológico correcto (*"Estás viendo solo un boceto del 20% armado en minutos con tus datos públicos; mirá cómo queda tu Sistema Final 10x"*):
 
-El ecosistema técnico deja de ser un conjunto de scripts aislados en una laptop para convertirse en un **Sistema Operativo Agéntico de 4 Pilares** ejecutado en un VPS Linux 24/7 ($5–$12 USD/mes en Hostinger/Hetzner):
+1. **Barra/Dock Superior Discreta + Badge de Estado (`PROTOTIPO CONCEPTUAL · 20%`)**:
+   - Indica al **prestador** que la demo está reservada por **7 días** (TTL real), que las fotos y secciones son referenciales y que se personaliza con su material real tras la activación.
+2. **Badges en Imágenes de Referencia**:
+   - Etiqueta sutil en fotos del **template**: `"📸 Foto ilustrativa de prototipo — Se reemplaza por fotos reales de tu consultorio y equipo"`.
+3. **Modal / Drawer Comparativo `"✨ Preview (20%) vs. Tu Sistema Final (10x)"`**:
+   - Comparación visual lado a lado de lo que cambia cuando contrata:
+     - **Hoy (Preview 20%):** Subdominio temporal `preview.nexobow.site`, datos públicos de Maps, fotos ilustrativas, botón de agenda demo.
+     - **Web Final (Sistema 10x):** Dominio propio (`.com.ar` / `.com`) + SSL, sesión/curaduría de fotos reales del consultorio, copy afinado tras llamada de 15 min, **Recepcionista IA 24/7 en WhatsApp** (transcribe audios y agenda sola), **confirmación anti-silla vacía** y **posicionamiento AEO en ChatGPT & Google Maps**.
+4. **Mini-Simulador Interactivo de Turno IA en Vivo**:
+   - Botón dentro del HUD (`"🤖 Probar cómo atiende tu Recepcionista IA"`) que abre una micro-simulación de chat donde el profesional ve en 10 segundos cómo un paciente manda un audio preguntando por obra social/arancel y el sistema le responde en voseo humano y cierra el horario en la agenda.
+5. **Selector de 4 Paletas en Vivo + CTA Real a `5493489536088`**:
+   - Conserva las 4 paletas instantáneas con `localStorage`, pero corrige de raíz el teléfono hacia `5493489536088` y dispara el evento `theme-switched` hacia `preview-telemetry` para alertar a Juanma en tiempo real.
+
+---
+
+## 📲 Estrategia Omnicanal de Adquisición y Alertas: WhatsApp + Zoho Mail + Sensor `/api/ping` ($0)
+
+No elegimos "WhatsApp o Email" como dogma excluyente: cada canal cumple la función matemática donde es imbatible en Argentina/LATAM sobre lotes de **10 links de Google Maps**.
+
+| Dimensión | WhatsApp (Canal #1 de Venta y Cierre) | Zoho Mail (Email Outbound B2B) | Sensor `/api/ping` + Resend ($0) |
+| :--- | :--- | :--- | :--- |
+| **Rol Estratégico** | **Primer contacto y cierre humano.** Apertura >80% en profesionales locales. | **Respaldo ejecutivo B2B al prestador** cuando tiene email público en su web o perfil. | **Sensor Hot-Lead en Tiempo Real** (< 1 KB, 0 cookies, Ley 25.326). |
+| **¿Se automatiza en frío desde el Día 1?** | **NO (Prohibido).** Enviar links masivos desde WhatsApp no oficial garantiza baneo del chip. | **SÍ (Controlado por lote).** Correo personalizado desde Zoho (`ZOHO_SMTP_*`) con diagnóstico de Maps y preview 10x. | **SÍ (Pasivo en el clon).** Registra aperturas y cambios de paleta en Supabase y alerta a Juanma. |
+| **Cómo opera en Fase 1 (Gate 0)** | Tras procesar un lote de **10 links de Maps**, queda listo en consola y `/admin/crm` el mensaje en voseo + guion de audio 35s para enviar manualmente en 1 clic. | Si el scraper extrae email válido de la web/bio, Zoho Mail envía un correo ejecutivo con el link `preview.nexobow.site/{slug}/` y la ecuación Anti-Silla Vacía. | Conectado a `preview-telemetry.mjs` (`/api/ping` en Cloudflare Worker): al abrir la preview o probar una paleta, actualiza el CRM con `🔥 Hot-Lead` y alerta al instante. |
+| **Uso Secundario con Clientes** | En **Fase 2 (Gate 1)** pasa a **Meta Cloud API Oficial (WABA)** para atender pacientes 24/7 con 0% riesgo de baneo. | Respuestas ejecutivas a estudios jurídicos/clínicas y coordinación formal de propuestas. | Avisos TTL (<48hs) y trazabilidad de interés real antes del seguimiento humano. |
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Juanma
+    participant Intake as Lote 10 Links Maps
+    participant Zoho as Zoho Mail Outbound
+    participant CRM as /admin/crm (Supabase)
+    participant Prestador as Prestador (Mail / WA / Web)
+    participant CF as Cloudflare Worker (/api/ping)
+
+    Juanma->>Intake: Pega 10 links de Google Maps
+    Intake->>Intake: Califica, extrae email/web (Cubeta A/B), WA y reseñas
+    Intake->>Zoho: Envía email B2B con diagnóstico + Preview 10x (si tiene mail)
+    Intake->>CRM: Sincroniza fichas + estado Zoho + mensaje WA & audio 35s listos
+    Juanma->>Prestador: Dispara WhatsApp + Audio 35s desde /admin/crm en 1 clic
+    Prestador->>CF: Abre https://preview.nexobow.site/{slug}/
+    CF->>CRM: Actualiza telemetry (🔥 Hot-Lead) + alerta email instantánea a Juanma
+    Juanma->>Prestador: Seguimiento quirúrgico en caliente ("Vi que estuviste probando los colores...")
+```
+
+---
+
+## 🧠 Arquitectura del Sistema Operativo Agéntico (5 Capas) & Radar GitHub
+
+El ecosistema NexoBow evoluciona de scripts locales hacia una fábrica modular ejecutada 24/7 en VPS Linux ($6–$12 USD/mes en Hetzner), **activando cada capa únicamente cuando el Gate de Facturación lo justifica**:
 
 ```mermaid
 flowchart TB
-    subgraph Cerebro ["🧠 CEREBRO & MEMORIA INFINITA (Obsidian + Git)"]
-        Raw["📁 /raw (Inmutable)<br/>Fichas de cliente, transcripciones, leyes"]
-        Wiki["📚 /wiki (Grafo Activo)<br/>index.md, SOPs, precios vigentes, casos de éxito"]
-        Diario["🗓️ /diario (Logs)<br/>Reportes matutinos, auditorías y métricas"]
-        Privado["🔒 /privado (Local Sync)<br/>Finanzas, API keys, contratos"]
+    subgraph Capa1 ["1. MEMORIA INFINITA (Obsidian + Git + Syncthing)"]
+        Raw["📁 /raw (Solo Lectura)<br/>Fichas /clients/*.md, GLOSSARY.md, Ley 25.326"]
+        Wiki["📚 /wiki (Grafo Activo)<br/>index.md, SOPs, precios vigentes, /radar-github/"]
+        Diario["🗓️ /diario (Logs 07:30 AM)<br/>Auditorías matutinas, TTLs <48h y KPIs"]
+        Privado["🔒 /privado (.stignore)<br/>Credenciales, contratos y finanzas"]
     end
 
-    subgraph Arnes ["⚡ ARNÉS ORQUESTADOR 24/7 (Hermes Agent + Claude Code)"]
-        Hermes["🤖 Hermes Agent Runtime (VPS)<br/>SOUL.md + AGENTS.md + Self-Improving Skills"]
-        ClaudeCode["🛠️ Claude Code + n8n Programmer<br/>Arquitecto de código, AEO y generador de workflows"]
+    subgraph Capa2 ["2. ARNÉS ÚNICO 24/7 (Hermes Agent en VPS — Sin OpenClaw duplicado)"]
+        Hermes["🤖 Hermes Agent (Docker aislado, sin docker.sock)<br/>Crons en lenguaje natural + Bot Telegram de Juanma + Self-Improving Skills"]
     end
 
-    subgraph Ejecucion ["⚙️ FÁBRICA DE EMBUDOS & RECEPCIÓN IA"]
-        AstroSSG["🚀 Motor Astro SSG + REA Templates<br/>Clones <0.8s + Theme Switcher + AEO Ready"]
-        N8NEngine["🔄 n8n 2.0 + Postgres + Redis<br/>Agente Recepcionista Multi-mensaje + Recordatorios"]
-        ChatwootCRM["💬 Chatwoot + WhatsApp API / Evolution<br/>CRM Omnicanal para Prestadores"]
+    subgraph Capa3 ["3. TOOL GATEWAY (Treg.to / superdesigndev/treg)"]
+        Treg["🔌 Treg Gateway & Credential Proxy<br/>1 solo endpoint/token para Maps, Serper, Resend, SEO y Scraping<br/>(Evita quemar 25k tokens de MCPs y protege API Keys)"]
     end
 
-    Cerebro <-->|Lectura de index.md y escritura de Wiki| Arnes
-    Arnes -->|Compila y audita con Playwright| AstroSSG
-    Arnes -->|Crea y repara workflows vía API/MCP| N8NEngine
-    N8NEngine <-->|Turnos automatizados 24/7| ChatwootCRM
+    subgraph Capa4 ["4. DECISIONES SYSTEM-1 (Jev / jevtypesafeai.com)"]
+        Jev["⚡ Jev Typed Decision Layer (<50ms)<br/>Choice / Score / Noul JSON<br/>1) Filtra leads High-Ticket en scouting<br/>2) Clasifica intención en WhatsApp antes del LLM"]
+    end
+
+    subgraph Capa5 ["5. FÁBRICA & RECEPCIÓN EN PRODUCCIÓN"]
+        AstroSSG["🚀 Astro SSG + REA Templates + Preview HUD 10x<br/>Cloudflare Pages + /api/ping + Resend"]
+        N8N["🔄 n8n 2.0 + Postgres 16 + Redis 7 (data-tier aislada)<br/>Recepcionista IA Multimodal + Anti-Silla Vacía + Reseñas 5★"]
+        WABA["💬 Meta Cloud API Oficial (WABA) + Chatwoot Satélite"]
+    end
+
+    Capa1 <--> Capa2
+    Capa2 --> Capa3
+    Capa2 --> Capa4
+    Capa3 --> AstroSSG
+    Capa4 --> N8N
+    AstroSSG --> WABA
+    N8N <--> WABA
 ```
 
-### Pilar 1: Arnés de Agentes 24/7 (`Hermes Agent` + `Claude Code`)
-Siguiendo la arquitectura de [HERMES 2026: Curso Completo](https://www.youtube.com/watch?v=FQZGoSwdS_0) y [Así Se Usa Hermes Agent a Nivel Profesional](https://www.youtube.com/watch?v=4qTj2dyDPpI), el modelo LLM es un commodity; la ventaja competitiva real de NexoBow es el **arnés (harness)**:
-* **División del Trabajo (Arquitecto vs. Operador 24/7):** **Claude Code** actúa en sesiones de ingeniería profunda (creación de **templates** REA, auditorías AEO y programación automática de flujos n8n mediante `n8n-mcp` y `n8n-skills` según [Claude Code Crea Automatizaciones](https://www.youtube.com/watch?v=Ivn4rX2wfxk)), mientras que **Hermes Agent** vive encendido 24/7 en el VPS ejecutando **crons** en lenguaje natural, atendiendo a Juanma por Telegram (texto y notas de voz) y coordinando subagentes por perfil (`perfil-scouting`, `perfil-build`, `perfil-ventas`, `perfil-soporte`) ([Fuente Hermes Desde Cero](https://www.youtube.com/watch?v=I9BnhFTudBY)).
-* **Self-Improving Loop & Skills (`<200 líneas` en `AGENTS.md`):** Cada vez que un agente resuelve un bug de compilación o descubre una objeción nueva de un **prestador**, actualiza sus propios procedimientos operativos estándar (SOPs digitales) respaldados con rollback automático en GitHub.
-* **Enrutamiento Inteligente de Costos:** Uso de suscripción fija / modelos económicos vía OpenRouter para tareas programadas y clasificación rápida ([Fuente OpenAI DevDay](https://www.youtube.com/watch?v=2v-_ustjm6k)), reservando los modelos frontier para estrategia, copywriting Hormozi y generación de arquitectura.
+### ¿Para Qué Sirve Cada Herramienta y Cómo Encajan Sin Estorbarse?
 
-### Pilar 2: Memoria Infinita sin Alucinaciones (`Obsidian` + Método Karpathy)
-Como establecen [Hermes Agent + Obsidian Puede Cambiar TODO](https://www.youtube.com/watch?v=FAfMhbVU9g0) y [Claude Code + Obsidian = Memoria Infinita](https://www.youtube.com/watch?v=p5YgvC6yzCs), la memoria nativa de un agente (~2.200 caracteres) produce amnesia operativa al escalar a cientos de **prestadores**. NexoBow implementa una bóveda de texto plano Markdown sincronizada vía **Syncthing** entre el VPS y el equipo local:
-1. **`/raw/` (Fuente de Verdad Inmutable):** Contiene las **fichas de cliente** originales (`N-rubro-nombre.md`), el `GLOSSARY.md` y normativas (Ley 25.326). Los agentes tienen permiso de **solo lectura**; jamás pueden sobrescribir ni alucinar sobre `/raw/`.
-2. **`/wiki/` (Grafo de Conocimiento Vivo):** Mantenida automáticamente por el agente principal a partir de `index.md`. Conecta con enlaces bidireccionales `[[prestador]]`, `[[rubro]]`, `[[template]]`, precios vigentes de **setup** y **abono**, y **casos de éxito** por zona. Evita que un agente cotice precios viejos o invente datos no verificados.
-3. **`/diario/` (Auditoría Matutina Automatizada):** Todos los días a las 07:30 AM, una rutina de Hermes audita la bóveda buscando contradicciones, **clones** próximos a vencer (TTL días 5–6), **fichas de cliente** sin seguimiento hace >72h o enlaces rotos, enviando el parte ejecutivo al Telegram de Juanma.
-4. **`/privado/` (Excluido en `.stignore`):** Credenciales maestras, márgenes financieros y contratos sensibles que nunca viajan a APIs externas.
+1. **Obsidian (Segundo Cerebro en Markdown):** Resuelve la amnesia de los agentes. `/raw/` guarda las **fichas de cliente** inmutables (solo lectura para la IA); `/wiki/` conecta precios vigentes, objeciones reales, templates y análisis del Radar GitHub con `[[wikilinks]]`; `/diario/` registra el parte diario de las 07:30 AM. Sincronizado entre tu PC y el VPS con Syncthing.
+2. **Hermes Agent vs. OpenClaw (Regla Anti-Duplicación):** **Hermes Agent** y **OpenClaw** cumplen exactamente el mismo rol arquitectónico: son arneses/gateways de agentes 24/7 conectados a chat (Telegram/WhatsApp), crons y skills. Correr ambos en el mismo VPS duplicaría consumo de RAM, rompería la fuente única de verdad en Obsidian y generaría conflictos de estado. **Decisión:** **Hermes Agent** es el único arnés oficial 24/7 en el VPS (por su arquitectura de memoria/skills y confinamiento Docker), mientras que `openclaw/openclaw` queda en el **Radar GitHub** como fuente de patrones de skills e integraciones para importar selectivamente vía REA.
+3. **Treg.to (`superdesigndev/treg` — Tool Gateway & Credential Proxy):** Es el *"OpenRouter para herramientas de agentes"*. En lugar de enchufar 15 servidores MCP dentro del prompt (que queman 20.000+ tokens por turno antes de pensar) o guardar API keys en texto plano dentro del VPS, Treg expone herramientas bajo un solo endpoint y hace inyección de credenciales del lado del servidor.
+4. **Jev (`jevtypesafeai.com` — Modelo de Decisión System-1):** A diferencia de un LLM que redacta párrafos lentos y caros, Jev recibe un JSON y responde decisiones tipadas (`Choice`, `Score`, `Noul`/sí-no) con probabilidades calibradas en milisegundos. En NexoBow resuelve dos cuellos de botella:
+   - *En Scouting:* Decide al instante si un consultorio de Google Maps es High-Ticket o spam/MLM y qué ángulo de dolor Hormozi asignarle.
+   - *En Recepción IA (n8n):* Clasifica el mensaje del **paciente** (`turno_nuevo`, `reprogramar`, `duda_obra_social`, `urgencia_medica`, `handoff_humano`) antes de invocar al modelo grande, bajando latencia y costo de API en ~70%.
+5. **n8n 2.0 + Redis 7 + PostgreSQL 16 (Motor Determinista de Turnos):** La IA sola alucina horarios y responde 3 veces seguidas si el paciente manda 3 mensajes cortos (*"Hola"* / *"Atienden OSDE?"* / *"Quiero turno"*). Redis aplica un **debounce de 8–12 segundos**, Postgres guarda memoria persistente + calendario/confirmaciones booleanas (para no mandar recordatorios duplicados) y n8n ejecuta la secuencia **Anti-Silla Vacía** sin fallas.
+6. **Topología de Seguridad VPS (Zero-Trust):** Red interna `data-tier` sin acceso a internet para Postgres y Redis; Hermes confinado (`cap_drop: [ALL]`, `read_only: true`, sin `docker.sock`); cero puertos SSH/n8n públicos (acceso solo vía **Tailscale Mesh VPN**); webhooks filtrados por **Cloudflare Zero Trust Tunnels** + **CrowdSec** + **UFW**.
 
-### Pilar 3: Recepcionista IA en Producción Real (El Verdadero "Turno Automatizado")
-Basado en la ingeniería de producción de [NO Vendas Agentes IA, Vende Sistemas IA](https://www.youtube.com/watch?v=zhu4fzty0Ms), [Curso Completo de n8n 2.0](https://www.youtube.com/watch?v=7Z-vRvIUqNs) y [Construye un Chatbot de $5,000](https://www.youtube.com/watch?v=x361xBKBdic), el **turno automatizado** de NexoBow (Tier 2 y Tier 3) supera por completo a los bots amateurs de YouTube mediante 6 capas industriales:
-1. **Ingesta Multimodal Omnicanal:** Procesa texto, **notas de voz** (transcripción automática, vital en Argentina/LATAM donde el **paciente** envía audios largos) e imágenes (ej. órdenes médicas o estudios previos).
-2. **Buffer de Mensajes en Redis (Debounce Inteligente):** Los **pacientes** escriben en ráfagas (*"Hola"*, *"¿Atienden por OSDE?"*, *"Quiero turno para el martes"*). Redis agrupa los mensajes durante 8–12 segundos antes de disparar al agente para que responda con contexto unificado en vez de contestar 3 veces seguidas sin sentido.
-3. **Arquitectura Multi-Agente con Memoria en PostgreSQL:** Un **Agente Orquestador** con historial persistente por número de teléfono delega en dos subagentes especializados: el **Agente de Conocimiento (RAG/Wiki del Prestador)** que despeja dudas de modalidades y enfoque, y el **Agente de Turno Automatizado** que consulta disponibilidad real, agenda la **consultoría gratuita**, reprograma o cancela.
-4. **Humanización de Salida (Message Splitter):** Un `Auto-fixing Output Parser` divide la respuesta en 2 a 4 burbujas breves con pausas naturales de escritura, eliminando los bloques robóticos de texto.
-5. **Centro de Control en Chatwoot + Regla Anti-Ban:** En etapa de prospección y pruebas internas se utiliza **Evolution API** en el VPS a costo cero; cuando el **prestador** pasa a producción en Tier 2/3, se conecta a **Chatwoot** con **Meta Cloud API oficial** y validación de seguridad por headers en los webhooks para garantizar 0% riesgo de bloqueo del número del consultorio. Incluye herramienta de *Handoff Humano* (desactivación automática del bot cuando el **prestador** interviene).
-6. **Secuencia Anti-Ausentismo (Show-Rate Booster):** Workflows en n8n que envían recordatorios automáticos 24 horas y 1 hora antes de la **consultoría gratuita** (con flag booleano de control en base de datos para jamás duplicar envíos), elevando drásticamente la tasa de **consultorías concretadas**.
+### 🔭 Radar Táctico de Repos de GitHub (El Filtro de 3 Preguntas de ROI)
 
-### Pilar 4: Posicionamiento AEO (Answer Engine Optimization) en Cloudflare
-Incorporando la metodología de [Cloudflare + Claude Code = Posicionamiento AEO de 1.300€](https://www.youtube.com/watch?v=upsI04_iAQ8), cada **landing** y **clon** compilado por NexoBow se optimiza automáticamente para los **AI Crawlers** (`GPTBot`, `ClaudeBot`, `PerplexityBot`, `Google-Extended`):
-* **Objetivo Comercial:** Que cuando un **paciente** pregunte en ChatGPT, Perplexity o Gemini *"¿Cuál es el mejor nutricionista deportivo en Belgrano?"* o *"¿Qué clínica dermatológica me recomendás en Palermo?"*, la IA recomiende en primer lugar al **prestador** de NexoBow.
-* **Implementación Técnica en el Build (`build-client-site`):** Inyección automática de JSON-LD estructurado (`MedicalBusiness`, `Physician`, `LegalService`, `FAQPage`), generación de `/llms.txt` con resumen semántico de la **ficha de cliente**, configuración de `robots.txt` amigable para agentes y cabeceras en Cloudflare verificadas contra el estándar de `isitagentready.com`.
+Estudiar repositorios con miles de estrellas en GitHub es una ventaja injusta **solo si evita el síndrome del objeto brillante**. Ningún repo entra al stack de NexoBow sin aprobar este filtro de 3 preguntas:
 
-## 🎯 El Nuevo "Golden Flow" (De Scouting a Upsell Recurrente)
+1. **Impacto Directo en Caja:** ¿Aumenta cierres de ventas, reduce sillas vacías del prestador o baja costo/latencia de tokens? *(Si es "solo por curiosidad técnica", queda archivado).*
+2. **Regla de No-Duplicación:** ¿Cubre una capa vacía o duplica algo que ya hacen Astro, Supabase, n8n o Hermes?
+3. **Alineación al Gate Actual:** ¿Pertenece al Gate de facturación donde estamos hoy, o se documenta en Obsidian `/wiki/radar-github/` para el Gate siguiente?
 
-```
-[1. Scouting + AEO Audit] ──► [2. Ficha en /raw/ + DB ACID] ──► [3. Clon Astro + Theme Switcher + AEO]
-                                                                               │
-[6. Upsell a Tier 2/3 ($250-$650/m)] ◄── [5. Cierre Tier 1 ($150+$10)] ◄── [4. QA Playwright + Outbound Híbrido]
-```
+| Repositorio / Herramienta | Rol Real en el Mercado | Veredicto del Filtro ROI | Gate de Adopción |
+| :--- | :--- | :--- | :---: |
+| **`superdesigndev/treg`** | Gateway unificado de herramientas e inyección segura de API keys. | ✅ **APROBADO:** Elimina bloat de MCPs y protege credenciales en VPS. | **Gate 2** *(Fase 3)* |
+| **`jevtypesafeai.com` (`Jev`)** | Clasificador/decisor System-1 en JSON en milisegundos. | ✅ **APROBADO:** Abarata y acelera el routing de WhatsApp en n8n y el filtro de scouting. | **Gate 1–2** *(Fase 2–3)* |
+| **`openclaw/openclaw`** | Arnés personal de agente multi-canal con amplio ecosistema de skills. | ⚠️ **SOLO PATRONES:** Duplica a Hermes Agent. Se inspeccionan sus skills/patrones en Radar, no se instala en paralelo. | **Radar Continuo** |
+| **`unclecode/crawl4ai`** | Scraper web LLM-ready ultra rápido para extraer contexto de clínicas con web vieja. | ✅ **APROBADO (Cubeta B):** En Fase 2/3 audita automáticamente sitios viejos para generar comparativas *Antes vs. Después*. | **Gate 1–2** *(Fase 2–3)* |
+| **`calcom/cal.com`** | Infraestructura de agendamiento open-source multi-profesional. | ⏳ **CONDICIONAL:** En Tier 1/2 basta Google Calendar + n8n; evaluar self-host/API recién en **Tier 3 (Clínicas multi-sede)**. | **Gate 2–3** *(Fase 3)* |
+| **`chatwoot/chatwoot`** | CRM omnicanal oficial con Embedded Signup de WhatsApp WABA + handoff humano. | ✅ **APROBADO DESACOPLADO:** Usar Chatwoot Cloud ($19/mes) o satélite separado para no saturar RAM del VPS central. | **Gate 1** *(Fase 2)* |
 
-1. **Entrada por Voz o Cron Nocturno:** Juanma envía un audio por Telegram a Hermes (*"Buscame 20 nutricionistas y clínicas estéticas en Palermo y Belgrano"*) o se dispara el cron nocturno a las 02:00 AM.
-2. **Scouting Dual & Auditoría AEO:** `scout-lead.mjs` consulta Google Maps / Serper Dev y clasifica a los prospectos en dos cubetas:
-   * **Cubeta A (Sin Web):** Profesionales que solo tienen link de WhatsApp o Instagram.
-   * **Cubeta B (Web Obsoleta / 0 AEO):** Profesionales o clínicas con sitios lentos (>3s), sin estructura de conversión ni lectura por AI Crawlers (los mejores candidatos para **Tier 2 y Tier 3** porque ya invierten en digital).
-3. **Persistencia ACID + Ficha Inmutable:** Registra el prospecto en **SQLite/Turso** (`SqliteLeadStore`, latencia <5ms, sin colisiones de ID), sincroniza en segundo plano con Google Sheets (`'Prospección NexoBow'!B11:S1000`) y genera la **ficha de cliente** en `/raw/clients/{id}-{rubro}-{nombre}.md` respetando Ley 25.326 y dolores Hormozi.
-4. **Arquitectura Visual + Compilación AEO:** El motor separa estrategia (Claude) de ejecución (Astro SSG): selecciona el **template** REA óptimo según el arquetipo del **prestador**, inyecta copywriting de alivio, empaqueta el componente `ThemeSwitcher.astro` (4 paletas en vivo + persistencia en `localStorage` + botón de cierre por WhatsApp), añade la capa **AEO** y verifica en `375px` y `1440px` con **Playwright MCP**.
-5. **Contacto Híbrido de Alto Impacto (El Secreto de Conversión):** Se despliega el **clon** en `https://preview.nexobow.site/{slug}/` con **TTL de 7 días** y telemetría pasiva (<1 KB). El contacto inicial combina el enlace del **clon** ya construido con un **audio breve o llamada directa** ([Fuente Cómo Vender Webs](https://www.youtube.com/watch?v=vq6qME9Og2c)): *"Hola Dra. Gómez, vi tus reseñas en Maps y te armé sin cargo tu nueva landing lista para agendar consultorías gratuitas, además de medir cómo aparece tu consultorio en ChatGPT. Te dejé el link acá para que elijas los colores con un botón"*.
-6. **Entrada por Tier 1 ($150 Setup + $10 Abono) o Diagnóstico:** El **prestador** entra sin fricción pagando los $150 USD de **setup** (o contratando el Diagnóstico AEO + Embudo).
-7. **Activación del Upsell Interno a Tier 2 ($197–$297/mes):** A los 14–21 días de uso de la **landing**, cuando el **prestador** recibe tráfico pero tarda en contestar WhatsApp o sufre ausentismo en sus **consultorías gratuitas**, NexoBow activa la demostración en vivo de su **Recepcionista IA de Turno Automatizado**, migrando al **prestador** del **abono** de $10 USD/mes al sistema completo de $197–$297 USD/mes.
+---
 
-## 🏗️ Catálogo de Templates REA (Ingeniería Inversa de Referentes Internacionales)
+## 🤝 Protocolo Operativo Co-Founder (Manera de Trabajar Juntos para Automatizar)
 
-> **Regla Innegociable de Producto:** Cada **template** (`/templates/{id}/`) es una arquitectura espacial y visual autónoma inspirada en un referente internacional real mediante REA, manteniendo sus tipografías originales (o equivalente anatómico exacto), **0 JS innecesario**, carga `<0.8s` y compatibilidad nativa con `ThemeSwitcher.astro` y **AEO Schema**.
+Para que entiendas el 100% de cada decisión y podamos automatizar sin cajas negras frágiles, operamos bajo **4 reglas inquebrantables**:
 
-| Template (`/templates/{id}/`) | Arquetipo Visual | Referente Internacional REA | Estado | Nicho B2B Objetivo | Ticket Ideal |
+1. **Explicación Pedagógica del *Porqué* Primero:** Antes de construir un módulo o activar una herramienta nueva, definimos en lenguaje claro qué problema de negocio resuelve, qué alternativas descartamos y por qué elegimos esa arquitectura.
+2. **Validación Manual Asistida Antes de Automatizar en Piloto Automático:** Nunca automatizamos en ciego algo que no convirtió primero manualmente. Primero validamos el pitch, la preview y el cierre con vos al volante (sobre los 29 prospectos actuales); lo que funciona se automatiza.
+3. **Cristalización Progresiva en `Agent Skills`:** Todo flujo repetitivo que ya probó resultados se encapsula en `/.agents/skills/{nombre}/SKILL.md` + scripts deterministas con pruebas `node --test` (`npm test`). Así, cuando Hermes Agent corra 24/7 en el VPS en Gate 2, heredará procesos probados en batalla, no improvisaciones.
+4. **Ciclo SDD Estricto (`prompts_structure.md`):** `/grill-me` (alinear decisiones) ➔ `/to-spec` (contrato `spec.md`) ➔ `/to-tickets` (tajadas verticales) ➔ `/implement` (TDD Red-Green-Refactor) ➔ `/audit-code` + `impeccable detect` (calidad visual y 0 regresiones).
+
+---
+
+## 🏗️ Catálogo de Templates REA (Estado Real Verificado)
+
+> **Regla Innegociable de Producto:** Cada **template** (`/templates/{id}/`) es una arquitectura visual autónoma inspirada en un referente internacional real vía REA, con su layout propio, compatible con `NexoBow Preview Studio HUD`, carga `<0.8s` y esquema AEO.
+
+| Template (`/templates/{id}/`) | Arquetipo Visual | Referente Internacional REA | Estado Verificado | Nicho B2B Objetivo | Ticket Ideal |
 | :--- | :--- | :--- | :---: | :--- | :---: |
-| `templates/nutricionista/` | `editorial-classic` (v1.0.0) | **Delta Cafés** (`deltacafes.com`) — Fraunces + Archivo | ✅ Activo | Nutricionistas, psicólogos, terapeutas holísticos | Tier 1 → Tier 2 |
-| `templates/abogado/` | `obsidian-authority` (Ticket 20) | **Kümmerlein** (`kuemmerlein.de`) — Brutalismo ejecutivo, recortes SVG | ✅ Activo | Estudios jurídicos, contadores, escribanías | Tier 2 → Tier 3 |
-| `templates/clinica/` | `architectural-prestige` (Ticket 21) | **SkyClinics** (`skyclinics.al`) — Mineral piedra, Deep Forest Teal | ✅ Activo | Clínicas médicas, centros odontológicos y quirúrgicos | Tier 2 → Tier 3 |
-| `templates/producto/` | `minimalist-hardware` (Ticket 27) | **Heavn One** (`heavn-lights.com`) — Precisión óptica, Deep Matte Black | ✅ Activo | Equipamiento médico, ortopedia, suplementos propios | Tier 2 → Tier 3 |
-| `templates/dermatologia/` | `clinical-pure` (Ticket 25) | **Lipedema Guru** (`lipedemaguru.com`) — Espacio negativo clínico y cian | ⏳ Prioridad Q4 | Dermatología estética, medicina estética, cirugía plástica | Tier 2 → Tier 3 |
-| `templates/deportes/` | `kinetic-performance` (Ticket 24) | **The Performance Lab** (`theperformancelab.ca`) — Carbon Dark + Emerald | ⏳ Prioridad Q4 | Kinesiólogos deportivos, deportólogos, centros de alto rendimiento | Tier 1 → Tier 2 |
-| `templates/corporativo/` | `high-ticket-consulting` (Ticket 22) | **Vetter Consulting** (`vetter-consulting-en.webflow.io`) — Onyx + Orange | ⏳ Backlog | Consultoras B2B, asesores financieros, brokers | Tier 3 |
-| `templates/propiedades/` | `architectural-spaces` (Ticket 26) | **Lufte** (`lufte.us`) — Outfit + Manrope, galerías arquitectónicas | ⏳ Backlog | Desarrolladoras, estudios de arquitectura, inmobiliarias | Tier 3 |
-| `templates/tech/` a `musica/` | Tickets 23, 28, 29, 30, 31, 32 | *Think Company, Reliable Paving, Roveia, Tahiti Numérique, Bluemore, Ethos* | ⏳ Congelados | **Regla Anti-Dispersión:** No abrir nuevos nichos hasta superar $25k/mes en Salud y Legales ([Fuente Productos](https://www.youtube.com/watch?v=dnqzOcLrejs)). | Fase 3–4 |
+| `templates/nutricionista/` | `editorial-classic` (`@1.0.0`) | **Delta Cafés** (`deltacafes.com`) | ✅ Activo + Demo | Nutricionistas, psicólogos, terapeutas | Tier 1 → Tier 2 |
+| `templates/abogado/` | `obsidian-authority` (`@2.0.0`) | **Kümmerlein** (`kuemmerlein.de`) | ✅ Activo + Demo | Estudios jurídicos, contadores, escribanías | Tier 2 → Tier 3 |
+| `templates/clinica/` | `architectural-prestige` (`@2.0.0`) | **SkyClinics** (`skyclinics.al`) | ✅ Activo + Demo | Clínicas médicas, centros odontológicos | Tier 2 → Tier 3 |
+| `templates/corporativo/` | `high-ticket-consulting` (`@2.0.0`) | **Vetter Consulting** | ✅ Activo + Demo | Consultoras B2B, asesores financieros | Tier 3 |
+| `templates/tech/` | `tech-editorial-system` (`@1.0.0`) | **Think Company** | ✅ Activo + Demo | Consultoras software, arquitectura digital | Tier 3 |
+| `templates/deportes/` | `kinetic-performance` (`@1.0.0`) | **The Performance Lab** | ✅ Activo + Demo | Kinesiólogos deportivos, deportólogos, gym | Tier 1 → Tier 2 |
+| `templates/dermatologia/` | `clinical-pure` (`@1.0.0`) | **Lipedema Guru** | ✅ Activo + Demo | Dermatología, medicina estética, cirugía | Tier 2 → Tier 3 |
+| `templates/producto/` | `minimalist-hardware` (`@1.0.0`) | **Heavn One** (`heavn-lights.com`) | ✅ Activo + Demo | Equipamiento médico, ortopedia, hardware | Tier 2 → Tier 3 |
+| `templates/construccion/` | `industrial-authority` (`@1.0.0`) | **Reliable Paving** | ✅ Activo + Demo | Construcción, pavimentación, ingeniería | Tier 2 → Tier 3 |
+| `templates/propiedades/` | `architectural-spaces` (Ticket 26) | **Lufte** (`lufte.us`) | 🛠️ En Repo (`src/` base) | Desarrolladoras, arquitectura, inmobiliarias | Tier 3 |
+| `farmaceutica` a `musica` | Tickets 29–32 | *Roveia, Tahiti Numérique, Bluemore, Ethos* | ⏳ Congelados | **Regla Anti-Dispersión:** No abrir nuevos templates hasta facturar >$5k/mes en Salud y Legales. | Fase 3–4 |
 
-## 🔌 Stack de MCPs, Higiene de Contexto e Infraestructura
+---
 
-### 1. Higiene de Contexto Inmediata (Smart Zone `<100k tokens`)
-* **Purga de Plugins Irrelevantes:** Desactivar del entorno local cualquier MCP ajeno al negocio (bioinformática `alphafold`/`chembl`/`pdb`, `flutter`, `bigquery`). Recupera **15.000 a 30.000 tokens por turno**.
-* **Regla de Oro de Archivos de Agente:** Mantener `AGENTS.md` y `SOUL.md` estrictamente por debajo de **200 líneas** ([Fuente Hermes 2026](https://www.youtube.com/watch?v=FQZGoSwdS_0)), delegando el conocimiento específico a las **skills** modulares y al índice `wiki/index.md` de Obsidian.
+## 🔌 Higiene de Contexto e Infraestructura de Agentes
 
-### 2. Los 6 MCPs Estratégicos del Ecosistema NexoBow
-1. **🎭 Playwright MCP (`screenshot-qa`):** Levanta servidor efímero del **clon**, captura vistas en `375px` (móvil) y `1440px` (desktop) y valida que no existan desbordes tipográficos ni errores visuales antes de subir a `dist-previews/`.
-2. **🗄️ SQLite / Turso MCP (`SqliteLeadStore`):** Reemplaza a Google Sheets como motor transaccional primario (<5ms, ACID, sin colisiones en Columna B ni límites de 60 req/min). Sheets queda como espejo visual asíncrono.
-3. **🔄 n8n MCP + `n8n-skills` (`Automation-Bow`):** Permite que Claude Code y Hermes construyan, auditen y reparen workflows de recepción de **turnos automatizados** directamente contra la API de n8n sin armar nodos a mano ([Fuente Claude + n8n](https://www.youtube.com/watch?v=Ivn4rX2wfxk)).
-4. **🧠 Obsidian Vault / Filesystem MCP:** Conecta a los agentes con `/raw/`, `/wiki/` y `/diario/` para memoria persistente inter-sesión.
-5. **☁️ Cloudflare MCP (`domain-provisioner` & AEO):** Despliegue instantáneo en Cloudflare Pages, configuración de dominios `.com.ar` / `.com`, reglas de caché y políticas de acceso para AI Crawlers.
-6. **📲 WhatsApp / Chatwoot / Telegram MCP:** Bandeja de aprobación en 1 clic en el Telegram de Juanma (*"¿Aprobar envío de preview a Dr. Martínez? [Enviar / Editar Audio]"*) y gestión de webhooks en producción.
+1. **Smart Zone (`<100k tokens`):** Mantener `AGENTS.md` y futuros `SOUL.md` compactos, desactivando plugins/MCPs ajenos al negocio (como ocurrió con `data-agent-kit-plugin`) y migrando integraciones repetitivas a `Treg.to` en Fase 3.
+2. **Los 6 Conectores Estratégicos del Ecosistema:**
+   - **🎭 Playwright MCP (`screenshot-qa`):** Auditoría visual headless en `375px` y `1440px`.
+   - **🗄️ Supabase PostgreSQL (`createSupabaseLeadStore`):** Base relacional ACID con RLS estricto para `/admin` (`leads`, `financial_transactions`, `schedule_blocks`, `alaynow_videos`, `habits`, `habit_logs`).
+   - **🔄 n8n MCP + `n8n-skills`:** Creación y reparación automatizada de flujos de **turno automatizado** y anti-silla vacía (Gate 1).
+   - **🧠 Obsidian Vault MCP:** Lectura/escritura estructurada de `/raw/`, `/wiki/` y `/diario/` (Gate 2).
+   - **☁️ Cloudflare Pages + Functions + Resend:** Hosting gratuito `<0.8s`, endpoint `/api/v1/bow-system/create`, `/api/ping` y alertas por email.
+   - **📲 Telegram + Meta Cloud API WABA / Chatwoot:** Centro de mando para Juanma en Telegram y operación clínica sin riesgo de baneo para los **prestadores**.
 
-## 🚀 Roadmap de Ejecución en 4 Fases: De $0 a +$100,000 USD/mes
+---
 
+## 🚀 Roadmap de Ejecución por "Gates de Facturación": De $0 a +$100,000 USD/mes
+
+> **Regla de Oro de Reactivación:** No se paga ningún servidor ni se construyen automatizaciones pesadas antes de desbloquear el **Gate de Caja** correspondiente. Cada fase se autofinancia con la anterior.
+
+```text
+[GATE 0: HOY ($0 gasto fijo)] ──► [GATE 1: 1-3 Setups (~$500-$1k USD)] ──► [GATE 2: >$2.5k-$5k USD/m] ──► [FASE 4: $60k-$100k+/m]
+ Validar Oferta + HUD 10x         VPS Hetzner + n8n + Turno IA            Hermes 24/7 + Obsidian          Ads IA (Higgsfield)
+ + Resend Alerts + 29 Leads       + WABA + Anti-Silla Vacía + Jev         + Treg.to + España/USA/MX       + Tier 4 Self-Serve
 ```
-[FASE 1: $0 a $5k/mes] ──► [FASE 2: $5k a $25k/mes] ──► [FASE 3: $25k a $60k/mes] ──► [FASE 4: $60k a +$100k/mes]
- Validación & Cashflow      Sistemas de Turno IA         VPS 24/7 + Internacional       Escala Híbrida + Infoproducto
-   (Días 1 a 30)              (Días 31 a 90)               (Meses 4 a 6)                  (Meses 6 a 12)
-```
 
-### 🟢 FASE 1: Tracción Inmediata y Validación de Caja ($0 a $5,000 USD/mes — Días 1 a 30)
-> **Principio Rector:** *"Al dinero le gusta la velocidad"*. Prohibido programar más código o crear nuevos templates antes de cerrar los primeros prestadores pagos. La infraestructura está 100% lista para vender hoy mismo a costo $0.
+### 🟢 FASE 1 (GATE 0): Reactivación, Validación de Oferta & Caja Inmediata ($0 a $5,000 USD/mes — Costo Fijo $0)
+> **Principio Rector:** *"Al dinero le gusta la velocidad"*. Tenés una fábrica ya construida con 116 tests en verde, `/admin` Cockpit conectado a Supabase, 9 templates REA con demo en vivo y **29 prospectos reales ya compilados en `clients/` (`#9`–`#37`)**. Lo único que falta para facturar es pulir la experiencia "10x" de la preview, activar alertas en tiempo real con Resend y salir a contactar.
 
-- [x] Web flagship de NexoBow con 12 secciones y estándar 0 JS (`web/`).
-- [x] Motor de scouting (`scout-lead.mjs`), generador de **fichas de cliente** (`generate-client-fiche.mjs`) y compilador de **clones** (`build-client-site.mjs`).
-- [x] Componente `ThemeSwitcher.astro` (4 paletas) activo en todas las previews (`preview.nexobow.site/{slug}/`).
-- [x] 4 Templates maestros REA de nivel internacional listos para producción (`nutricionista`, `abogado`, `clinica`, `producto`).
-- [x] **Frente E Completado:** Admin Cockpit en `/admin` con Supabase Auth, CRM Kanban, Finanzas, Calendario, Pipeline AlayNow, Hábitos y Realtime (116 tests en verde).
-- [ ] **Hito 1.1 — Protocolo de Venta Inmediata $0 Presupuesto (Días 1 a 10):**
-  * **Cero gasto inicial:** Cloudflare Pages es gratuito, la prospección en Maps es gratuita y los clones se compilan en local.
-  * **Acción diaria:** 15 a 20 prospectos diarios calificados en Palermo, Belgrano, Recoleta y San Isidro (enfoque en Odontología, Medicina Estética, Cirugía Plástica y Estudios Jurídicos).
-  * **Contacto híbrido de alto impacto:** Envío del enlace de la preview interactiva + nota de voz personalizada de 35 segundos al WhatsApp del consultorio.
-- [ ] **Hito 1.2 — Cierre Asistido con Oferta Irresistible (Tier 1):**
-  * Cerrar los primeros **10 a 15 prestadores** en **Tier 1 ($189 – $249 USD Setup único o $189.999 ARS)** con 1 año de hosting incluido y garantía de satisfacción 14 días.
-  * Generación de **$2,000 a $3,500 USD netos en caja** para financiar el VPS y las APIs sin deuda ni capital externo.
-- [ ] **Hito 1.3 — Primeros 3 Pilotos de Tier 2 (Turno Automatizado):**
-  * A los 3 mejores clientes de Tier 1, activarles la prueba de 30 días del **Agente Recepcionista de WhatsApp** (n8n + Postgres + Google Calendar) para documentar sus métricas de agendamiento y publicarlos como casos de éxito.
+- [x] Web flagship B2B Soft-Obsidian (`web/`) con 12 secciones, precios alineados y 0 JS en landing pública.
+- [x] Cockpit `/admin` en Supabase (`CRM Kanban`, `Finanzas`, `Calendario + Preset Escuela/Prospección`, `AlayNow`, `Hábitos`, `Settings` y `Realtime`).
+- [x] Endpoint inbound `web/functions/api/v1/bow-system/create.ts` y pipeline multi-rubro con embudos flexibles (`Ticket #47`–`#49`).
+- [x] Lote activo de **29 fichas reales** (`#9`–`#23` Nutrición en Campana/Zárate/CABA, `#24`–`#27` Odontología, `#28`–`#32` Medicina Estética, `#33`–`#37` Abogacía).
+- [ ] **Hito 1.1 — Ticket #50 (`NexoBow Preview Studio HUD` + Fix WhatsApp `5493489536088` — ver [`spec-gate0-validation.md`](./spec-gate0-validation.md)):**
+  * **Fix Crítico:** Corregir el placeholder `5491100000000` en los 10 `templates/*/src/components/ThemeSwitcher.astro` reemplazándolo por `5493489536088`.
+  * **Efecto 10x:** Evolucionar `ThemeSwitcher.astro` a **Preview Studio HUD** (barra de prototipo al 20% con TTL de 7 días, badges de *"Foto ilustrativa de prototipo"*, modal comparativo *Preview 20% vs. Tu Sistema Final 10x*, mini-simulador de Turno IA en vivo y emisión de evento `theme-switched`).
+- [ ] **Hito 1.2 — Ticket #51 (Pipeline "10 Links Google Maps → Calificación, Scraping Email/Web & Preview Live"):**
+  * Crear `scripts/intake-maps-batch.mjs` y skill `intake-maps-batch`: recibe hasta 10 links de Google Maps, resuelve URLs, extrae perfil/WhatsApp/reviews, inspecciona web/bio para capturar **email** y clasificar **Cubeta A / B**, califica (`0–100`), genera ficha, compila **clon** con HUD 10x y publica en `preview.nexobow.site/{slug}/`.
+- [ ] **Hito 1.3 — Ticket #52 (Zoho Mail Outbound + Telemetría `/api/ping` & Alertas Hot-Lead):**
+  * Crear `scripts/send-zoho-outreach.mjs` para enviar correo profesional HTML desde **Zoho Mail** (`ZOHO_SMTP_*`) a todo lead con email válido y guardar trazabilidad en `metadata.email_outreach`.
+  * Inyectar el snippet `< 1 KB` de `scripts/preview-telemetry.mjs` en `build-client-site.mjs` y crear `web/functions/api/ping.ts` para actualizar `metadata.telemetry` en Supabase y disparar alerta Hot-Lead en tiempo real.
+- [ ] **Hito 1.4 — Ticket #53 (Workstation `/admin/crm` + Mensajes/Audios WhatsApp Listos & Sprint de Validación):**
+  * Exponer en `CrmView.tsx` y `CockpitView.tsx`: email + estado Zoho, web original/Maps (`Cubeta A/B`), rating/reseñas, badge `🔥 Hot-Lead`, modal de lote 10 links, botones de 1 clic **`Copiar Mensaje WA`** / **`Abrir WhatsApp`** y guion de audio 35s bajo el ángulo **"Anti-Silla Vacía & Cero-Secretaria"**.
+  * Ejecutar bloques diarios de prospección con lotes de **10 links de Google Maps** hasta validar la oferta y cerrar los primeros **3 a 5 Setups Tier 1 (`$189.999 ARS`)** = **~$500 a $1.000 USD** en caja para desbloquear **Gate 1**.
 
-### 🟡 FASE 2: El Giro a "Sistemas IA" y VPS Dedicado ($5,000 a $25,000 USD/mes — Días 31 a 90)
-> **Principio Rector:** Dejar de vender solo landings estáticas; posicionarse como socios de infraestructura IA. La landing es el caballo de Troya para cobrar **abonos de $197 a $297 USD/mes** por el agendamiento 24/7.
+---
 
-- [x] **Persistencia Relacional ACID:** Migración exitosa de Google Sheets a Supabase PostgreSQL en producción con RLS estricto y soporte en `createSupabaseLeadStore`.
-- [ ] **Hito 2.1 — Despliegue de Infraestructura Zero-Trust en VPS Hetzner:**
-  * Levantar el stack Docker Compose aislado (`data-tier` interna sin internet): **n8n 2.0 + PostgreSQL 16 + Redis 7**.
-  * Blindaje perimetral: Cero puertos públicos expuestos, administración exclusiva por **Tailscale Mesh VPN**, webhooks de WhatsApp filtrados vía **Cloudflare Zero Trust Tunnels** y protección host con **CrowdSec + UFW**.
-  * Desacoplamiento de Chatwoot (uso de Chatwoot Cloud o instancia satélite) para proteger la RAM del VPS.
-- [ ] **Hito 2.2 — Onboarding Oficial con Meta Cloud API (WABA):**
-  * Conexión oficial de WhatsApp mediante Embedded Signup para garantizar 0% riesgo de baneo de los números de los consultorios.
-- [ ] **Hito 2.3 — Secuencia Anti-Ausentismo & Automatización de Reseñas Maps:**
-  * Recordatorios automáticos por WhatsApp a las 24h y 1h previas a la consultoría, más solicitud automática de reseña 5 estrellas en Google Maps post-atención.
-- [ ] **Meta Financiera Fase 2:** 50 prestadores acumulados en Tier 2 ($250/mes prom. = $12,500 MRR) + 15 nuevos setups mensuales ($650 prom. = $9,750) + base Tier 1 = **~$25,000 USD/mes**.
+### 🟡 FASE 2 (GATE 1 — Se desbloquea al cobrar 1–3 Setups): VPS Zero-Trust, n8n 2.0 & Sistema Anti-Silla Vacía ($5,000 a $25,000 USD/mes)
+> **Principio Rector:** Pagado 100% con caja generada en Fase 1 (nunca antes). La landing deja de ser el producto final y pasa a ser el caballo de Troya para cobrar **abonos recurrentes de `$229.999 ARS/mes` (`$197–$297 USD/mes`)**.
 
-### 🟣 FASE 3: Fábrica Autónoma 24/7 con Hermes + Obsidian & Expansión Internacional ($25,000 a $60,000 USD/mes — Meses 4 a 6)
-> **Principio Rector:** Arbitraje geográfico e inteligencia colectiva. El mismo **embudo** que en Argentina se vende en Tier 1/2, en **España, Estados Unidos (Miami/Texas/California hispano), México y Chile** se comercializa entre **$1,500 y $3,000 USD de Setup** y **$500 a $1,000 USD/mes de Abono** ([Fuente Arbitraje](https://www.youtube.com/watch?v=vq6qME9Og2c)).
+- [ ] **Hito 2.1 — Contratación y Blindaje del VPS Hetzner ($6–$12 USD/mes):**
+  * Desplegar stack Docker Compose Zero-Trust: **n8n 2.0 + PostgreSQL 16 + Redis 7** en red `data-tier` (`internal: true`, sin salida a internet).
+  * Perímetro cerrado: **Tailscale Mesh VPN** para administración, **Cloudflare Zero Trust Tunnels** para webhooks y **CrowdSec + UFW**. Chatwoot desacoplado (Cloud o satélite) para proteger la RAM.
+- [ ] **Hito 2.2 — Onboarding Oficial Meta Cloud API (WABA) + Recepcionista IA:**
+  * Conexión por Embedded Signup (0% riesgo de baneo del consultorio).
+  * Flujo industrial n8n: transcripción de **notas de voz**, buffer de ráfagas en **Redis (8–12s)**, router rápido con **Jev** (clasificación de intención en ms antes del LLM), agente RAG con reglas del consultorio, **Message Splitter** (burbujas humanas) y *Handoff Humano* en Chatwoot.
+- [ ] **Hito 2.3 — Motor "Anti-Silla Vacía" & Multiplicador de Reseñas 5★:**
+  * Confirmación automática 24h y 2h antes de cada **consultoría** con control booleano en Postgres + reactivación automática de lista de espera ante cancelaciones.
+  * Solicitud automática de reseña en Google Maps post-consulta (`review-booster`) + inyección de `/llms.txt` y JSON-LD (`aeo-optimizer`) verificado con `isitagentready.com`.
+- [ ] **Meta Financiera Gate 2:** 10–50 **prestadores** en **abono** Tier 2 + setups continuos = **$5,000 a $25,000 USD/mes**.
 
-- [ ] **Hito 3.1 — Instalación de Hermes Agent + Bóveda Obsidian en VPS:**
-  - Configurar `Hermes Agent` en Docker conectado por Tailscale y Telegram.
-  - Desplegar la bóveda Obsidian (`/raw/`, `/wiki/`, `/diario/`, `/privado/`) con la rutina matutina de auditoría de las 07:30 AM y tablero Kanban de agentes.
+---
+
+### 🟣 FASE 3 (GATE 2 — Se desbloquea al superar $2.500–$5.000 USD/mes): Hermes Agent 24/7, Obsidian Sync, Treg.to & Arbitraje Internacional ($25,000 a $60,000 USD/mes)
+> **Principio Rector:** Delegar la prospección y la preparación de demos en un arnés autónomo 24/7 mientras aplicamos **arbitraje geográfico**: vender exactamente el mismo sistema en **España, Estados Unidos hispano (Miami/Texas/California), México y Chile** a `$1,500–$3,000 USD` de **setup** y `$500–$1,000 USD/mes` de **abono**.
+
+- [ ] **Hito 3.1 — Despliegue de Hermes Agent + Obsidian Sync + Treg.to en el VPS:**
+  * Instalar **Hermes Agent** enjaulado (`cap_drop: [ALL]`, `read_only: true`, sin `docker.sock`) conectado al Telegram de Juanma (voz y texto).
+  * Sincronizar bóveda **Obsidian** (`/raw/`, `/wiki/`, `/diario/`, `/privado/`) vía Syncthing con auditoría matutina automática a las 07:30 AM.
+  * Conectar **Treg.to** (`superdesigndev/treg`) como gateway único de APIs/credenciales y **Crawl4AI** para auditar webs obsoletas (Cubeta B).
 - [ ] **Hito 3.2 — Daemons Autónomos 24/7:**
-  - `Batch Hunter Daemon` (02:00 AM): Scouting nocturno en Madrid, Valencia, Barcelona, Miami, CDMX y Santiago de Chile; compilación de **clones** con QA de Playwright y preparación de bandeja de salida.
-  - `Lifecycle Daemon`: Control estricto del **TTL de 7 días**, envío automático de alerta de urgencia en los días 5–6 (<48hs antes de purgar la demo) y limpieza de almacenamiento.
-- [ ] **Hito 3.3 — Activación de `templates/dermatologia/` y `templates/deportes/`:** Lanzamiento de los dos verticales médicos de mayor retorno publicitario (estética/dermatología y rehabilitación deportiva).
-- [ ] **Hito 3.4 — Célula de Closers a Comisión:** Con los **clones** y diagnósticos AEO generados 100% por IA, incorporar 2 closers comisionistas dedicados exclusivamente a llamar y cerrar las oportunidades calientes (los prospectos que abrieron la preview y jugaron con el Theme Switcher).
-- [ ] **Meta Financiera Fase 3:** 120 **prestadores** en Tier 2 ($30,000 MRR) + 15 clínicas en Tier 3 ($9,750 MRR) + 25 **setups** mensuales entre Tier 2 y Tier 3 ($20,000) = **~$60,000 USD/mes**.
+  * `Batch Hunter Daemon` (02:00 AM): Scouting nocturno multi-ciudad con **Jev** como filtro de calificación High-Ticket, compilación de **clones** con `Preview Studio HUD`, QA visual Playwright (`375px`/`1440px`) y bandeja de aprobación en 1 clic en Telegram.
+  * `Lifecycle Daemon`: Control estricto del **TTL de 7 días**, disparo de alertas **Resend** en días 5–6 y purga automática.
+- [ ] **Hito 3.3 — Célula de Closers a Comisión & Verticales Congelados:**
+  * Incorporar closers que llamen únicamente a los *Hot-Leads* detectados por `preview-telemetry` + Resend.
+  * Evaluar `Cal.com` self-hosted / API para clínicas Tier 3 multi-sede y habilitar nuevos **templates** REA (`propiedades`, etc.) según demanda.
+- [ ] **Meta Financiera Fase 3:** 120 **prestadores** en Tier 2 + 15 clínicas Tier 3 + 25 **setups**/mes = **~$60,000 USD/mes**.
 
-### 🔴 FASE 4: Escala Híbrida a +$100,000 USD/mes (Agencia Autónoma + Activos Digitales — Meses 6 a 12)
-> **Principio Rector:** Combinar el flujo de caja predecible de los **abonos** B2B con la escalabilidad infinita sin costo marginal de los **productos digitales y anuncios generados con IA** ([Fuente 10 Habilidades](https://www.youtube.com/watch?v=89oIFpQ4yyY) y [Fuente $22,963 con Claude + Higgsfield](https://www.youtube.com/watch?v=dnqzOcLrejs)).
+---
 
-- [ ] **Hito 4.1 — Motor de Ads con IA (Claude + Higgsfield) para Tier 3 y Marca Propia:**
-  - Generación automatizada de decenas de variantes de anuncios de video y ángulos de venta para llenar las agendas de las clínicas Tier 3 y atraer **prestadores** de forma inbound (sin depender solo del outbound en frío).
-- [ ] **Hito 4.2 — Lanzamiento de "NexoBow Self-Serve / Digital Kit" (Tier 4):**
-  - Empaquetar el conocimiento validado en cientos de **prestadores** en un activo digital low-ticket ($47–$97 USD + orden bump de plantillas de WhatsApp y guiones para el **upsell del prestador**).
-  - Escalar con campañas de Meta Ads auditadas por `Business-Bow`, convirtiendo en ingreso pasivo a miles de profesionales independientes de toda Iberoamérica.
-- [ ] **Hito 4.3 — Gobernanza Ejecutiva Completa (`Business-Bow` & `Legal-Bow`):**
-  - Automatización de contratos de adhesión, cobros recurrentes internacionales (Stripe / LemonSqueezy / MercadoPago Suscripciones), suspensión automática de **embudos** por mora y reportes de LTV/CAC en tiempo real.
-- [ ] **Meta Financiera Fase 4:** Superar de forma sostenida los **$100,000 USD/mes** con >85% de margen operativo y menos de 2 horas diarias de supervisión estratégica en Telegram y Obsidian.
+### 🔴 FASE 4: Escala Híbrida a +$100,000 USD/mes (Ads IA + Activos Digitales — Meses 6 a 12)
+> **Principio Rector:** Combinar el MRR predecible de los **abonos** B2B con la escalabilidad sin techo de infoproductos y adquisición inbound automatizada.
 
-## 📋 Matriz Actualizada de Agentes y Skills del Ecosistema NexoBow
+- [ ] **Hito 4.1 — Motor de Ads con IA (`Creative-Ads-Bow`):** Generación de creativos y ángulos de video para clínicas Tier 3 y atracción inbound propia hacia `/solicitud-enviada` (`CreateBowSystem`).
+- [ ] **Hito 4.2 — Lanzamiento de "NexoBow Digital Kit" (Tier 4):** Producto digital `$47–$97 USD` + comunidad `$29 USD/mes` monetizando a profesionales independientes de toda Iberoamérica.
+- [ ] **Hito 4.3 — Gobernanza Ejecutiva (`Business-Bow` & `Legal-Bow`):** Facturación recurrente automatizada (Stripe / LemonSqueezy / MercadoPago Suscripciones), suspensión por mora, contratos Ley 25.326 y monitoreo diario en `<2 horas/día` desde Telegram y `/admin`.
+- [ ] **Meta Financiera Fase 4:** Superar los **$100,000 USD/mes** sostenidos con >85% de margen operativo.
 
-| Agente / Skill | Capa del Sistema | Estado | Función Específica en la Escala a $100k/mes |
-| :--- | :--- | :---: | :--- |
-| `scout-lead` | Adquisición (CLI / Cron) | ✅ Activo | Búsqueda en Google Maps / Serper Dev y clasificación en Cubeta A (sin web) y Cubeta B (web obsoleta / 0 AEO). |
-| `generate-client-fiche` | Contenido (`/raw/`) | ✅ Activo | Creación de la **ficha de cliente** en Markdown con dolores Hormozi, cumplimiento Ley 25.326 y metadatos de TTL. |
-| `build-client-site` | Producto (Astro SSG) | ✅ Activo | Compilación determinista del **clon** con `ThemeSwitcher.astro`, bloqueo de versión y presupuesto estricto de JS. |
-| `audit-code` & `impeccable` | Calidad Técnica & Diseño | ✅ Activo | Verificación de 0-JS en `web/`, performance `<0.8s` y curaduría estética anti-mediocridad. |
-| `screenshot-qa` | QA Visual (Playwright) | ✅ Activo | Captura y validación headless en `375px` y `1440px` antes de publicar cualquier preview. |
-| `preview-telemetry` | Observabilidad | ✅ Activo | Ping ultraliviano (<1 KB, 0 cookies) que detecta aperturas de preview y cambios en el Theme Switcher en tiempo real. |
-| `lead-lifecycle` | Retención & Urgencia | ✅ Activo | Gestión del ciclo TTL de 7 días, disparo de alertas de escasez (<48hs) y purga automática de **clones** vencidos. |
-| `objection-handler` | Cierre Comercial | ✅ Activo | Matriz de respuestas en voseo argentino / español neutro para rebatir objeciones de **setup**, **abono** y redes sociales. |
-| `domain-provisioner` | Handoff Post-Venta | ✅ Activo | Paso automatizado de `preview.nexobow.site/{slug}` al dominio definitivo del **prestador** en Cloudflare. |
-| `admin-cockpit` (`/admin`) | Gestión & Operaciones | ✅ Activo | Cockpit ejecutivo con 6 submódulos (CRM, Finanzas, Calendario, Videos Alaynow, Hábitos, Settings), sincronización Realtime y 0-JS. |
-| `aeo-optimizer` | **NUEVO (Fase 2)** | 🛠️ En Desarrollo | Auditoría con `isitagentready.com`, generación de `/llms.txt`, JSON-LD médico/legal y apertura a AI Crawlers. |
-| `n8n-receptionist-builder` | **NUEVO (Fase 2)** | 🛠️ En Desarrollo | Programador automático de flujos n8n (`n8n-mcp` + `n8n-skills`) que despliega el **turno automatizado** con Redis + Postgres + Chatwoot. |
-| `review-booster` | **NUEVO (Fase 2)** | 🛠️ En Desarrollo | Automatización post-**consultoría concretada** para multiplicar reseñas 5 estrellas del **prestador** en Google Maps. |
-| `Hermes Orchestrator` | **NUEVO (Fase 3)** | ⏳ Planificado | Arnés central 24/7 en VPS conectado a Telegram y a la bóveda **Obsidian** (`/raw`, `/wiki`, `/diario`, `/privado`). |
-| `Creative-Ads-Bow` | **NUEVO (Fase 4)** | ⏳ Planificado | Fábrica de anuncios de video y ángulos de venta con Claude + Higgsfield para clínicas Tier 3 y productos digitales Tier 4. |
-| `Business-Bow` & `Legal-Bow` | **NUEVO (Fase 3–4)** | ⏳ Planificado | Control de unit economics (MRR, Churn, CAC, LTV), cobros automáticos de **abonos** y contratos bajo Ley 25.326. |
+---
+
+## 📋 Matriz Actualizada de Agentes, Módulos y Skills del Ecosistema NexoBow
+
+| Componente / Skill | Capa / Gate | Estado | Función Específica |
+| :--- | :---: | :---: | :--- |
+| `scout-lead` & `prospect-in-conversation` | Adquisición (`Gate 0`) | ✅ Activo | Búsqueda en Google Maps / Serper Dev, filtro celular WhatsApp y sincronización Supabase. |
+| `generate-client-fiche` | Contenido (`Gate 0`) | ✅ Activo | Fichas en `/clients/*.md` con voseo, ángulos Hormozi, embudos flexibles y TTL 7d. |
+| `build-client-site` & `edit-client-site` | Producto (`Gate 0`) | ✅ Activo | Compilación determinista del **clon** Astro SSG con bloqueo de versión por git tag. |
+| `audit-code` + `impeccable` + `screenshot-qa` | QA Técnico & Visual (`Gate 0`) | ✅ Activo | Auditoría 0-JS (`web/`), anti-slop visual y capturas Playwright `375px` / `1440px`. |
+| `objection-handler` & `lead-lifecycle` | Cierre & TTL (`Gate 0`) | ✅ Activo | Objeciones en voseo argentino, alertas de urgencia días 5–6 y purga a los `>=7` días. |
+| `domain-provisioner` | Post-Venta (`Gate 0`) | ✅ Activo | Paso de `preview.nexobow.site/{slug}` a dominio propio `.com.ar` / `.com` en Cloudflare. |
+| `admin-cockpit` (`/admin`) | Centro de Mando (`Gate 0`) | ✅ Activo | Cockpit React aislado en Supabase (CRM, Finanzas, Calendario, AlayNow, Hábitos, Settings). |
+| `preview-studio-hud` (**Ticket #50**) | Conversión Preview (`Gate 0`) | 🎯 **Prioridad #1** | Evolución de `ThemeSwitcher` a **Preview Studio HUD 10x** + fix teléfono `5493489536088`. |
+| `intake-maps-batch` (**Ticket #51**) | Lotes 10 Links Maps (`Gate 0`) | 🎯 **Prioridad #1** | Pipeline de 10 links Maps: calificación, scraping de email/web (Cubeta A/B), reseñas y preview live. |
+| `send-zoho-outreach` + `/api/ping` (**Ticket #52**) | Outbound & Alertas (`Gate 0`) | 🛠️ **Prioridad #2** | Email B2B automático vía **Zoho Mail** + ping <1 KB en previews + alertas Hot-Lead en tiempo real. |
+| `admin-crm-gate0` (**Ticket #53**) | Workstation CRM (`Gate 0`) | 🛠️ **Prioridad #2** | Visibilidad de email, Zoho, Cubeta, reseñas, Hot-Lead y copiado/envío WA + audio 35s en 1 clic. |
+| `n8n-receptionist` + `review-booster` + `aeo-optimizer` | Recepción IA (`Gate 1`) | ⏳ Planificado | Turno IA multimodal (Redis + Postgres + WABA), Anti-Silla Vacía, reseñas 5★ y `/llms.txt`. |
+| `Hermes` + `Obsidian` + `Treg.to` + `Jev` | Fábrica 24/7 (`Gate 2`) | ⏳ Planificado | Arnés único en VPS con bóveda `/raw`/`/wiki`/`/diario`, gateway de herramientas y router System-1. |
+| `Creative-Ads-Bow` & `Business/Legal-Bow` | Escala $100k (`Fase 4`) | ⏳ Planificado | Ads automatizados, cobros recurrentes Stripe/MP y analítica ejecutiva LTV/CAC. |

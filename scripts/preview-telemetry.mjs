@@ -63,17 +63,39 @@ export function validatePrivacyCompliance(payload = {}) {
  */
 export function getTelemetryClientSnippet({
   slug = 'demo',
-  endpointUrl = 'https://telemetry.nexobow.site/api/ping'
+  endpointUrl = '/api/ping'
 } = {}) {
-  // Código vanilla ultraliviano minificado (~380 bytes)
-  return `<script>(function(){try{var s="${slug}",u="${endpointUrl}",p=function(e,m){var d=JSON.stringify({event:e,slug:s,timestamp:Date.now(),meta:m||{},compliance:"Ley 25.326 - 0 Cookies"});if(navigator.sendBeacon){navigator.sendBeacon(u,d)}else{fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:d,keepalive:true}).catch(function(){})}};p("preview_view");window.addEventListener("theme-switched",function(ev){p("theme_switch",{theme:ev.detail&&ev.detail.theme})});document.addEventListener("click",function(ev){var t=ev.target.closest("a[href*='wa.me'], a[href*='whatsapp'], a[href*='calendly']");if(t){p("cta_click",{ctaLabel:t.innerText.trim().slice(0,30)})}})}catch(err){}})();</script>`;
+  // Código vanilla ultraliviano minificado (~410 bytes)
+  return `<script data-nx-telemetry="1">(function(){try{var s=${JSON.stringify(String(slug))},u=${JSON.stringify(String(endpointUrl))},p=function(e,m){var d=JSON.stringify({event:e,slug:s,timestamp:Date.now(),meta:m||{},compliance:"Ley 25.326 - 0 Cookies"});if(navigator.sendBeacon){navigator.sendBeacon(u,d)}else{fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:d,keepalive:true}).catch(function(){})}};p("preview_view");window.addEventListener("theme-switched",function(ev){p("theme_switch",{theme:ev.detail&&ev.detail.theme})});document.addEventListener("click",function(ev){var t=ev.target&&ev.target.closest&&ev.target.closest("a[href*='wa.me'], a[href*='whatsapp'], a[href*='calendly']");if(t){p("cta_click",{ctaLabel:(t.innerText||"").trim().slice(0,30)})}})}catch(err){}})();</script>`;
+}
+
+/**
+ * Inyecta de forma idempotente el snippet pasivo (< 1 KB) antes de </body> en HTML de previews
+ */
+export function injectTelemetrySnippetIntoHtml(
+  html,
+  { slug = 'demo', endpointUrl = '/api/ping' } = {}
+) {
+  const source = String(html || '');
+  if (!source) return source;
+  if (
+    source.includes('data-nx-telemetry="1"') ||
+    (source.includes('/api/ping') && source.includes('preview_view'))
+  ) {
+    return source;
+  }
+  const snippet = getTelemetryClientSnippet({ slug, endpointUrl });
+  if (/<\/body>/i.test(source)) {
+    return source.replace(/<\/body>/i, `${snippet}\n</body>`);
+  }
+  return `${source}\n${snippet}`;
 }
 
 // Ejecución como CLI
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2);
   const slug = args[0] || 'demo';
-  const endpoint = args[1] || 'https://telemetry.nexobow.site/api/ping';
+  const endpoint = args[1] || '/api/ping';
 
   console.log(`\n📡 GENERADOR DE TELEMETRÍA NEXOBOW (Ley 25.326 Compliant)`);
   console.log(`Slug: ${slug} | Endpoint: ${endpoint}\n`);

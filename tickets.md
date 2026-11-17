@@ -69,3 +69,9 @@
 - [x] [48: Verdad Única en `/admin` (0 Datos Fantasma) y Alineación de Tiers `routemap.md`](./scratch/nexobow-v2/issues/48-admin-single-truth-and-routemap-tiers.md) (`done`)
 - [x] [49: Onboarding de Rutina Real Escuela + Prospección en `/admin/calendar` y Verificación E2E](./scratch/nexobow-v2/issues/49-school-prospecting-schedule-preset.md) (`done`)
 
+## Frente G — Sistema Final Gate 0: Lotes de 10 Links Maps, Preview HUD 10x, Zoho Mail & CRM Prospección (`spec-gate0-validation.md`)
+- [x] [50: NexoBow Preview Studio HUD 10x + Fix WhatsApp `5493489536088` en 10 Templates](./scratch/nexobow-v2/issues/50-preview-studio-hud-10x-whatsapp-fix.md) (`done`)
+- [x] [51: Pipeline Ingesta de 10 Links Google Maps → Calificación, Scraping Email/Web (Cubeta A/B) & Preview Live](./scratch/nexobow-v2/issues/51-intake-10-maps-links-scraping-qualification.md) (`done`)
+- [x] [52: Outbound Ejecutivo con Zoho Mail + Telemetría Pasiva & Endpoint `/api/ping` Hot-Lead](./scratch/nexobow-v2/issues/52-zoho-mail-outbound-and-api-ping-telemetry.md) (`done`)
+- [x] [53: Workstation `/admin/crm` & Cockpit Gate 0 (Email, Zoho, Reseñas, Hot-Lead y WhatsApp/Audio 35s 1-Clic)](./scratch/nexobow-v2/issues/53-admin-crm-gate0-workstation-whatsapp-scripts.md) (`done`)
+

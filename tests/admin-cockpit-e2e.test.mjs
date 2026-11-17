@@ -428,5 +428,99 @@ test("T46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS"
     assert.equal(summary.cashflow.netCashflowArs, 549999);
     assert.ok(decodeURIComponent(summary.ttlAlerts[0].whatsappUrl).includes("tu estudio"));
   });
+
+  // -------------------------------------------------------------
+  // 7. Ticket #53 Gate 0 E2E: Verdad Única en Cockpit, Hot-Leads y Cierre Frente G
+  // -------------------------------------------------------------
+  await t.test("7. Ticket #53 Gate 0 E2E: fetchDailyCockpitSummary sin datos fantasma cuando Supabase está online (error === null), Hot-Leads y cierre de Frente G", async () => {
+    const { fetchDailyCockpitSummary } = await import(
+      join(REPO_ROOT, "web", "src", "lib", "cockpit.ts")
+    );
+
+    const createMockSupabaseClient = (tableRows = {}) => ({
+      from(tableName) {
+        const result = { data: tableRows[tableName] ?? [], error: null };
+        const builder = {
+          select() { return builder; },
+          eq() { return builder; },
+          gte() { return builder; },
+          lte() { return builder; },
+          order() { return builder; },
+          then(resolve, reject) {
+            return Promise.resolve(result).then(resolve, reject);
+          },
+        };
+        return builder;
+      },
+    });
+
+    const today = new Date("2026-11-17T12:00:00Z");
+
+    // A. Supabase online vacío (error === null, data === []) -> 0 datos fantasma
+    const emptyOnlineClient = createMockSupabaseClient({
+      leads: [],
+      habits: [],
+      habit_logs: [],
+      schedule_blocks: [],
+      alaynow_videos: [],
+      financial_transactions: [],
+    });
+
+    const emptySummary = await fetchDailyCockpitSummary(today, emptyOnlineClient);
+    assert.equal(emptySummary.isOffline, false);
+    assert.equal(emptySummary.ttlAlerts.length, 0);
+    assert.equal(emptySummary.hotLeads.length, 0);
+    assert.equal(emptySummary.todayHabits.length, 0);
+    assert.equal(emptySummary.todayBlocks.length, 0);
+    assert.equal(emptySummary.activeVideo, null);
+    assert.equal(emptySummary.cashflow.incomeArs, 0);
+
+    // B. Supabase online con Hot-Lead desde /api/ping
+    const liveHotLeadClient = createMockSupabaseClient({
+      leads: [
+        {
+          id: 24,
+          slug: "24-centro-odonto-palermo",
+          name: "Centro Odonto Palermo",
+          niche: "odontologo",
+          phone: "+5491160001111",
+          funnel_status: "2. Contactado",
+          demo_url: "https://preview.nexobow.site/24-centro-odonto-palermo/",
+          expires_at: "2026-11-22T12:00:00Z",
+          metadata: {
+            email: "turnos@centropalermo.com.ar",
+            email_outreach: { status: "sent", provider: "zoho_mail" },
+            telemetry: {
+              views_count: 4,
+              cta_clicks: 1,
+              selected_theme: "Obsidian Gold",
+              last_event: "theme_switch",
+              last_viewed_at: "2026-11-17T11:55:00Z",
+              is_hot_lead: true,
+            },
+          },
+        },
+      ],
+      habits: [],
+      habit_logs: [],
+      schedule_blocks: [],
+      alaynow_videos: [],
+      financial_transactions: [],
+    });
+
+    const hotSummary = await fetchDailyCockpitSummary(today, liveHotLeadClient);
+    assert.equal(hotSummary.isOffline, false);
+    assert.equal(hotSummary.hotLeads.length, 1);
+    assert.equal(hotSummary.hotLeads[0].selectedTheme, "Obsidian Gold");
+    assert.ok(hotSummary.hotLeads[0].whatsappUrl.includes("Obsidian%20Gold"));
+
+    // C. Documentación de cierre Frente G / Ticket #53
+    const ticketsMd = readFileSync(join(REPO_ROOT, "tickets.md"), "utf8");
+    const memoryMd = readFileSync(join(REPO_ROOT, "memory.md"), "utf8");
+    const brainMd = readFileSync(join(REPO_ROOT, "brain.md"), "utf8");
+    assert.match(ticketsMd, /- \[x\] \[53:.*?\(`done`\)/, "tickets.md debe marcar el Ticket #53 como done");
+    assert.match(memoryMd, /Ticket #53/i, "memory.md debe documentar el Ticket #53");
+    assert.match(brainMd, /Ticket #53/i, "brain.md debe documentar el Ticket #53");
+  });
 });
 

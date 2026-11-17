@@ -10,8 +10,29 @@ import { parse as parseYaml } from "yaml";
 import { defaultLeadStore, buildPreviewUrl } from "./sheets-sync.mjs";
 import { auditVisualLanding } from "./screenshot-qa.mjs";
 import { resolveBookingConfig, resolveLeadMetadata } from "./generate-client-fiche.mjs";
+import {
+  getTelemetryClientSnippet,
+  injectTelemetrySnippetIntoHtml,
+} from "./preview-telemetry.mjs";
 
-export { resolveBookingConfig, resolveLeadMetadata };
+export { resolveBookingConfig, resolveLeadMetadata, injectTelemetrySnippetIntoHtml };
+
+export function injectTelemetryIntoSiteDist(distPath, slug, { endpointUrl = "/api/ping" } = {}) {
+  const htmlPath = join(distPath, "index.html");
+  if (!existsSync(htmlPath)) {
+    return { injected: false, reason: "missing-index-html", htmlPath };
+  }
+  const rawHtml = readFileSync(htmlPath, "utf8");
+  const updatedHtml = injectTelemetrySnippetIntoHtml(rawHtml, { slug, endpointUrl });
+  if (updatedHtml !== rawHtml) {
+    writeFileSync(htmlPath, updatedHtml, "utf8");
+  }
+  const snippetBytes = Buffer.byteLength(
+    getTelemetryClientSnippet({ slug, endpointUrl }),
+    "utf8"
+  );
+  return { injected: true, htmlPath, snippetBytes };
+}
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -572,6 +593,12 @@ function main() {
   if (buildCode !== 0) fail(`Fallo en npm run build (código ${buildCode}).`);
 
   const distPath = join(siteDir, "dist");
+  const telemetryRes = injectTelemetryIntoSiteDist(distPath, slug, { endpointUrl: "/api/ping" });
+  if (telemetryRes.injected) {
+    console.log(
+      `\x1b[32m[build-site] ✓\x1b[0m Telemetría pasiva inyectada hacia /api/ping (${telemetryRes.snippetBytes} bytes < 1 KB, 0 cookies).`
+    );
+  }
   const htmlPath = join(distPath, "index.html");
   let htmlSize = 0;
   if (existsSync(htmlPath)) {
