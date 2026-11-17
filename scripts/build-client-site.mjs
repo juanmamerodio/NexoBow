@@ -274,6 +274,7 @@ function main() {
   let upgradeRequested = false;
   let skipBuild = false;
   let runQa = false;
+  let skipSheetsSync = false;
 
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--base" && args[i + 1]) {
@@ -285,6 +286,8 @@ function main() {
       skipBuild = true;
     } else if (args[i] === "--run-qa") {
       runQa = true;
+    } else if (args[i] === "--skip-sheets-sync") {
+      skipSheetsSync = true;
     } else if (!args[i].startsWith("--") && !ficheArg) {
       ficheArg = args[i];
     }
@@ -623,7 +626,9 @@ function main() {
   }
 
   // Sincronizar URL de preview en Columna G de Google Sheets mediante LeadStore
-  syncBuildPreviewUrlToStore({ fm, slug });
+  if (!skipSheetsSync) {
+    syncBuildPreviewUrlToStore({ fm, slug });
+  }
 
   if (runQa) {
     console.log(`\x1b[36m[build-site]\x1b[0m Ejecutando QA visual dual-viewport para ${slug}...`);
