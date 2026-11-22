@@ -1,0 +1,254 @@
+{
+  "name": "NexoBow Autonomous - 03 Review Booster 5 Estrellas",
+  "active": false,
+  "versionId": "nexobow-gate1-review-booster-v1",
+  "meta": {
+    "instanceId": "nexobow-autonomous-gate1",
+    "templateCredsSetupCompleted": false
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Argentina/Buenos_Aires",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "tags": [
+    { "name": "nexobow-gate1" },
+    { "name": "review-booster" }
+  ],
+  "nodes": [
+    {
+      "id": "webhook-sync-booster-config",
+      "name": "Webhook Sincronizar Config Review Booster",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [140, 80],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "review-booster-config",
+        "responseMode": "onReceived",
+        "options": {}
+      }
+    },
+    {
+      "id": "hash-expected-config-key",
+      "name": "Hash Clave Esperada Config",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [360, 80],
+      "parameters": {
+        "action": "hash",
+        "type": "SHA256",
+        "value": "={{$env.AUTONOMOUS_INGEST_KEY}}",
+        "dataPropertyName": "expectedKeySha256"
+      }
+    },
+    {
+      "id": "hash-provided-config-key",
+      "name": "Hash Clave Recibida Config",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [580, 80],
+      "parameters": {
+        "action": "hash",
+        "type": "SHA256",
+        "value": "={{ String($json.headers?.['x-autonomous-key'] || $json.headers?.['X-Autonomous-Key'] || '') }}",
+        "dataPropertyName": "providedKeySha256"
+      }
+    },
+    {
+      "id": "verify-config-key-and-payload",
+      "name": "Validar Clave y Payload Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [800, 80],
+      "parameters": {
+        "jsCode": "function constantTimeHexEqual(hexA, hexB) {\n  if (!/^[0-9a-f]{64}$/i.test(hexA) || !/^[0-9a-f]{64}$/i.test(hexB)) return false;\n  const a = hexA.toLowerCase();\n  const b = hexB.toLowerCase();\n  try {\n    const { timingSafeEqual } = require('node:crypto');\n    return timingSafeEqual(Buffer.from(a, 'hex'), Buffer.from(b, 'hex'));\n  } catch {\n    let diff = 0;\n    for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);\n    return diff === 0;\n  }\n}\nconst GOOGLE_MAPS_URL_RE = /^https:\\/\\/(?:(?:search|www|maps)\\.google\\.(?:com|[a-z]{2,3}(?:\\.[a-z]{2})?)|maps\\.app\\.goo\\.gl)\\//i;\nconst item = $input.first().json;\nconst headers = item.headers || {};\nconst rawKey = String(headers['x-autonomous-key'] || headers['X-Autonomous-Key'] || '').trim();\nif (!rawKey || !constantTimeHexEqual(String(item.providedKeySha256 || ''), String(item.expectedKeySha256 || ''))) {\n  throw new Error('Acceso no autorizado al webhook de configuración review-booster');\n}\nconst payload = item.body && typeof item.body === 'object' ? item.body : item;\nconst clientSlug = String(payload.client_slug || '').trim();\nif (!/^[a-z0-9-]+$/i.test(clientSlug)) {\n  throw new Error('client_slug inválido en configuración review-booster');\n}\nconst rawReviewUrl = payload.review_url ? String(payload.review_url).trim() : '';\nif (rawReviewUrl && !GOOGLE_MAPS_URL_RE.test(rawReviewUrl)) {\n  throw new Error('review_url rechazada: solo se permiten hosts oficiales de Google Maps por HTTPS');\n}\nconst rawPlaceId = payload.maps_place_id ? String(payload.maps_place_id).trim() : '';\nconst safePlaceId = /^[A-Za-z0-9_-]{10,200}$/.test(rawPlaceId) ? rawPlaceId : null;\nreturn [{\n  json: {\n    client_slug: clientSlug,\n    validatedConfig: {\n      workflow_id: '03-review-booster',\n      client_slug: clientSlug,\n      provider_name: String(payload.provider_name || '').trim(),\n      specialty: String(payload.specialty || '').trim(),\n      maps_place_id: safePlaceId,\n      review_url: rawReviewUrl || null,\n      compliance: {\n        ley_25326: true,\n        require_opt_in: true,\n        respect_opt_out_keyword: 'baja',\n        no_incentives_policy: true,\n        idempotent_reminder_type: 'review_5star'\n      }\n    }\n  }\n}];"
+      }
+    },
+    {
+      "id": "redis-save-booster-config",
+      "name": "Redis Guardar Config Prestador",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [1040, 80],
+      "parameters": {
+        "operation": "set",
+        "key": "=review_booster:config:{{ $json.client_slug }}",
+        "value": "={{ JSON.stringify($json.validatedConfig) }}"
+      }
+    },
+    {
+      "id": "cron-post-consult-reviews",
+      "name": "Cron Post-Consultoria 2 a 4 Horas",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [140, 300],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 30
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "pg-select-completed-consults",
+      "name": "Postgres Turnos Concretados Elegibles",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [400, 300],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT a.id, a.client_slug, a.patient_phone_e164, a.patient_first_name, a.specialty, a.updated_at FROM appointments a WHERE a.status = 'concretado' AND a.review_requested_at IS NULL AND a.updated_at BETWEEN now() - interval '4 hours' AND now() - interval '2 hours' AND NOT EXISTS (SELECT 1 FROM conversation_state cs WHERE cs.client_slug = a.client_slug AND cs.patient_phone_hash = a.patient_phone_hash AND cs.opted_out = true) AND NOT EXISTS (SELECT 1 FROM reminder_dispatches rd WHERE rd.appointment_id = a.id AND rd.reminder_type = 'review_5star' AND rd.status <> 'fallido') ORDER BY a.updated_at ASC;"
+      }
+    },
+    {
+      "id": "redis-load-booster-config",
+      "name": "Redis Leer Config Prestador",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [660, 300],
+      "parameters": {
+        "operation": "get",
+        "propertyName": "boosterConfigRaw",
+        "key": "=review_booster:config:{{ $json.client_slug }}"
+      }
+    },
+    {
+      "id": "build-review-booster-message",
+      "name": "Construir Mensaje Review Booster Paridad",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [920, 300],
+      "parameters": {
+        "jsCode": "const GOOGLE_MAPS_URL_RE = /^https:\\/\\/(?:(?:search|www|maps)\\.google\\.(?:com|[a-z]{2,3}(?:\\.[a-z]{2})?)|maps\\.app\\.goo\\.gl)\\//i;\nconst rows = $('Postgres Turnos Concretados Elegibles').all();\nconst configs = $input.all();\nreturn rows.map((item, idx) => {\n  const row = item.json;\n  const rawCfg = configs[idx]?.json?.boosterConfigRaw;\n  let cfg = {};\n  if (typeof rawCfg === 'string' && rawCfg.trim()) {\n    try { cfg = JSON.parse(rawCfg); } catch {}\n  } else if (rawCfg && typeof rawCfg === 'object') {\n    cfg = rawCfg;\n  }\n  const placeId = String(cfg.maps_place_id || row.maps_place_id || '').trim();\n  const providerName = String(cfg.provider_name || row.provider_name || row.client_slug || 'nuestro consultorio').trim();\n  const specialty = String(cfg.specialty || row.specialty || '').trim();\n  const firstName = String(row.patient_first_name || '').trim();\n  const cfgUrl = String(cfg.review_url || '').trim();\n  const reviewUrl = /^[A-Za-z0-9_-]{10,200}$/.test(placeId)\n    ? `https://search.google.com/local/writereview?placeid=${encodeURIComponent(placeId)}`\n    : GOOGLE_MAPS_URL_RE.test(cfgUrl)\n      ? cfgUrl\n      : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(providerName)}`;\n  const greeting = firstName ? `Hola ${firstName}` : 'Hola';\n  const specialtyText = specialty ? ` (${specialty})` : '';\n  const messageText = `${greeting}, ¿cómo estás? Te escribimos de parte de ${providerName}${specialtyText} para agradecerte por la consulta de hoy. Si podés compartir en 30 segundos cómo fue tu experiencia en Google Maps, ayudás a otros pacientes a encontrarnos con tranquilidad: ${reviewUrl} Si preferís no recibir este tipo de avisos, respondé \"baja\" y lo desactivamos de inmediato.`;\n  return {\n    json: {\n      workflow_id: '03-review-booster',\n      idempotent_reminder_type: 'review_5star',\n      appointment_id: row.id,\n      client_slug: row.client_slug,\n      provider_name: providerName,\n      maps_place_id: placeId || null,\n      to: row.patient_phone_e164,\n      review_url: reviewUrl,\n      messageText,\n      telemetry_event: {\n        client_slug: row.client_slug,\n        event_type: 'review_invite_sent',\n        count_delta: 1\n      }\n    }\n  };\n});"
+      }
+    },
+    {
+      "id": "send-review-invite-waba",
+      "name": "Enviar Invitacion Resena WABA",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1180, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v21.0/me/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.META_WABA_ACCESS_TOKEN}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ messaging_product: 'whatsapp', recipient_type: 'individual', to: $json.to, type: 'text', text: { body: $json.messageText } }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "pg-mark-review-dispatched",
+      "name": "Registrar Dispatch review_5star Idempotente",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [1440, 300],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH upd AS (UPDATE appointments SET review_requested_at = now(), updated_at = now() WHERE id = $1::uuid RETURNING id) INSERT INTO reminder_dispatches (appointment_id, reminder_type, status, provider_message_id) SELECT id, 'review_5star', 'enviado', $2 FROM upd ON CONFLICT (appointment_id, reminder_type) DO UPDATE SET status = 'enviado', provider_message_id = COALESCE(EXCLUDED.provider_message_id, reminder_dispatches.provider_message_id), dispatched_at = now(), updated_at = now() WHERE reminder_dispatches.status = 'fallido';",
+        "options": {
+          "queryReplacement": "={{ [$('Construir Mensaje Review Booster Paridad').item.json.appointment_id, $json.messages?.[0]?.id || null] }}"
+        }
+      }
+    },
+    {
+      "id": "ingest-review-telemetry",
+      "name": "Enviar Metrica review_invite_sent Sin PII",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1700, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.NEXOBOW_INGEST_URL}}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Autonomous-Key",
+              "value": "={{$env.AUTONOMOUS_INGEST_KEY}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ client_slug: $('Construir Mensaje Review Booster Paridad').item.json.client_slug, event_type: 'review_invite_sent', period_date: new Date().toISOString().slice(0, 10), count_delta: 1, engine_version: 'gate1-v1', summary: { workflow_id: '03-review-booster', idempotent_reminder_type: 'review_5star' } }) }}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Sincronizar Config Review Booster": {
+      "main": [
+        [{ "node": "Hash Clave Esperada Config", "type": "main", "index": 0 }]
+      ]
+    },
+    "Hash Clave Esperada Config": {
+      "main": [
+        [{ "node": "Hash Clave Recibida Config", "type": "main", "index": 0 }]
+      ]
+    },
+    "Hash Clave Recibida Config": {
+      "main": [
+        [{ "node": "Validar Clave y Payload Config", "type": "main", "index": 0 }]
+      ]
+    },
+    "Validar Clave y Payload Config": {
+      "main": [
+        [{ "node": "Redis Guardar Config Prestador", "type": "main", "index": 0 }]
+      ]
+    },
+    "Cron Post-Consultoria 2 a 4 Horas": {
+      "main": [
+        [{ "node": "Postgres Turnos Concretados Elegibles", "type": "main", "index": 0 }]
+      ]
+    },
+    "Postgres Turnos Concretados Elegibles": {
+      "main": [
+        [{ "node": "Redis Leer Config Prestador", "type": "main", "index": 0 }]
+      ]
+    },
+    "Redis Leer Config Prestador": {
+      "main": [
+        [{ "node": "Construir Mensaje Review Booster Paridad", "type": "main", "index": 0 }]
+      ]
+    },
+    "Construir Mensaje Review Booster Paridad": {
+      "main": [
+        [{ "node": "Enviar Invitacion Resena WABA", "type": "main", "index": 0 }]
+      ]
+    },
+    "Enviar Invitacion Resena WABA": {
+      "main": [
+        [{ "node": "Registrar Dispatch review_5star Idempotente", "type": "main", "index": 0 }]
+      ]
+    },
+    "Registrar Dispatch review_5star Idempotente": {
+      "main": [
+        [{ "node": "Enviar Metrica review_invite_sent Sin PII", "type": "main", "index": 0 }]
+      ]
+    }
+  }
+}

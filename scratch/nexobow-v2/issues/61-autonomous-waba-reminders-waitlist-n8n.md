@@ -11,7 +11,7 @@
 **Blocks:**
 - 62: Endpoint `/api/v1/autonomous/ingest` (Sin PII), Panel Gate 1 en `/admin/settings`, Humanización Ampliada & Auditoría Final E2E (Cierre Frente I)
 
-**Status:** ready-for-agent
+**Status:** done
 
 ## Archivos a Crear o Modificar
 
@@ -34,11 +34,11 @@
 
 ## Acceptance Criteria
 
-- [ ] **[RED]** Crear `tests/autonomous-engine.test.mjs` cubriendo todo el Seam 5 (handshake `GET`, firma HMAC, normalización WABA, debounce `8–12s`, `IntentClassifier` + guardarraíl de urgencia, recordatorios `24h`/`2h` idempotentes, lista de espera FIFO Ley 25.326 y validación estructural de los 3 JSON en `workflows/n8n/`); confirmar fallos antes de implementar.
-- [ ] **[GREEN]** Implementar `scripts/autonomous/waba-webhook.mjs` con todas sus funciones puras exportadas y cero dependencias externas ni llamadas de red.
-- [ ] **[GREEN]** Implementar `scripts/autonomous/appointment-reminders.mjs` garantizando idempotencia `24h`/`2h`, voseo +40 sin frases prohibidas, lista de espera FIFO con consentimiento Ley 25.326 y rotación de ofertas expiradas.
-- [ ] **[GREEN]** Crear `workflows/n8n/01-waba-receptionist.json`, `workflows/n8n/02-reminders-waitlist.json` y `workflows/n8n/03-review-booster.json` referenciando exclusivamente variables `{{$env.*}}` sin credenciales literales ni PII en el payload saliente hacia `/api/v1/autonomous/ingest`.
-- [ ] **[VERIFY]** Ejecutar el comando de validación exacto comprobando todas las pruebas de motor autónomo, reseñas e infraestructura pasando en verde al 100% offline.
+- [x] **[RED]** Crear `tests/autonomous-engine.test.mjs` cubriendo todo el Seam 5 (handshake `GET`, firma HMAC, normalización WABA, debounce `8–12s`, `IntentClassifier` + guardarraíl de urgencia, recordatorios `24h`/`2h` idempotentes, lista de espera FIFO Ley 25.326 y validación estructural de los 3 JSON en `workflows/n8n/`); confirmar fallos antes de implementar.
+- [x] **[GREEN]** Implementar `scripts/autonomous/waba-webhook.mjs` con todas sus funciones puras exportadas y cero dependencias externas ni llamadas de red.
+- [x] **[GREEN]** Implementar `scripts/autonomous/appointment-reminders.mjs` garantizando idempotencia `24h`/`2h`, voseo +40 sin frases prohibidas, lista de espera FIFO con consentimiento Ley 25.326 y rotación de ofertas expiradas.
+- [x] **[GREEN]** Crear `workflows/n8n/01-waba-receptionist.json`, `workflows/n8n/02-reminders-waitlist.json` y `workflows/n8n/03-review-booster.json` referenciando exclusivamente variables `{{$env.*}}` sin credenciales literales ni PII en el payload saliente hacia `/api/v1/autonomous/ingest`.
+- [x] **[VERIFY]** Ejecutar el comando de validación exacto comprobando todas las pruebas de motor autónomo, reseñas e infraestructura pasando en verde al 100% offline.
 
 ## Comando de Validación Exacto
 

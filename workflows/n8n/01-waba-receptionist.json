@@ -1,0 +1,512 @@
+{
+  "name": "NexoBow Autonomous - 01 Recepcionista WABA",
+  "active": false,
+  "versionId": "nexobow-gate1-waba-receptionist-v1",
+  "meta": {
+    "instanceId": "nexobow-autonomous-gate1",
+    "templateCredsSetupCompleted": false
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Argentina/Buenos_Aires",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "tags": [
+    { "name": "nexobow-gate1" },
+    { "name": "waba" }
+  ],
+  "nodes": [
+    {
+      "id": "waba-webhook-get",
+      "name": "Webhook WABA GET Challenge",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [120, 140],
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "waba",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "hash-verify-token",
+      "name": "Hash Token Verificacion Meta",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [320, 140],
+      "parameters": {
+        "action": "hash",
+        "type": "SHA256",
+        "value": "={{$env.META_WABA_VERIFY_TOKEN}}",
+        "dataPropertyName": "expectedTokenSha256"
+      }
+    },
+    {
+      "id": "hash-incoming-token",
+      "name": "Hash Token Entrante Meta",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [520, 140],
+      "parameters": {
+        "action": "hash",
+        "type": "SHA256",
+        "value": "={{ String($json.query?.['hub.verify_token'] || $json.query?.token || '') }}",
+        "dataPropertyName": "providedTokenSha256"
+      }
+    },
+    {
+      "id": "verify-get-challenge",
+      "name": "Validar Handshake GET Meta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [720, 140],
+      "parameters": {
+        "jsCode": "function constantTimeHexEqual(hexA, hexB) {\n  if (!/^[0-9a-f]{64}$/i.test(hexA) || !/^[0-9a-f]{64}$/i.test(hexB)) return false;\n  const a = hexA.toLowerCase();\n  const b = hexB.toLowerCase();\n  try {\n    const { timingSafeEqual } = require('node:crypto');\n    return timingSafeEqual(Buffer.from(a, 'hex'), Buffer.from(b, 'hex'));\n  } catch {\n    let diff = 0;\n    for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);\n    return diff === 0;\n  }\n}\nconst item = $input.first().json;\nconst query = item.query || {};\nconst mode = String(query['hub.mode'] || query.mode || '').trim();\nconst rawToken = String(query['hub.verify_token'] || query.token || '');\nconst challenge = String(query['hub.challenge'] || query.challenge || '');\nconst expectedHex = String(item.expectedTokenSha256 || '').trim();\nconst providedHex = String(item.providedTokenSha256 || '').trim();\nif (!rawToken || mode !== 'subscribe' || !challenge) {\n  return [{ json: { ok: false, status: 403, body: 'Forbidden' } }];\n}\nconst ok = constantTimeHexEqual(providedHex, expectedHex);\nreturn [{ json: { ok, status: ok ? 200 : 403, body: ok ? challenge : 'Forbidden' } }];"
+      }
+    },
+    {
+      "id": "respond-get-challenge",
+      "name": "Responder Handshake Meta",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [940, 140],
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.body }}",
+        "options": {
+          "responseCode": "={{ $json.status }}"
+        }
+      }
+    },
+    {
+      "id": "waba-webhook-post",
+      "name": "Webhook WABA POST Eventos",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [120, 440],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "waba",
+        "responseMode": "responseNode",
+        "options": {
+          "rawBody": true
+        }
+      }
+    },
+    {
+      "id": "hmac-expected-signature",
+      "name": "Calcular HMAC Esperado Meta",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [320, 440],
+      "parameters": {
+        "action": "hmac",
+        "type": "SHA256",
+        "value": "={{ typeof $json.rawBody === 'string' ? $json.rawBody : JSON.stringify($json.body || {}) }}",
+        "secret": "={{$env.META_WABA_APP_SECRET}}",
+        "dataPropertyName": "expectedSignatureHex"
+      }
+    },
+    {
+      "id": "verify-hmac-signature",
+      "name": "Verificar Firma X-Hub-Signature-256",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [540, 440],
+      "parameters": {
+        "jsCode": "function constantTimeHexEqual(hexA, hexB) {\n  if (!/^[0-9a-f]{64}$/i.test(hexA) || !/^[0-9a-f]{64}$/i.test(hexB)) return false;\n  const a = hexA.toLowerCase();\n  const b = hexB.toLowerCase();\n  try {\n    const { timingSafeEqual } = require('node:crypto');\n    return timingSafeEqual(Buffer.from(a, 'hex'), Buffer.from(b, 'hex'));\n  } catch {\n    let diff = 0;\n    for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);\n    return diff === 0;\n  }\n}\nconst item = $input.first().json;\nconst headers = item.headers || {};\nconst sig = String(headers['x-hub-signature-256'] || headers['X-Hub-Signature-256'] || '').trim();\nconst expectedHex = String(item.expectedSignatureHex || '').trim();\nconst match = sig.match(/^sha256=([0-9a-f]{64})$/i);\nif (!match || !constantTimeHexEqual(match[1], expectedHex)) {\n  throw new Error('Firma X-Hub-Signature-256 ausente o inválida en tiempo constante');\n}\nconst rawBody = typeof item.rawBody === 'string' ? item.rawBody : JSON.stringify(item.body || {});\nconst payload = item.body || JSON.parse(rawBody);\nconst entry = Array.isArray(payload.entry) ? payload.entry : [];\nconst messages = [];\nfor (const e of entry) {\n  for (const ch of (e.changes || [])) {\n    const val = ch.value || {};\n    for (const m of (val.messages || [])) {\n      const digits = String(m.from || '').replace(/\\D+/g, '');\n      messages.push({\n        json: {\n          ignoreStatusOnly: false,\n          client_slug: String(val.metadata?.display_phone_number || 'clinica-principal'),\n          messageId: String(m.id || ''),\n          from: String(m.from || ''),\n          fromDigits: digits,\n          type: String(m.type || 'text').toLowerCase(),\n          text: m.text?.body || m.interactive?.button_reply?.title || m.interactive?.list_reply?.title || m.audio?.transcript || '',\n          mediaId: m.audio?.id || null,\n          buttonId: m.interactive?.button_reply?.id || null,\n          timestamp: String(m.timestamp || Math.floor(Date.now() / 1000))\n        }\n      });\n    }\n  }\n}\nreturn messages.length ? messages : [{ json: { ignoreStatusOnly: true } }];"
+      }
+    },
+    {
+      "id": "respond-waba-ack",
+      "name": "Responder ACK 200 Meta",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [760, 290],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"received\":true}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    },
+    {
+      "id": "if-has-incoming-messages",
+      "name": "Si Hay Mensajes Entrantes",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [760, 500],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "not-status-only",
+              "leftValue": "={{ $json.ignoreStatusOnly }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "has-message-id",
+              "leftValue": "={{ $json.messageId }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "hash-patient-phone",
+      "name": "Hash Telefono Paciente",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [980, 500],
+      "parameters": {
+        "action": "hash",
+        "type": "SHA256",
+        "value": "={{ $json.fromDigits }}",
+        "dataPropertyName": "patientPhoneHash"
+      }
+    },
+    {
+      "id": "if-audio-message",
+      "name": "Si Es Audio Condicional",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1180, 500],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false
+          },
+          "conditions": [
+            {
+              "id": "cond-audio",
+              "leftValue": "={{ $json.type }}",
+              "rightValue": "audio",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "fetch-waba-audio-meta",
+      "name": "Consultar Audio WABA Meta",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1400, 380],
+      "parameters": {
+        "method": "GET",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.mediaId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.META_WABA_ACCESS_TOKEN}}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "normalize-audio-transcript",
+      "name": "Consolidar Texto Nota de Voz",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1620, 380],
+      "parameters": {
+        "jsCode": "const baseMsg = $('Hash Telefono Paciente').item.json;\nconst audioMeta = $input.first().json || {};\nconst resolvedText = String(audioMeta.transcript || baseMsg.text || '').trim() || `Nota de voz recibida (${audioMeta.mime_type || 'audio/ogg'})`;\nreturn [{ json: { ...baseMsg, text: resolvedText, audioMeta: { mediaId: baseMsg.mediaId, mimeType: audioMeta.mime_type || null, mediaUrl: audioMeta.url || null } } }];"
+      }
+    },
+    {
+      "id": "redis-read-buffer",
+      "name": "Redis Leer Buffer Debounce",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [1840, 500],
+      "parameters": {
+        "operation": "get",
+        "propertyName": "debounceRaw",
+        "key": "=waba:debounce:{{ $('Hash Telefono Paciente').item.json.client_slug }}:{{ $('Hash Telefono Paciente').item.json.patientPhoneHash }}"
+      }
+    },
+    {
+      "id": "merge-burst-buffer",
+      "name": "Consolidar Rafaga en Buffer",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2060, 500],
+      "parameters": {
+        "jsCode": "const baseMsg = $('Hash Telefono Paciente').item.json;\nlet maybeAudio = null;\ntry { maybeAudio = $('Consolidar Texto Nota de Voz').item?.json || null; } catch {}\nconst effectiveMsg = maybeAudio && maybeAudio.messageId === baseMsg.messageId ? maybeAudio : baseMsg;\nconst bufferKey = `waba:debounce:${effectiveMsg.client_slug}:${effectiveMsg.patientPhoneHash}`;\nconst raw = $input.first().json.debounceRaw;\nlet state = { messages: [], latestMessageId: '' };\nif (typeof raw === 'string' && raw.trim()) {\n  try { state = JSON.parse(raw); } catch {}\n} else if (raw && typeof raw === 'object') {\n  state = raw;\n}\nconst messages = Array.isArray(state.messages) ? [...state.messages] : [];\nif (!messages.some((m) => m.messageId === effectiveMsg.messageId)) {\n  messages.push({ messageId: effectiveMsg.messageId, text: String(effectiveMsg.text || '').trim(), type: effectiveMsg.type, ts: Date.now() });\n}\nconst bufferState = { messages, latestMessageId: effectiveMsg.messageId, flushAt: Date.now() + 10000 };\nreturn [{ json: { ...effectiveMsg, bufferKey, bufferState } }];"
+      }
+    },
+    {
+      "id": "redis-save-buffer",
+      "name": "Redis Guardar Buffer Debounce 10s",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [2280, 500],
+      "parameters": {
+        "operation": "set",
+        "key": "={{ $json.bufferKey }}",
+        "value": "={{ JSON.stringify($json.bufferState) }}",
+        "expire": true,
+        "ttl": 60
+      }
+    },
+    {
+      "id": "wait-debounce-10s",
+      "name": "Esperar Ventana Debounce 10s",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [2500, 500],
+      "parameters": {
+        "amount": 10,
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "redis-read-after-wait",
+      "name": "Redis Leer Buffer Tras Espera",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [2720, 500],
+      "parameters": {
+        "operation": "get",
+        "propertyName": "debounceAfterRaw",
+        "key": "={{ $('Consolidar Rafaga en Buffer').item.json.bufferKey }}"
+      }
+    },
+    {
+      "id": "select-burst-leader",
+      "name": "Consolidar y Filtrar Lider de Rafaga",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2940, 500],
+      "parameters": {
+        "jsCode": "const current = $('Consolidar Rafaga en Buffer').item.json;\nconst raw = $input.first().json.debounceAfterRaw;\nif (!raw) return [];\nlet state;\ntry {\n  state = typeof raw === 'string' ? JSON.parse(raw) : raw;\n} catch {\n  return [];\n}\nif (!state || state.latestMessageId !== current.messageId) {\n  return [];\n}\nconst mergedText = (Array.isArray(state.messages) ? state.messages : [])\n  .map((m) => String(m.text || '').trim())\n  .filter(Boolean)\n  .join('\\n');\nreturn [{ json: { ...current, mergedText, messageCount: (state.messages || []).length } }];"
+      }
+    },
+    {
+      "id": "redis-delete-consumed",
+      "name": "Redis Borrar Buffer Consumido",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [3160, 500],
+      "parameters": {
+        "operation": "delete",
+        "key": "={{ $json.bufferKey }}"
+      }
+    },
+    {
+      "id": "classify-intent-rules",
+      "name": "IntentClassifier Determinista $0",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3380, 500],
+      "parameters": {
+        "jsCode": "const data = $('Consolidar y Filtrar Lider de Rafaga').item.json;\nconst text = String(data.mergedText || data.text || '').trim();\nconst isUrgency = /(dolor\\s+(?:de\\s+|en\\s+el\\s+)?pecho|falta\\s+(?:de|el)\\s+aire|no\\s+puedo\\s+respirar|sangrado|hemorragia|desmayo|convulsi[oó]n|fiebre\\s+alta|urgencia|emergencia|guardia)/i.test(text);\nlet intent = 'turno_nuevo';\nlet requiresHumanHandoff = false;\nlet eventType = 'heartbeat';\nif (isUrgency) {\n  intent = 'urgencia_clinica';\n  requiresHumanHandoff = true;\n  eventType = 'human_handoff';\n} else if (/(cancelar|anular|dar\\s+de\\s+baja.*turno)/i.test(text)) {\n  intent = 'cancelar_turno';\n  eventType = 'appointment_cancelled';\n} else if (/^\\s*baja\\s*[.!]*$/i.test(text) || /darme\\s+de\\s+baja/i.test(text)) {\n  intent = 'baja_comunicaciones';\n} else if (/(reprogramar|reagendar|cambiar.*horario)/i.test(text)) {\n  intent = 'reprogramar_turno';\n  eventType = 'appointment_rescheduled';\n} else if (/(confirmar|confirmo)/i.test(text)) {\n  intent = 'confirmar_turno';\n  eventType = 'appointment_confirmed';\n} else if (/(arancel|precio|valor|obra\\s+social|prepaga)/i.test(text)) {\n  intent = 'consulta_arancel_obra_social';\n} else if (/(hablar\\s+con|persona|secretar[ií]a|humano)/i.test(text)) {\n  intent = 'handoff_humano';\n  requiresHumanHandoff = true;\n  eventType = 'human_handoff';\n}\nconst replyText = requiresHumanHandoff\n  ? 'Recibimos tu consulta con prioridad. Derivamos este aviso al equipo profesional para que se comunique con vos a la brevedad.'\n  : intent === 'baja_comunicaciones'\n    ? 'Listo, registramos tu baja y no vas a recibir nuevos avisos automáticos por este medio.'\n    : '¡Hola! Gracias por escribirnos. Ya registramos tu consulta para ayudarte con tu turno.';\nreturn [{ json: { ...data, intent, requiresHumanHandoff, event_type: eventType, replyText } }];"
+      }
+    },
+    {
+      "id": "pg-upsert-conversation",
+      "name": "Postgres Upsert conversation_state y appointments",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [3600, 500],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH conv AS (INSERT INTO conversation_state (client_slug, patient_phone_hash, current_intent, handoff_active, opted_out, last_message_at) VALUES ($1, $2, $3, $4, $5, now()) ON CONFLICT (client_slug, patient_phone_hash) DO UPDATE SET current_intent = EXCLUDED.current_intent, handoff_active = EXCLUDED.handoff_active OR conversation_state.handoff_active, opted_out = CASE WHEN $5 THEN true ELSE conversation_state.opted_out END, last_message_at = now() RETURNING id) SELECT conv.id AS conversation_id, (SELECT count(*) FROM appointments a WHERE a.client_slug = $1 AND a.patient_phone_hash = $2 AND a.status IN ('pendiente', 'confirmado')) AS active_appointments FROM conv;",
+        "options": {
+          "queryReplacement": "={{ [$json.client_slug, $json.patientPhoneHash, $json.intent, $json.requiresHumanHandoff, $json.intent === 'baja_comunicaciones'] }}"
+        }
+      }
+    },
+    {
+      "id": "send-waba-reply",
+      "name": "Enviar Respuesta WABA",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3840, 400],
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v21.0/me/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.META_WABA_ACCESS_TOKEN}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ messaging_product: 'whatsapp', to: $('IntentClassifier Determinista $0').item.json.from, type: 'text', text: { body: $('IntentClassifier Determinista $0').item.json.replyText } }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "ingest-aggregated-event",
+      "name": "Enviar Evento Agregado Sin PII",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3840, 600],
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.NEXOBOW_INGEST_URL}}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Autonomous-Key",
+              "value": "={{$env.AUTONOMOUS_INGEST_KEY}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ client_slug: $('IntentClassifier Determinista $0').item.json.client_slug, event_type: $('IntentClassifier Determinista $0').item.json.event_type, period_date: new Date().toISOString().slice(0, 10), count_delta: 1, engine_version: 'gate1-v1', summary: { workflow_id: '01-waba-receptionist', intent: $('IntentClassifier Determinista $0').item.json.intent, requires_human_handoff: Boolean($('IntentClassifier Determinista $0').item.json.requiresHumanHandoff), merged_messages: $('IntentClassifier Determinista $0').item.json.messageCount || 1 } }) }}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Webhook WABA GET Challenge": {
+      "main": [
+        [{ "node": "Hash Token Verificacion Meta", "type": "main", "index": 0 }]
+      ]
+    },
+    "Hash Token Verificacion Meta": {
+      "main": [
+        [{ "node": "Hash Token Entrante Meta", "type": "main", "index": 0 }]
+      ]
+    },
+    "Hash Token Entrante Meta": {
+      "main": [
+        [{ "node": "Validar Handshake GET Meta", "type": "main", "index": 0 }]
+      ]
+    },
+    "Validar Handshake GET Meta": {
+      "main": [
+        [{ "node": "Responder Handshake Meta", "type": "main", "index": 0 }]
+      ]
+    },
+    "Webhook WABA POST Eventos": {
+      "main": [
+        [{ "node": "Calcular HMAC Esperado Meta", "type": "main", "index": 0 }]
+      ]
+    },
+    "Calcular HMAC Esperado Meta": {
+      "main": [
+        [{ "node": "Verificar Firma X-Hub-Signature-256", "type": "main", "index": 0 }]
+      ]
+    },
+    "Verificar Firma X-Hub-Signature-256": {
+      "main": [
+        [
+          { "node": "Responder ACK 200 Meta", "type": "main", "index": 0 },
+          { "node": "Si Hay Mensajes Entrantes", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Si Hay Mensajes Entrantes": {
+      "main": [
+        [{ "node": "Hash Telefono Paciente", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Hash Telefono Paciente": {
+      "main": [
+        [{ "node": "Si Es Audio Condicional", "type": "main", "index": 0 }]
+      ]
+    },
+    "Si Es Audio Condicional": {
+      "main": [
+        [{ "node": "Consultar Audio WABA Meta", "type": "main", "index": 0 }],
+        [{ "node": "Redis Leer Buffer Debounce", "type": "main", "index": 0 }]
+      ]
+    },
+    "Consultar Audio WABA Meta": {
+      "main": [
+        [{ "node": "Consolidar Texto Nota de Voz", "type": "main", "index": 0 }]
+      ]
+    },
+    "Consolidar Texto Nota de Voz": {
+      "main": [
+        [{ "node": "Redis Leer Buffer Debounce", "type": "main", "index": 0 }]
+      ]
+    },
+    "Redis Leer Buffer Debounce": {
+      "main": [
+        [{ "node": "Consolidar Rafaga en Buffer", "type": "main", "index": 0 }]
+      ]
+    },
+    "Consolidar Rafaga en Buffer": {
+      "main": [
+        [{ "node": "Redis Guardar Buffer Debounce 10s", "type": "main", "index": 0 }]
+      ]
+    },
+    "Redis Guardar Buffer Debounce 10s": {
+      "main": [
+        [{ "node": "Esperar Ventana Debounce 10s", "type": "main", "index": 0 }]
+      ]
+    },
+    "Esperar Ventana Debounce 10s": {
+      "main": [
+        [{ "node": "Redis Leer Buffer Tras Espera", "type": "main", "index": 0 }]
+      ]
+    },
+    "Redis Leer Buffer Tras Espera": {
+      "main": [
+        [{ "node": "Consolidar y Filtrar Lider de Rafaga", "type": "main", "index": 0 }]
+      ]
+    },
+    "Consolidar y Filtrar Lider de Rafaga": {
+      "main": [
+        [{ "node": "Redis Borrar Buffer Consumido", "type": "main", "index": 0 }]
+      ]
+    },
+    "Redis Borrar Buffer Consumido": {
+      "main": [
+        [{ "node": "IntentClassifier Determinista $0", "type": "main", "index": 0 }]
+      ]
+    },
+    "IntentClassifier Determinista $0": {
+      "main": [
+        [{ "node": "Postgres Upsert conversation_state y appointments", "type": "main", "index": 0 }]
+      ]
+    },
+    "Postgres Upsert conversation_state y appointments": {
+      "main": [
+        [
+          { "node": "Enviar Respuesta WABA", "type": "main", "index": 0 },
+          { "node": "Enviar Evento Agregado Sin PII", "type": "main", "index": 0 }
+        ]
+      ]
+    }
+  }
+}

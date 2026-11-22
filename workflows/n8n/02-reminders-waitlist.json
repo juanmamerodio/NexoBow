@@ -1,0 +1,335 @@
+{
+  "name": "NexoBow Autonomous - 02 Recordatorios 24h/2h & Lista de Espera FIFO",
+  "active": false,
+  "versionId": "nexobow-gate1-reminders-waitlist-v1",
+  "meta": {
+    "instanceId": "nexobow-autonomous-gate1",
+    "templateCredsSetupCompleted": false
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Argentina/Buenos_Aires",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "tags": [
+    { "name": "nexobow-gate1" },
+    { "name": "reminders" },
+    { "name": "waitlist" }
+  ],
+  "nodes": [
+    {
+      "id": "cron-hourly-reminders",
+      "name": "Cron Horario Recordatorios 24h y 2h",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [140, 180],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "pg-select-due-reminders",
+      "name": "Postgres Buscar Turnos 24h y 2h Idempotentes",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [380, 180],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH due AS (SELECT a.id, a.client_slug, a.patient_phone_e164, a.patient_first_name, a.specialty, a.scheduled_at, CASE WHEN a.confirmed_2h = false AND a.scheduled_at BETWEEN now() + interval '90 minutes' AND now() + interval '150 minutes' THEN '2h' WHEN a.confirmed_24h = false AND a.scheduled_at BETWEEN now() + interval '23 hours 30 minutes' AND now() + interval '24 hours 30 minutes' THEN '24h' END AS reminder_type FROM appointments a WHERE a.status IN ('pendiente', 'confirmado') AND NOT EXISTS (SELECT 1 FROM conversation_state cs WHERE cs.client_slug = a.client_slug AND cs.patient_phone_hash = a.patient_phone_hash AND cs.opted_out = true)) SELECT d.* FROM due d WHERE d.reminder_type IS NOT NULL AND NOT EXISTS (SELECT 1 FROM reminder_dispatches rd WHERE rd.appointment_id = d.id AND rd.reminder_type = d.reminder_type AND rd.status <> 'fallido') ORDER BY d.scheduled_at ASC;"
+      }
+    },
+    {
+      "id": "build-reminder-waba",
+      "name": "Construir Recordatorio Voseo +40",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [620, 180],
+      "parameters": {
+        "jsCode": "return $input.all().map((item) => {\n  const row = item.json;\n  const greeting = row.patient_first_name ? `Hola ${row.patient_first_name}, ¿cómo estás?` : 'Hola, ¿cómo estás?';\n  const bodyText = row.reminder_type === '24h'\n    ? `${greeting} Te recordamos tu turno programado dentro de las próximas 24 horas. Confirmá tu asistencia o avisanos si necesitás reprogramar. Si preferís no recibir avisos, respondé \"baja\".`\n    : `${greeting} En aproximadamente dos horas tenés tu turno programado. Si surge algún imprevisto, avisanos para reorganizar la agenda. Si preferís no recibir avisos, respondé \"baja\".`;\n  return {\n    json: {\n      ...row,\n      wabaPayload: {\n        messaging_product: 'whatsapp',\n        recipient_type: 'individual',\n        to: row.patient_phone_e164,\n        type: 'interactive',\n        interactive: {\n          type: 'button',\n          body: { text: bodyText },\n          action: {\n            buttons: [\n              { type: 'reply', reply: { id: `confirmar_${row.reminder_type}_${row.id}`, title: 'Confirmar turno' } },\n              { type: 'reply', reply: { id: `reprogramar_${row.reminder_type}_${row.id}`, title: 'Reprogramar' } }\n            ]\n          }\n        }\n      }\n    }\n  };\n});"
+      }
+    },
+    {
+      "id": "send-reminder-waba",
+      "name": "Enviar Recordatorio WABA",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [860, 180],
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v21.0/me/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.META_WABA_ACCESS_TOKEN}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.wabaPayload) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "pg-insert-reminder-dispatch",
+      "name": "Registrar Dispatch Idempotente Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [1100, 180],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO reminder_dispatches (appointment_id, reminder_type, status, provider_message_id) VALUES ($1::uuid, $2, 'enviado', $3) ON CONFLICT (appointment_id, reminder_type) DO UPDATE SET status = 'enviado', provider_message_id = COALESCE(EXCLUDED.provider_message_id, reminder_dispatches.provider_message_id), dispatched_at = now(), updated_at = now() WHERE reminder_dispatches.status = 'fallido';",
+        "options": {
+          "queryReplacement": "={{ [$('Construir Recordatorio Voseo +40').item.json.id, $('Construir Recordatorio Voseo +40').item.json.reminder_type, $json.messages?.[0]?.id || null] }}"
+        }
+      }
+    },
+    {
+      "id": "pg-expire-waitlist-offers",
+      "name": "Expirar Ofertas Vencidas y Rotar FIFO",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [380, 420],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH expired AS (UPDATE waitlist_entries SET status = 'expirado', updated_at = now() WHERE status = 'ofertado' AND offer_expires_at <= now() RETURNING id, client_slug, specialty, offered_slot_id, offer_expires_at), expired_ranked AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY client_slug, specialty ORDER BY offer_expires_at ASC, id ASC) AS rn FROM expired), candidates_ranked AS (SELECT id, client_slug, specialty, ROW_NUMBER() OVER (PARTITION BY client_slug, specialty ORDER BY created_at ASC, id ASC) AS rn FROM waitlist_entries WHERE status = 'esperando' AND consent_waitlist = true AND opted_out = false), paired AS (SELECT e.offered_slot_id, c.id AS waitlist_id FROM expired_ranked e JOIN candidates_ranked c ON c.client_slug = e.client_slug AND c.specialty = e.specialty AND c.rn = e.rn) UPDATE waitlist_entries target SET status = 'ofertado', offered_slot_id = p.offered_slot_id, offer_expires_at = now() + interval '45 minutes', updated_at = now() FROM paired p WHERE target.id = p.waitlist_id RETURNING target.id AS waitlist_id, target.client_slug, target.specialty, target.patient_phone_e164 AS offer_phone_e164, target.patient_first_name AS offer_first_name, target.offered_slot_id, target.offer_expires_at;"
+      }
+    },
+    {
+      "id": "webhook-appointment-action",
+      "name": "Webhook Respuesta Turno y Lista Espera",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [140, 620],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reminders-response",
+        "responseMode": "onReceived",
+        "options": {}
+      }
+    },
+    {
+      "id": "hash-expected-response-key",
+      "name": "Hash Clave Esperada Respuestas",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [340, 620],
+      "parameters": {
+        "action": "hash",
+        "type": "SHA256",
+        "value": "={{$env.AUTONOMOUS_INGEST_KEY}}",
+        "dataPropertyName": "expectedKeySha256"
+      }
+    },
+    {
+      "id": "hash-provided-response-key",
+      "name": "Hash Clave Recibida Respuestas",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [540, 620],
+      "parameters": {
+        "action": "hash",
+        "type": "SHA256",
+        "value": "={{ String($json.headers?.['x-autonomous-key'] || $json.headers?.['X-Autonomous-Key'] || '') }}",
+        "dataPropertyName": "providedKeySha256"
+      }
+    },
+    {
+      "id": "verify-response-webhook-key",
+      "name": "Validar X-Autonomous-Key Respuestas",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [740, 620],
+      "parameters": {
+        "jsCode": "function constantTimeHexEqual(hexA, hexB) {\n  if (!/^[0-9a-f]{64}$/i.test(hexA) || !/^[0-9a-f]{64}$/i.test(hexB)) return false;\n  const a = hexA.toLowerCase();\n  const b = hexB.toLowerCase();\n  try {\n    const { timingSafeEqual } = require('node:crypto');\n    return timingSafeEqual(Buffer.from(a, 'hex'), Buffer.from(b, 'hex'));\n  } catch {\n    let diff = 0;\n    for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);\n    return diff === 0;\n  }\n}\nconst item = $input.first().json;\nconst headers = item.headers || {};\nconst rawKey = String(headers['x-autonomous-key'] || headers['X-Autonomous-Key'] || '').trim();\nif (!rawKey || !constantTimeHexEqual(String(item.providedKeySha256 || ''), String(item.expectedKeySha256 || ''))) {\n  throw new Error('Acceso no autorizado al webhook de respuestas de turnos');\n}\nconst { expectedKeySha256, providedKeySha256, ...safePayload } = item;\nreturn [{ json: safePayload }];"
+      }
+    },
+    {
+      "id": "pg-process-response-fifo",
+      "name": "Postgres Actualizar Turno y Ofertar FIFO Ley 25.326",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [960, 620],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH updated_app AS (UPDATE appointments SET status = CASE WHEN $2 = 'confirmar' THEN 'confirmado' WHEN $2 = 'reprogramar' THEN 'reprogramado' ELSE 'cancelado' END, confirmed_24h = CASE WHEN $2 = 'confirmar' AND $3 = '24h' THEN true ELSE confirmed_24h END, confirmed_2h = CASE WHEN $2 = 'confirmar' AND $3 = '2h' THEN true ELSE confirmed_2h END, updated_at = now() WHERE id = $1::uuid RETURNING id, client_slug, specialty, scheduled_at, patient_phone_hash, status), fifo_pick AS (SELECT u.id AS slot_id, w.id AS waitlist_id FROM updated_app u JOIN LATERAL (SELECT * FROM waitlist_entries cand WHERE cand.client_slug = u.client_slug AND cand.specialty = u.specialty AND cand.status = 'esperando' AND cand.consent_waitlist = true AND cand.opted_out = false AND cand.patient_phone_hash <> u.patient_phone_hash ORDER BY created_at ASC LIMIT 1) w ON u.status IN ('cancelado', 'reprogramado')), offered AS (UPDATE waitlist_entries target SET status = 'ofertado', offered_slot_id = fp.slot_id, offer_expires_at = now() + interval '45 minutes', updated_at = now() FROM fifo_pick fp WHERE target.id = fp.waitlist_id RETURNING target.id AS waitlist_id, target.client_slug, target.specialty, target.patient_phone_e164, target.patient_first_name, target.offered_slot_id, target.offer_expires_at) SELECT u.client_slug, u.specialty, u.status AS appointment_status, COALESCE((SELECT waitlist_id::text FROM offered LIMIT 1), '') AS waitlist_id, COALESCE((SELECT offered_slot_id::text FROM offered LIMIT 1), '') AS offered_slot_id, COALESCE((SELECT patient_phone_e164 FROM offered LIMIT 1), '') AS offer_phone_e164, COALESCE((SELECT patient_first_name FROM offered LIMIT 1), '') AS offer_first_name FROM updated_app u;",
+        "options": {
+          "queryReplacement": "={{ [$json.body?.appointment_id || $json.appointment_id, $json.body?.action || $json.action, $json.body?.reminder_type || $json.reminder_type || '24h'] }}"
+        }
+      }
+    },
+    {
+      "id": "if-waitlist-offer-exists",
+      "name": "Si Hay Oferta FIFO para Enviar",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1180, 520],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "has-offer-phone",
+              "leftValue": "={{ $json.offer_phone_e164 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "send-waitlist-offer-waba",
+      "name": "Enviar Oferta Lista Espera WABA",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1420, 420],
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v21.0/me/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.META_WABA_ACCESS_TOKEN}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ messaging_product: 'whatsapp', recipient_type: 'individual', to: $json.offer_phone_e164, type: 'text', text: { body: `Hola ${$json.offer_first_name || ''}, ¿cómo estás? Se liberó un turno antes de lo previsto y tenés prioridad en lista de espera por 45 minutos. Respondé para confirmarlo o \"baja\" para salir de la lista.` } }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "prepare-aggregated-summary",
+      "name": "Preparar Resumen Agregado Sin PII",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1420, 620],
+      "parameters": {
+        "jsCode": "return $input.all().map((item) => {\n  const row = item.json || {};\n  const status = String(row.appointment_status || '');\n  let eventType = 'heartbeat';\n  if (status === 'confirmado') eventType = 'appointment_confirmed';\n  else if (status === 'reprogramado') eventType = 'appointment_rescheduled';\n  else if (status === 'cancelado') eventType = 'appointment_cancelled';\n  else if (row.offered_slot_id) eventType = 'waitlist_filled';\n  return {\n    json: {\n      client_slug: String(row.client_slug || 'clinica-principal'),\n      event_type: eventType,\n      has_waitlist_offer: Boolean(row.waitlist_id || row.offered_slot_id)\n    }\n  };\n});"
+      }
+    },
+    {
+      "id": "ingest-reminders-telemetry",
+      "name": "Enviar Metrica Agregada Sin PII",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1660, 620],
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.NEXOBOW_INGEST_URL}}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Autonomous-Key",
+              "value": "={{$env.AUTONOMOUS_INGEST_KEY}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ client_slug: $json.client_slug, event_type: $json.event_type, period_date: new Date().toISOString().slice(0, 10), count_delta: 1, engine_version: 'gate1-v1', summary: { workflow_id: '02-reminders-waitlist', has_waitlist_offer: Boolean($json.has_waitlist_offer) } }) }}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Cron Horario Recordatorios 24h y 2h": {
+      "main": [
+        [
+          { "node": "Postgres Buscar Turnos 24h y 2h Idempotentes", "type": "main", "index": 0 },
+          { "node": "Expirar Ofertas Vencidas y Rotar FIFO", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Postgres Buscar Turnos 24h y 2h Idempotentes": {
+      "main": [
+        [{ "node": "Construir Recordatorio Voseo +40", "type": "main", "index": 0 }]
+      ]
+    },
+    "Construir Recordatorio Voseo +40": {
+      "main": [
+        [{ "node": "Enviar Recordatorio WABA", "type": "main", "index": 0 }]
+      ]
+    },
+    "Enviar Recordatorio WABA": {
+      "main": [
+        [{ "node": "Registrar Dispatch Idempotente Postgres", "type": "main", "index": 0 }]
+      ]
+    },
+    "Expirar Ofertas Vencidas y Rotar FIFO": {
+      "main": [
+        [{ "node": "Si Hay Oferta FIFO para Enviar", "type": "main", "index": 0 }]
+      ]
+    },
+    "Webhook Respuesta Turno y Lista Espera": {
+      "main": [
+        [{ "node": "Hash Clave Esperada Respuestas", "type": "main", "index": 0 }]
+      ]
+    },
+    "Hash Clave Esperada Respuestas": {
+      "main": [
+        [{ "node": "Hash Clave Recibida Respuestas", "type": "main", "index": 0 }]
+      ]
+    },
+    "Hash Clave Recibida Respuestas": {
+      "main": [
+        [{ "node": "Validar X-Autonomous-Key Respuestas", "type": "main", "index": 0 }]
+      ]
+    },
+    "Validar X-Autonomous-Key Respuestas": {
+      "main": [
+        [{ "node": "Postgres Actualizar Turno y Ofertar FIFO Ley 25.326", "type": "main", "index": 0 }]
+      ]
+    },
+    "Postgres Actualizar Turno y Ofertar FIFO Ley 25.326": {
+      "main": [
+        [{ "node": "Si Hay Oferta FIFO para Enviar", "type": "main", "index": 0 }]
+      ]
+    },
+    "Si Hay Oferta FIFO para Enviar": {
+      "main": [
+        [
+          { "node": "Enviar Oferta Lista Espera WABA", "type": "main", "index": 0 },
+          { "node": "Preparar Resumen Agregado Sin PII", "type": "main", "index": 0 }
+        ],
+        [
+          { "node": "Preparar Resumen Agregado Sin PII", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Preparar Resumen Agregado Sin PII": {
+      "main": [
+        [{ "node": "Enviar Metrica Agregada Sin PII", "type": "main", "index": 0 }]
+      ]
+    }
+  }
+}

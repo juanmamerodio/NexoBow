@@ -85,6 +85,6 @@
 - [x] [58: AEO (`scripts/aeo-optimizer.mjs`), `--mode preview|production` en `build-client-site.mjs`, `web/public/llms.txt` (`0 JS`) y `routemap.md` v4.0](./scratch/nexobow-v2/issues/58-aeo-production-mode-llms-routemap-v4.md) (`done`)
 - [x] [59: Motor de Reseñas 5★ (`review-booster.mjs`), Migración Supabase (`active_clients`, `autonomous_events`), `/admin/clients` (Entrega 72h, 6 Hitos), Promoción 1-Clic desde CRM, Alertas Cockpit & 8 Tablas](./scratch/nexobow-v2/issues/59-review-booster-active-clients-72h-admin.md) (`done`)
 - [x] [60: Blueprint IaC Zero-Trust Gate 1 (`infra/autonomous/`, Postgres 16 SQL, `activate-autonomous.mjs --dry-run` y `docs/gate1-vps-activation.md`)](./scratch/nexobow-v2/issues/60-autonomous-gate1-iac-postgres-activation.md) (`done`)
-- [ ] [61: Seams Puros `NexoBow Autonomous` (WABA, Recordatorios `24h`/`2h`, Lista de Espera FIFO) & 3 Workflows `n8n` JSON en `workflows/n8n/`](./scratch/nexobow-v2/issues/61-autonomous-waba-reminders-waitlist-n8n.md) (`ready-for-agent`)
+- [x] [61: Seams Puros `NexoBow Autonomous` (WABA, Recordatorios `24h`/`2h`, Lista de Espera FIFO) & 3 Workflows `n8n` JSON en `workflows/n8n/`](./scratch/nexobow-v2/issues/61-autonomous-waba-reminders-waitlist-n8n.md) (`done`)
 - [ ] [62: Endpoint `/api/v1/autonomous/ingest` (Sin PII), Panel Gate 1 en `/admin/settings`, Humanización Ampliada & Auditoría Final E2E (Cierre Frente I)](./scratch/nexobow-v2/issues/62-autonomous-edge-ingest-settings-e2e-audit.md) (`ready-for-agent`)
 
