@@ -1,0 +1,178 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE } from "../config";
+---
+
+<Layout
+  title="Términos y Condiciones | NexoBow"
+  description="Términos y Condiciones del servicio de páginas web y turnos por WhatsApp de NexoBow: prueba de 7 días, propiedad intelectual, Política de Reembolsos y Política de Débito Automático en Argentina."
+  canonicalPath="/terminos/"
+>
+  <Header />
+
+  <main class="mx-auto max-w-4xl px-6 py-16 sm:py-20">
+    <div class="mb-10 rounded-3xl border border-[#4928C2]/40 bg-[#0B0D12] p-8 sm:p-10 shadow-[0_20px_55px_rgba(4,6,7,0.85)]">
+      <p class="text-xs font-bold uppercase tracking-widest text-[#BF40FA]">
+        Marco Contractual Transparente · República Argentina
+      </p>
+      <h1 class="mt-3 font-outfit text-3xl font-extrabold tracking-tight text-[#F8F6FF] sm:text-4xl">
+        Términos y Condiciones de Servicio
+      </h1>
+      <p class="mt-4 text-base leading-relaxed text-[#E3D9FC]/85">
+        Este documento regula la prestación de servicios digitales de <strong>{SITE.name}</strong> (titular: <strong>Juanma Merodio</strong>, correo oficial{" "}
+        <a href={`mailto:${SITE.email}`} class="text-[#E3D9FC] underline decoration-[#BF40FA]/70 underline-offset-2 hover:text-[#BF40FA]">
+          {SITE.email}
+        </a>
+        , WhatsApp {SITE.phone}). Redactado en lenguaje claro y sin letra chica para profesionales de la salud, estudios jurídicos y servicios.
+      </p>
+
+      <nav aria-label="Secciones de Términos y Condiciones" class="mt-6 flex flex-wrap gap-2.5">
+        <a href="#objeto" class="rounded-full border border-[#4928C2]/45 bg-[#040607] px-3.5 py-1.5 text-xs font-semibold text-[#E3D9FC] hover:border-[#BF40FA] hover:text-[#F8F6FF] transition-colors">
+          1. Objeto
+        </a>
+        <a href="#preview-7-dias" class="rounded-full border border-[#4928C2]/45 bg-[#040607] px-3.5 py-1.5 text-xs font-semibold text-[#E3D9FC] hover:border-[#BF40FA] hover:text-[#F8F6FF] transition-colors">
+          2. Muestra de 7 días
+        </a>
+        <a href="#propiedad-intelectual" class="rounded-full border border-[#4928C2]/45 bg-[#040607] px-3.5 py-1.5 text-xs font-semibold text-[#E3D9FC] hover:border-[#BF40FA] hover:text-[#F8F6FF] transition-colors">
+          3. Propiedad Intelectual
+        </a>
+        <a href="#reembolsos" class="rounded-full border border-emerald-500/50 bg-[#040607] px-3.5 py-1.5 text-xs font-semibold text-emerald-300 hover:border-emerald-400 transition-colors">
+          4. Política de Reembolsos
+        </a>
+        <a href="#debito-automatico" class="rounded-full border border-[#BF40FA]/50 bg-[#040607] px-3.5 py-1.5 text-xs font-semibold text-[#E3D9FC] hover:border-[#BF40FA] transition-colors">
+          5. Política de Débito Automático
+        </a>
+        <a href="#jurisdiccion" class="rounded-full border border-[#4928C2]/45 bg-[#040607] px-3.5 py-1.5 text-xs font-semibold text-[#E3D9FC] hover:border-[#BF40FA] hover:text-[#F8F6FF] transition-colors">
+          6. Jurisdicción
+        </a>
+      </nav>
+    </div>
+
+    <div class="space-y-8">
+      <section id="objeto" class="scroll-mt-24 rounded-2xl border border-[#4928C2]/30 bg-[#0B0D12] p-7 sm:p-8">
+        <h2 class="font-outfit text-2xl font-bold text-[#F8F6FF]">1. Objeto del servicio</h2>
+        <p class="mt-3 text-base leading-relaxed text-[#E3D9FC]/85">
+          NexoBow diseña, implementa y publica páginas web de carga rápida (&lt;1s), embudos de consulta y sistemas de ordenamiento de turnos por WhatsApp, Google Calendar o turnero existente para profesionales independientes, consultorios médicos, clínicas y estudios jurídicos en Argentina.
+        </p>
+        <p class="mt-3 text-base leading-relaxed text-[#E3D9FC]/85">
+          El servicio incluye el diseño personalizado de la página del prestador, la redacción comercial inicial de sus bloques de servicios, la integración de botones de WhatsApp o agenda y la publicación sobre infraestructura edge de alta disponibilidad.
+        </p>
+      </section>
+
+      <section id="preview-7-dias" class="scroll-mt-24 rounded-2xl border border-[#4928C2]/30 bg-[#0B0D12] p-7 sm:p-8">
+        <h2 class="font-outfit text-2xl font-bold text-[#F8F6FF]">2. Alcance de la muestra (preview) gratuita por 7 días</h2>
+        <ul class="mt-4 list-disc space-y-2.5 pl-5 text-base leading-relaxed text-[#E3D9FC]/85">
+          <li>
+            <strong>Evaluación previa sin costo:</strong> Antes de abonar cualquier importe, el prestador puede solicitar o recibir una muestra interactiva alojada bajo subdominio temporal de NexoBow para evaluar diseño, velocidad y redacción.
+          </li>
+          <li>
+            <strong>Vigencia de 7 días corridos:</strong> Toda muestra no contratada permanece reservada en el servidor durante <strong>7 días corridos</strong> desde su última actividad. Vencido ese plazo sin contratación, el sistema elimina automáticamente los archivos de demostración para liberar capacidad.
+          </li>
+          <li>
+            <strong>Material ilustrativo:</strong> Las muestras preliminares pueden utilizar fotografías de referencia ilustrativa que se reemplazan por fotografías reales del consultorio, estudio o equipo del profesional al confirmar la puesta en producción.
+          </li>
+        </ul>
+      </section>
+
+      <section id="propiedad-intelectual" class="scroll-mt-24 rounded-2xl border border-[#4928C2]/30 bg-[#0B0D12] p-7 sm:p-8">
+        <h2 class="font-outfit text-2xl font-bold text-[#F8F6FF]">3. Propiedad intelectual y dominio</h2>
+        <div class="mt-4 space-y-3 text-base leading-relaxed text-[#E3D9FC]/85">
+          <p>
+            <strong>Contenidos y dominio del prestador:</strong> La marca comercial, logotipo, matrícula profesional, fotografías provistas, base de pacientes/clientes y el nombre de dominio (<code>.com</code> o <code>.com.ar</code>) registrado para el proyecto pertenecen exclusivamente al prestador.
+          </p>
+          <p>
+            <strong>Código base y arquitectura NexoBow:</strong> Las plantillas estructurales, componentes de interfaz, estilos base y scripts de compilación propios de NexoBow son propiedad intelectual de NexoBow. Al abonar el Setup correspondiente, el prestador adquiere una licencia de uso perpetua, no exclusiva e intransferible sobre los activos compilados para su sitio web publicado.
+          </p>
+        </div>
+      </section>
+
+      <section id="reembolsos" class="scroll-mt-24 rounded-2xl border border-emerald-500/45 bg-gradient-to-b from-emerald-950/20 via-[#0B0D12] to-[#0B0D12] p-7 sm:p-8">
+        <h2 class="font-outfit text-2xl font-bold text-[#F8F6FF]">4. Política de Reembolsos</h2>
+        <p class="mt-3 text-base leading-relaxed text-[#E3D9FC]/85">
+          Para proteger al profesional que contrata y evitar costos irrecuperables de terceros antes de publicar, la cobertura de reembolsos funciona en cuatro instancias claras:
+        </p>
+
+        <div class="mt-6 space-y-5 text-base leading-relaxed text-[#E3D9FC]/85">
+          <div class="border-l-2 border-emerald-500/60 pl-5 py-1">
+            <h3 class="font-outfit text-lg font-bold text-[#F8F6FF]">Etapa 0 — Prueba sin riesgo previa al pago (7 días)</h3>
+            <p class="mt-1.5">
+              Todo prestador recibe y evalúa su muestra personalizada durante <strong>7 días corridos</strong> sin abonar el Setup ni dejar tarjeta de crédito.
+            </p>
+          </div>
+
+          <div class="border-l-2 border-emerald-500/60 pl-5 py-1">
+            <h3 class="font-outfit text-lg font-bold text-[#F8F6FF]">Garantía Técnica de Entrega y Velocidad (14 días corridos)</h3>
+            <p class="mt-1.5">
+              Si NexoBow no entrega la landing compilada y operativa dentro de las <strong>72 horas hábiles</strong> desde la recepción completa de los datos del prestador, o si la página en producción no alcanza una carga inicial menor a <strong>1 segundo (&lt;1s)</strong> en condiciones de red estándar dentro de los primeros <strong>14 días corridos</strong> desde el pago del Setup, corresponde el <strong>reembolso del 100% del Setup</strong>.
+            </p>
+          </div>
+
+          <div class="border-l-2 border-emerald-500/60 pl-5 py-1">
+            <h3 class="font-outfit text-lg font-bold text-[#F8F6FF]">Desistimiento dentro de los 14 días corridos previos a la publicación definitiva</h3>
+            <p class="mt-1.5">
+              Si el prestador decide desistir durante los primeros <strong>14 días corridos</strong> desde el pago y <strong>antes de otorgar la aprobación final de salida a producción</strong>, NexoBow reintegra el <strong>100% de lo abonado deduciendo únicamente los gastos directos no reembolsables de terceros ya ejecutados</strong> (por ejemplo, registro de dominio <code>.com</code> o <code>.com.ar</code> o licencias adquiridas a su nombre), transfiriendo de inmediato la titularidad total de dicho dominio al profesional.
+            </p>
+          </div>
+
+          <div class="border-l-2 border-[#4928C2]/70 pl-5 py-1">
+            <h3 class="font-outfit text-lg font-bold text-[#F8F6FF]">Servicios ejecutados y aprobados / Abonos mensuales</h3>
+            <p class="mt-1.5">
+              Una vez aprobada la publicación definitiva en producción y superados los 14 días corridos, el Setup (trabajo de ingeniería, diseño y redacción comercial ya entregado) no es reembolsable. En los abonos mensuales, la solicitud de cancelación detiene la facturación del período siguiente sin devolución proporcional retroactiva de los días ya transcurridos del mes en curso.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="debito-automatico" class="scroll-mt-24 rounded-2xl border border-[#BF40FA]/45 bg-gradient-to-b from-[#5B2A62]/15 via-[#0B0D12] to-[#0B0D12] p-7 sm:p-8">
+        <h2 class="font-outfit text-2xl font-bold text-[#F8F6FF]">5. Política de Débito Automático</h2>
+
+        <ul class="mt-4 list-disc space-y-3 pl-5 text-base leading-relaxed text-[#E3D9FC]/85">
+          <li>
+            <strong>Plan Starter (Tier 1):</strong> Durante los primeros <strong>12 meses (Año 1)</strong> el hosting y mantenimiento es de <strong>$0 ARS/mes</strong>, sin adhesión a débito automático obligatorio. Al cumplirse el <strong>mes 11</strong>, NexoBow notifica por email y WhatsApp con al menos <strong>30 días de anticipación</strong> las opciones para el Año 2 (renovar el alojamiento anual con NexoBow o migrar el sitio y dominio a infraestructura propia del prestador sin penalidades).
+          </li>
+          <li>
+            <strong>Plan Autonomous (Tier 2) y Abonos Mensuales:</strong> El débito automático mensual se procesa entre el día <strong>1 y el 5</strong> de cada mes calendario por el arancel vigente pactado en Pesos Argentinos (ARS). Cuando el prestador accede al beneficio de <strong>30 días de prueba</strong> inicial, el primer débito mensual se ejecuta recién a partir del <strong>día 31</strong> si decide continuar activo.
+          </li>
+          <li>
+            <strong>Actualización de arancel:</strong> Cualquier actualización tarifaria vinculada a variación de costos o índice de precios al consumidor (<strong>IPC</strong> oficial) o ampliación de infraestructura se informa por email con al menos <strong>15 días corridos</strong> de anticipación antes de impactar en el débito siguiente.
+          </li>
+          <li>
+            <strong>Rechazos bancarios y período de gracia:</strong> Ante un rechazo del medio de pago, el sistema notifica al titular y realiza hasta <strong>3 reintentos</strong> dentro de un período de gracia de <strong>10 días corridos</strong> antes de pausar temporalmente las automatizaciones, sin borrar en ningún momento los datos, la página ni el dominio del profesional.
+          </li>
+          <li>
+            <strong>Baja sin permanencia mínima:</strong> No existen contratos de permanencia forzosa. Podés solicitar la baja del débito automático en cualquier momento por WhatsApp ({SITE.phone}) o por email a{" "}
+            <a href={`mailto:${SITE.email}`} class="underline decoration-[#BF40FA]/70 underline-offset-2 hover:text-[#BF40FA]">
+              {SITE.email}
+            </a>
+            , con al menos <strong>48 horas hábiles</strong> de anticipación al próximo ciclo para evitar el cobro del mes siguiente.
+          </li>
+        </ul>
+      </section>
+
+      <section id="responsabilidad" class="scroll-mt-24 rounded-2xl border border-[#4928C2]/30 bg-[#0B0D12] p-7 sm:p-8">
+        <h2 class="font-outfit text-2xl font-bold text-[#F8F6FF]">6. Limitación razonable de responsabilidad</h2>
+        <p class="mt-3 text-base leading-relaxed text-[#E3D9FC]/85">
+          El prestador es el único responsable de la veracidad de su matrícula profesional, especialidades declaradas, aranceles y la prestación médica, terapéutica, nutricional o jurídica brindada a sus pacientes o clientes. NexoBow no responde por interrupciones ajenas originadas en plataformas de terceros (Meta/WhatsApp, Google, registradores de dominios o proveedores de conectividad), aunque brinda soporte técnico diligente para restablecer la operatividad a la brevedad.
+        </p>
+      </section>
+
+      <section id="jurisdiccion" class="scroll-mt-24 rounded-2xl border border-[#4928C2]/30 bg-[#0B0D12] p-7 sm:p-8">
+        <h2 class="font-outfit text-2xl font-bold text-[#F8F6FF]">7. Legislación aplicable y jurisdicción</h2>
+        <p class="mt-3 text-base leading-relaxed text-[#E3D9FC]/85">
+          Estos Términos y Condiciones se rigen íntegramente por las leyes de la <strong>República Argentina</strong>. Para cualquier controversia derivada de su interpretación o ejecución, las partes se someten a la jurisdicción de los tribunales ordinarios competentes de la <strong>Ciudad Autónoma de Buenos Aires (CABA)</strong> o de la <strong>Provincia de Buenos Aires</strong>, según corresponda conforme al domicilio legal aplicable.
+        </p>
+        <p class="mt-4 text-sm text-[#E3D9FC]/70">
+          Consultá también nuestra{" "}
+          <a href="/privacidad/" class="font-semibold text-[#E3D9FC] underline decoration-[#BF40FA]/70 underline-offset-2 hover:text-[#BF40FA]">
+            Política de Privacidad (Ley 25.326)
+          </a>
+          .
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

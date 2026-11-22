@@ -1,5 +1,5 @@
 // scripts/audit-site.mjs — NexoBow: auditoría automatizada de calidad, accesibilidad y presupuesto JS
-// - En web/ (benchmark de agencia): exige 0 JS ejecutable estricto en cliente.
+// - En web/ (benchmark de agencia): exige 0 JS de lógica de negocio en cliente, permitiendo únicamente el cargador aislado de consentimiento/GA4 (data-nexobow-consent-loader="true") bloqueado en 'denied' por defecto.
 // - En sites/{slug} (templates PREMIUM de prestadores): permite JS propio dentro de presupuesto (DEFAULT_SITE_JS_BUDGET_BYTES) y rechaza scripts externos de terceros no declarados.
 // Uso: node scripts/audit-site.mjs <slug | web>
 // Códigos de salida: 0 = aprobado · 1 = fallo de auditoría
@@ -12,6 +12,7 @@ import { spawnSync } from "node:child_process";
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 export const DEFAULT_SITE_JS_BUDGET_BYTES = 25 * 1024 * 1024; // Sin límite artificial de JS: rige únicamente la restricción de Cloudflare Pages (25 MB por archivo)
+export const MAX_CONSENT_LOADER_BYTES = 6 * 1024; // Límite máximo del cargador inline aislado de Consent Mode v2 / GA4
 
 export function auditHtmlDocument(
   html,
@@ -26,12 +27,54 @@ export function auditHtmlDocument(
   const warnings = [];
 
   const scriptTags = html.match(/<script\b[^>]*>([\s\S]*?)<\/script>/gi) || [];
-  const executableScripts = scriptTags.filter(
+  const nonJsonLdScripts = scriptTags.filter(
     (tag) => !/type=["']application\/ld\+json["']/i.test(tag)
   );
 
+  const isConsentLoaderTag = (tag) =>
+    /\bdata-nexobow-consent-loader=["']true["']/i.test(tag);
+
+  const consentLoaders =
+    mode === "web" ? nonJsonLdScripts.filter(isConsentLoaderTag) : [];
+  const executableScripts =
+    mode === "web"
+      ? nonJsonLdScripts.filter((tag) => !isConsentLoaderTag(tag))
+      : nonJsonLdScripts;
+
   let jsBytes = 0;
+  let consentLoaderBytes = 0;
   const externalScripts = [];
+
+  if (mode === "web") {
+    if (consentLoaders.length > 1) {
+      errors.push(
+        `Se detectaron múltiples cargadores de consentimiento (${consentLoaders.length}). Máximo permitido: 1.`
+      );
+    }
+    for (const tag of consentLoaders) {
+      if (/\bsrc=["'][^"']+["']/i.test(tag)) {
+        errors.push(
+          `El cargador data-nexobow-consent-loader="true" debe ser inline y no usar src externo.`
+        );
+        continue;
+      }
+      const inner = tag
+        .replace(/^<script\b[^>]*>/i, "")
+        .replace(/<\/script>$/i, "");
+      const bytes = Buffer.byteLength(inner, "utf8");
+      consentLoaderBytes += bytes;
+      if (bytes > MAX_CONSENT_LOADER_BYTES) {
+        errors.push(
+          `El cargador de consentimiento excede el límite (${bytes} bytes > ${MAX_CONSENT_LOADER_BYTES} bytes).`
+        );
+      }
+      if (!/analytics_storage/i.test(inner) || !/['"]denied['"]/i.test(inner)) {
+        errors.push(
+          `El cargador de consentimiento debe inicializar Google Consent Mode v2 con analytics_storage en 'denied' por defecto.`
+        );
+      }
+    }
+  }
 
   for (const tag of executableScripts) {
     const srcMatch = tag.match(/\bsrc=["']([^"']+)["']/i);
@@ -55,9 +98,17 @@ export function auditHtmlDocument(
   }
 
   if (mode === "web") {
+    const preloadedTrackers = executableScripts.filter((tag) =>
+      /\bsrc=["'][^"']*(googletagmanager\.com|google-analytics\.com)/i.test(tag)
+    );
+    if (preloadedTrackers.length > 0) {
+      errors.push(
+        `Se detectó descarga estática precargada de Google Analytics / GTM antes del consentimiento explícito.`
+      );
+    }
     if (executableScripts.length > 0) {
       errors.push(
-        `Se detectaron ${executableScripts.length} etiquetas <script> ejecutables en web/. El benchmark de NexoBow exige 0 JS estricto en cliente.`
+        `Se detectaron ${executableScripts.length} etiquetas <script> ejecutables de lógica de negocio en web/. El benchmark de NexoBow exige 0 JS estricto en cliente (salvo el cargador aislado de consentimiento).`
       );
     }
   } else {
@@ -99,6 +150,7 @@ export function auditHtmlDocument(
   }
 
   const jsKb = Number((jsBytes / 1024).toFixed(2));
+  const consentLoaderKb = Number((consentLoaderBytes / 1024).toFixed(2));
   return {
     ok: errors.length === 0,
     mode,
@@ -106,6 +158,9 @@ export function auditHtmlDocument(
     jsKb,
     maxJsBudgetBytes: mode === "web" ? 0 : maxJsBudgetBytes,
     executableScriptCount: executableScripts.length,
+    consentLoaderCount: consentLoaders.length,
+    consentLoaderBytes,
+    consentLoaderKb,
     externalScripts,
     errors,
     warnings,
@@ -134,7 +189,7 @@ export function runAudit(target, mode = "site") {
   const htmlPath = join(distDir, "index.html");
 
   console.log(
-    `\x1b[36m[audit-site]\x1b[0m Iniciando auditoría de calidad (${isWeb ? "modo web 0-JS" : "modo sites PREMIUM"}) para: \x1b[1m${target}\x1b[0m`
+    `\x1b[36m[audit-site]\x1b[0m Iniciando auditoría de calidad (${isWeb ? "modo web 0-JS + Consent Loader" : "modo sites PREMIUM"}) para: \x1b[1m${target}\x1b[0m`
   );
 
   if (!existsSync(siteDir)) {
@@ -161,31 +216,49 @@ export function runAudit(target, mode = "site") {
     }
   }
 
-  const html = readFileSync(htmlPath, "utf8");
-  const report = auditHtmlDocument(html, {
-    mode: isWeb ? "web" : "site",
-    distDir,
-    requireWhatsappCta: !isWeb,
-  });
+  const pagesToAudit = isWeb
+    ? [
+        { label: "index.html", path: htmlPath },
+        { label: "terminos/index.html", path: join(distDir, "terminos", "index.html") },
+        { label: "privacidad/index.html", path: join(distDir, "privacidad", "index.html") },
+        { label: "solicitud-enviada/index.html", path: join(distDir, "solicitud-enviada", "index.html") },
+        { label: "baja-email/index.html", path: join(distDir, "baja-email", "index.html") },
+      ].filter((entry) => existsSync(entry.path))
+    : [{ label: "index.html", path: htmlPath }];
 
-  if (!report.ok) {
-    console.error(`\n\x1b[31m=======================================================
-✗ AUDITORÍA FALLIDA (${report.errors.length} errores)
-=======================================================\x1b[0m`);
-    report.errors.forEach((e) => console.error(`  - ✗ ${e}`));
-    if (report.warnings.length > 0) {
-      console.warn(`\nAvisos:`);
-      report.warnings.forEach((w) => console.warn(`  - ⚠ ${w}`));
+  let primaryReport = null;
+  for (const page of pagesToAudit) {
+    const html = readFileSync(page.path, "utf8");
+    const report = auditHtmlDocument(html, {
+      mode: isWeb ? "web" : "site",
+      distDir,
+      requireWhatsappCta: !isWeb,
+    });
+    if (page.label === "index.html") {
+      primaryReport = report;
     }
-    process.exit(1);
+    if (!report.ok) {
+      console.error(`\n\x1b[31m=======================================================
+✗ AUDITORÍA FALLIDA en ${page.label} (${report.errors.length} errores)
+=======================================================\x1b[0m`);
+      report.errors.forEach((e) => console.error(`  - ✗ ${e}`));
+      if (report.warnings.length > 0) {
+        console.warn(`\nAvisos:`);
+        report.warnings.forEach((w) => console.warn(`  - ⚠ ${w}`));
+      }
+      process.exit(1);
+    }
   }
 
+  const report = primaryReport;
   console.log(`
 \x1b[32m=======================================================
 ✓ AUDITORÍA APROBADA: ${isWeb ? "web/" : `sites/${target}`}
 =======================================================\x1b[0m
-- Modo de política JS: ${isWeb ? "0 JS estricto (web/)" : `Template PREMIUM (presupuesto máx ${(report.maxJsBudgetBytes / 1024).toFixed(0)} KB)`}
-- Peso JS detectado: ${report.jsKb} KB (${report.jsBytes} bytes en ${report.executableScriptCount} script/s)
+- Modo de política JS: ${isWeb ? "0 JS de negocio estricto (web/) + cargador Consent Mode v2 aislado" : `Template PREMIUM (presupuesto máx ${(report.maxJsBudgetBytes / 1024).toFixed(0)} KB)`}
+- Peso JS de negocio: ${report.jsKb} KB (${report.jsBytes} bytes en ${report.executableScriptCount} script/s)
+${isWeb ? `- Cargador aislado Consent Mode v2 / GA4: ${report.consentLoaderCount} bloque (${report.consentLoaderKb} KB)` : ""}
+- Páginas auditadas: ${pagesToAudit.map((p) => p.label).join(", ")}
 - Accesibilidad: Marcado semántico, lang="es", viewport, h1 único
 - Conversión: ${isWeb ? "Benchmark Soft-Obsidian verificado" : "CTAs de agendamiento y WhatsApp operativos"}
 `);

@@ -1,14 +1,15 @@
 ---
 import { SITE } from "../config";
+const anchorPrefix = Astro.url.pathname === "/" ? "" : "/";
 const links = [
-  { href: "#problema", label: "El Problema" },
-  { href: "#como-funciona", label: "Cómo Funciona" },
-  { href: "#disenos", label: "Diseños (+10)" },
-  { href: "#casos-de-exito", label: "Casos de Éxito" },
-  { href: "#calculadora-roi", label: "Calculadora ROI" },
-  { href: "#planes", label: "Planes y Bonos" },
-  { href: "#quien-esta-detras", label: "Quién Está Detrás" },
-  { href: "#contacto", label: "Contacto" },
+  { href: `${anchorPrefix}#problema`, label: "El Problema" },
+  { href: `${anchorPrefix}#como-funciona`, label: "Cómo Funciona" },
+  { href: `${anchorPrefix}#disenos`, label: "Diseños (+10)" },
+  { href: `${anchorPrefix}#casos-de-exito`, label: "Casos de Éxito" },
+  { href: `${anchorPrefix}#calculadora-roi`, label: "Calculadora ROI" },
+  { href: `${anchorPrefix}#planes`, label: "Planes y Bonos" },
+  { href: `${anchorPrefix}#quien-esta-detras`, label: "Quién Está Detrás" },
+  { href: `${anchorPrefix}#contacto`, label: "Contacto" },
 ];
 ---
 
@@ -52,7 +53,7 @@ const links = [
         <span>WhatsApp: {SITE.phone}</span>
       </span>
       <span class="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-[#040607] font-extrabold transition-all duration-300 group-hover:translate-x-0.5 group-hover:bg-emerald-400">
-        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+        <svg aria-hidden="true" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.586 1.86.897 2.796.897h.001c3.181 0 5.767-2.587 5.768-5.766.001-3.181-2.585-5.767-5.769-5.767zm7.575 5.766c-.002 4.174-3.398 7.57-7.574 7.57-1.309 0-2.548-.344-3.649-.976l-4.383 1.15 1.17-4.272c-.722-1.15-1.107-2.483-1.108-3.864.002-4.174 3.398-7.57 7.574-7.57 4.176 0 7.572 3.397 7.572 7.57z" />
         </svg>
       </span>

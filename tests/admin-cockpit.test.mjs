@@ -360,9 +360,9 @@ test("T45: Cockpit Diario (Home): Resumen Ejecutivo y Alertas Cruzadas", async (
     }
   );
 
-  // --- SEAM 4: TICKET #48 — SUSTANTIVO POR RUBRO Y ENDPOINT CREATE.TS ---
+  // --- SEAM 4: TICKET #48 / #57 — SUSTANTIVO POR RUBRO Y ENDPOINT CREATE.TS ---
   await t.test(
-    "10. Ticket #48: buildUrgentWhatsAppUrl adapta sustantivo ('tu estudio' / 'tu centro' / 'tu consultorio') y create.ts apunta al proyecto Supabase unificado",
+    "10. Ticket #48 / #57: buildUrgentWhatsAppUrl adapta sustantivo ('tu estudio' / 'tu centro' / 'tu consultorio') y create.ts exige variables de entorno sin URL hardcodeada ni fallback anon",
     () => {
       const { buildUrgentWhatsAppUrl } = cockpitModule;
       assert.equal(typeof buildUrgentWhatsAppUrl, "function");
@@ -411,12 +411,20 @@ test("T45: Cockpit Diario (Home): Resumen Ejecutivo y Alertas Cruzadas", async (
       );
       const createSource = readFileSync(createEndpointPath, "utf8");
       assert.ok(
-        createSource.includes("https://henpyuwguwvflhgbxmvn.supabase.co"),
-        "create.ts debe usar https://henpyuwguwvflhgbxmvn.supabase.co como fallback URL"
+        !createSource.includes("henpyuwguwvflhgbxmvn.supabase.co"),
+        "create.ts no debe contener URL de Supabase hardcodeada"
       );
       assert.ok(
         !createSource.includes("bcfhwwqkgmwboflytmtm"),
         "create.ts no debe contener el proyecto viejo bcfhwwqkgmwboflytmtm"
+      );
+      assert.ok(
+        !createSource.includes("PUBLIC_SUPABASE_ANON_KEY"),
+        "create.ts no debe usar fallback silencioso a PUBLIC_SUPABASE_ANON_KEY"
+      );
+      assert.ok(
+        createSource.includes("SUPABASE_SERVICE_ROLE_KEY"),
+        "create.ts debe requerir SUPABASE_SERVICE_ROLE_KEY desde entorno"
       );
       assert.ok(
         createSource.includes("whatsapp_secretaria"),

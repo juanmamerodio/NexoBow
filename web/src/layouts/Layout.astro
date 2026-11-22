@@ -1,12 +1,33 @@
 ---
 import "../styles/global.css";
 import { SITE } from "../config";
+import { buildCanonicalUrl, normalizeBrandTitle } from "../lib/seo";
+import CookieConsentBanner from "../components/CookieConsentBanner.astro";
 
 interface Props {
   title: string;
   description: string;
+  canonicalPath?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>[];
 }
-const { title, description } = Astro.props;
+
+const {
+  title,
+  description,
+  canonicalPath,
+  noindex = false,
+  jsonLd = [],
+} = Astro.props;
+
+const normalizedTitle = normalizeBrandTitle(title);
+const canonicalUrl = buildCanonicalUrl(
+  canonicalPath || Astro.url.pathname,
+  Astro.site ? Astro.site.toString() : SITE.siteUrl
+);
+const googleSiteVerification = (
+  import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || ""
+).trim();
 ---
 
 <!doctype html>
@@ -14,11 +35,19 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
+    <title>{normalizedTitle}</title>
     <meta name="description" content={description} />
-    <meta property="og:title" content={title} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {googleSiteVerification && (
+      <meta name="google-site-verification" content={googleSiteVerification} />
+    )}
+    <meta property="og:title" content={normalizedTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="NexoBow" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:url" content={canonicalUrl} />
     <!-- Google Fonts: Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -30,6 +59,9 @@ const { title, description } = Astro.props;
     <meta name="color-scheme" content="dark" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    {jsonLd.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
   </head>
   <body class="selection:bg-[#BF40FA] selection:text-[#F8F6FF] relative min-h-screen bg-[#040607] text-[#F8F6FF]">
     <!-- Soft-Obsidian atmospheric glows (#5B2A62 Velvet & #4928C2 Ultrasonic at 10-18% opacity) -->
@@ -59,16 +91,18 @@ const { title, description } = Astro.props;
       class="group fixed bottom-5 right-5 z-50 flex items-center gap-2.5 rounded-full border border-emerald-500/50 bg-[#0B0D12]/95 px-4 py-3 text-xs font-bold text-[#F8F6FF] shadow-[0_10px_35px_rgba(0,0,0,0.85),0_0_20px_rgba(16,185,129,0.25)] backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-emerald-400 hover:shadow-[0_0_30px_rgba(16,185,129,0.45)]"
       aria-label={`Contactar por WhatsApp a Juanma Merodio (${SITE.phone})`}
     >
-      <span class="flex h-2.5 w-2.5 items-center justify-center">
+      <span class="flex h-2.5 w-2.5 items-center justify-center" aria-hidden="true">
         <span class="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
       </span>
       <span class="hidden sm:inline text-[#E3D9FC] group-hover:text-[#F8F6FF] transition-colors">
         WhatsApp: <span class="text-emerald-400 font-extrabold">{SITE.phone}</span>
       </span>
       <span class="sm:hidden text-emerald-400 font-bold">WhatsApp</span>
-      <svg class="h-4 w-4 text-emerald-400 group-hover:translate-x-0.5 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+      <svg aria-hidden="true" class="h-4 w-4 text-emerald-400 group-hover:translate-x-0.5 transition-transform" fill="currentColor" viewBox="0 0 24 24">
         <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.586 1.86.897 2.796.897h.001c3.181 0 5.767-2.587 5.768-5.766.001-3.181-2.585-5.767-5.769-5.767zm7.575 5.766c-.002 4.174-3.398 7.57-7.574 7.57-1.309 0-2.548-.344-3.649-.976l-4.383 1.15 1.17-4.272c-.722-1.15-1.107-2.483-1.108-3.864.002-4.174 3.398-7.57 7.574-7.57 4.176 0 7.572 3.397 7.572 7.57z" />
       </svg>
     </a>
+
+    <CookieConsentBanner />
   </body>
 </html>

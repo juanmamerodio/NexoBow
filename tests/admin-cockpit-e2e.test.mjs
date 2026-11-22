@@ -1,9 +1,36 @@
 // tests/admin-cockpit-e2e.test.mjs — Suite de Integración Punta a Punta, Settings & Verificación 0-JS (Ticket 46)
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, mkdirSync, rmSync, statSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+
+function acquireWebDistLock() {
+  const lockDir = join(tmpdir(), "nexobow-web-dist.lock");
+  const deadline = Date.now() + 180_000;
+  const view = new Int32Array(new SharedArrayBuffer(4));
+  while (true) {
+    try {
+      mkdirSync(lockDir);
+      return () => {
+        try {
+          rmSync(lockDir, { recursive: true, force: true });
+        } catch {}
+      };
+    } catch (err) {
+      if (err && err.code !== "EEXIST") throw err;
+      try {
+        if (Date.now() - statSync(lockDir).mtimeMs > 180_000) {
+          rmSync(lockDir, { recursive: true, force: true });
+          continue;
+        }
+      } catch {}
+      if (Date.now() > deadline) throw new Error("Timeout esperando lock de web/dist");
+      Atomics.wait(view, 0, 0, 100);
+    }
+  }
+}
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -342,36 +369,66 @@ test("T46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS"
       "AdminApp debe enrutar /admin/settings"
     );
 
-    // Auditar rigurosamente web/dist/index.html (generando el build si no existiera)
-    if (!existsSync(webDistPath)) {
-      const { spawnSync } = await import("node:child_process");
-      spawnSync("npm", ["run", "build"], { cwd: join(REPO_ROOT, "web"), stdio: "pipe" });
+    const releaseWebDistLock = acquireWebDistLock();
+    try {
+      // Auditar rigurosamente web/dist/index.html (recompilando si falta o quedó desactualizado respecto a Layout.astro)
+      const layoutPath = join(REPO_ROOT, "web", "src", "layouts", "Layout.astro");
+      const needsBuild =
+        !existsSync(webDistPath) ||
+        (existsSync(layoutPath) &&
+          statSync(layoutPath).mtimeMs > statSync(webDistPath).mtimeMs);
+      if (needsBuild) {
+        const { spawnSync } = await import("node:child_process");
+        spawnSync("npm", ["run", "build"], { cwd: join(REPO_ROOT, "web"), stdio: "pipe" });
+      }
+      assert.ok(existsSync(webDistPath), "web/dist/index.html debe existir para la verificación");
+
+      const html = readFileSync(webDistPath, "utf8");
+      const { auditHtmlDocument } = await import("../scripts/audit-site.mjs");
+      const report = auditHtmlDocument(html, {
+        mode: "web",
+        distDir: join(REPO_ROOT, "web", "dist"),
+        requireWhatsappCta: false,
+      });
+
+      assert.equal(
+        report.ok,
+        true,
+        `La landing pública web/ debe tener 0 errores de auditoría:\n${report.errors.join("\n")}`
+      );
+      assert.equal(
+        report.executableScriptCount,
+        0,
+        "La landing pública web/dist/index.html debe tener exactamente 0 scripts ejecutables de negocio en cliente"
+      );
+      assert.equal(
+        report.jsBytes,
+        0,
+        "El peso de JavaScript de negocio en web/dist/index.html debe ser exactamente 0 bytes"
+      );
+      assert.equal(
+        report.consentLoaderCount,
+        1,
+        "La landing pública debe incluir únicamente 1 cargador aislado de consentimiento"
+      );
+      assert.doesNotMatch(
+        html,
+        /<script\b[^>]*src=["'][^"']*googletagmanager\.com\/gtag\/js/i,
+        "No debe precargarse gtag.js sin consentimiento previo"
+      );
+
+      const adminDistPath = join(REPO_ROOT, "web", "dist", "admin", "index.html");
+      if (existsSync(adminDistPath)) {
+        const adminHtml = readFileSync(adminDistPath, "utf8");
+        assert.doesNotMatch(
+          adminHtml,
+          /data-nexobow-consent-loader/i,
+          "La ruta /admin debe excluir explícitamente el cargador de consentimiento/GA4"
+        );
+      }
+    } finally {
+      releaseWebDistLock();
     }
-    assert.ok(existsSync(webDistPath), "web/dist/index.html debe existir para la verificación");
-
-    const html = readFileSync(webDistPath, "utf8");
-    const { auditHtmlDocument } = await import("../scripts/audit-site.mjs");
-    const report = auditHtmlDocument(html, {
-      mode: "web",
-      distDir: join(REPO_ROOT, "web", "dist"),
-      requireWhatsappCta: false,
-    });
-
-    assert.equal(
-      report.ok,
-      true,
-      `La landing pública web/ debe tener 0 errores de auditoría:\n${report.errors.join("\n")}`
-    );
-    assert.equal(
-      report.executableScriptCount,
-      0,
-      "La landing pública web/dist/index.html debe tener exactamente 0 scripts ejecutables en cliente"
-    );
-    assert.equal(
-      report.jsBytes,
-      0,
-      "El peso de JavaScript cliente en web/dist/index.html debe ser exactamente 0 bytes"
-    );
   });
 
   // -------------------------------------------------------------

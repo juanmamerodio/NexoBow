@@ -13,11 +13,17 @@ import Founder from "../components/Founder.astro";
 import Faq from "../components/Faq.astro";
 import FinalCta from "../components/FinalCta.astro";
 import Footer from "../components/Footer.astro";
+import { SITE } from "../config";
+import { buildHomeJsonLd } from "../lib/seo";
+
+const homeJsonLd = buildHomeJsonLd(SITE.faqs);
 ---
 
 <Layout
-  title="NexoBow | Sistema de Captación y Agendamiento B2B (<0.8s)"
-  description="Transformamos tus clics de Google Maps e Instagram en consultorías agendadas automáticamente. Sin secretarias, en Astro SSG (<0.8s) y con +10 diseños exclusivos por rubro."
+  title="NexoBow | Páginas Web y Turnos por WhatsApp para Médicos y Profesionales"
+  description="Diseño de páginas web para consultorios médicos, odontólogos, nutricionistas, psicólogos y estudios jurídicos en Argentina. Sistema de turnos online con WhatsApp y Google Maps en menos de 1 segundo."
+  canonicalPath="/"
+  jsonLd={homeJsonLd}
 >
   <Header />
   <main>

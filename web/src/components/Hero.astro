@@ -2,28 +2,28 @@
 import { SITE } from "../config";
 
 const microMetrics = [
-  { value: "0.6s", label: "Tiempo de Carga" },
-  { value: "100/100", label: "Google PageSpeed" },
-  { value: "+10", label: "Diseños por Rubro" },
-  { value: "7 Días", label: "Reserva de Demo" },
+  { value: "< 0.8s", label: "Apertura rápida" },
+  { value: "+10 hs", label: "Libres por semana" },
+  { value: "+10", label: "Diseños a medida" },
+  { value: "7 días", label: "Muestra sin cargo" },
 ];
 ---
 
-<section class="relative mx-auto max-w-6xl px-6 pb-24 pt-12 md:pt-20">
+<section class="relative mx-auto max-w-6xl px-6 pb-20 pt-12 md:pt-20">
   <div class="grid items-center gap-12 lg:grid-cols-12">
-    <!-- Copy Column (Hormozi direct quantifiable promise) -->
+    <!-- Copy Column (+40 clear & direct promise) -->
     <div class="lg:col-span-7">
-      <div class="mb-6 inline-flex items-center gap-2.5 rounded-full border border-[#4928C2]/40 bg-[#0B0D12] px-4 py-1.5 text-xs font-semibold tracking-wider text-[#E3D9FC] shadow-sm">
-        <span class="flex h-2 w-2 rounded-full bg-[#BF40FA]"></span>
-        <span>SISTEMA DE CAPTACIÓN Y AGENDAMIENTO B2B · CARGA EN &lt; 0.8 SEGUNDOS</span>
+      <div class="mb-6 inline-flex items-center gap-2.5 rounded-full border border-[#4928C2]/45 bg-[#0B0D12] px-4 py-1.5 text-xs sm:text-sm font-semibold tracking-wide text-[#E3D9FC]">
+        <span class="flex h-2 w-2 rounded-full bg-[#BF40FA]" aria-hidden="true"></span>
+        <span>PÁGINAS WEB Y TURNOS POR WHATSAPP · ABRE EN MENOS DE 0.8 SEGUNDOS</span>
       </div>
 
-      <h1 class="font-outfit text-4xl font-extrabold leading-[1.06] tracking-tight text-[#F8F6FF] sm:text-5xl md:text-6xl">
+      <h1 class="font-outfit text-4xl font-extrabold leading-[1.08] tracking-tight text-[#F8F6FF] sm:text-5xl md:text-6xl">
         Dejá de perder pacientes que te piden info por WhatsApp y <span class="text-[#BF40FA]">nunca agendan.</span>
       </h1>
 
-      <p class="mt-6 max-w-2xl text-lg font-normal leading-relaxed text-[#E3D9FC]/85">
-        Transformamos tus clics de Google Maps e Instagram en consultorías agendadas automáticamente. Sin secretarias, sin plantillas lentas de WordPress y con una inversión que recuperás con 3 consultas.
+      <p class="mt-6 max-w-2xl text-lg font-normal leading-relaxed text-[#E3D9FC]/90">
+        Convertimos tus visitas de Google Maps e Instagram en consultas ordenadas. Sin responder mensajes uno por uno, y recuperando tu inversión con apenas 2 consultas al mes.
       </p>
 
       <div class="mt-9 flex flex-wrap items-center gap-4">
@@ -31,11 +31,11 @@ const microMetrics = [
           href={SITE.whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="group relative inline-flex items-center gap-4 rounded-full border border-emerald-500/60 bg-[#0B0D12] p-2 pl-7 pr-2.5 text-sm font-bold tracking-wide text-[#F8F6FF] shadow-[0_0_30px_rgba(16,185,129,0.25)] transition-all duration-300 hover:border-emerald-400 hover:bg-emerald-950/30 hover:shadow-[0_0_40px_rgba(16,185,129,0.4)]"
+          class="group relative inline-flex items-center gap-4 rounded-full border border-emerald-500/70 bg-[#0B0D12] p-2 pl-7 pr-2.5 text-base font-bold tracking-wide text-[#F8F6FF] transition-all duration-300 hover:border-emerald-400 hover:bg-emerald-950/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
         >
           <span>WhatsApp Directo ({SITE.phone})</span>
           <span class="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-500 text-[#040607] font-extrabold transition-all duration-300 group-hover:translate-x-1 group-hover:bg-emerald-400">
-            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <svg aria-hidden="true" focusable="false" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.586 1.86.897 2.796.897h.001c3.181 0 5.767-2.587 5.768-5.766.001-3.181-2.585-5.767-5.769-5.767zm7.575 5.766c-.002 4.174-3.398 7.57-7.574 7.57-1.309 0-2.548-.344-3.649-.976l-4.383 1.15 1.17-4.272c-.722-1.15-1.107-2.483-1.108-3.864.002-4.174 3.398-7.57 7.574-7.57 4.176 0 7.572 3.397 7.572 7.57z" />
             </svg>
           </span>
@@ -43,99 +43,123 @@ const microMetrics = [
 
         <a
           href="#casos-de-exito"
-          class="inline-flex items-center gap-2 rounded-full border border-[#4928C2]/40 bg-[#0B0D12]/80 px-6 py-3.5 text-sm font-semibold text-[#E3D9FC] transition-all duration-200 hover:border-[#E3D9FC]/40 hover:bg-[#5B2A62]/20 hover:text-[#F8F6FF]"
+          class="inline-flex items-center gap-2 rounded-full border border-[#4928C2]/50 bg-[#0B0D12] px-6 py-3.5 text-base font-semibold text-[#E3D9FC] transition-colors duration-200 hover:border-[#BF40FA] hover:text-[#F8F6FF] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#BF40FA]"
         >
           <span>Ver casos de éxito ↓</span>
         </a>
       </div>
 
-      <p class="mt-4 flex items-center gap-2 text-xs font-medium text-[#E3D9FC]/75">
-        <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-        <span>Atención directa con Juanma Merodio · Respuesta en &lt; 15 min · Garantía 14 días</span>
+      <p class="mt-4 flex items-center gap-2 text-sm font-medium text-[#E3D9FC]/80">
+        <span class="h-2 w-2 rounded-full bg-emerald-400" aria-hidden="true"></span>
+        <span>Atención directa con Juanma Merodio · Respuesta en menos de 15 min · Garantía 14 días</span>
       </p>
 
       <!-- Micro-metrics bar -->
-      <div class="mt-12 grid grid-cols-2 gap-4 border-t border-[#4928C2]/25 pt-8 sm:grid-cols-4">
+      <dl class="mt-10 grid grid-cols-2 gap-6 border-t border-[#4928C2]/25 pt-8 sm:grid-cols-4">
         {microMetrics.map((m) => (
           <div>
-            <p class="font-outfit text-2xl font-extrabold text-[#F8F6FF]">{m.value}</p>
-            <p class="mt-0.5 text-xs font-medium text-[#E3D9FC]/70">{m.label}</p>
+            <dd class="font-outfit text-2xl font-extrabold text-[#F8F6FF]">{m.value}</dd>
+            <dt class="mt-1 text-sm font-medium text-[#E3D9FC]/80">{m.label}</dt>
           </div>
         ))}
-      </div>
+      </dl>
     </div>
 
-    <!-- 3D CSS Funnel Mockup Column (0 JS) -->
+    <!-- Diagram-First 4-Stage Visual Flow Card (0 JS, 3D CSS hover) -->
     <div class="flex justify-center lg:col-span-5">
-      <div class="relative w-full max-w-[380px]">
-        <!-- Soft Velvet & Ultrasonic Backlight -->
-        <div class="pointer-events-none absolute -inset-4 rounded-[44px] bg-gradient-to-tr from-[#5B2A62]/35 via-[#4928C2]/25 to-transparent blur-2xl"></div>
+      <div class="relative w-full max-w-[420px]">
+        <!-- Soft Velvet Backlight -->
+        <div class="pointer-events-none absolute -inset-4 rounded-[40px] bg-gradient-to-tr from-[#5B2A62]/30 via-[#4928C2]/20 to-transparent blur-2xl" aria-hidden="true"></div>
 
-        <!-- 3D CSS Card Container -->
-        <div class="hero-3d-card preserve-3d relative rounded-[36px] border border-[#4928C2]/45 bg-[#0B0D12] p-5 shadow-[0_25px_60px_-15px_rgba(4,6,7,0.95),0_0_35px_rgba(73,40,194,0.2)]">
-          <!-- Top System Status Bar -->
-          <div class="mb-4 flex items-center justify-between border-b border-[#4928C2]/20 pb-3">
+        <div class="hero-3d-card preserve-3d relative rounded-[32px] border border-[#4928C2]/50 bg-[#0B0D12] p-6 sm:p-7 shadow-[0_24px_55px_rgba(4,6,7,0.92)]">
+          <!-- Diagram Title Bar -->
+          <div class="flex items-center justify-between border-b border-[#4928C2]/25 pb-4">
             <div class="flex items-center gap-2">
-              <span class="h-2.5 w-2.5 rounded-full bg-[#BF40FA]"></span>
-              <span class="text-xs font-semibold tracking-wider text-[#E3D9FC] uppercase">Flujo NexoBow en Vivo</span>
+              <span class="h-2.5 w-2.5 rounded-full bg-[#BF40FA]" aria-hidden="true"></span>
+              <span class="text-xs font-bold tracking-wider text-[#E3D9FC] uppercase">Así funciona tu sistema</span>
             </div>
-            <span class="rounded-full border border-[#4928C2]/40 bg-[#4928C2]/15 px-2.5 py-0.5 text-[10px] font-bold text-[#E3D9FC]">
-              LCP 0.6s · 0 JS
+            <span class="rounded-full border border-[#4928C2]/45 bg-[#040607] px-3 py-1 text-xs font-bold text-emerald-300">
+              En 4 pasos claros
             </span>
           </div>
 
-          <!-- Connected 4-Stage Pipeline Cards -->
-          <div class="space-y-3 text-xs">
-            <!-- Stage 1: Google Maps / IG -->
-            <div class="rounded-2xl border border-[#4928C2]/30 bg-[#040607]/90 p-3.5">
-              <div class="flex items-center justify-between">
-                <span class="font-semibold text-[#F8F6FF]">1. Google Maps &amp; Instagram</span>
-                <span class="text-[10px] font-medium text-[#E3D9FC]/70">Tráfico en caliente</span>
+          <!-- 4-Node SVG Connected Diagram -->
+          <ol data-diagram="hero-flow" aria-label="Recorrido del paciente en 4 pasos" class="mt-5 space-y-2">
+            <!-- Node 1 -->
+            <li class="flex items-start gap-3.5 py-1.5">
+              <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#4928C2]/60 bg-[#040607] font-outfit text-sm font-extrabold text-[#E3D9FC]">
+                1
+              </span>
+              <div class="min-w-0 flex-1">
+                <p class="font-outfit text-base font-bold text-[#F8F6FF]">Te buscan en Google o Instagram</p>
+                <p class="mt-0.5 text-sm text-[#E3D9FC]/80">Ven tus reseñas reales y tocan tu enlace.</p>
               </div>
-              <p class="mt-1 text-[11px] text-[#E3D9FC]/75">
-                El paciente busca en tu ciudad, ve tus ★ 4.9 reseñas y toca el link de tu perfil.
-              </p>
-            </div>
+            </li>
 
-            <!-- Stage 2: Landing del Prestador -->
-            <div class="rounded-2xl border border-[#4928C2]/45 bg-gradient-to-r from-[#5B2A62]/20 to-[#040607] p-3.5">
-              <div class="flex items-center justify-between">
-                <span class="font-semibold text-[#F8F6FF]">2. Landing del Prestador (&lt;0.8s)</span>
-                <span class="rounded-full bg-[#4928C2]/30 px-2 py-0.5 text-[10px] font-semibold text-[#E3D9FC]">Pre-venta</span>
-              </div>
-              <p class="mt-1 text-[11px] text-[#E3D9FC]/80">
-                Conoce tu método, casos reales y precios claros antes de hacerte perder tiempo.
-              </p>
-            </div>
+            <!-- Connector Arrow 1 -> 2 -->
+            <li aria-hidden="true" class="pl-3.5">
+              <svg class="h-5 w-5 text-[#BF40FA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                <path d="M12 4v14" />
+                <path d="m7 13 5 5 5-5" />
+              </svg>
+            </li>
 
-            <!-- Stage 3: WhatsApp Pre-filtrado -->
-            <div class="rounded-2xl border border-[#4928C2]/30 bg-[#040607]/90 p-3.5">
-              <div class="flex items-center justify-between">
-                <span class="font-semibold text-[#F8F6FF]">3. WhatsApp Pre-filtrado</span>
-                <span class="text-[10px] font-medium text-emerald-400">Sin curiosos</span>
+            <!-- Node 2 -->
+            <li class="flex items-start gap-3.5 py-1.5">
+              <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#4928C2]/60 bg-[#040607] font-outfit text-sm font-extrabold text-[#E3D9FC]">
+                2
+              </span>
+              <div class="min-w-0 flex-1">
+                <p class="font-outfit text-base font-bold text-[#F8F6FF]">Ven tu página clara</p>
+                <p class="mt-0.5 text-sm text-[#E3D9FC]/80">Entienden cómo trabajás antes de escribir.</p>
               </div>
-              <p class="mt-1 text-[11px] text-[#E3D9FC]/75">
-                Llega con motivo de consulta y disponibilidad lista, o pasa directo a tu calendario.
-              </p>
-            </div>
+            </li>
 
-            <!-- Stage 4: Turno Confirmado -->
-            <div class="rounded-2xl border border-[#BF40FA]/50 bg-gradient-to-br from-[#5B2A62]/30 via-[#0B0D12] to-[#040607] p-4 shadow-[0_0_25px_rgba(191,64,250,0.15)]">
-              <div class="flex items-center justify-between">
-                <span class="font-outfit text-sm font-bold text-[#F8F6FF]">4. Turno Confirmado</span>
-                <span class="rounded-full bg-[#BF40FA] px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-[#F8F6FF] uppercase">
-                  Agendado
-                </span>
+            <!-- Connector Arrow 2 -> 3 -->
+            <li aria-hidden="true" class="pl-3.5">
+              <svg class="h-5 w-5 text-[#BF40FA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                <path d="M12 4v14" />
+                <path d="m7 13 5 5 5-5" />
+              </svg>
+            </li>
+
+            <!-- Node 3 -->
+            <li class="flex items-start gap-3.5 py-1.5">
+              <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#4928C2]/60 bg-[#040607] font-outfit text-sm font-extrabold text-[#E3D9FC]">
+                3
+              </span>
+              <div class="min-w-0 flex-1">
+                <p class="font-outfit text-base font-bold text-[#F8F6FF]">Eligen horario o escriben decididos</p>
+                <p class="mt-0.5 text-sm text-[#E3D9FC]/80">Sin idas y vueltas eternas por WhatsApp.</p>
               </div>
-              <p class="mt-1.5 text-xs text-[#E3D9FC]">
-                📅 Jueves 16:30 hs · Sincronizado en Google Calendar
-              </p>
-              <div class="mt-2 flex items-center justify-between border-t border-[#4928C2]/25 pt-2 text-[11px] text-[#E3D9FC]/80">
-                <span>Tiempo invertido por vos:</span>
-                <span class="font-bold text-[#BF40FA]">0 minutos</span>
+            </li>
+
+            <!-- Connector Arrow 3 -> 4 -->
+            <li aria-hidden="true" class="pl-3.5">
+              <svg class="h-5 w-5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                <path d="M12 4v14" />
+                <path d="m7 13 5 5 5-5" />
+              </svg>
+            </li>
+
+            <!-- Node 4 (Outcome) -->
+            <li class="flex items-start gap-3.5 border-t border-[#4928C2]/30 pt-4">
+              <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-500 font-outfit text-sm font-extrabold text-[#040607]">
+                4
+              </span>
+              <div class="min-w-0 flex-1">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <p class="font-outfit text-lg font-extrabold text-[#F8F6FF]">Vos solo atendés</p>
+                  <span class="rounded-full bg-[#BF40FA] px-3 py-0.5 text-xs font-extrabold text-[#040607] uppercase">
+                    Confirmado
+                  </span>
+                </div>
+                <p class="mt-1 text-sm text-[#E3D9FC]">
+                  📅 Turno agendado · 0 minutos perdidos respondiendo.
+                </p>
               </div>
-            </div>
-          </div>
+            </li>
+          </ol>
         </div>
       </div>
     </div>

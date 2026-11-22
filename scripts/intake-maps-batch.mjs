@@ -760,7 +760,7 @@ export function qualifyLeadForGate0(leadInput = {}) {
     modalidad: resolvedMeta.modalidad,
     tipo_consulta: resolvedMeta.tipo_consulta,
     canal_agenda: resolvedMeta.canal_agenda,
-    pain_angle: "Anti-Silla Vacía & Cero-Secretaria",
+    pain_angle: "Orden de consultas y turnos confirmados",
   };
 }
 
@@ -789,8 +789,7 @@ export function buildGate0WhatsAppOutreach(lead = {}) {
 
   const message =
     `Hola ${nombre}! Soy Juanma de NexoBow. Estuve viendo el perfil de ${placeNoun}${cityBit}${ratingText}. ` +
-    `${bucketObservation} Te armé sin cargo un prototipo interactivo con el sistema Anti-Silla Vacía & Cero-Secretaria ` +
-    `para captar consultas y confirmar turnos sin depender de secretaría: ${previewUrl}${emailMention} ` +
+    `${bucketObservation} Te armé sin cargo un prototipo interactivo enfocado en orden de consultas y turnos confirmados con recordatorios automáticos 24h/2h: ${previewUrl}${emailMention} ` +
     `Lo tenés reservado 7 días para probar los estilos — ¿querés que te mande un audio corto contándote cómo funcionaría para vos?`;
 
   const phoneDigits = String(lead.telefono || lead.phone || "").replace(/\D/g, "");
@@ -819,7 +818,7 @@ export function buildGate0AudioScript35s(lead = {}) {
 
   return (
     `[GUION AUDIO 35s] "Hola ${nombre}, ¿cómo estás? Te habla Juanma, te grabo este audio rápido para no robarte tiempo. ` +
-    `${bucketHook} Por eso te armé un prototipo real en ${previewUrl} enfocado en el sistema Anti-Silla Vacía y Cero-Secretaria: ` +
+    `${bucketHook} Por eso te armé un prototipo real en ${previewUrl} enfocado en orden de consultas y turnos confirmados: ` +
     `básicamente ordena las consultas que entran de Maps o Instagram, filtra a los pacientes/clientes antes de agendar ` +
     `y recuerda los turnos para que no te queden huecos en la agenda. Chusmealo tranquilo desde el celu y contame qué paleta te gustó más."`
   );

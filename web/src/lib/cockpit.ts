@@ -276,7 +276,7 @@ export function buildHotFollowupWhatsAppUrl(
   }
 
   const themeLabel = selectedTheme || "Original";
-  const message = `Hola ${name}! Soy Juanma de NexoBow. Vi que recién estuviste chusmeando la demo de ${noun} y probaste la paleta "${themeLabel}". ¿Qué te pareció el sistema Anti-Silla Vacía & Cero-Secretaria? (${demoUrl})`;
+  const message = `Hola ${name}! Soy Juanma de NexoBow. Vi que recién estuviste chusmeando la demo de ${noun} y probaste la paleta "${themeLabel}". ¿Qué te pareció la propuesta de orden de consultas y turnos confirmados? (${demoUrl})`;
 
   return digits ? `https://wa.me/${digits}?text=${encodeURIComponent(message)}` : "";
 }

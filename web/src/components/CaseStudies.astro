@@ -3,217 +3,248 @@ import { SITE } from "../config";
 ---
 
 <section id="casos-de-exito" class="relative mx-auto max-w-6xl px-6 py-24 scroll-mt-16">
-  <!-- Glowing Section Header -->
+  <!-- Section Header -->
   <div class="mx-auto max-w-3xl text-center mb-16">
-    <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-[#BF40FA]/40 bg-[#5B2A62]/20 px-4 py-1 text-xs font-bold tracking-wider text-[#E3D9FC] uppercase shadow-sm">
-      <span class="h-2 w-2 rounded-full bg-[#BF40FA]"></span>
+    <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-[#4928C2]/50 bg-[#0B0D12] px-4 py-1.5 text-xs font-bold tracking-wider text-[#E3D9FC] uppercase">
+      <span class="h-2 w-2 rounded-full bg-[#BF40FA]" aria-hidden="true"></span>
       <span>Casos de Éxito &amp; Proyectos Reales</span>
     </div>
     <h2 class="font-outfit text-3xl font-extrabold tracking-tight text-[#F8F6FF] sm:text-4xl md:text-5xl">
       Ingeniería comprobable, <span class="text-[#BF40FA]">no promesas vacías</span>
     </h2>
-    <p class="mt-4 text-base leading-relaxed text-[#E3D9FC]/85">
-      Estos son algunos de los proyectos, productoras y plataformas reales desarrollados y operados por Juanma Merodio. Sistemas diseñados para convertir visitas en facturación con velocidad instantánea (&lt;0.8s) y retención absoluta.
+    <p class="mt-4 text-base sm:text-lg leading-relaxed text-[#E3D9FC]/90">
+      Estos son proyectos reales desarrollados y operados por Juanma Merodio. Podés hacer clic en cualquiera de las capturas para ver cómo abren al instante en vivo.
     </p>
   </div>
 
   <!-- Primary Showcase: 3 Flagship Real Success Cases -->
   <div class="grid gap-8 md:grid-cols-3 mb-16">
     {SITE.caseStudies.map((cs) => (
-      <div class="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-[#4928C2]/45 bg-gradient-to-b from-[#0B0D12] via-[#0B0D12] to-[#040607] p-8 transition-all duration-300 hover:-translate-y-1.5 hover:border-[#BF40FA] hover:shadow-[0_20px_50px_rgba(191,64,250,0.2)]">
-        <!-- Top Status Bar & Badge -->
+      <article class="group flex flex-col justify-between overflow-hidden rounded-3xl border border-[#4928C2]/45 bg-[#0B0D12] transition-all duration-300 hover:-translate-y-1 hover:border-[#BF40FA]">
         <div>
-          <div class="flex items-center justify-between gap-2">
-            <span class="rounded-full bg-[#BF40FA]/20 border border-[#BF40FA]/50 px-3.5 py-1 text-xs font-extrabold text-[#F8F6FF]">
-              {cs.badge}
-            </span>
-            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-400">
-              <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-              <span>En Producción</span>
-            </span>
-          </div>
-
-          <h3 class="mt-5 font-outfit text-2xl font-bold text-[#F8F6FF] group-hover:text-[#BF40FA] transition-colors">
-            {cs.title}
-          </h3>
-          <p class="text-xs font-semibold text-[#E3D9FC] mt-1">{cs.subtitle}</p>
-
-          <p class="mt-4 text-xs leading-relaxed text-[#E3D9FC]/80">
-            {cs.description}
-          </p>
-
-          <!-- Micro-Metrics Box -->
-          <div class="mt-6 grid grid-cols-3 gap-2 rounded-2xl border border-[#4928C2]/30 bg-[#040607]/90 p-3 text-center">
-            {cs.metrics.map((m) => (
-              <div>
-                <p class="font-outfit text-sm font-extrabold text-[#F8F6FF]">{m.value}</p>
-                <p class="text-[10px] font-medium text-[#E3D9FC]/70 mt-0.5">{m.label}</p>
-              </div>
-            ))}
-          </div>
-
-          <!-- Semantic Tags -->
-          <div class="mt-5 flex flex-wrap gap-1.5">
-            {cs.tags.map((tag) => (
-              <span class="rounded-md border border-[#4928C2]/30 bg-[#0B0D12] px-2 py-0.5 text-[10px] font-medium text-[#E3D9FC]/70">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <!-- Live Link Footer -->
-        <div class="mt-8 pt-4 border-t border-[#4928C2]/25 flex items-center justify-between">
-          <span class="text-xs font-mono text-[#E3D9FC]/60">{cs.urlDisplay}</span>
+          <!-- Real 16:9 Hero Capture -->
           <a
             href={cs.url}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 text-xs font-bold text-[#BF40FA] hover:text-[#F8F6FF] transition-colors"
+            aria-label={`Abrir sitio en vivo de ${cs.title}`}
+            class="block overflow-hidden border-b border-[#4928C2]/30 bg-[#040607] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#BF40FA]"
           >
-            <span>Ver sitio en vivo</span>
-            <span>↗</span>
+            <img
+              src={cs.screenshot}
+              alt={cs.screenshotAlt}
+              width="1440"
+              height="900"
+              loading="lazy"
+              decoding="async"
+              class="aspect-video w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+          </a>
+
+          <div class="p-6 sm:p-7">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="rounded-full border border-[#4928C2]/50 bg-[#040607] px-3 py-1 text-xs font-bold text-[#E3D9FC]">
+                {cs.badge}
+              </span>
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400">
+                <span class="h-2 w-2 rounded-full bg-emerald-400" aria-hidden="true"></span>
+                <span>En Producción</span>
+              </span>
+            </div>
+
+            <h3 class="mt-4 font-outfit text-2xl font-bold text-[#F8F6FF]">
+              {cs.title}
+            </h3>
+            <p class="mt-1 text-sm font-semibold text-[#E3D9FC]">{cs.subtitle}</p>
+
+            <p class="mt-3 text-base leading-relaxed text-[#E3D9FC]/85">
+              {cs.description}
+            </p>
+
+            <!-- Flat Metrics Row (no nested cards) -->
+            <dl class="mt-6 grid grid-cols-3 gap-3 border-t border-[#4928C2]/25 pt-4 text-center">
+              {cs.metrics.map((m) => (
+                <div>
+                  <dd class="font-outfit text-base font-extrabold text-[#F8F6FF]">{m.value}</dd>
+                  <dt class="mt-0.5 text-xs font-medium text-[#E3D9FC]/80">{m.label}</dt>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+
+        <!-- Live Link Footer -->
+        <div class="flex items-center justify-between border-t border-[#4928C2]/25 bg-[#040607]/60 px-6 py-4 sm:px-7">
+          <span class="text-xs font-mono text-[#E3D9FC]/75">{cs.urlDisplay}</span>
+          <a
+            href={cs.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-sm font-bold text-[#E3D9FC] hover:text-[#BF40FA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#BF40FA] transition-colors"
+          >
+            <span>Ver sitio en vivo<span class="sr-only"> de {cs.title}</span></span>
+            <span aria-hidden="true">↗</span>
           </a>
         </div>
-      </div>
+      </article>
     ))}
   </div>
 
-  <!-- Highlight Row: Health Demo Transformation & Technical Benchmark -->
+  <!-- Highlight Row: Health Demo Transformation & Speed Benchmark -->
   <div class="grid gap-8 lg:grid-cols-12 items-stretch">
     <!-- Star Clinical Showcase: Lic. Sofía Ramos -->
-    <div class="lg:col-span-7 flex flex-col justify-between rounded-3xl border-2 border-[#BF40FA]/70 bg-gradient-to-br from-[#5B2A62]/25 via-[#0B0D12] to-[#040607] p-8 sm:p-10 shadow-[0_15px_50px_rgba(191,64,250,0.2)]">
+    <article class="lg:col-span-7 flex flex-col justify-between overflow-hidden rounded-3xl border-2 border-[#BF40FA]/80 bg-[#0B0D12]">
       <div>
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <span class="rounded-full bg-emerald-500/20 border border-emerald-500/40 px-3.5 py-1 text-xs font-bold text-emerald-300">
-            ★ CASO DE ÉXITO EN SALUD · SHOWROOM OFICIAL
-          </span>
-          <span class="text-xs font-semibold text-[#E3D9FC]">Estilo #01 Editorial Delta</span>
-        </div>
+        <a
+          href={SITE.demoLiveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Abrir muestra en vivo de Lic. Sofía Ramos"
+          class="block overflow-hidden border-b border-[#4928C2]/35 bg-[#040607] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#BF40FA]"
+        >
+          <img
+            src={SITE.demoScreenshot}
+            alt={SITE.demoScreenshotAlt}
+            width="1440"
+            height="900"
+            loading="lazy"
+            decoding="async"
+            class="aspect-video w-full object-cover object-top transition-transform duration-300 hover:scale-[1.02]"
+          />
+        </a>
 
-        <h3 class="mt-5 font-outfit text-2xl sm:text-3xl font-extrabold text-[#F8F6FF]">
-          Lic. Sofía Ramos — Nutrición Funcional &amp; Deportiva
-        </h3>
-        <p class="mt-3 text-sm leading-relaxed text-[#E3D9FC]/85">
-          Transformación de consultorio nutricional: reemplazó un linktree improvisado en Instagram por un embudo editorial de alta gama. Reseñas verificadas de Google Maps integradas, presentación de especialidades y agendamiento directo a consultoría de valoración.
-        </p>
+        <div class="p-6 sm:p-8">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="rounded-full bg-[#BF40FA] px-3.5 py-1 text-xs font-extrabold text-[#040607]">
+              ★ CASO DE ÉXITO EN SALUD · MUESTRA EN VIVO
+            </span>
+            <span class="text-sm font-semibold text-[#E3D9FC]">Estilo #01 Editorial Delta</span>
+          </div>
 
-        <!-- Before vs After Transformation Grid -->
-        <div class="mt-6 grid gap-3 sm:grid-cols-2">
-          <div class="rounded-2xl border border-red-500/30 bg-[#040607]/80 p-4">
-            <p class="text-xs font-bold text-red-400 uppercase tracking-wider">Antes de NexoBow</p>
-            <p class="mt-1 text-xs text-[#E3D9FC]/80 leading-relaxed">
-              35 mensajes semanales por WhatsApp preguntando precios, horas perdidas respondiendo manualmente y más de 50% de ausentismo en turnos.
-            </p>
-          </div>
-          <div class="rounded-2xl border border-emerald-500/40 bg-emerald-950/20 p-4">
-            <p class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Con el Sistema Bow</p>
-            <p class="mt-1 text-xs text-[#E3D9FC]/90 leading-relaxed">
-              +14 consultorías agendadas por semana sin tocar el teléfono, pacientes calificados y presencia médica de primer nivel.
-            </p>
-          </div>
-        </div>
+          <h3 class="mt-5 font-outfit text-2xl sm:text-3xl font-extrabold text-[#F8F6FF]">
+            Lic. Sofía Ramos — Nutrición Funcional &amp; Deportiva
+          </h3>
+          <p class="mt-3 text-base leading-relaxed text-[#E3D9FC]/90">
+            Reemplazó un enlace improvisado en Instagram por una página ordenada con sus reseñas reales de Google Maps, método de atención y turnos directos.
+          </p>
 
-        <!-- Live Metrics Badge -->
-        <div class="mt-6 grid grid-cols-3 gap-3 rounded-2xl border border-[#4928C2]/35 bg-[#040607] p-4 text-center">
-          <div>
-            <p class="font-outfit text-2xl font-extrabold text-[#F8F6FF]">0.6s</p>
-            <p class="text-[11px] font-semibold text-[#E3D9FC]/70 mt-0.5">LCP Móvil</p>
+          <!-- Flat Before vs After Comparison -->
+          <div class="mt-6 grid gap-5 border-t border-[#4928C2]/25 pt-5 sm:grid-cols-2">
+            <div class="border-l-2 border-red-400/70 pl-4">
+              <p class="text-xs font-bold text-red-300 uppercase tracking-wider">Antes de NexoBow</p>
+              <p class="mt-1.5 text-sm sm:text-base text-[#E3D9FC]/85 leading-relaxed">
+                35 mensajes por semana preguntando precios y demasiados turnos que se olvidaban o caían sin aviso.
+              </p>
+            </div>
+            <div class="border-l-2 border-emerald-400 pl-4">
+              <p class="text-xs font-bold text-emerald-300 uppercase tracking-wider">Con NexoBow Activo</p>
+              <p class="mt-1.5 text-sm sm:text-base text-[#F8F6FF] leading-relaxed">
+                +14 consultorías por semana con pacientes ya informados y listos para confirmar horario.
+              </p>
+            </div>
           </div>
-          <div>
-            <p class="font-outfit text-2xl font-extrabold text-[#BF40FA]">0 KB</p>
-            <p class="text-[11px] font-semibold text-[#E3D9FC]/70 mt-0.5">JS en Cliente</p>
-          </div>
-          <div>
-            <p class="font-outfit text-2xl font-extrabold text-emerald-400">100/100</p>
-            <p class="text-[11px] font-semibold text-[#E3D9FC]/70 mt-0.5">Core Web Vitals</p>
-          </div>
+
+          <!-- Live Metrics Strip -->
+          <dl class="mt-6 grid grid-cols-3 gap-4 border-t border-[#4928C2]/25 pt-5 text-center">
+            <div>
+              <dd class="font-outfit text-2xl font-extrabold text-[#F8F6FF]">0.6s</dd>
+              <dt class="mt-0.5 text-xs sm:text-sm font-semibold text-[#E3D9FC]/80">Apertura en Celular</dt>
+            </div>
+            <div>
+              <dd class="font-outfit text-2xl font-extrabold text-[#BF40FA]">0 esperas</dd>
+              <dt class="mt-0.5 text-xs sm:text-sm font-semibold text-[#E3D9FC]/80">Sin Cargas Lentas</dt>
+            </div>
+            <div>
+              <dd class="font-outfit text-2xl font-extrabold text-emerald-400">100/100</dd>
+              <dt class="mt-0.5 text-xs sm:text-sm font-semibold text-[#E3D9FC]/80">Calificación Google</dt>
+            </div>
+          </dl>
         </div>
       </div>
 
-      <div class="mt-8 pt-5 border-t border-[#4928C2]/30 flex flex-wrap items-center justify-between gap-4">
-        <span class="text-xs text-[#E3D9FC]/70">Compilación estática de 27.8 KB totales · Servida en Edge CDN</span>
-        <div class="flex items-center gap-4">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-t border-[#4928C2]/30 bg-[#040607]/60 px-6 py-5 sm:px-8">
+        <span class="text-sm text-[#E3D9FC]/80">Carga instantánea en celular y computadora</span>
+        <div class="flex flex-wrap items-center gap-4">
           <a
             href={SITE.demoLiveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 rounded-full border border-[#BF40FA] bg-[#5B2A62]/30 px-4 py-2 text-xs font-bold text-[#F8F6FF] transition-all hover:bg-[#BF40FA]"
+            class="inline-flex items-center gap-1.5 rounded-full border border-[#BF40FA] bg-[#040607] px-5 py-2.5 text-sm font-bold text-[#F8F6FF] transition-colors hover:bg-[#BF40FA] hover:text-[#040607] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#BF40FA]"
           >
             <span>Ver demo en vivo</span>
-            <span>↗</span>
+            <span aria-hidden="true">↗</span>
           </a>
           <a
             href={SITE.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
+            class="text-sm font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
           >
             Pedir web similar →
           </a>
         </div>
       </div>
-    </div>
+    </article>
 
-    <!-- Technical Benchmark -->
-    <div class="lg:col-span-5 flex flex-col justify-between rounded-3xl border border-[#4928C2]/45 bg-gradient-to-b from-[#5B2A62]/20 to-[#0B0D12] p-8 sm:p-10">
+    <!-- Speed Comparison Benchmark -->
+    <aside class="lg:col-span-5 flex flex-col justify-between rounded-3xl border border-[#4928C2]/45 bg-[#0B0D12] p-6 sm:p-8">
       <div>
         <div class="flex flex-wrap items-center justify-between gap-2">
           <span class="rounded-full border border-[#4928C2]/50 bg-[#040607] px-3.5 py-1 text-xs font-bold text-[#E3D9FC]">
-            Benchmark Técnico
+            Velocidad Real en Celular
           </span>
-          <span class="text-xs font-semibold text-[#E3D9FC]/70">Auditoría Real</span>
+          <span class="text-sm font-semibold text-[#E3D9FC]/80">Medición Comparativa</span>
         </div>
 
         <h3 class="mt-5 font-outfit text-2xl font-bold text-[#F8F6FF]">
-          WordPress tradicional vs. Arquitectura Astro SSG NexoBow
+          Página lenta tradicional vs. Página rápida NexoBow
         </h3>
-        <p class="mt-3 text-xs leading-relaxed text-[#E3D9FC]/80">
-          El 42% de los usuarios que hacen clic desde Instagram o WhatsApp abandonan si la página tarda más de 3 segundos en abrir. Así rinde NexoBow frente a las agencias tradicionales:
+        <p class="mt-3 text-base leading-relaxed text-[#E3D9FC]/85">
+          4 de cada 10 pacientes que tocan un enlace desde Instagram o Google Maps cierran la página si tarda más de 3 segundos en abrir.
         </p>
 
-        <div class="mt-6 space-y-3.5">
+        <div class="mt-8 space-y-6 border-t border-[#4928C2]/25 pt-6">
           <!-- WordPress Elementor -->
-          <div class="rounded-2xl border border-red-500/25 bg-[#040607]/90 p-4">
-            <div class="flex items-center justify-between text-xs font-bold text-red-300">
-              <span>WordPress / Elementor Tradicional</span>
-              <span>4.8s de carga</span>
+          <div>
+            <div class="flex items-center justify-between text-sm font-bold text-red-300">
+              <span>WordPress / Elementor tradicional</span>
+              <span>4.8s de espera</span>
             </div>
-            <div class="w-full bg-[#1A1D26] h-1.5 rounded-full mt-2 overflow-hidden">
-              <div class="bg-red-500 h-full w-[80%]"></div>
+            <div class="mt-2.5 h-2.5 w-full overflow-hidden rounded-full bg-[#1A1D26]">
+              <div class="h-full w-[82%] rounded-full bg-red-500"></div>
             </div>
-            <p class="mt-2 text-[11px] text-[#E3D9FC]/70">
-              +1.4 MB de scripts pesados, plugins vulnerables y 42% de abandono móvil antes de ver el botón de WhatsApp.
+            <p class="mt-2 text-sm text-[#E3D9FC]/80">
+              Demora en abrir desde datos móviles y el paciente se va antes de ver tu botón de WhatsApp.
             </p>
           </div>
 
-          <!-- NexoBow Astro -->
-          <div class="rounded-2xl border border-[#BF40FA]/50 bg-[#040607] p-4 shadow-[0_0_20px_rgba(191,64,250,0.15)]">
-            <div class="flex items-center justify-between text-xs font-bold text-[#BF40FA]">
-              <span>Arquitectura Astro SSG NexoBow</span>
-              <span class="text-emerald-400 font-extrabold">0.6s instantáneo</span>
+          <!-- NexoBow -->
+          <div>
+            <div class="flex items-center justify-between text-sm font-bold text-[#E3D9FC]">
+              <span>Página NexoBow en vivo</span>
+              <span class="font-extrabold text-emerald-400">0.6s al instante</span>
             </div>
-            <div class="w-full bg-[#1A1D26] h-1.5 rounded-full mt-2 overflow-hidden">
-              <div class="bg-gradient-to-r from-[#BF40FA] to-emerald-400 h-full w-[15%]"></div>
+            <div class="mt-2.5 h-2.5 w-full overflow-hidden rounded-full bg-[#1A1D26]">
+              <div class="h-full w-[14%] rounded-full bg-emerald-400"></div>
             </div>
-            <p class="mt-2 text-[11px] text-[#E3D9FC]/85">
-              HTML estático puro en CDN global, retención inmediata del paciente y 0 mantenimiento de plugins rotos.
+            <p class="mt-2 text-sm text-[#E3D9FC]/90">
+              Abre de inmediato en cualquier teléfono, sin plugins que se rompan ni demoras.
             </p>
           </div>
         </div>
       </div>
 
-      <div class="mt-8 pt-4 border-t border-[#4928C2]/20 flex flex-wrap items-center justify-between gap-3 text-xs text-[#E3D9FC]/75">
-        <span class="font-semibold text-emerald-400">✓ Garantizado: Carga instantánea &lt; 1 segundo.</span>
+      <div class="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-[#4928C2]/25 pt-5 text-sm text-[#E3D9FC]/85">
+        <span class="font-semibold text-emerald-400">✓ Garantizado: abre en menos de 1 segundo.</span>
         <a
           href={SITE.whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="font-bold text-[#BF40FA] hover:text-[#E3D9FC] transition-colors"
+          class="font-bold text-[#E3D9FC] underline decoration-[#BF40FA]/70 underline-offset-4 hover:text-[#BF40FA] transition-colors"
         >
-          Consultar por WhatsApp (+54 9 3489 53-6088) →
+          Consultar por WhatsApp ({SITE.phone}) →
         </a>
       </div>
-    </div>
+    </aside>
   </div>
 </section>

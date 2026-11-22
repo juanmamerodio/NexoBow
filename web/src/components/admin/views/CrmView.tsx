@@ -68,6 +68,19 @@ export interface LeadMetadata {
     is_hot_lead: boolean;
   };
   audio_script_35s: string;
+  terms_accepted: boolean;
+  terms_accepted_at: string | null;
+  terms_version: string | null;
+  marketing_opt_in: boolean;
+  email_marketing: {
+    unsubscribed: boolean;
+    unsubscribed_at: string | null;
+    welcome_sent_at: string | null;
+    preview_ready_sent_at: string | null;
+    ttl_reminder_sent_at: string | null;
+    followup_stage: "none" | "welcome" | "preview_delivered" | "ttl_reminder" | string;
+    provider_last: "zoho_mail" | "resend" | null;
+  };
   [key: string]: any;
 }
 
@@ -171,7 +184,7 @@ function buildDefaultAudioScript35s(
 
   return (
     `[GUION AUDIO 35s] "Hola ${name}, ¿cómo estás? Te habla Juanma de NexoBow, te grabo este audio rápido para no robarte tiempo. ` +
-    `${bucketHook} Por eso te armé un prototipo real en ${demoUrl} enfocado en el sistema Anti-Silla Vacía & Cero-Secretaria: ` +
+    `${bucketHook} Por eso te armé un prototipo real en ${demoUrl} enfocado en orden de consultas y turnos confirmados: ` +
     `ordena las consultas de Maps o Instagram, filtra antes de agendar y confirma turnos para evitar huecos en tu agenda. ` +
     `Chusmealo tranquilo desde el celu y contame qué paleta te gustó más."`
   );
@@ -319,6 +332,42 @@ export function resolveLeadMetadata(lead: Partial<LeadEntity> = {}): LeadMetadat
       ? rawAudio.trim()
       : buildDefaultAudioScript35s(lead, website_bucket);
 
+  const rawEm =
+    (rawAny.email_marketing && typeof rawAny.email_marketing === "object"
+      ? rawAny.email_marketing
+      : null) ||
+    (rawMeta.email_marketing && typeof rawMeta.email_marketing === "object"
+      ? rawMeta.email_marketing
+      : {});
+  const isUnsubscribed = Boolean(
+    rawAny.unsubscribed === true ||
+      rawMeta.unsubscribed === true ||
+      rawEm.unsubscribed === true
+  );
+  const termsAcceptedAtRaw = rawAny.terms_accepted_at ?? rawMeta.terms_accepted_at ?? null;
+  const termsVersionRaw = rawAny.terms_version ?? rawMeta.terms_version ?? null;
+  const terms_accepted = Boolean(
+    rawAny.terms_accepted ?? rawMeta.terms_accepted ?? Boolean(termsAcceptedAtRaw)
+  );
+  const marketingOptInRaw = rawAny.marketing_opt_in ?? rawMeta.marketing_opt_in;
+  const marketing_opt_in =
+    marketingOptInRaw !== undefined ? Boolean(marketingOptInRaw) : !isUnsubscribed;
+
+  const email_marketing = {
+    unsubscribed: isUnsubscribed,
+    unsubscribed_at: rawEm.unsubscribed_at ?? null,
+    welcome_sent_at: rawEm.welcome_sent_at ?? null,
+    preview_ready_sent_at: rawEm.preview_ready_sent_at ?? null,
+    ttl_reminder_sent_at: rawEm.ttl_reminder_sent_at ?? null,
+    followup_stage: (rawEm.followup_stage || "none") as
+      | "none"
+      | "welcome"
+      | "preview_delivered"
+      | "ttl_reminder"
+      | string,
+    provider_last: (rawEm.provider_last ?? null) as "zoho_mail" | "resend" | null,
+  };
+
   return {
     ...rawMeta,
     modalidad: rawMeta.modalidad || (isPresencial ? "presencial" : "mixto"),
@@ -337,6 +386,11 @@ export function resolveLeadMetadata(lead: Partial<LeadEntity> = {}): LeadMetadat
     email_outreach,
     telemetry,
     audio_script_35s,
+    terms_accepted,
+    terms_accepted_at: termsAcceptedAtRaw ? String(termsAcceptedAtRaw) : null,
+    terms_version: termsVersionRaw ? String(termsVersionRaw) : null,
+    marketing_opt_in,
+    email_marketing,
   };
 }
 
@@ -473,7 +527,7 @@ export function buildVoseoWhatsAppMessage(
     const themeLabel = meta.telemetry.selected_theme || "Original";
     return (
       `Hola ${name}! Soy Juanma de NexoBow. Vi que recién estuviste chusmeando la demo de ${placeNoun} en ${city} ` +
-      `y probaste la paleta "${themeLabel}". ¿Qué te pareció la idea del sistema Anti-Silla Vacía & Cero-Secretaria ` +
+      `y probaste la paleta "${themeLabel}". ¿Qué te pareció la propuesta de orden de consultas y turnos confirmados ` +
       `para filtrar consultas y evitar huecos en agenda? Si te gustó cómo queda, en 48 hs la activamos con tus fotos reales: ${demoUrl}`
     );
   }
@@ -482,18 +536,18 @@ export function buildVoseoWhatsAppMessage(
     const placePresencial = isLegal ? "tu estudio jurídico presencial" : "tu consultorio presencial";
     return (
       `Totalmente ${name}, por eso configuramos la web como vidriera profesional de ${placePresencial} en ${city}, ` +
-      `con mapa interactivo y el sistema Anti-Silla Vacía & Cero-Secretaria conectado directo al WhatsApp para coordinar turnos presenciales sin intermediarios: ${demoUrl}`
+      `con mapa interactivo y agenda ordenada con recordatorios automáticos conectado directo al WhatsApp para coordinar turnos presenciales sin intermediarios: ${demoUrl}`
     );
   }
 
   if (mode === "objecion_arancelada") {
     return (
-      `Exacto ${name}, la web presenta tu trayectoria en ${city}, filtra curiosos con el sistema Cero-Secretaria ` +
+      `Exacto ${name}, la web presenta tu trayectoria en ${city}, filtra curiosos para que lleguen consultas ordenadas ` +
       `y deja claro desde el primer clic que la primera consulta de valoración es arancelada antes de pasar al WhatsApp: ${demoUrl}`
     );
   }
 
-  // Modo "initial" (Gate 0: zona + rating/Maps + preview 10x + Anti-Silla Vacía & Cero-Secretaria + mención sutil a Zoho si fue enviado)
+  // Modo "initial" (Gate 0: zona + rating/Maps + preview 10x + Orden de consultas y turnos confirmados + mención sutil a Zoho si fue enviado)
   const mapsRef = meta.rating
     ? ` (${meta.rating}★${meta.reviews_count > 0 ? ` · ${meta.reviews_count} reseñas en Google Maps` : " en Google Maps"})`
     : "";
@@ -508,7 +562,7 @@ export function buildVoseoWhatsAppMessage(
 
   return (
     `Hola ${name}! Soy Juanma de NexoBow. Estuve viendo el perfil de ${placeNoun} en ${city}${mapsRef}. ` +
-    `${bucketHook} Te armé una muestra 10x con el sistema Anti-Silla Vacía & Cero-Secretaria para filtrar consultas ` +
+    `${bucketHook} Te armé una muestra 10x enfocada en orden de consultas y turnos confirmados para filtrar interesados ` +
     `y confirmar turnos directo por WhatsApp: ${demoUrl}${zohoMention} ` +
     `La tenés reservada 7 días — ¿querés que te mande un audio corto de 35s contándote cómo funcionaría para ${placeNoun}?`
   );
@@ -618,6 +672,7 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
   const [showNewLeadModal, setShowNewLeadModal] = useState(false);
   const [showBatchModal, setShowBatchModal] = useState(false);
   const [copiedLeadId, setCopiedLeadId] = useState<number | null>(null);
+  const [sendingPreviewId, setSendingPreviewId] = useState<number | null>(null);
   const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
 
   // Cargar prospectos desde Supabase (Single Source of Truth)
@@ -919,6 +974,78 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
     }
 
     showNotification(`✓ Cambios de #${updated.id} guardados correctamente`);
+  };
+
+  const handleSendPreviewEmail = async (targetLead: LeadEntity) => {
+    const meta = resolveLeadMetadata(targetLead);
+    if (!meta.email) {
+      showNotification(`⚠ El prospecto #${targetLead.id} no tiene email cargado`);
+      return;
+    }
+    if (meta.email_marketing.unsubscribed) {
+      showNotification(`⛔ ${meta.email} figura como Dado de baja (no se envió correo)`);
+      return;
+    }
+
+    setSendingPreviewId(targetLead.id);
+    try {
+      const supabase = getBrowserSupabaseClient();
+      const { data: sessionData } = await supabase.auth.getSession();
+      const accessToken = sessionData?.session?.access_token || "";
+
+      const res = await fetch("/api/v1/email/send-preview", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+        },
+        body: JSON.stringify({
+          slug: targetLead.slug,
+          leadId: targetLead.id,
+          stage: "preview_delivered",
+        }),
+      });
+      const payload = (await res.json().catch(() => ({}))) as Record<string, any>;
+
+      if (res.ok && payload.status === "sent") {
+        const nextEmailMarketing = payload.email_marketing || {
+          ...meta.email_marketing,
+          preview_ready_sent_at: new Date().toISOString(),
+          followup_stage: "preview_delivered",
+          provider_last: "resend",
+        };
+        const applyUpdate = (l: LeadEntity): LeadEntity => ({
+          ...l,
+          metadata: {
+            ...(l.metadata || {}),
+            email_marketing: nextEmailMarketing,
+          },
+        });
+        setLeads((prev) => prev.map((l) => (l.id === targetLead.id ? applyUpdate(l) : l)));
+        setSelectedLead((prev) => (prev && prev.id === targetLead.id ? applyUpdate(prev) : prev));
+        showNotification(`✓ Preview enviada por email a ${meta.email}`);
+      } else if (res.ok && payload.status === "skipped_unsubscribed") {
+        const applyUnsub = (l: LeadEntity): LeadEntity => ({
+          ...l,
+          metadata: {
+            ...(l.metadata || {}),
+            email_marketing: {
+              ...meta.email_marketing,
+              unsubscribed: true,
+            },
+          },
+        });
+        setLeads((prev) => prev.map((l) => (l.id === targetLead.id ? applyUnsub(l) : l)));
+        setSelectedLead((prev) => (prev && prev.id === targetLead.id ? applyUnsub(prev) : prev));
+        showNotification(`⛔ ${meta.email} figura como Dado de baja`);
+      } else {
+        showNotification(`⚠ No se pudo enviar el email (${payload?.error || res.status})`);
+      }
+    } catch {
+      showNotification(`⚠ Error de red enviando la preview por email`);
+    } finally {
+      setSendingPreviewId(null);
+    }
   };
 
   // Listas únicas para filtros
@@ -1286,11 +1413,14 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
                     const waMessage = buildVoseoWhatsAppMessage(lead, waMode);
                     const waUrl = buildVoseoWhatsAppUrl(lead, waMode);
                     const isInbound = lead.metadata?.source === "inbound_web";
-                    const zohoStatusLabel = !meta.email
-                      ? "Sin Email"
-                      : meta.email_outreach.status === "sent"
-                        ? "✉️ Zoho Enviado"
-                        : "⏳ Pendiente";
+                    const isUnsubscribed = meta.email_marketing.unsubscribed;
+                    const zohoStatusLabel = isUnsubscribed
+                      ? "Dado de baja"
+                      : !meta.email
+                        ? "Sin Email"
+                        : meta.email_outreach.status === "sent"
+                          ? "✉️ Zoho Enviado"
+                          : "⏳ Pendiente";
 
                     return (
                       <div
@@ -1384,16 +1514,18 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
                           )}
                         </div>
 
-                        {/* Email + Badge Zoho Mail */}
+                        {/* Email + Badge Zoho Mail / Dado de baja */}
                         <div className="p-2 rounded-lg bg-zinc-950 border border-zinc-900 space-y-1">
                           <div className="flex items-center justify-between gap-1">
                             <span
                               className={`text-[9px] font-mono font-bold px-1.5 py-0.5 rounded border ${
-                                !meta.email
-                                  ? "bg-zinc-900 text-zinc-500 border-zinc-800"
-                                  : meta.email_outreach.status === "sent"
-                                    ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
-                                    : "bg-amber-500/15 text-amber-300 border-amber-500/30"
+                                isUnsubscribed
+                                  ? "bg-red-500/15 text-red-300 border-red-500/40"
+                                  : !meta.email
+                                    ? "bg-zinc-900 text-zinc-500 border-zinc-800"
+                                    : meta.email_outreach.status === "sent"
+                                      ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
+                                      : "bg-amber-500/15 text-amber-300 border-amber-500/30"
                               }`}
                             >
                               {zohoStatusLabel}
@@ -1548,11 +1680,14 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
                   const waMessage = buildVoseoWhatsAppMessage(lead, waMode);
                   const waUrl = buildVoseoWhatsAppUrl(lead, waMode);
                   const isInbound = lead.metadata?.source === "inbound_web";
-                  const zohoStatusLabel = !meta.email
-                    ? "Sin Email"
-                    : meta.email_outreach.status === "sent"
-                      ? "✉️ Zoho Enviado"
-                      : "⏳ Pendiente";
+                  const isUnsubscribed = meta.email_marketing.unsubscribed;
+                  const zohoStatusLabel = isUnsubscribed
+                    ? "Dado de baja"
+                    : !meta.email
+                      ? "Sin Email"
+                      : meta.email_outreach.status === "sent"
+                        ? "✉️ Zoho Enviado"
+                        : "⏳ Pendiente";
 
                   return (
                     <tr
@@ -1588,11 +1723,13 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
                         <div className="mb-1">
                           <span
                             className={`text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded border ${
-                              !meta.email
-                                ? "bg-zinc-900 text-zinc-500 border-zinc-800"
-                                : meta.email_outreach.status === "sent"
-                                  ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
-                                  : "bg-amber-500/15 text-amber-300 border-amber-500/30"
+                              isUnsubscribed
+                                ? "bg-red-500/15 text-red-300 border-red-500/40"
+                                : !meta.email
+                                  ? "bg-zinc-900 text-zinc-500 border-zinc-800"
+                                  : meta.email_outreach.status === "sent"
+                                    ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
+                                    : "bg-amber-500/15 text-amber-300 border-amber-500/30"
                             }`}
                           >
                             {zohoStatusLabel}
@@ -1757,6 +1894,8 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
           onRenewTtl={() => handleRenewTtl(selectedLead.id)}
           onUpdateStage={(stage) => handleUpdateStage(selectedLead.id, stage)}
           onCopy={(text, label) => handleCopyText(text, label, selectedLead.id)}
+          onSendPreviewEmail={handleSendPreviewEmail}
+          sendingPreview={sendingPreviewId === selectedLead.id}
         />
       )}
     </div>
@@ -2155,6 +2294,8 @@ interface LeadDrawerProps {
   onRenewTtl: () => void;
   onUpdateStage: (stage: string) => void;
   onCopy: (text: string, label: string) => void;
+  onSendPreviewEmail: (lead: LeadEntity) => Promise<void>;
+  sendingPreview?: boolean;
 }
 
 const LeadDrawer: React.FC<LeadDrawerProps> = ({
@@ -2164,6 +2305,8 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
   onRenewTtl,
   onUpdateStage,
   onCopy,
+  onSendPreviewEmail,
+  sendingPreview = false,
 }) => {
   const initialMeta = resolveLeadMetadata(lead);
   const [formData, setFormData] = useState<LeadEntity>({
@@ -2173,6 +2316,13 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
   const [activeWaMode, setActiveWaMode] = useState<WhatsAppScriptMode>(
     initialMeta.telemetry.is_hot_lead ? "followup_hot" : "initial"
   );
+
+  useEffect(() => {
+    setFormData({
+      ...lead,
+      metadata: resolveLeadMetadata(lead),
+    });
+  }, [lead]);
 
   const ttl = calculateDaysRemaining(formData.expires_at);
   const currentMeta = resolveLeadMetadata(formData);
@@ -2200,11 +2350,13 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
     onSave(formData);
   };
 
-  const zohoStatusLabel = !currentMeta.email
-    ? "Sin Email"
-    : currentMeta.email_outreach.status === "sent"
-      ? "✉️ Zoho Enviado"
-      : "⏳ Pendiente";
+  const zohoStatusLabel = currentMeta.email_marketing.unsubscribed
+    ? "Dado de baja"
+    : !currentMeta.email
+      ? "Sin Email"
+      : currentMeta.email_outreach.status === "sent"
+        ? "✉️ Zoho Enviado"
+        : "⏳ Pendiente";
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-fade-in">
@@ -2234,6 +2386,11 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
                   🔥 Hot-Lead ({currentMeta.telemetry.views_count} vistas)
                 </span>
               )}
+              {currentMeta.email_marketing.unsubscribed && (
+                <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/40">
+                  Dado de baja
+                </span>
+              )}
             </div>
             <h2 className="text-lg font-bold text-white truncate">{formData.name}</h2>
           </div>
@@ -2255,11 +2412,13 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
             <div className="flex items-center gap-2">
               <span
                 className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded border ${
-                  !currentMeta.email
-                    ? "bg-zinc-900 text-zinc-500 border-zinc-800"
-                    : currentMeta.email_outreach.status === "sent"
-                      ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
-                      : "bg-amber-500/15 text-amber-300 border-amber-500/30"
+                  currentMeta.email_marketing.unsubscribed
+                    ? "bg-red-500/15 text-red-300 border-red-500/40"
+                    : !currentMeta.email
+                      ? "bg-zinc-900 text-zinc-500 border-zinc-800"
+                      : currentMeta.email_outreach.status === "sent"
+                        ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
+                        : "bg-amber-500/15 text-amber-300 border-amber-500/30"
                 }`}
               >
                 {zohoStatusLabel}
@@ -2291,7 +2450,17 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
               </span>
               {currentMeta.email_outreach.sent_at && (
                 <span className="text-[10px] text-emerald-400 font-mono block mt-0.5">
-                  Enviado: {currentMeta.email_outreach.sent_at.slice(0, 16)}
+                  Zoho: {currentMeta.email_outreach.sent_at.slice(0, 16)}
+                </span>
+              )}
+              {currentMeta.email_marketing.preview_ready_sent_at && (
+                <span className="text-[10px] text-sky-400 font-mono block mt-0.5">
+                  Preview email: {currentMeta.email_marketing.preview_ready_sent_at.slice(0, 16)}
+                </span>
+              )}
+              {currentMeta.terms_accepted_at && (
+                <span className="text-[10px] text-zinc-400 font-mono block mt-0.5">
+                  T&amp;C: {currentMeta.terms_accepted_at.slice(0, 10)} ({currentMeta.terms_version || "2026-11"})
                 </span>
               )}
             </div>
@@ -2305,6 +2474,24 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
                 Paleta: {currentMeta.telemetry.selected_theme || "Original"}
               </span>
             </div>
+          </div>
+
+          <div className="flex items-center justify-between gap-2 pt-1">
+            <button
+              type="button"
+              disabled={!currentMeta.email || currentMeta.email_marketing.unsubscribed || sendingPreview}
+              onClick={() => onSendPreviewEmail(formData)}
+              className="w-full py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all border border-purple-500/40 bg-purple-600/20 text-purple-200 hover:bg-purple-600/35 disabled:opacity-45 disabled:cursor-not-allowed cursor-pointer"
+            >
+              <Mail className="w-3.5 h-3.5" />
+              <span>
+                {sendingPreview
+                  ? "Enviando email..."
+                  : currentMeta.email_marketing.unsubscribed
+                    ? "Contacto Dado de baja"
+                    : "Enviar Preview Lista (Email)"}
+              </span>
+            </button>
           </div>
 
           <div className="flex flex-wrap items-center gap-3 text-[11px]">
@@ -2379,7 +2566,7 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
         >
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-400 font-bold">
-              WhatsApp Táctico (Anti-Silla Vacía &amp; Cero-Secretaria)
+              WhatsApp Táctico (Orden de Consultas y Turnos Confirmados)
             </span>
             <button
               type="button"

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Allow: /terminos/
+Allow: /privacidad/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /solicitud-enviada/
+Disallow: /baja-email/
+
+Sitemap: https://nexobow.site/sitemap.xml

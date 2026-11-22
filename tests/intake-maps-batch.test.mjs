@@ -214,7 +214,7 @@ test("Ticket #51 — Seam 2b: classifyWebsiteBucket & qualifyLeadForGate0 calcul
   assert.equal(qualFull.grade, "A");
   assert.equal(qualFull.recommended_tier, "tier_2_autonomous");
   assert.equal(qualFull.modalidad, "presencial");
-  assert.equal(qualFull.pain_angle, "Anti-Silla Vacía & Cero-Secretaria");
+  assert.equal(qualFull.pain_angle, "Orden de consultas y turnos confirmados");
   assert.ok(Array.isArray(qualFull.reasons) && qualFull.reasons.length >= 4);
 
   // Cubeta A lead without email and lower review count -> 35 + 20 + 20 + 15 + 0 = 90 -> tier_1_starter
@@ -382,7 +382,7 @@ test("Ticket #51 — Seam 3: runIntakeMapsBatch orchestrates E2E batch in mock/-
     assert.equal(lead1.qualification.score, 100);
     assert.equal(lead1.qualification.recommended_tier, "tier_2_autonomous");
     assert.match(lead1.previewUrl, /^https:\/\/preview\.nexobow\.site\/1-.*\/$/);
-    assert.match(lead1.whatsappMessage, /Anti-Silla Vacía|silla vacía/i);
+    assert.match(lead1.whatsappMessage, /orden de consultas y turnos confirmados|recordatorios automáticos/i);
     assert.match(lead1.whatsappUrl, /^https:\/\/wa\.me\/5491160001111\?text=/);
     assert.ok(lead1.audioScript35s && lead1.audioScript35s.length > 40, "Must generate 35s audio script");
 

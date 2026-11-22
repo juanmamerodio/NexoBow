@@ -97,11 +97,11 @@ describe('T52-Seam1: Zoho Mail Outbound (buildZohoOutreachEmail & sendZohoOutrea
     // Voseo argentino + anclaje Hormozi + reserva 7 días + WhatsApp Juanma
     assert.match(email.text, /armé|tenés|podés|miralo|respondeme/i);
     assert.ok(
-      email.html.includes('evitar apenas 2 sillas vacías por semana cubre el sistema completo'),
+      email.html.includes('con solo recuperar 2 consultas por mes que hoy se pierden sin respuesta, el sistema ya se paga solo'),
       'El cuerpo HTML debe incluir el anclaje de valor exacto'
     );
     assert.ok(
-      email.text.includes('evitar apenas 2 sillas vacías por semana cubre el sistema completo'),
+      email.text.includes('con solo recuperar 2 consultas por mes que hoy se pierden sin respuesta, el sistema ya se paga solo'),
       'El cuerpo texto plano debe incluir el anclaje de valor exacto'
     );
     assert.match(email.html, /7 días/);

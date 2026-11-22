@@ -1,107 +1,167 @@
 ---
 import { SITE } from "../config";
+
+const scenarios = [
+  {
+    id: "roi-a",
+    labelClass: "roi-label-a",
+    panelClass: "roi-panel-a",
+    tag: "Consultorio tranquilo",
+    optionText: "Pierdo 2 consultas por mes sin respuesta",
+    revenueHeading: "Recupero estimado (2 consultas)",
+    revenueValue: "~$80.000 a $120.000 ARS/mes",
+    revenueNote: "Equivale a dos consultas o seguimientos mensuales que hoy se enfrían.",
+    weeklyHours: "3 hs libres / semana",
+    monthlyHours: "+12 hs libres al mes",
+    barFillWidth: 112,
+    hoursNote: "Dejás de responder precios de noche.",
+    checked: false,
+  },
+  {
+    id: "roi-b",
+    labelClass: "roi-label-b",
+    panelClass: "roi-panel-b",
+    tag: "Agenda habitual",
+    optionText: "Pierdo 5 consultas por mes en WhatsApp",
+    revenueHeading: "Ingreso recuperado (5 consultas)",
+    revenueValue: "~$200.000 a $300.000 ARS/mes",
+    revenueNote: "Solo ordenando 5 consultas que antes quedaban en el visto.",
+    weeklyHours: "6 hs libres / semana",
+    monthlyHours: "+24 hs libres al mes",
+    barFillWidth: 204,
+    hoursNote: "Equivale a 3 jornadas de consultorio recuperadas.",
+    checked: true,
+  },
+  {
+    id: "roi-c",
+    labelClass: "roi-label-c",
+    panelClass: "roi-panel-c",
+    tag: "Clínica o equipo",
+    optionText: "Recibimos más de 30 consultas por semana",
+    revenueHeading: "Facturación ordenada (+15 turnos)",
+    revenueValue: "+$600.000 ARS/mes",
+    revenueNote: "Derivando consultas por especialidad sin saturar recepción.",
+    weeklyHours: "11 hs libres / semana",
+    monthlyHours: "+45 hs libres al mes",
+    barFillWidth: 300,
+    hoursNote: "Atención automática incluso domingos y feriados.",
+    checked: false,
+  },
+];
 ---
 
 <section id="calculadora-roi" class="relative mx-auto max-w-5xl px-6 py-24">
   <div class="mx-auto max-w-3xl text-center mb-12">
-    <div class="mb-3 inline-block rounded-full border border-[#4928C2]/40 bg-[#0B0D12] px-4 py-1 text-xs font-semibold tracking-wider text-[#E3D9FC] uppercase">
-      Matemática Simple · Retorno Inmediato
+    <div class="mb-3 inline-block rounded-full border border-[#4928C2]/45 bg-[#0B0D12] px-4 py-1.5 text-xs font-bold tracking-wider text-[#E3D9FC] uppercase">
+      Cuenta Rápida · Retorno Claro
     </div>
     <h2 class="font-outfit text-3xl font-extrabold tracking-tight text-[#F8F6FF] sm:text-4xl md:text-5xl">
       Hacé la cuenta rápida: ¿cuánta plata estás dejando <span class="text-[#BF40FA]">arriba de la mesa</span> cada mes?
     </h2>
-    <p class="mt-3 text-base text-[#E3D9FC]/80">
-      Elegí tu escenario actual para calcular cuánto facturación y tiempo recuperás al automatizar tu recepción de pacientes.
+    <p class="mt-4 text-lg text-[#E3D9FC]/90">
+      Tocá tu situación actual para ver el ingreso y las horas libres que recuperás por semana.
     </p>
   </div>
 
-  <div class="roi-box rounded-3xl border border-[#4928C2]/40 bg-[#0B0D12] p-6 sm:p-10 shadow-[0_20px_50px_rgba(4,6,7,0.85)]">
+  <div class="roi-box rounded-3xl border border-[#4928C2]/45 bg-[#0B0D12] p-6 sm:p-10 shadow-[0_20px_50px_rgba(4,6,7,0.85)]">
     <!-- Hidden Radio Inputs (0 JS) -->
-    <input type="radio" name="roi-tier" id="roi-a" class="sr-only" />
-    <input type="radio" name="roi-tier" id="roi-b" class="sr-only" checked />
-    <input type="radio" name="roi-tier" id="roi-c" class="sr-only" />
+    {scenarios.map((s) => (
+      <input
+        type="radio"
+        name="roi-tier"
+        id={s.id}
+        class="sr-only"
+        checked={s.checked}
+      />
+    ))}
 
-    <!-- Scenario Selectors -->
-    <div class="grid gap-4 md:grid-cols-3 mb-8">
-      <label
-        for="roi-a"
-        class="roi-label-a cursor-pointer rounded-2xl border border-[#4928C2]/30 bg-[#040607] p-5 transition-all duration-200 hover:border-[#BF40FA]/60"
-      >
-        <span class="text-xs font-bold tracking-wider text-[#E3D9FC]/70 uppercase">Escenario Conservador</span>
-        <p class="mt-1.5 font-outfit text-base font-bold text-[#F8F6FF]">
-          Pierdo 2 pacientes por mes por no responder a tiempo
-        </p>
-      </label>
-
-      <label
-        for="roi-b"
-        class="roi-label-b cursor-pointer rounded-2xl border border-[#4928C2]/30 bg-[#040607] p-5 transition-all duration-200 hover:border-[#BF40FA]/60"
-      >
-        <span class="text-xs font-bold tracking-wider text-[#BF40FA] uppercase">Promedio Profesional (Habitual)</span>
-        <p class="mt-1.5 font-outfit text-base font-bold text-[#F8F6FF]">
-          Pierdo 5 pacientes por mes en el "visto" de WhatsApp
-        </p>
-      </label>
-
-      <label
-        for="roi-c"
-        class="roi-label-c cursor-pointer rounded-2xl border border-[#4928C2]/30 bg-[#040607] p-5 transition-all duration-200 hover:border-[#BF40FA]/60"
-      >
-        <span class="text-xs font-bold tracking-wider text-[#E3D9FC]/70 uppercase">Alto Volumen / Clínica</span>
-        <p class="mt-1.5 font-outfit text-base font-bold text-[#F8F6FF]">
-          Somos clínica / recibimos +30 consultas semanales
-        </p>
-      </label>
+    <!-- 3 Simplified Scenario Selectors -->
+    <div class="grid gap-4 md:grid-cols-3">
+      {scenarios.map((s) => (
+        <label
+          for={s.id}
+          class={`${s.labelClass} cursor-pointer rounded-2xl border border-[#4928C2]/35 bg-[#040607] p-5 transition-all duration-200 hover:border-[#BF40FA]`}
+        >
+          <span class="text-xs font-bold tracking-wider text-[#E3D9FC] uppercase">{s.tag}</span>
+          <p class="mt-2 font-outfit text-base sm:text-lg font-bold text-[#F8F6FF]">
+            {s.optionText}
+          </p>
+        </label>
+      ))}
     </div>
 
-    <!-- Dynamic Output Panels -->
-    <div class="rounded-2xl border border-[#4928C2]/35 bg-gradient-to-br from-[#5B2A62]/25 via-[#040607] to-[#040607] p-6 sm:p-8">
-      <!-- Result A -->
-      <div class="roi-panel-a hidden grid items-center gap-6 md:grid-cols-2">
-        <div>
-          <p class="text-xs font-semibold uppercase tracking-wider text-[#E3D9FC]/70">Facturación mensual recuperada</p>
-          <p class="mt-1 font-outfit text-3xl font-extrabold text-[#F8F6FF] sm:text-4xl">~$80.000 a $120.000 ARS/mes</p>
-          <p class="mt-2 text-sm text-[#E3D9FC]/80">Considerando el valor promedio de un tratamiento o seguimiento mensual.</p>
-        </div>
-        <div class="rounded-2xl border border-[#4928C2]/30 bg-[#0B0D12] p-5">
-          <p class="text-xs font-semibold uppercase tracking-wider text-[#BF40FA]">Tiempo libre recuperado</p>
-          <p class="mt-1 font-outfit text-2xl font-bold text-[#F8F6FF]">+12 horas libres al mes</p>
-          <p class="mt-1 text-xs text-[#E3D9FC]/75">Sin responder precios a las 11 de la noche.</p>
-        </div>
-      </div>
+    <!-- Visual Comparison Area (flat divider, no nested card box) -->
+    <div
+      data-diagram="roi-hours-bar"
+      class="mt-8 border-t border-[#4928C2]/30 pt-8"
+    >
+      <p class="mb-5 text-sm font-bold uppercase tracking-wider text-[#E3D9FC]">
+        Horas que recuperás por semana frente al costo único del sistema
+      </p>
 
-      <!-- Result B (Default) -->
-      <div class="roi-panel-b grid items-center gap-6 md:grid-cols-2">
-        <div>
-          <p class="text-xs font-semibold uppercase tracking-wider text-[#E3D9FC]/70">Facturación mensual recuperada</p>
-          <p class="mt-1 font-outfit text-3xl font-extrabold text-[#F8F6FF] sm:text-4xl">~$200.000 a $300.000 ARS/mes</p>
-          <p class="mt-2 text-sm text-[#E3D9FC]/80">Solamente convirtiendo 5 consultas que antes quedaban enfriándose en WhatsApp.</p>
-        </div>
-        <div class="rounded-2xl border border-[#4928C2]/30 bg-[#0B0D12] p-5">
-          <p class="text-xs font-semibold uppercase tracking-wider text-[#BF40FA]">Tiempo libre recuperado</p>
-          <p class="mt-1 font-outfit text-2xl font-bold text-[#F8F6FF]">+24 horas libres al mes</p>
-          <p class="mt-1 text-xs text-[#E3D9FC]/75">Equivalente a 3 jornadas completas de consultorio ahorradas.</p>
-        </div>
-      </div>
+      {scenarios.map((s) => (
+        <div class={`${s.panelClass} ${s.checked ? "grid" : "hidden"} items-center gap-8 md:grid-cols-2`}>
+          <!-- Left: Financial recovery -->
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-wider text-[#E3D9FC]/80">
+              {s.revenueHeading}
+            </p>
+            <p class="mt-1.5 font-outfit text-3xl font-extrabold text-[#F8F6FF] sm:text-4xl">
+              {s.revenueValue}
+            </p>
+            <p class="mt-2.5 text-base leading-relaxed text-[#E3D9FC]/85">
+              {s.revenueNote}
+            </p>
+          </div>
 
-      <!-- Result C -->
-      <div class="roi-panel-c hidden grid items-center gap-6 md:grid-cols-2">
-        <div>
-          <p class="text-xs font-semibold uppercase tracking-wider text-[#E3D9FC]/70">Facturación mensual recuperada</p>
-          <p class="mt-1 font-outfit text-3xl font-extrabold text-[#F8F6FF] sm:text-4xl">+$600.000 ARS/mes</p>
-          <p class="mt-2 text-sm text-[#E3D9FC]/80">Filtrando pacientes por especialidad y eliminando cuellos de botella en recepción.</p>
-        </div>
-        <div class="rounded-2xl border border-[#4928C2]/30 bg-[#0B0D12] p-5">
-          <p class="text-xs font-semibold uppercase tracking-wider text-[#BF40FA]">Ahorro operativo</p>
-          <p class="mt-1 font-outfit text-2xl font-bold text-[#F8F6FF]">+45 hs de secretaría ahorradas</p>
-          <p class="mt-1 text-xs text-[#E3D9FC]/75">Derivación automática las 24 horas, incluso domingos y feriados.</p>
-        </div>
-      </div>
+          <!-- Right: SVG Comparative Hours Bar -->
+          <div class="border-l-2 border-[#BF40FA] pl-5 space-y-3">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <span class="font-outfit text-2xl font-extrabold text-[#F8F6FF]">{s.weeklyHours}</span>
+              <span class="text-sm font-bold text-emerald-400">{s.monthlyHours}</span>
+            </div>
 
-      <!-- Bottom Mathematical Conclusion -->
-      <div class="mt-6 border-t border-[#4928C2]/25 pt-5 text-center">
-        <p class="text-sm font-semibold text-[#E3D9FC]">
-          💡 Conclusión matemática: <span class="text-[#F8F6FF]">Tu Setup único de {SITE.setupPrice} se paga solo con 2 pacientes recuperados — y tenés {SITE.monthlyPrice} de abono durante todo el primer año.</span>
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 320 46"
+              class="h-11 w-full"
+            >
+              <!-- Recovered hours bar -->
+              <rect x="0" y="4" width="320" height="14" rx="7" fill="#1A1D26" />
+              <rect x="0" y="4" width={s.barFillWidth} height="14" rx="7" fill="#34D399" />
+              <!-- Setup cost comparative bar (1-time low baseline) -->
+              <rect x="0" y="28" width="320" height="14" rx="7" fill="#1A1D26" />
+              <rect x="0" y="28" width="68" height="14" rx="7" fill="#BF40FA" />
+            </svg>
+
+            <div class="text-sm text-[#E3D9FC]/85">
+              <span class="inline-flex items-center gap-2">
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-400" aria-hidden="true"></span>
+                <span>{s.hoursNote}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      <!-- Shared Legend & Bottom Mathematical Conclusion -->
+      <div class="mt-8 border-t border-[#4928C2]/25 pt-5 text-center space-y-2">
+        <p class="inline-flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-[#E3D9FC]/80">
+          <span class="inline-flex items-center gap-1.5">
+            <span class="h-2.5 w-2.5 rounded-full bg-emerald-400" aria-hidden="true"></span>
+            <span>Horas recuperadas por semana</span>
+          </span>
+          <span class="inline-flex items-center gap-1.5">
+            <span class="h-2.5 w-2.5 rounded-full bg-[#BF40FA]" aria-hidden="true"></span>
+            <span>Setup único: {SITE.setupPrice}</span>
+          </span>
+        </p>
+        <p class="text-base font-semibold text-[#E3D9FC]">
+          💡 Con solo recuperar 2 consultas por mes que hoy se pierden sin respuesta,{" "}
+          <span class="text-[#F8F6FF]">
+            tu Setup único ya se paga solo — y tenés {SITE.monthlyPrice} de abono durante todo el primer año.
+          </span>
         </p>
       </div>
     </div>
@@ -113,8 +173,14 @@ import { SITE } from "../config";
   .roi-box:has(#roi-b:checked) .roi-label-b,
   .roi-box:has(#roi-c:checked) .roi-label-c {
     border-color: #BF40FA;
-    background-color: rgba(91, 42, 98, 0.25);
-    box-shadow: 0 0 25px rgba(191, 64, 250, 0.2);
+    background-color: rgba(91, 42, 98, 0.35);
+  }
+
+  .roi-box:has(#roi-a:focus-visible) .roi-label-a,
+  .roi-box:has(#roi-b:focus-visible) .roi-label-b,
+  .roi-box:has(#roi-c:focus-visible) .roi-label-c {
+    outline: 2px solid #BF40FA;
+    outline-offset: 2px;
   }
 
   .roi-box:has(#roi-a:checked) .roi-panel-a { display: grid; }

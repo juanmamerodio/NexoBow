@@ -9,10 +9,20 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join, dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { createHmac } from "node:crypto";
 import tls from "node:tls";
 import net from "node:net";
 import { parse as parseYaml } from "yaml";
 import { buildPreviewUrl } from "./sheets-sync.mjs";
+import {
+  buildUnsubscribeFooterHtml,
+  buildUnsubscribeFooterText,
+  buildUnsubscribeHeaders,
+  buildUnsubscribeUrl,
+  DEFAULT_UNSUBSCRIBE_TTL_SECONDS,
+  resolveUnsubscribeSecret,
+  toBase64Url,
+} from "../web/src/lib/unsubscribe-token.ts";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -42,6 +52,52 @@ function isValidEmail(email) {
   const clean = String(email || "").trim().toLowerCase();
   if (!clean || clean.length > 160) return false;
   return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$/i.test(clean);
+}
+
+export function sanitizeSmtpHeaderValue(value = "") {
+  return String(value ?? "")
+    .replace(/[\r\n\u0000-\u001f\u007f]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export function isLeadUnsubscribed(lead = {}) {
+  const meta = lead.metadata && typeof lead.metadata === "object" ? lead.metadata : {};
+  const emailMarketing =
+    (meta.email_marketing && typeof meta.email_marketing === "object"
+      ? meta.email_marketing
+      : null) ||
+    (lead.email_marketing && typeof lead.email_marketing === "object"
+      ? lead.email_marketing
+      : {});
+  return Boolean(
+    lead.unsubscribed === true ||
+      meta.unsubscribed === true ||
+      emailMarketing.unsubscribed === true
+  );
+}
+
+export function createUnsubscribeTokenSync(input = {}, secret = "", options = {}) {
+  if (!secret) {
+    throw new Error("UNSUBSCRIBE_SECRET requerido para firmar el enlace de baja.");
+  }
+  const nowSeconds = options.nowSeconds ?? Math.floor(Date.now() / 1000);
+  const ttlSeconds = options.ttlSeconds ?? DEFAULT_UNSUBSCRIBE_TTL_SECONDS;
+  const exp =
+    typeof input.exp === "number" && Number.isFinite(input.exp)
+      ? Math.floor(input.exp)
+      : nowSeconds + ttlSeconds;
+
+  const canonicalPayload = {
+    slug: String(input.slug || "").trim(),
+    email: String(input.email || "").trim().toLowerCase(),
+    exp,
+  };
+  const payloadB64 = toBase64Url(Buffer.from(JSON.stringify(canonicalPayload), "utf8"));
+  const sigBytes = new Uint8Array(
+    createHmac("sha256", secret).update(payloadB64, "utf8").digest()
+  );
+  return `${payloadB64}.${toBase64Url(sigBytes)}`;
 }
 
 function escapeHtml(text = "") {
@@ -110,9 +166,8 @@ function buildBucketDiagnosis(lead = {}) {
  */
 export function buildZohoOutreachEmail(lead = {}, options = {}) {
   const rootDomain = options.rootDomain || process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site";
-  const nombre = String(
-    lead.nombre || lead.name || lead.displayName || "Colega"
-  ).trim();
+  const nombre =
+    sanitizeSmtpHeaderValue(lead.nombre || lead.name || lead.displayName || "Colega") || "Colega";
   const slug = String(lead.slug || "").trim();
   const email = String(resolveLeadField(lead, "email", "") || "").trim().toLowerCase();
   const rubro = String(lead.rubro || lead.niche || lead.nicho || "salud").trim();
@@ -142,12 +197,26 @@ export function buildZohoOutreachEmail(lead = {}, options = {}) {
     `Hola Juanma, vi el mail y mi preview en ${previewUrl}. Quiero consultar cómo activar el sistema.`
   )}`;
 
-  const subject = rating
-    ? `Prototipo privado para ${nombre} (${rating}★ en Google Maps)`
-    : `Prototipo privado reservado para ${nombre}`;
+  const subject = sanitizeSmtpHeaderValue(
+    rating
+      ? `Prototipo privado para ${nombre} (${rating}★ en Google Maps)`
+      : `Prototipo privado reservado para ${nombre}`
+  );
 
   const valueAnchor =
-    "En la práctica, evitar apenas 2 sillas vacías por semana cubre el sistema completo.";
+    "En la práctica, con solo recuperar 2 consultas por mes que hoy se pierden sin respuesta, el sistema ya se paga solo.";
+
+  const signingKey =
+    options.unsubscribeSecret || resolveUnsubscribeSecret(process.env);
+  if (!signingKey) {
+    throw new Error("UNSUBSCRIBE_SECRET requerido en producción para firmar el enlace de baja.");
+  }
+  const unsubToken = createUnsubscribeTokenSync(
+    { slug: slug || email, email },
+    signingKey
+  );
+  const unsubscribeUrl = buildUnsubscribeUrl(unsubToken, rootDomain);
+  const headers = buildUnsubscribeHeaders(unsubscribeUrl);
 
   const text = [
     `Hola ${nombre},`,
@@ -159,7 +228,7 @@ export function buildZohoOutreachEmail(lead = {}, options = {}) {
     `Qué encontramos en tu auditoría (${bucketLabel}):`,
     findingText,
     "",
-    `Cómo lo resolvemos con el Sistema Anti-Silla Vacía & Cero-Secretaria:`,
+    `Cómo lo resolvemos para lograr orden de consultas y turnos confirmados:`,
     `- Ordenamos las consultas de Google Maps e Instagram antes de que lleguen a tu agenda.`,
     `- Recordatorios automáticos 24h y 2h antes con lista de espera para cubrir cancelaciones.`,
     `- ${valueAnchor}`,
@@ -171,6 +240,8 @@ export function buildZohoOutreachEmail(lead = {}, options = {}) {
     `Un saludo cordial,`,
     `Juanma Merodio · NexoBow`,
     `WhatsApp directo: https://wa.me/${OFFICIAL_WHATSAPP_NUMBER}`,
+    "",
+    buildUnsubscribeFooterText(unsubscribeUrl),
   ].join("\n");
 
   const html = `<!doctype html>
@@ -208,7 +279,7 @@ export function buildZohoOutreachEmail(lead = {}, options = {}) {
     </div>
 
     <p style="margin:0 0 14px;font-size:15px;">
-      El sistema conecta tu página con el protocolo <strong>Anti-Silla Vacía &amp; Cero-Secretaria</strong> para filtrar consultas, recordar turnos y cubrir cancelaciones sin sumar trabajo administrativo.
+      El sistema ordena tus consultas con <strong>recordatorios automáticos 24h/2h y lista de espera</strong> para filtrar interesados, confirmar turnos y cubrir cancelaciones sin sumar trabajo administrativo.
       <strong>${escapeHtml(valueAnchor)}</strong>
     </p>
 
@@ -226,6 +297,7 @@ export function buildZohoOutreachEmail(lead = {}, options = {}) {
       Sistemas de Captación y Turnos para Profesionales<br />
       <a href="https://nexobow.site" style="color:#6b7280;text-decoration:none;">nexobow.site</a> · WhatsApp ${OFFICIAL_WHATSAPP_NUMBER}
     </p>
+    ${buildUnsubscribeFooterHtml(unsubscribeUrl)}
   </div>
 </body>
 </html>`;
@@ -237,28 +309,54 @@ export function buildZohoOutreachEmail(lead = {}, options = {}) {
     text,
     previewUrl,
     bucket,
+    unsubscribeUrl,
+    headers,
   };
 }
 
 function encodeMimeHeader(value = "") {
-  const str = String(value || "");
+  const str = sanitizeSmtpHeaderValue(value);
   if (/^[\x20-\x7e]*$/.test(str)) return str;
   return `=?UTF-8?B?${Buffer.from(str, "utf8").toString("base64")}?=`;
 }
 
-function buildMimeMessage({ fromEmail, fromName, to, replyTo, subject, text, html, messageId }) {
+export function buildMimeMessage({
+  fromEmail,
+  fromName,
+  to,
+  replyTo,
+  subject,
+  text,
+  html,
+  messageId,
+  headers = {},
+}) {
   const boundary = `----=_NexoBow_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+  const cleanFromEmail = sanitizeSmtpHeaderValue(fromEmail);
+  const cleanTo = sanitizeSmtpHeaderValue(to);
+  const cleanReplyTo = sanitizeSmtpHeaderValue(replyTo || cleanFromEmail);
+  const cleanMessageId = sanitizeSmtpHeaderValue(messageId);
   const formattedFrom = fromName
-    ? `${encodeMimeHeader(fromName)} <${fromEmail}>`
-    : fromEmail;
+    ? `${encodeMimeHeader(fromName)} <${cleanFromEmail}>`
+    : cleanFromEmail;
+
+  const extraHeaderLines = [];
+  for (const [k, v] of Object.entries(headers || {})) {
+    const cleanKey = sanitizeSmtpHeaderValue(k).replace(/[:\s]+/g, "");
+    const cleanVal = sanitizeSmtpHeaderValue(v);
+    if (cleanKey && cleanVal && /^[A-Za-z0-9-]+$/.test(cleanKey)) {
+      extraHeaderLines.push(`${cleanKey}: ${cleanVal}`);
+    }
+  }
 
   const lines = [
     `From: ${formattedFrom}`,
-    `To: ${to}`,
-    `Reply-To: ${replyTo || fromEmail}`,
+    `To: ${cleanTo}`,
+    `Reply-To: ${cleanReplyTo}`,
     `Subject: ${encodeMimeHeader(subject)}`,
     `Date: ${new Date().toUTCString()}`,
-    `Message-ID: ${messageId}`,
+    `Message-ID: ${cleanMessageId}`,
+    ...extraHeaderLines,
     `MIME-Version: 1.0`,
     `Content-Type: multipart/alternative; boundary="${boundary}"`,
     ``,
@@ -353,7 +451,11 @@ function createSmtpResponseReader(socket, timeoutMs = 15000) {
     });
 
   const sendCmd = async (cmd, expectedCodes) => {
-    socket.write(`${cmd}\r\n`);
+    const safeCmd = String(cmd || "");
+    if (/[\r\n]/.test(safeCmd)) {
+      throw new Error("Comando SMTP inválido (salto CRLF detectado).");
+    }
+    socket.write(`${safeCmd}\r\n`);
     const reply = await readReply();
     if (!expectedCodes.includes(reply.code)) {
       throw new Error(`SMTP error (${reply.code}): ${reply.text}`);
@@ -377,24 +479,33 @@ export function createZohoSmtpTransport(config = {}) {
 
   return {
     config: { host, port, user, fromName },
-    async sendMail({ to, subject, html, text, replyTo }) {
+    async sendMail({ to, subject, html, text, replyTo, headers = {} }) {
       if (!user || !pass) {
         throw new Error(
           "Faltan credenciales Zoho Mail (ZOHO_SMTP_USER / ZOHO_SMTP_PASS) en el entorno."
         );
       }
 
-      const domain = user.includes("@") ? user.split("@")[1] : "nexobow.site";
+      const cleanUser = sanitizeSmtpHeaderValue(user);
+      const cleanFromName = sanitizeSmtpHeaderValue(fromName);
+      const cleanTo = sanitizeSmtpHeaderValue(to);
+      if (!isValidEmail(cleanTo)) {
+        throw new Error("Destinatario SMTP inválido.");
+      }
+      const cleanReplyTo = sanitizeSmtpHeaderValue(replyTo || cleanUser);
+      const cleanSubject = sanitizeSmtpHeaderValue(subject);
+      const domain = cleanUser.includes("@") ? cleanUser.split("@")[1] : "nexobow.site";
       const messageId = `<${Date.now()}.${Math.random().toString(36).slice(2, 10)}@${domain}>`;
       const mimeBody = buildMimeMessage({
-        fromEmail: user,
-        fromName,
-        to,
-        replyTo: replyTo || user,
-        subject,
+        fromEmail: cleanUser,
+        fromName: cleanFromName,
+        to: cleanTo,
+        replyTo: cleanReplyTo,
+        subject: cleanSubject,
         text,
         html,
         messageId,
+        headers,
       });
 
       let socket =
@@ -436,8 +547,8 @@ export function createZohoSmtpTransport(config = {}) {
         await reader.sendCmd("AUTH LOGIN", [334]);
         await reader.sendCmd(Buffer.from(user, "utf8").toString("base64"), [334]);
         await reader.sendCmd(Buffer.from(pass, "utf8").toString("base64"), [235]);
-        await reader.sendCmd(`MAIL FROM:<${user}>`, [250]);
-        await reader.sendCmd(`RCPT TO:<${to}>`, [250, 251]);
+        await reader.sendCmd(`MAIL FROM:<${sanitizeSmtpHeaderValue(user)}>`, [250]);
+        await reader.sendCmd(`RCPT TO:<${cleanTo}>`, [250, 251]);
         await reader.sendCmd("DATA", [354]);
 
         socket.write(`${mimeBody}\r\n.\r\n`);
@@ -504,6 +615,27 @@ export async function sendZohoOutreachEmail(lead = {}, options = {}) {
   const currentMeta =
     lead.metadata && typeof lead.metadata === "object" ? lead.metadata : {};
   const existingOutreach = currentMeta.email_outreach || lead.email_outreach || null;
+
+  if (isLeadUnsubscribed(lead)) {
+    const emailOutreach = {
+      ...(existingOutreach && typeof existingOutreach === "object" ? existingOutreach : {}),
+      status: "skipped_unsubscribed",
+      provider: "zoho_mail",
+      error: null,
+    };
+    const updatedLead = {
+      ...lead,
+      metadata: { ...currentMeta, email_outreach: emailOutreach },
+    };
+    return {
+      ok: true,
+      skipped: true,
+      duplicate: false,
+      status: "skipped_unsubscribed",
+      emailOutreach,
+      lead: updatedLead,
+    };
+  }
 
   if (!isValidEmail(rawEmail)) {
     const emailOutreach = {
@@ -575,6 +707,7 @@ export async function sendZohoOutreachEmail(lead = {}, options = {}) {
       html: emailPayload.html,
       text: emailPayload.text,
       replyTo: smtpConfig.user || process.env.ZOHO_SMTP_USER || undefined,
+      headers: emailPayload.headers,
     });
 
     const sentAt = (typeof now === "function" ? now() : new Date()).toISOString();
@@ -641,6 +774,7 @@ export async function sendZohoOutreachBatch(leads = [], options = {}) {
   const results = [];
   let sent = 0;
   let skippedNoEmail = 0;
+  let skippedUnsubscribed = 0;
   let duplicates = 0;
   let dryRunCount = 0;
   let errors = 0;
@@ -651,6 +785,7 @@ export async function sendZohoOutreachBatch(leads = [], options = {}) {
 
     if (res.duplicate) duplicates++;
     else if (res.status === "sent") sent++;
+    else if (res.status === "skipped_unsubscribed") skippedUnsubscribed++;
     else if (res.status === "skipped_no_email") skippedNoEmail++;
     else if (res.status === "dry_run") dryRunCount++;
     else if (res.status === "error") errors++;
@@ -664,6 +799,7 @@ export async function sendZohoOutreachBatch(leads = [], options = {}) {
     total: leads.length,
     sent,
     skippedNoEmail,
+    skippedUnsubscribed,
     duplicates,
     dryRun: dryRunCount,
     errors,

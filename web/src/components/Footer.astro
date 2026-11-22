@@ -2,7 +2,7 @@
 import { SITE } from "../config";
 ---
 
-<footer class="relative mx-auto max-w-6xl px-6 pb-12 pt-8 text-xs text-[#E3D9FC]/60">
+<footer class="relative mx-auto max-w-6xl px-6 pb-20 pt-8 text-xs text-[#E3D9FC]/70">
   <div class="flex flex-col items-center justify-between gap-6 border-t border-[#4928C2]/25 pt-8 md:flex-row">
     <!-- Brand Logo Minimal -->
     <div class="flex items-center gap-2">
@@ -10,8 +10,8 @@ import { SITE } from "../config";
         <span class="text-[#F8F6FF]">Nexo</span>
         <span class="text-[#BF40FA]">Bow</span>
       </a>
-      <span class="text-[#E3D9FC]/40">·</span>
-      <span>Ingeniería de Embudos B2B en Astro SSG</span>
+      <span class="text-[#E3D9FC]/40" aria-hidden="true">·</span>
+      <span>Páginas web y turnos por WhatsApp para profesionales</span>
     </div>
 
     <!-- Partner & Founder Links -->
@@ -32,7 +32,7 @@ import { SITE } from "../config";
       >
         AfterBow Audiovisual
       </a>
-      <a href="#planes" class="hover:text-[#BF40FA] transition-colors">
+      <a href="/#planes" class="hover:text-[#BF40FA] transition-colors">
         Planes (Desde {SITE.setupPrice} · Hosting $0/mes Año 1)
       </a>
       <a
@@ -41,7 +41,7 @@ import { SITE } from "../config";
         rel="noopener noreferrer"
         class="inline-flex items-center gap-1.5 font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
       >
-        <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+        <span class="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true"></span>
         <span>WhatsApp: {SITE.phone}</span>
       </a>
     </div>
@@ -50,4 +50,33 @@ import { SITE } from "../config";
       © {new Date().getFullYear()} {SITE.name}. Todos los derechos reservados.
     </p>
   </div>
+
+  <!-- Legal & Cookie Controls -->
+  <nav
+    aria-label="Enlaces legales y privacidad"
+    class="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-[#4928C2]/15 pt-5 text-xs text-[#E3D9FC]/75 md:justify-between"
+  >
+    <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+      <a href="/terminos/" class="hover:text-[#BF40FA] transition-colors">
+        Términos y Condiciones
+      </a>
+      <a href="/privacidad/" class="hover:text-[#BF40FA] transition-colors">
+        Política de Privacidad (Ley 25.326)
+      </a>
+      <a href="/terminos/#reembolsos" class="hover:text-[#BF40FA] transition-colors">
+        Política de Reembolsos
+      </a>
+      <a href="/terminos/#debito-automatico" class="hover:text-[#BF40FA] transition-colors">
+        Política de Débito Automático
+      </a>
+    </div>
+
+    <button
+      type="button"
+      data-open-cookie-settings="true"
+      class="min-h-6 cursor-pointer underline decoration-[#4928C2]/70 underline-offset-4 hover:text-[#BF40FA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#BF40FA] transition-colors"
+    >
+      Configurar cookies
+    </button>
+  </nav>
 </footer>

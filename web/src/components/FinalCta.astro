@@ -6,20 +6,20 @@ import { SITE } from "../config";
   <!-- Anchor alias for #agendar backwards compatibility -->
   <div id="agendar" class="sr-only"></div>
 
-  <div class="relative overflow-hidden rounded-[36px] border border-[#4928C2]/50 bg-gradient-to-b from-[#5B2A62]/30 via-[#0B0D12] to-[#040607] px-8 py-16 sm:py-20 shadow-[0_0_70px_rgba(91,42,98,0.3)]">
-    <!-- Ambient Soft Velvet Glow -->
-    <div class="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[#5B2A62]/35 blur-3xl"></div>
+  <div class="relative overflow-hidden rounded-[36px] border border-[#4928C2]/55 bg-[#0B0D12] px-8 py-16 sm:py-20 shadow-[0_24px_60px_rgba(4,6,7,0.9)]">
+    <!-- Ambient Soft Velvet Accent -->
+    <div class="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[#5B2A62]/25 blur-3xl" aria-hidden="true"></div>
 
-    <p class="mb-4 inline-block rounded-full border border-emerald-500/40 bg-[#040607]/80 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-300">
+    <p class="mb-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-400">
       💬 Contacto Directo · WhatsApp Activo: {SITE.phone}
     </p>
 
     <h2 class="font-outfit mx-auto max-w-3xl text-3xl font-extrabold tracking-tight text-[#F8F6FF] sm:text-5xl">
-      ¿Tenés un proyecto o querés consultar tu caso? <span class="text-[#BF40FA]">Hablemos directamente.</span>
+      ¿Querés consultar por tu consultorio o estudio? <span class="text-[#BF40FA]">Hablemos directamente.</span>
     </h2>
 
-    <p class="mx-auto mt-5 max-w-xl text-base text-[#E3D9FC]/80">
-      Escribime a mi WhatsApp personal para coordinar tu embudo, ver una demo para tu rubro o despejar cualquier duda técnica o comercial. Respondo en el día.
+    <p class="mx-auto mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-[#E3D9FC]/90">
+      Escribime por WhatsApp para ver una muestra para tu especialidad, revisar cómo llegan hoy tus consultas o despejar cualquier duda. Respondo en el día.
     </p>
 
     <div class="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -27,22 +27,22 @@ import { SITE } from "../config";
         href={SITE.whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="group relative inline-flex items-center gap-4 rounded-full border border-emerald-500 bg-emerald-500 p-2 pl-7 pr-2.5 text-sm font-bold tracking-wide text-[#040607] shadow-[0_0_35px_rgba(16,185,129,0.4)] transition-all duration-300 hover:bg-emerald-400"
+        class="group relative inline-flex items-center gap-4 rounded-full border border-emerald-500 bg-emerald-500 p-2 pl-7 pr-2.5 text-base font-bold tracking-wide text-[#040607] transition-colors duration-200 hover:bg-emerald-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
       >
         <span>Hablar por WhatsApp ({SITE.phone})</span>
         <span class="flex h-10 w-10 items-center justify-center rounded-full bg-[#040607] text-emerald-400 transition-transform duration-300 group-hover:translate-x-0.5">
-          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+          <svg aria-hidden="true" focusable="false" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.586 1.86.897 2.796.897h.001c3.181 0 5.767-2.587 5.768-5.766.001-3.181-2.585-5.767-5.769-5.767zm7.575 5.766c-.002 4.174-3.398 7.57-7.574 7.57-1.309 0-2.548-.344-3.649-.976l-4.383 1.15 1.17-4.272c-.722-1.15-1.107-2.483-1.108-3.864.002-4.174 3.398-7.57 7.574-7.57 4.176 0 7.572 3.397 7.572 7.57z" />
           </svg>
         </span>
       </a>
     </div>
 
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-[#E3D9FC]/70">
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-[#E3D9FC]/80">
       <span>🛡️ Garantía 14 Días</span>
-      <span>•</span>
+      <span aria-hidden="true">•</span>
       <span>⚡ 1 Año Hosting $0/mes en Starter</span>
-      <span>•</span>
+      <span aria-hidden="true">•</span>
       <span>🔒 Cumplimiento Ley 25.326</span>
     </div>
   </div>

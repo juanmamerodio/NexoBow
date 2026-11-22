@@ -1,6 +1,8 @@
 // Single source of truth for NexoBow B2B Flagship Web (see /spec.md).
 export const SITE = {
   name: "NexoBow",
+  siteUrl: "https://nexobow.site",
+  email: "juanma@nexobow.site",
   phone: "+54 9 3489 53-6088",
   phoneRaw: "5493489536088",
   whatsappUrl:
@@ -10,6 +12,8 @@ export const SITE = {
   afterbowUrl: "https://www.afterbow.com",
   founderCvUrl: "https://juanmamerodio.github.io/cv",
   demoLiveUrl: "https://demo-nutri-sofia.pages.dev/",
+  demoScreenshot: "/images/cases/sofia-ramos-hero.webp",
+  demoScreenshotAlt: "Portada en vivo de Lic. Sofía Ramos, Nutrición Funcional y Deportiva",
   setupPrice: "$189.999 ARS",
   setupOldPrice: "$260.000 ARS",
   monthlyPrice: "$0 ARS/mes",
@@ -25,14 +29,16 @@ export const SITE = {
       badge: "Productora Audiovisual",
       url: "https://www.afterbow.com",
       urlDisplay: "afterbow.com",
+      screenshot: "/images/cases/afterbow-hero.webp",
+      screenshotAlt: "Portada en vivo de AfterBow, productora audiovisual corporativa",
       description:
-        "Sitio web corporativo y showcase dinámico para productora audiovisual. Portfolio cinematográfico de alta retención, reproducción ágil de reels publicitarios y conversión directa de clientes B2B.",
+        "Sitio web corporativo y vitrina audiovisual para productora. Portfolio cinematográfico de carga rápida, reproducción ágil de reels y contacto directo para empresas.",
       metrics: [
-        { value: "< 0.8s", label: "Carga Inicial" },
-        { value: "4K / HD", label: "Showcase Audiovisual" },
-        { value: "100%", label: "Mobile Responsive" },
+        { value: "< 0.8s", label: "Apertura Inicial" },
+        { value: "4K / HD", label: "Muestra de Reels" },
+        { value: "100%", label: "Adaptada a Celular" },
       ],
-      tags: ["Productora Audiovisual", "Showcase Cinematográfico", "Branding"],
+      tags: ["Productora Audiovisual", "Muestra Cinematográfica", "Identidad Visual"],
     },
     {
       id: "juanmamerodio",
@@ -41,30 +47,34 @@ export const SITE = {
       badge: "Embudo de Infoproducto",
       url: "https://juanmamerodio.github.io",
       urlDisplay: "juanmamerodio.github.io",
+      screenshot: "/images/cases/infoproducto-hero.webp",
+      screenshotAlt: "Portada en vivo del embudo para infoproducto digital",
       description:
-        "Embudo de alta conversión diseñado estratégicamente para la venta directa de infoproductos digitales. Estructura de pre-calificación, copywriting persuasivo, prueba social y pasarela directa hacia WhatsApp y checkout.",
+        "Página diseñada para ordenar consultas y concretar ventas de formación digital. Estructura clara de presentación, prueba real y acceso directo a WhatsApp y pago.",
       metrics: [
-        { value: "0.6s", label: "LCP Móvil" },
-        { value: "Alta Tasa", label: "Conversión de Venta" },
-        { value: "0 KB", label: "JS Innecesario" },
+        { value: "0.6s", label: "Apertura en Celular" },
+        { value: "Directo", label: "Consulta y Venta" },
+        { value: "100%", label: "Lectura Clara" },
       ],
-      tags: ["Embudo de Infoproducto", "Copywriting de Conversión", "Venta Directa"],
+      tags: ["Embudo Educativo", "Textos Claros", "Venta Directa"],
     },
     {
       id: "esenciatecnica",
       title: "Esencia Técnica",
-      subtitle: "E-Commerce Educativo Especializado",
-      badge: "E-Commerce Educativo",
+      subtitle: "Tienda Educativa Especializada",
+      badge: "Tienda Educativa",
       url: "https://esenciatecnica.vercel.app",
       urlDisplay: "esenciatecnica.vercel.app",
+      screenshot: "/images/cases/esenciatecnica-hero.webp",
+      screenshotAlt: "Portada en vivo de Esencia Técnica, tienda educativa de cursos técnicos",
       description:
-        "Plataforma completa de comercio electrónico para formación técnica y educativa. Catálogo interactivo de cursos técnicos, experiencia fluida de compra, pasarela de pago optimizada y arquitectura de carga instantánea.",
+        "Plataforma completa de venta online para formación técnica y educativa. Catálogo ordenado de cursos y productos, recorrido simple de compra y navegación inmediata.",
       metrics: [
-        { value: "E-Commerce", label: "Catálogo Activo" },
+        { value: "Tienda", label: "Catálogo Activo" },
         { value: "Educativo", label: "Cursos Técnicos" },
-        { value: "Instantáneo", label: "Navegación Sin Fricción" },
+        { value: "Inmediato", label: "Navegación Simple" },
       ],
-      tags: ["E-Commerce Educativo", "Catálogo & Checkout", "Arquitectura Moderna"],
+      tags: ["Tienda Educativa", "Catálogo & Compra", "Carga Rápida"],
     },
   ],
   bonuses: [
@@ -203,6 +213,44 @@ export const SITE = {
       status: "En Vivo (Demo)",
       description: "Estética Reliable Paving: Asphalt Dark, acentos Safety Amber de alta visibilidad, módulos de maquinaria pesada y métricas de tonelaje para contratistas viales e infraestructura.",
       demoUrl: "https://preview.nexobow.site/demo-construccion/",
+    },
+  ],
+  faqs: [
+    {
+      q: "¿Sirve si busco una página web para consultorio médico, nutricionistas, psicólogos u odontólogos?",
+      a: "Sí. Diseñamos páginas web para consultorios médicos, odontólogos en Argentina, nutricionistas y psicólogos con diseño propio de cada especialidad, carga en menos de 1 segundo y reseñas reales de Google Maps para que el paciente llegue decidido a atenderse.",
+    },
+    {
+      q: "¿Trabajan también con páginas web para estudios jurídicos y abogados en Argentina?",
+      a: "Sí. Contamos con arquitecturas sobrias exclusivas para estudios jurídicos y abogados en Argentina, enfocadas en consultas serias por áreas de práctica, honorarios claros y derivación directa a entrevista o WhatsApp profesional.",
+    },
+    {
+      q: "¿Cómo ordenan los turnos por WhatsApp y ayudan a recibir más pacientes desde Google Maps?",
+      a: "Conectamos tu ficha de Google Maps y tu Instagram con un sistema de turnos online por WhatsApp: el paciente ve primero tus especialidades, ubicación, modalidad de atención y horarios disponibles antes de escribir, evitando ida y vuelta innecesario.",
+    },
+    {
+      q: "¿Cuánto tardan en entregar el sitio web funcionando y qué garantía tiene?",
+      a: "Desde que aprobás tu diseño y nos pasás tus datos de agenda y WhatsApp, tu página queda online en menos de 72 horas hábiles. Antes de pagar recibís una muestra gratuita reservada por 7 días corridos, y luego contás con garantía técnica de 14 días corridos.",
+      linkHref: "/terminos/#reembolsos",
+      linkLabel: "Ver Política de Reembolsos y Garantía",
+    },
+    {
+      q: "¿Cuánto cuesta mantener la página y cómo funciona el débito automático?",
+      a: "El Plan Starter cuesta $189.999 ARS por única vez e incluye 1 año completo de hosting Cloudflare con $0 ARS/mes de abono y sin débito automático obligatorio. Si elegís el Plan Autonomous con Recepcionista IA 24/7 tras 30 días de prueba, el abono mensual se debita del 1 al 5 de cada mes sin permanencia mínima.",
+      linkHref: "/terminos/#debito-automatico",
+      linkLabel: "Ver Política de Débito Automático",
+    },
+    {
+      q: "¿Cómo cuidan la privacidad de mis datos, mis pacientes y las cookies según la Ley 25.326?",
+      a: "Cumplimos estrictamente con la Ley 25.326 de Protección de Datos Personales y garantizamos tus derechos ARCO sin costo. No publicamos datos sensibles ni historias clínicas de pacientes, respetamos los plazos oficiales de conservación de datos y cargamos analítica (GA4) únicamente si aceptás cookies en el banner.",
+      linkHref: "/privacidad/",
+      linkLabel: "Ver Política de Privacidad",
+      secondaryLinkHref: "/privacidad/#retencion",
+      secondaryLinkLabel: "Ver plazos de retención y cookies",
+    },
+    {
+      q: "¿Puedo usar mi propio dominio (.com o .com.ar)?",
+      a: "Sí. Podés salir andando hoy mismo con un subdominio oficial de NexoBow o conectar tu propio dominio .com / .com.ar a tu nombre con certificado SSL incluido.",
     },
   ],
 };

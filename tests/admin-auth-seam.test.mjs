@@ -278,13 +278,23 @@ test("T39: Admin Shell, Supabase Auth & RLS Core Tracer Bullet", async (t) => {
       assert.ok(existsSync(distAdmin), "web/dist/admin/index.html debe existir");
 
       const publicHtml = readFileSync(distIndex, "utf8");
-      const publicScripts = (
+      const nonJsonLdPublicScripts = (
         publicHtml.match(/<script\b[^>]*>([\s\S]*?)<\/script>/gi) || []
       ).filter((tag) => !/type=["']application\/ld\+json["']/i.test(tag));
+      const publicBusinessScripts = nonJsonLdPublicScripts.filter(
+        (tag) => !/\bdata-nexobow-consent-loader=["']true["']/i.test(tag)
+      );
       assert.equal(
-        publicScripts.length,
+        publicBusinessScripts.length,
         0,
-        "La landing pública web/dist/index.html debe tener 0 scripts ejecutables"
+        "La landing pública web/dist/index.html debe tener 0 scripts ejecutables de negocio"
+      );
+      const publicConsentLoaders = nonJsonLdPublicScripts.filter((tag) =>
+        /\bdata-nexobow-consent-loader=["']true["']/i.test(tag)
+      );
+      assert.ok(
+        publicConsentLoaders.length <= 1,
+        "La landing pública puede incluir como máximo 1 cargador aislado de consentimiento"
       );
 
       const adminHtml = readFileSync(distAdmin, "utf8");
@@ -293,6 +303,11 @@ test("T39: Admin Shell, Supabase Auth & RLS Core Tracer Bullet", async (t) => {
       assert.ok(
         adminScripts.length > 0,
         "La ruta /admin debe contener el bundle interactivo React"
+      );
+      assert.doesNotMatch(
+        adminHtml,
+        /data-nexobow-consent-loader/i,
+        "La ruta /admin debe excluir el banner de cookies y GA4"
       );
     }
   );

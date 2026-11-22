@@ -75,3 +75,16 @@
 - [x] [52: Outbound Ejecutivo con Zoho Mail + Telemetría Pasiva & Endpoint `/api/ping` Hot-Lead](./scratch/nexobow-v2/issues/52-zoho-mail-outbound-and-api-ping-telemetry.md) (`done`)
 - [x] [53: Workstation `/admin/crm` & Cockpit Gate 0 (Email, Zoho, Reseñas, Hot-Lead y WhatsApp/Audio 35s 1-Clic)](./scratch/nexobow-v2/issues/53-admin-crm-gate0-workstation-whatsapp-scripts.md) (`done`)
 
+## Frente H — Optimización Final, Legal, Diagramas +40, Humanización, Inbound/Email Marketing, SEO & Ciberseguridad (`spec-final-polish.md`)
+- [x] [54: Marco Legal (`/terminos/`, `/privacidad/`), Banner de Cookies + GA4 Condicional, SEO de Intención Real, Search Console & Google Business Profile](./scratch/nexobow-v2/issues/54-legal-cookies-ga4-seo-gbp.md) (`done`)
+- [x] [55: UX "Diagram-First" para +40 Años, Capturas Reales de Casos de Éxito & Humanización Total (Cero "Silla Vacía")](./scratch/nexobow-v2/issues/55-ux-diagram-first-40plus-cases-humanization.md) (`done`)
+- [x] [56: Inbound Preview End-to-End, Checkbox T&C Sin Marcar, Zoho Mail + Resend, Enlace de Baja HMAC & ElevenLabs MCP Starter](./scratch/nexobow-v2/issues/56-inbound-preview-zoho-resend-unsubscribe-elevenlabs.md) (`done`)
+- [x] [57: `robots.txt`, Blindaje Cibernético Perimetral & Auditoría Final E2E (Cierre Frente H)](./scratch/nexobow-v2/issues/57-robots-cybersecurity-hardening-e2e-audit.md) (`done`)
+
+## Frente I — Valor Inmediato Tier 1 & Blueprint Offline Gate 1 — NexoBow Autonomous (`spec-frente-i.md`)
+- [ ] [58: AEO (`scripts/aeo-optimizer.mjs`), `--mode preview|production` en `build-client-site.mjs`, `web/public/llms.txt` (`0 JS`) y `routemap.md` v4.0](./scratch/nexobow-v2/issues/58-aeo-production-mode-llms-routemap-v4.md) (`ready-for-agent`)
+- [ ] [59: Motor de Reseñas 5★ (`review-booster.mjs`), Migración Supabase (`active_clients`, `autonomous_events`), `/admin/clients` (Entrega 72h, 6 Hitos), Promoción 1-Clic desde CRM, Alertas Cockpit & 8 Tablas](./scratch/nexobow-v2/issues/59-review-booster-active-clients-72h-admin.md) (`ready-for-agent`)
+- [ ] [60: Blueprint IaC Zero-Trust Gate 1 (`infra/autonomous/`, Postgres 16 SQL, `activate-autonomous.mjs --dry-run` y `docs/gate1-vps-activation.md`)](./scratch/nexobow-v2/issues/60-autonomous-gate1-iac-postgres-activation.md) (`ready-for-agent`)
+- [ ] [61: Seams Puros `NexoBow Autonomous` (WABA, Recordatorios `24h`/`2h`, Lista de Espera FIFO) & 3 Workflows `n8n` JSON en `workflows/n8n/`](./scratch/nexobow-v2/issues/61-autonomous-waba-reminders-waitlist-n8n.md) (`ready-for-agent`)
+- [ ] [62: Endpoint `/api/v1/autonomous/ingest` (Sin PII), Panel Gate 1 en `/admin/settings`, Humanización Ampliada & Auditoría Final E2E (Cierre Frente I)](./scratch/nexobow-v2/issues/62-autonomous-edge-ingest-settings-e2e-audit.md) (`ready-for-agent`)
+

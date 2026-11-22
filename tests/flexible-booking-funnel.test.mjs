@@ -206,7 +206,7 @@ test("Ticket #53 — Seam 1: resolveLeadMetadata exposes Gate 0 fields with safe
         cta_clicks: 1,
         is_hot_lead: true,
       },
-      audio_script_35s: "[GUION 35s] Hola Centro Odonto Palermo, sistema Anti-Silla Vacía listo.",
+      audio_script_35s: "[GUION 35s] Hola Centro Odonto Palermo, muestra de orden de consultas y turnos confirmados lista.",
     },
   };
 
@@ -232,7 +232,7 @@ test("Ticket #53 — Seam 1: resolveLeadMetadata exposes Gate 0 fields with safe
     assert.equal(resolved.telemetry.selected_theme, "Obsidian Gold");
     assert.equal(resolved.telemetry.cta_clicks, 1);
     assert.equal(resolved.telemetry.is_hot_lead, true);
-    assert.equal(resolved.audio_script_35s, "[GUION 35s] Hola Centro Odonto Palermo, sistema Anti-Silla Vacía listo.");
+    assert.equal(resolved.audio_script_35s, "[GUION 35s] Hola Centro Odonto Palermo, muestra de orden de consultas y turnos confirmados lista.");
   }
 });
 
@@ -278,8 +278,8 @@ test("Ticket #53 — Seam 2: buildVoseoWhatsAppMessage & buildVoseoWhatsAppUrl g
   assert.ok(initialMsg.includes("Palermo"), "Initial mode must mention zone");
   assert.ok(initialMsg.includes("4.9"), "Initial mode must mention Maps rating");
   assert.ok(initialMsg.includes("https://preview.nexobow.site/24-centro-odonto-palermo/"), "Initial mode must include preview 10x link");
-  assert.match(initialMsg, /Anti-Silla Vacía/i, "Initial mode must pitch Anti-Silla Vacía");
-  assert.match(initialMsg, /Cero-Secretaria/i, "Initial mode must pitch Cero-Secretaria");
+  assert.match(initialMsg, /orden de consultas y turnos confirmados/i, "Initial mode must pitch orden de consultas y turnos confirmados");
+  assert.match(initialMsg, /filtrar interesados|turnos directo por WhatsApp/i, "Initial mode must explain filtering & WhatsApp booking");
   assert.match(initialMsg, /Zoho|correo|mail/i, "Initial mode must subtly reference Zoho email when sent");
   assert.ok(initialMsg.includes("tu consultorio"));
 
@@ -307,8 +307,8 @@ test("Ticket #53 — Seam 2: buildVoseoWhatsAppMessage & buildVoseoWhatsAppUrl g
 
   // 2. Mode audio_script (35s)
   const audioMsg = crmMod.buildVoseoWhatsAppMessage(hotLeadWithZoho, "audio_script");
-  assert.match(audioMsg, /Anti-Silla Vacía/i);
-  assert.match(audioMsg, /Cero-Secretaria/i);
+  assert.match(audioMsg, /orden de consultas y turnos confirmados/i);
+  assert.match(audioMsg, /filtra antes de agendar|evitar huecos/i);
   assert.ok(audioMsg.includes("https://preview.nexobow.site/24-centro-odonto-palermo/"));
   assert.match(audioMsg, /chusme|armé|contame|miralo/i);
 
@@ -316,7 +316,7 @@ test("Ticket #53 — Seam 2: buildVoseoWhatsAppMessage & buildVoseoWhatsAppUrl g
   const hotMsg = crmMod.buildVoseoWhatsAppMessage(hotLeadWithZoho, "followup_hot");
   assert.match(hotMsg, /chusmeando|abriste|viste/i, "followup_hot must mention preview view");
   assert.ok(hotMsg.includes("Obsidian Gold"), "followup_hot must reference telemetry.selected_theme");
-  assert.match(hotMsg, /Anti-Silla Vacía/i);
+  assert.match(hotMsg, /orden de consultas y turnos confirmados/i);
 
   // 4. Mode objecion_presencial
   const presMsg = crmMod.buildVoseoWhatsAppMessage(hotLeadWithZoho, "objecion_presencial");

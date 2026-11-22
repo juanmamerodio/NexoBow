@@ -4,13 +4,14 @@
 
 export interface PingEnv {
   PUBLIC_SUPABASE_URL?: string;
-  PUBLIC_SUPABASE_ANON_KEY?: string;
+  SUPABASE_URL?: string;
   SUPABASE_SERVICE_ROLE_KEY?: string;
   ADMIN_OWNER_EMAIL?: string;
   RESEND_API_KEY?: string;
   RESEND_FROM_EMAIL?: string;
   HOT_LEAD_WEBHOOK_URL?: string;
   NEXOBOW_ROOT_DOMAIN?: string;
+  PING_ALLOWED_ORIGINS?: string;
 }
 
 export type TelemetryEventType = "preview_view" | "theme_switch" | "cta_click";
@@ -86,6 +87,11 @@ export interface PingContext {
   fetchImpl?: typeof fetch;
 }
 
+export const MAX_PING_BODY_BYTES = 2 * 1024;
+export const MAX_META_FIELD_LENGTH = 80;
+
+const textEncoder = new TextEncoder();
+
 const VALID_EVENTS = new Set<string>(["preview_view", "theme_switch", "cta_click"]);
 const FORBIDDEN_KEYS = new Set<string>([
   "ip",
@@ -98,24 +104,140 @@ const FORBIDDEN_KEYS = new Set<string>([
   "cookies",
 ]);
 
-function getCorsHeaders(): Record<string, string> {
-  return {
-    "Access-Control-Allow-Origin": "*",
+function parseCustomAllowedOrigins(env: PingEnv = {}): string[] {
+  return String(env.PING_ALLOWED_ORIGINS || "")
+    .split(",")
+    .map((entry) => entry.trim())
+    .filter(Boolean)
+    .map((entry) => {
+      try {
+        return new URL(entry).origin;
+      } catch {
+        return "";
+      }
+    })
+    .filter(Boolean);
+}
+
+export function isAllowedPingOrigin(origin: string, env: PingEnv = {}): boolean {
+  const cleanOrigin = String(origin || "").trim();
+  if (!cleanOrigin) return false;
+  let parsed: URL;
+  try {
+    parsed = new URL(cleanOrigin);
+  } catch {
+    return false;
+  }
+  if (parsed.origin !== cleanOrigin) return false;
+
+  const customAllowed = parseCustomAllowedOrigins(env);
+  if (customAllowed.includes(parsed.origin)) {
+    return true;
+  }
+
+  if (parsed.protocol !== "https:" || parsed.port !== "") {
+    return false;
+  }
+
+  const rootDomain = (env.NEXOBOW_ROOT_DOMAIN || "nexobow.site").trim().toLowerCase();
+  const hostname = parsed.hostname.toLowerCase();
+  if (
+    hostname === rootDomain ||
+    hostname === `www.${rootDomain}` ||
+    hostname === `preview.${rootDomain}`
+  ) {
+    return true;
+  }
+
+  if (/^(?:[a-z0-9-]+\.)?(?:nexobow[a-z0-9-]*|demo-[a-z0-9-]+)\.pages\.dev$/i.test(hostname)) {
+    return true;
+  }
+
+  return false;
+}
+
+function resolveRequestOriginPolicy(
+  request: Request | undefined,
+  env: PingEnv = {}
+): { allowed: boolean; allowOriginHeader: string | null } {
+  const originHeader = request?.headers.get("origin")?.trim() || "";
+  if (originHeader) {
+    if (!isAllowedPingOrigin(originHeader, env)) {
+      return { allowed: false, allowOriginHeader: null };
+    }
+    return { allowed: true, allowOriginHeader: originHeader };
+  }
+
+  const refererHeader = request?.headers.get("referer")?.trim() || "";
+  if (refererHeader) {
+    try {
+      const refererOrigin = new URL(refererHeader).origin;
+      if (!isAllowedPingOrigin(refererOrigin, env)) {
+        return { allowed: false, allowOriginHeader: null };
+      }
+    } catch {
+      return { allowed: false, allowOriginHeader: null };
+    }
+  }
+
+  return { allowed: true, allowOriginHeader: null };
+}
+
+function getCorsHeaders(allowedOrigin: string | null): Record<string, string> {
+  const headers: Record<string, string> = {
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Access-Control-Max-Age": "86400",
+    "Vary": "Origin",
     "Cache-Control": "no-store",
+    "X-Robots-Tag": "noindex, nofollow",
+    "X-Content-Type-Options": "nosniff",
   };
+  if (allowedOrigin) {
+    headers["Access-Control-Allow-Origin"] = allowedOrigin;
+  }
+  return headers;
 }
 
-function jsonResponse(body: Record<string, unknown>, status: number): Response {
+function jsonResponse(
+  body: Record<string, unknown>,
+  status: number,
+  allowedOrigin: string | null = null
+): Response {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
-      ...getCorsHeaders(),
+      ...getCorsHeaders(allowedOrigin),
       "Content-Type": "application/json; charset=utf-8",
     },
   });
+}
+
+function sanitizeMetaField(value: unknown, maxLen = MAX_META_FIELD_LENGTH): string {
+  if (typeof value !== "string") return "";
+  return value
+    .replace(/<script\b[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/[\u0000-\u001f\u007f]/g, " ")
+    .replace(/[<>]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, maxLen);
+}
+
+function sanitizeSafeHttpUrl(rawUrl: unknown, fallback: string): string {
+  const clean = String(rawUrl || "").trim();
+  if (!clean) return fallback;
+  try {
+    const parsed = new URL(clean);
+    if (parsed.protocol === "https:" || parsed.protocol === "http:") {
+      return parsed.toString();
+    }
+  } catch {
+    // Fallback abajo
+  }
+  return fallback;
 }
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
@@ -221,25 +343,32 @@ function buildHotLeadAlert(
   lead: LeadRecord,
   event: TelemetryEventType,
   telemetry: LeadTelemetryState,
-  meta: Record<string, unknown>,
+  meta: { theme?: string; ctaLabel?: string },
   env: PingEnv
 ): HotLeadAlertPayload {
   const rootDomain = env.NEXOBOW_ROOT_DOMAIN || "nexobow.site";
   const ownerEmail = env.ADMIN_OWNER_EMAIL || "juanma@nexobow.site";
-  const leadName = String(lead.name || lead.slug || "Prospecto").trim();
+  const leadName = sanitizeMetaField(String(lead.name || lead.slug || "Prospecto"), 120) || "Prospecto";
   const crmUrl = `https://${rootDomain}/admin/crm`;
-  const previewUrl = lead.demo_url || `https://preview.${rootDomain}/${lead.slug}/`;
+  const defaultPreviewUrl = `https://preview.${rootDomain}/${lead.slug}/`;
+  const previewUrl = sanitizeSafeHttpUrl(lead.demo_url, defaultPreviewUrl);
   const digits = String(lead.phone || "").replace(/\D/g, "");
-  const waDirectUrl =
-    lead.whatsapp_link || (digits ? `https://wa.me/${digits}` : "https://wa.me/5493489536088");
+  const fallbackWa = digits ? `https://wa.me/${digits}` : "https://wa.me/5493489536088";
+  const waDirectUrl = sanitizeSafeHttpUrl(lead.whatsapp_link, fallbackWa);
+
+  const safeTheme = sanitizeMetaField(
+    telemetry.selected_theme || meta.theme || "Personalizada",
+    MAX_META_FIELD_LENGTH
+  );
+  const safeCtaLabel = sanitizeMetaField(meta.ctaLabel || "WhatsApp / Turno", MAX_META_FIELD_LENGTH);
 
   const eventLabelMap: Record<TelemetryEventType, string> = {
     preview_view: "Abrió su preview por primera vez",
-    theme_switch: `Cambió de paleta a "${telemetry.selected_theme || String(meta.theme || "Personalizada")}"`,
-    cta_click: `Hizo clic en CTA (${String(meta.ctaLabel || "WhatsApp / Turno")})`,
+    theme_switch: `Cambió de paleta a "${safeTheme || "Personalizada"}"`,
+    cta_click: `Hizo clic en CTA (${safeCtaLabel || "WhatsApp / Turno"})`,
   };
   const eventDescription = eventLabelMap[event];
-  const subject = `🔥 Hot-Lead: ${leadName} — ${eventDescription}`;
+  const subject = `🔥 Hot-Lead: ${leadName} — ${eventDescription}`.replace(/[\r\n]+/g, " ").trim();
 
   const text = [
     `Alerta Hot-Lead NexoBow`,
@@ -285,29 +414,47 @@ function buildHotLeadAlert(
   };
 }
 
-export const onRequestOptions = async (): Promise<Response> => {
+export const onRequestOptions = async (context: Partial<PingContext> = {}): Promise<Response> => {
+  const { request, env = {} } = context;
+  const originPolicy = resolveRequestOriginPolicy(request, env);
+  if (!originPolicy.allowed) {
+    return jsonResponse({ ok: false, error: "Origen no autorizado" }, 403, null);
+  }
   return new Response(null, {
     status: 204,
-    headers: getCorsHeaders(),
+    headers: getCorsHeaders(originPolicy.allowOriginHeader),
   });
 };
 
 export const onRequestPost = async (context: PingContext): Promise<Response> => {
   const { request, env = {}, supabaseClient, notifyHotLead, fetchImpl = globalThis.fetch } = context;
 
+  const originPolicy = resolveRequestOriginPolicy(request, env);
+  if (!originPolicy.allowed) {
+    return jsonResponse({ ok: false, error: "Origen no autorizado" }, 403, null);
+  }
+  const allowedOrigin = originPolicy.allowOriginHeader;
+
   let parsed: unknown;
   try {
     const rawBody = await request.text();
+    if (textEncoder.encode(rawBody).byteLength > MAX_PING_BODY_BYTES) {
+      return jsonResponse(
+        { ok: false, error: "Payload excede el tamaño máximo permitido (2 KB)" },
+        413,
+        allowedOrigin
+      );
+    }
     if (!rawBody || !rawBody.trim()) {
-      return jsonResponse({ ok: false, error: "Payload JSON requerido" }, 400);
+      return jsonResponse({ ok: false, error: "Payload JSON requerido" }, 400, allowedOrigin);
     }
     parsed = JSON.parse(rawBody);
   } catch {
-    return jsonResponse({ ok: false, error: "JSON malformado" }, 400);
+    return jsonResponse({ ok: false, error: "JSON malformado" }, 400, allowedOrigin);
   }
 
   if (!isPlainObject(parsed)) {
-    return jsonResponse({ ok: false, error: "Payload debe ser un objeto JSON" }, 400);
+    return jsonResponse({ ok: false, error: "Payload debe ser un objeto JSON" }, 400, allowedOrigin);
   }
 
   const forbiddenKey = hasForbiddenKeys(parsed);
@@ -317,32 +464,33 @@ export const onRequestPost = async (context: PingContext): Promise<Response> => 
         ok: false,
         error: `Campo prohibido por Ley 25.326 detectado: ${forbiddenKey}`,
       },
-      400
+      400,
+      allowedOrigin
     );
   }
 
   const rawEvent = typeof parsed.event === "string" ? parsed.event.trim() : "";
   if (!VALID_EVENTS.has(rawEvent)) {
-    return jsonResponse({ ok: false, error: "Evento de telemetría inválido" }, 400);
+    return jsonResponse({ ok: false, error: "Evento de telemetría inválido" }, 400, allowedOrigin);
   }
   const event = rawEvent as TelemetryEventType;
 
   const rawSlug = typeof parsed.slug === "string" ? parsed.slug.trim() : "";
   if (!rawSlug || !/^[a-zA-Z0-9_-]{1,140}$/.test(rawSlug)) {
-    return jsonResponse({ ok: false, error: "Slug inválido o ausente" }, 400);
+    return jsonResponse({ ok: false, error: "Slug inválido o ausente" }, 400, allowedOrigin);
   }
 
   if (parsed.meta !== undefined && !isPlainObject(parsed.meta)) {
-    return jsonResponse({ ok: false, error: "El campo meta debe ser un objeto" }, 400);
+    return jsonResponse({ ok: false, error: "El campo meta debe ser un objeto" }, 400, allowedOrigin);
   }
   const meta = isPlainObject(parsed.meta) ? parsed.meta : {};
 
   let db = supabaseClient;
   if (!db) {
-    const supabaseUrl = env.PUBLIC_SUPABASE_URL || "https://henpyuwguwvflhgbxmvn.supabase.co";
-    const supabaseKey = env.SUPABASE_SERVICE_ROLE_KEY || env.PUBLIC_SUPABASE_ANON_KEY || "";
-    if (!supabaseKey) {
-      return jsonResponse({ ok: false, error: "Persistencia Supabase no configurada" }, 503);
+    const supabaseUrl = (env.PUBLIC_SUPABASE_URL || env.SUPABASE_URL || "").trim();
+    const supabaseKey = (env.SUPABASE_SERVICE_ROLE_KEY || "").trim();
+    if (!supabaseUrl || !supabaseKey) {
+      return jsonResponse({ ok: false, error: "Persistencia Supabase no configurada" }, 503, allowedOrigin);
     }
     db = buildRestSupabaseAdapter(supabaseUrl, supabaseKey, fetchImpl);
   }
@@ -354,11 +502,11 @@ export const onRequestPost = async (context: PingContext): Promise<Response> => 
     .maybeSingle();
 
   if (selectError) {
-    return jsonResponse({ ok: false, error: "Error consultando lead en Supabase" }, 500);
+    return jsonResponse({ ok: false, error: "Error consultando lead en Supabase" }, 500, allowedOrigin);
   }
 
   if (!lead) {
-    return jsonResponse({ ok: false, error: "Lead no encontrado" }, 404);
+    return jsonResponse({ ok: false, error: "Lead no encontrado" }, 404, allowedOrigin);
   }
 
   const currentMeta = isPlainObject(lead.metadata) ? lead.metadata : {};
@@ -368,13 +516,13 @@ export const onRequestPost = async (context: PingContext): Promise<Response> => 
   const previousClicks = Number(currentTelemetry.cta_clicks || 0);
   const nextViews = event === "preview_view" ? previousViews + 1 : previousViews;
   const nextClicks = event === "cta_click" ? previousClicks + 1 : previousClicks;
-  const incomingTheme = typeof meta.theme === "string" ? meta.theme.trim() : "";
+  const incomingTheme = sanitizeMetaField(meta.theme, MAX_META_FIELD_LENGTH);
+  const incomingCtaLabel = sanitizeMetaField(meta.ctaLabel, MAX_META_FIELD_LENGTH);
+  const existingTheme = sanitizeMetaField(currentTelemetry.selected_theme, MAX_META_FIELD_LENGTH);
   const selectedTheme =
     event === "theme_switch" && incomingTheme
       ? incomingTheme
-      : typeof currentTelemetry.selected_theme === "string"
-        ? currentTelemetry.selected_theme
-        : null;
+      : existingTheme || null;
   const viewedAtIso = resolveIsoTimestamp(parsed.timestamp);
 
   const nextTelemetry: LeadTelemetryState = {
@@ -401,7 +549,7 @@ export const onRequestPost = async (context: PingContext): Promise<Response> => 
     .eq("slug", rawSlug);
 
   if (updateError) {
-    return jsonResponse({ ok: false, error: "Error actualizando telemetría" }, 500);
+    return jsonResponse({ ok: false, error: "Error actualizando telemetría" }, 500, allowedOrigin);
   }
 
   const isFirstView = event === "preview_view" && previousViews === 0;
@@ -409,7 +557,13 @@ export const onRequestPost = async (context: PingContext): Promise<Response> => 
   let hotLeadAlertSent = false;
 
   if (shouldAlert) {
-    const alertPayload = buildHotLeadAlert(lead, event, nextTelemetry, meta, env);
+    const alertPayload = buildHotLeadAlert(
+      lead,
+      event,
+      nextTelemetry,
+      { theme: incomingTheme, ctaLabel: incomingCtaLabel },
+      env
+    );
     try {
       if (typeof notifyHotLead === "function") {
         await notifyHotLead(alertPayload);
@@ -451,6 +605,7 @@ export const onRequestPost = async (context: PingContext): Promise<Response> => 
       hotLeadAlertSent,
       telemetry: nextTelemetry,
     },
-    200
+    200,
+    allowedOrigin
   );
 };

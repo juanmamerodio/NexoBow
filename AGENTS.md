@@ -145,7 +145,7 @@ flowchart TD
 1. **Spec-Driven (No Vibe Coding):** Prohibido inventar dependencias, asumir datos faltantes o escribir código sin contexto. Respetá estrictamente la arquitectura propia de cada template REA.
 2. **Gate de Planificación (Ask-First):** Si la ficha en `/clients/` tiene datos ambiguos o incompletos, **frená y preguntale al usuario** antes de generar o modificar un sitio.
 3. **Conservación de Tokens y Edición:** Para cambios grandes en un archivo, usá una única operación de escritura completa en vez de múltiples ediciones secuenciales. No leas carpetas de `/sites/` ajenas al cliente actual.
-4. **Orquestación y Sub-agentes:** Si una tarea requiere analizar +3 archivos o hacer auditoría de calidad, delegá en un sub-agente con ventana de contexto limpia.
+4. **Orquestación Escalada (Sub-agentes, Workflows y `/teamwork`):** Elegí la herramienta mínima que resuelva la tarea sin quemar cuota ni colisionar archivos: (a) **Sub-agente limpio (`invoke_subagent`)** para analizar +3 archivos o auditar (`audit-code`, `code-review`); (b) **`run_workflow`** para *fan-out* determinista y barato sobre lotes independientes; (c) **`/teamwork` (built-in `swarm`, Quota Heavy)** *únicamente* cuando el trabajo se parte en frentes con archivos disjuntos o pares autor+verificador, evitando siempre que dos workers editen el mismo archivo.
 5. **Sin Límite Artificial de JS en Templates:** En `/templates/` y `/sites/` no existe restricción de 35 KB. Solo aplican las restricciones de infraestructura de Cloudflare Pages (25 MB por archivo) o de APIs externas.
 6. **Filtro Anti-Mediocridad y Triage Rápido (Skill `impeccable`):** Queda terminantemente prohibido entregar landings mediocres, genéricas ("AI-slop"), con tipografías cliché, contrastes deficientes o layouts planos. Si una generación de web (`web/`, `/templates/` o `/sites/`) resulta insulsa, defectuosa o presenta errores visuales/layout, el agente debe activar el protocolo de remediación inmediata con `impeccable`:
    - **Diagnóstico Inmediato:** Ejecutar `.agents/skills/impeccable/scripts/impeccable detect <target>` para identificar anti-patrones visuales al instante.
@@ -187,6 +187,9 @@ flowchart TD
   - `critique` / `audit`: Evaluación heurística y técnica inmediata.
   - `distill`: Elimina ruido y sobrecarga visual manteniendo la esencia pura del diseño.
   - `clarify` / `typeset`: Perfecciona jerarquías tipográficas, legibilidad y micro-copy de conversión.
+- **`/teamwork` (built-in `swarm` — Preview & Quota Heavy):** Comando nativo de Antigravity (no requiere carpeta en `.agents/skills/`) que coordina varios agentes en paralelo sobre un tablero compartido (`workspace:"share"` para autores concurrentes).
+  - **Usar cuando:** existan piezas paralelas sobre **archivos disjuntos** (ej.: múltiples templates REA en `/templates/{rubro}/`, ediciones por lote sobre los 10 `templates/*/ThemeSwitcher.astro` en paralelo con `web/`, o auditoría adversarial autor+verificador).
+  - **No usar cuando:** el trabajo sea un ticket vertical atómico o una cadena secuencial sobre archivos compartidos (ej.: `#54` → `#55` → `#56` → `#57`); en esos casos usar 1 sesión limpia (`Smart Zone < 100k`) + sub-agente de auditoría para cuidar cuota y evitar conflictos.
 
 ## 🔄 Ciclo de Desarrollo Agéntico & Tracking de Estado (Main Flow)
 Para cualquier tarea de diseño, refactor o feature en el repo, el agente debe seguir obligatoriamente las fases definidas en [`/prompts_structure.md`](file:///home/juanmamerodio/Desktop/NexoBow/prompts_structure.md) e identificar explícitamente en qué etapa se encuentra:

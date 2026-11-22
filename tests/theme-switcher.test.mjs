@@ -175,7 +175,8 @@ test("T-THEME-04 (Ticket #50): Los 10 templates implementan los 5 bloques del Ne
     );
     assert.match(content, /subdominio temporal/i, `templates/${rubro}: falta contraste de subdominio temporal (20%)`);
     assert.match(content, /Recepcionista IA 24\/7/i, `templates/${rubro}: falta detalle de Recepcionista IA 24/7 (10x)`);
-    assert.match(content, /Protocolo Anti-Silla Vacía/i, `templates/${rubro}: falta Protocolo Anti-Silla Vacía (10x)`);
+    assert.match(content, /Recordatorios automáticos 24h\/2h/i, `templates/${rubro}: falta Recordatorios automáticos 24h/2h (10x)`);
+    assert.match(content, /lista de espera/i, `templates/${rubro}: falta lista de espera (10x)`);
     assert.match(content, /Posicionamiento AEO/i, `templates/${rubro}: falta Posicionamiento AEO (10x)`);
 
     // Bloque 4: Mini-simulador interactivo en voseo argentino

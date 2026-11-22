@@ -16,6 +16,8 @@
     "prospect": "node scripts/prospect-in-conversation.mjs",
     "intake-maps": "node scripts/intake-maps-batch.mjs",
     "send-zoho": "node scripts/send-zoho-outreach.mjs",
+    "process-inbound": "node scripts/process-inbound-leads.mjs",
+    "voice-note": "node scripts/generate-voice-note.mjs",
     "lead-lifecycle": "node scripts/lead-lifecycle.mjs",
     "continuous-improvement": "node scripts/continuous-improvement.mjs",
     "rea-inspect": "node scripts/rea-inspect.mjs"

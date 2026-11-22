@@ -4,10 +4,21 @@
 
 import { existsSync, readdirSync, statSync, writeFileSync, mkdirSync, cpSync } from "node:fs";
 import { join, dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { spawnSync } from "node:child_process";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+
+export const INTERNAL_WEB_DIRS = new Set([
+  "_astro",
+  "_worker.js",
+  "admin",
+  "solicitud-enviada",
+  "terminos",
+  "privacidad",
+  "baja-email",
+  "images",
+]);
 
 // Cargar variables de entorno si existe .env
 try {
@@ -79,7 +90,7 @@ async function main() {
   }
 
   const entries = readdirSync(distPreviewsDir).filter((f) => {
-    return statSync(join(distPreviewsDir, f)).isDirectory() && !["_astro", "_worker.js", "admin", "solicitud-enviada"].includes(f);
+    return statSync(join(distPreviewsDir, f)).isDirectory() && !INTERNAL_WEB_DIRS.has(f);
   });
 
   const projectName = "nexobow-previews";
@@ -142,7 +153,7 @@ async function main() {
 `);
 }
 
-if (process.argv[1] && import.meta.url.endsWith("deploy-previews.mjs")) {
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   main().catch((err) => {
     console.error(`\x1b[31m[deploy-previews ERROR FATAL]\x1b[0m ${err.message}`);
     process.exit(1);

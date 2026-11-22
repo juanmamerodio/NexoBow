@@ -1273,7 +1273,7 @@ function buildDefaultAudioScript35s(lead = {}, websiteBucket = "cubeta_a") {
       : "Vi tu ficha en Google Maps con muy buenas referencias, pero sin una página propia para convertir esas búsquedas en turnos.";
   return (
     `[GUION AUDIO 35s] "Hola ${rawName}, ¿cómo estás? Te habla Juanma de NexoBow, te grabo este audio rápido para no robarte tiempo. ` +
-    `${bucketHook} Por eso te armé un prototipo real en ${previewUrl} enfocado en el sistema Anti-Silla Vacía & Cero-Secretaria: ` +
+    `${bucketHook} Por eso te armé un prototipo real en ${previewUrl} enfocado en orden de consultas y turnos confirmados: ` +
     `ordena las consultas de Maps o Instagram, filtra antes de agendar y confirma turnos para evitar huecos en tu agenda. ` +
     `Chusmealo tranquilo desde el celu y contame qué paleta te gustó más."`
   );
@@ -1391,6 +1391,37 @@ export function resolveLeadMetadata(lead = {}) {
       ? rawAudio.trim()
       : buildDefaultAudioScript35s(lead, website_bucket);
 
+  const rawEm =
+    (lead.email_marketing && typeof lead.email_marketing === "object"
+      ? lead.email_marketing
+      : null) ||
+    (rawMeta.email_marketing && typeof rawMeta.email_marketing === "object"
+      ? rawMeta.email_marketing
+      : {});
+  const isUnsubscribed = Boolean(
+    lead.unsubscribed === true ||
+      rawMeta.unsubscribed === true ||
+      rawEm.unsubscribed === true
+  );
+  const termsAcceptedAtRaw = lead.terms_accepted_at ?? rawMeta.terms_accepted_at ?? null;
+  const termsVersionRaw = lead.terms_version ?? rawMeta.terms_version ?? null;
+  const terms_accepted = Boolean(
+    lead.terms_accepted ?? rawMeta.terms_accepted ?? Boolean(termsAcceptedAtRaw)
+  );
+  const marketingOptInRaw = lead.marketing_opt_in ?? rawMeta.marketing_opt_in;
+  const marketing_opt_in =
+    marketingOptInRaw !== undefined ? Boolean(marketingOptInRaw) : !isUnsubscribed;
+
+  const email_marketing = {
+    unsubscribed: isUnsubscribed,
+    unsubscribed_at: rawEm.unsubscribed_at ?? null,
+    welcome_sent_at: rawEm.welcome_sent_at ?? null,
+    preview_ready_sent_at: rawEm.preview_ready_sent_at ?? null,
+    ttl_reminder_sent_at: rawEm.ttl_reminder_sent_at ?? null,
+    followup_stage: rawEm.followup_stage || "none",
+    provider_last: rawEm.provider_last ?? null,
+  };
+
   return {
     ...rawMeta,
     modalidad: lead.modalidad || rawMeta.modalidad || defaultModalidad,
@@ -1409,6 +1440,11 @@ export function resolveLeadMetadata(lead = {}) {
     email_outreach,
     telemetry,
     audio_script_35s,
+    terms_accepted,
+    terms_accepted_at: termsAcceptedAtRaw ? String(termsAcceptedAtRaw) : null,
+    terms_version: termsVersionRaw ? String(termsVersionRaw) : null,
+    marketing_opt_in,
+    email_marketing,
   };
 }
 

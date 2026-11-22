@@ -133,14 +133,18 @@ describe('T37: preview-telemetry - Telemetría Pasiva sin Cookies', () => {
     }
   });
 
-  test('T37.7 (Ticket #52): onRequestOptions y onRequestPost responden con cabeceras CORS válidas y 0 cookies', async () => {
+  test('T37.7 (Ticket #52 / #57): onRequestOptions y onRequestPost responden con allowlist CORS dinámica, Vary: Origin y 0 cookies', async () => {
     const optRes = await onRequestOptions({
-      request: new Request('https://preview.nexobow.site/api/ping', { method: 'OPTIONS' }),
+      request: new Request('https://preview.nexobow.site/api/ping', {
+        method: 'OPTIONS',
+        headers: { Origin: 'https://preview.nexobow.site' },
+      }),
       env: {},
     });
 
     assert.ok(optRes.status === 200 || optRes.status === 204);
-    assert.ok(optRes.headers.get('access-control-allow-origin'));
+    assert.equal(optRes.headers.get('access-control-allow-origin'), 'https://preview.nexobow.site');
+    assert.match(optRes.headers.get('vary') || '', /\bOrigin\b/i);
     assert.match(optRes.headers.get('access-control-allow-methods') || '', /POST/);
     assert.match(optRes.headers.get('access-control-allow-methods') || '', /OPTIONS/);
     assert.equal(optRes.headers.get('set-cookie'), null, 'OPTIONS no debe setear cookies');
@@ -148,12 +152,17 @@ describe('T37: preview-telemetry - Telemetría Pasiva sin Cookies', () => {
     const badPostRes = await onRequestPost({
       request: new Request('https://preview.nexobow.site/api/ping', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Origin: 'https://preview.nexobow.site',
+        },
         body: 'invalid-json{',
       }),
       env: {},
     });
-    assert.ok(badPostRes.headers.get('access-control-allow-origin'));
+    assert.equal(badPostRes.status, 400);
+    assert.equal(badPostRes.headers.get('access-control-allow-origin'), 'https://preview.nexobow.site');
+    assert.match(badPostRes.headers.get('vary') || '', /\bOrigin\b/i);
     assert.equal(badPostRes.headers.get('set-cookie'), null, 'POST no debe setear cookies');
   });
 
@@ -355,5 +364,214 @@ describe('T37: preview-telemetry - Telemetría Pasiva sin Cookies', () => {
     assert.equal(leadAfter.metadata.telemetry.cta_clicks, 1);
     assert.equal(leadAfter.metadata.telemetry.last_event, 'cta_click');
     assert.equal(alerts.length, 3, 'cta_click debe disparar alerta Hot-Lead');
+  });
+
+  test('T37.10 (Ticket #57 — Seam 5): Allowlist dinámica de Origin (403 a externos), límite 2 KB (413), meta <= 80 chars y sin URL Supabase hardcodeada', async () => {
+    const allowedOrigins = [
+      'https://nexobow.site',
+      'https://www.nexobow.site',
+      'https://preview.nexobow.site',
+      'https://nexobow-previews.pages.dev',
+      'https://demo-nutri-sofia.pages.dev',
+    ];
+
+    for (const origin of allowedOrigins) {
+      const res = await onRequestOptions({
+        request: new Request('https://preview.nexobow.site/api/ping', {
+          method: 'OPTIONS',
+          headers: { Origin: origin },
+        }),
+        env: {},
+      });
+      assert.equal(res.status, 204, `OPTIONS permitido debe responder 204 para ${origin}`);
+      assert.equal(res.headers.get('access-control-allow-origin'), origin);
+      assert.notEqual(res.headers.get('access-control-allow-origin'), '*');
+      assert.match(res.headers.get('vary') || '', /\bOrigin\b/i);
+    }
+
+    // Dominio propio verificado vía PING_ALLOWED_ORIGINS
+    const customAllowedOpt = await onRequestOptions({
+      request: new Request('https://preview.nexobow.site/api/ping', {
+        method: 'OPTIONS',
+        headers: { Origin: 'https://clinica-verificada.com.ar' },
+      }),
+      env: { PING_ALLOWED_ORIGINS: 'https://clinica-verificada.com.ar' },
+    });
+    assert.equal(customAllowedOpt.status, 204);
+    assert.equal(
+      customAllowedOpt.headers.get('access-control-allow-origin'),
+      'https://clinica-verificada.com.ar'
+    );
+    assert.match(customAllowedOpt.headers.get('vary') || '', /\bOrigin\b/i);
+
+    // Orígenes externos no autorizados -> 403 sin ACAO y con Vary: Origin
+    for (const evilOrigin of [
+      'https://evil.example',
+      'https://evil.pages.dev',
+      'http://nexobow.site',
+    ]) {
+      const optBlocked = await onRequestOptions({
+        request: new Request('https://preview.nexobow.site/api/ping', {
+          method: 'OPTIONS',
+          headers: { Origin: evilOrigin },
+        }),
+        env: {},
+      });
+      assert.equal(optBlocked.status, 403, `OPTIONS debe rechazar ${evilOrigin} con 403`);
+      assert.equal(optBlocked.headers.get('access-control-allow-origin'), null);
+      assert.match(optBlocked.headers.get('vary') || '', /\bOrigin\b/i);
+
+      const postBlocked = await onRequestPost({
+        request: new Request('https://preview.nexobow.site/api/ping', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Origin: evilOrigin,
+          },
+          body: JSON.stringify({ event: 'preview_view', slug: '24-centro-odonto' }),
+        }),
+        env: {},
+      });
+      assert.equal(postBlocked.status, 403, `POST debe rechazar ${evilOrigin} con 403`);
+      assert.equal(postBlocked.headers.get('access-control-allow-origin'), null);
+      assert.match(postBlocked.headers.get('vary') || '', /\bOrigin\b/i);
+    }
+
+    // Payload > 2 KB -> HTTP 413
+    const hugePingBody = JSON.stringify({
+      event: 'preview_view',
+      slug: '24-centro-odonto',
+      meta: { theme: 'A'.repeat(2500) },
+    });
+    const res413 = await onRequestPost({
+      request: new Request('https://preview.nexobow.site/api/ping', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Origin: 'https://preview.nexobow.site',
+        },
+        body: hugePingBody,
+      }),
+      env: {},
+    });
+    assert.equal(res413.status, 413);
+    assert.equal(res413.headers.get('access-control-allow-origin'), 'https://preview.nexobow.site');
+    assert.match(res413.headers.get('vary') || '', /\bOrigin\b/i);
+
+    // Acotamiento y saneamiento de meta.theme y meta.ctaLabel (<= 80 chars)
+    const leadsDb = new Map([
+      [
+        '24-centro-odonto',
+        {
+          id: 24,
+          slug: '24-centro-odonto',
+          name: 'Centro Odonto',
+          metadata: { telemetry: { views_count: 1, cta_clicks: 0 } },
+        },
+      ],
+    ]);
+    const mockDb = {
+      from() {
+        return {
+          select() {
+            return {
+              eq(_col, val) {
+                return {
+                  maybeSingle: async () => ({
+                    data: leadsDb.get(val) ? structuredClone(leadsDb.get(val)) : null,
+                    error: null,
+                  }),
+                };
+              },
+            };
+          },
+          update(patch) {
+            return {
+              eq(_col, val) {
+                const cur = leadsDb.get(val);
+                if (cur) leadsDb.set(val, { ...cur, ...patch });
+                return Promise.resolve({ data: cur ? [leadsDb.get(val)] : [], error: null });
+              },
+            };
+          },
+        };
+      },
+    };
+    const alerts = [];
+
+    const longTheme = `<script>alert(1)</script>Obsidian ${'X'.repeat(130)}`;
+    const resTheme = await onRequestPost({
+      request: new Request('https://preview.nexobow.site/api/ping', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Origin: 'https://preview.nexobow.site',
+        },
+        body: JSON.stringify({
+          event: 'theme_switch',
+          slug: '24-centro-odonto',
+          meta: { theme: longTheme },
+        }),
+      }),
+      env: { ADMIN_OWNER_EMAIL: 'juanma@nexobow.site' },
+      supabaseClient: mockDb,
+      notifyHotLead: async (a) => alerts.push(a),
+    });
+    assert.equal(resTheme.status, 200);
+    const savedTheme = leadsDb.get('24-centro-odonto').metadata.telemetry.selected_theme;
+    assert.ok(savedTheme.length <= 80, `selected_theme debe medir <= 80 chars (actual: ${savedTheme.length})`);
+    assert.doesNotMatch(savedTheme, /[<>]|script/i);
+    assert.match(savedTheme, /^Obsidian/);
+    assert.doesNotMatch(alerts[0].html, /<script/i);
+
+    const longCta = `<img src=x onerror=1>Pedir turno ${'Y'.repeat(130)}`;
+    const resCta = await onRequestPost({
+      request: new Request('https://preview.nexobow.site/api/ping', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Origin: 'https://preview.nexobow.site',
+        },
+        body: JSON.stringify({
+          event: 'cta_click',
+          slug: '24-centro-odonto',
+          meta: { ctaLabel: longCta },
+        }),
+      }),
+      env: { ADMIN_OWNER_EMAIL: 'juanma@nexobow.site' },
+      supabaseClient: mockDb,
+      notifyHotLead: async (a) => alerts.push(a),
+    });
+    assert.equal(resCta.status, 200);
+    assert.doesNotMatch(alerts[1].html, /<img|onerror=/i);
+    assert.doesNotMatch(alerts[1].text, /Y{85,}/);
+
+    // Sin URL Supabase hardcodeada ni wildcard CORS ni fallback a anon key
+    const pingSource = readFileSync(join(process.cwd(), 'web', 'functions', 'api', 'ping.ts'), 'utf8');
+    assert.ok(!pingSource.includes('henpyuwguwvflhgbxmvn.supabase.co'), 'ping.ts no debe hardcodear URL Supabase');
+    assert.ok(!pingSource.includes('"Access-Control-Allow-Origin": "*"'), 'ping.ts no debe usar Access-Control-Allow-Origin: *');
+    assert.ok(!pingSource.includes('PUBLIC_SUPABASE_ANON_KEY'), 'ping.ts no debe usar fallback a PUBLIC_SUPABASE_ANON_KEY');
+
+    let fetchCalled = 0;
+    const res503 = await onRequestPost({
+      request: new Request('https://preview.nexobow.site/api/ping', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Origin: 'https://preview.nexobow.site',
+        },
+        body: JSON.stringify({ event: 'preview_view', slug: '24-centro-odonto' }),
+      }),
+      env: {
+        PUBLIC_SUPABASE_URL: 'https://custom.supabase.co',
+        PUBLIC_SUPABASE_ANON_KEY: 'anon-only',
+      },
+      fetchImpl: async () => {
+        fetchCalled++;
+        return new Response('[]', { status: 200 });
+      },
+    });
+    assert.equal(res503.status, 503);
+    assert.equal(fetchCalled, 0, 'Sin SUPABASE_SERVICE_ROLE_KEY no debe consultar Supabase');
   });
 });

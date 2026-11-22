@@ -1,19 +1,52 @@
 // tests/web-redesign.test.mjs — Suite E2E para Frente A (Rebranding Soft-Obsidian + 12 Secciones + 0 JS)
 import test from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, statSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
+function acquireWebDistLock() {
+  const lockDir = join(tmpdir(), "nexobow-web-dist.lock");
+  const deadline = Date.now() + 180_000;
+  const view = new Int32Array(new SharedArrayBuffer(4));
+  while (true) {
+    try {
+      mkdirSync(lockDir);
+      return () => {
+        try {
+          rmSync(lockDir, { recursive: true, force: true });
+        } catch {}
+      };
+    } catch (err) {
+      if (err && err.code !== "EEXIST") throw err;
+      try {
+        if (Date.now() - statSync(lockDir).mtimeMs > 180_000) {
+          rmSync(lockDir, { recursive: true, force: true });
+          continue;
+        }
+      } catch {}
+      if (Date.now() > deadline) throw new Error("Timeout esperando lock de web/dist");
+      Atomics.wait(view, 0, 0, 100);
+    }
+  }
+}
+
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const WEB_DIR = join(REPO_ROOT, "web");
-const DIST_HTML = join(WEB_DIR, "dist", "index.html");
-const CONFIRM_HTML = join(WEB_DIR, "dist", "solicitud-enviada", "index.html");
+const DIST_DIR = join(WEB_DIR, "dist");
+const DIST_HTML = join(DIST_DIR, "index.html");
+const TERMINOS_HTML = join(DIST_DIR, "terminos", "index.html");
+const PRIVACIDAD_HTML = join(DIST_DIR, "privacidad", "index.html");
+const CONFIRM_HTML = join(DIST_DIR, "solicitud-enviada", "index.html");
 const GLOBAL_CSS = join(WEB_DIR, "src", "styles", "global.css");
 const CREATE_FN = join(WEB_DIR, "functions", "api", "v1", "bow-system", "create.ts");
 
 test("T-WEB-04: Suite E2E Rebranding Soft-Obsidian y Funnel de 12 Secciones en web/", async (t) => {
+  const releaseWebDistLock = acquireWebDistLock();
+  t.after(releaseWebDistLock);
+
   await t.test("1. npm run build en web/ compila con código 0", () => {
     const buildRes = spawnSync("npm", ["run", "build"], {
       cwd: WEB_DIR,
@@ -26,25 +59,46 @@ test("T-WEB-04: Suite E2E Rebranding Soft-Obsidian y Funnel de 12 Secciones en w
     );
     assert.ok(existsSync(DIST_HTML), "web/dist/index.html debe existir tras el build");
     assert.ok(existsSync(CONFIRM_HTML), "web/dist/solicitud-enviada/index.html debe existir tras el build");
+    assert.ok(existsSync(TERMINOS_HTML), "web/dist/terminos/index.html debe existir tras el build");
+    assert.ok(existsSync(PRIVACIDAD_HTML), "web/dist/privacidad/index.html debe existir tras el build");
   });
 
   const html = existsSync(DIST_HTML) ? readFileSync(DIST_HTML, "utf8") : "";
+  const terminosHtml = existsSync(TERMINOS_HTML) ? readFileSync(TERMINOS_HTML, "utf8") : "";
+  const privacidadHtml = existsSync(PRIVACIDAD_HTML) ? readFileSync(PRIVACIDAD_HTML, "utf8") : "";
   const confirmHtml = existsSync(CONFIRM_HTML) ? readFileSync(CONFIRM_HTML, "utf8") : "";
   const textContent = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
   const css = existsSync(GLOBAL_CSS) ? readFileSync(GLOBAL_CSS, "utf8") : "";
+  const { auditHtmlDocument } = await import("../scripts/audit-site.mjs");
 
-  await t.test("2. Política estricta de 0 JS ejecutable en cliente en web/ pública y /solicitud-enviada/", () => {
+  await t.test("2. Política estricta de 0 JS de negocio en web/ pública (solo cargador aislado de consentimiento 'denied' por defecto)", () => {
     for (const [label, doc] of [
       ["index.html", html],
       ["solicitud-enviada/index.html", confirmHtml],
+      ["terminos/index.html", terminosHtml],
+      ["privacidad/index.html", privacidadHtml],
     ]) {
-      const scripts = (doc.match(/<script\b[^>]*>([\s\S]*?)<\/script>/gi) || []).filter(
-        (tag) => !/type=["']application\/ld\+json["']/i.test(tag)
-      );
+      const report = auditHtmlDocument(doc, {
+        mode: "web",
+        distDir: DIST_DIR,
+        requireWhatsappCta: false,
+      });
+      assert.equal(report.ok, true, `Auditoría fallida en ${label}: ${report.errors.join("; ")}`);
       assert.equal(
-        scripts.length,
+        report.executableScriptCount,
         0,
-        `Se detectaron ${scripts.length} etiquetas <script> en ${label} (debe ser 0 JS)`
+        `Se detectaron ${report.executableScriptCount} etiquetas <script> de negocio en ${label} (debe ser 0 JS)`
+      );
+      assert.equal(report.jsBytes, 0, `${label} debe tener 0 bytes de JS de negocio`);
+      assert.equal(
+        report.consentLoaderCount,
+        1,
+        `${label} debe incluir exactamente 1 cargador aislado de consentimiento`
+      );
+      assert.doesNotMatch(
+        doc,
+        /<script\b[^>]*src=["'][^"']*googletagmanager\.com/i,
+        `${label} no debe precargar gtag.js antes del consentimiento`
       );
     }
   });
