@@ -11,7 +11,7 @@
 - 61: Seams Puros `NexoBow Autonomous` (WABA, Recordatorios `24h`/`2h`, Lista de Espera FIFO) & 3 Workflows `n8n` JSON en `workflows/n8n/`
 - 62: Endpoint `/api/v1/autonomous/ingest` (Sin PII), Panel Gate 1 en `/admin/settings`, Humanización Ampliada & Auditoría Final E2E (Cierre Frente I)
 
-**Status:** ready-for-agent
+**Status:** done
 
 ## Archivos a Crear o Modificar
 
@@ -34,11 +34,11 @@
 
 ## Acceptance Criteria
 
-- [ ] **[RED]** Crear `tests/autonomous-infra.test.mjs` validando topología Zero-Trust de `docker-compose.yml`, placeholders en `.env.autonomous.example`, DDL de `001_autonomous_init.sql` y contratos `--dry-run` / `--strict-env` / `--apply` de `scripts/activate-autonomous.mjs` con dependencias inyectables; confirmar fallos antes de implementar.
-- [ ] **[GREEN]** Crear `infra/autonomous/docker-compose.yml`, `infra/autonomous/.env.autonomous.example` (sin credenciales reales) e `infra/autonomous/sql/001_autonomous_init.sql` con las 4 tablas, índices FIFO y restricciones `UNIQUE` anti-duplicados.
-- [ ] **[GREEN]** Implementar `scripts/activate-autonomous.mjs` (`--dry-run`, `--strict-env`, `--env-file`, `--apply` con `commandRunner` y `envLoader` inyectables) y registrar `"activate-autonomous"` en `package.json`.
-- [ ] **[GREEN]** Redactar `docs/gate1-vps-activation.md` con tono sobrio +40 cubriendo Tailscale, UFW, CrowdSec, Cloudflare Tunnel, Meta Embedded Signup / WABA, desacoplamiento de Chatwoot y activación Gate 1 en 1 comando.
-- [ ] **[VERIFY]** Ejecutar el comando de validación exacto comprobando la suite `autonomous-infra.test.mjs` en verde y la ejecución limpia de `node scripts/activate-autonomous.mjs --dry-run` con código `0`.
+- [x] **[RED]** Crear `tests/autonomous-infra.test.mjs` validando topología Zero-Trust de `docker-compose.yml`, placeholders en `.env.autonomous.example`, DDL de `001_autonomous_init.sql` y contratos `--dry-run` / `--strict-env` / `--apply` de `scripts/activate-autonomous.mjs` con dependencias inyectables; confirmar fallos antes de implementar.
+- [x] **[GREEN]** Crear `infra/autonomous/docker-compose.yml`, `infra/autonomous/.env.autonomous.example` (sin credenciales reales) e `infra/autonomous/sql/001_autonomous_init.sql` con las 4 tablas, índices FIFO y restricciones `UNIQUE` anti-duplicados.
+- [x] **[GREEN]** Implementar `scripts/activate-autonomous.mjs` (`--dry-run`, `--strict-env`, `--env-file`, `--apply` con `commandRunner` y `envLoader` inyectables) y registrar `"activate-autonomous"` en `package.json`.
+- [x] **[GREEN]** Redactar `docs/gate1-vps-activation.md` con tono sobrio +40 cubriendo Tailscale, UFW, CrowdSec, Cloudflare Tunnel, Meta Embedded Signup / WABA, desacoplamiento de Chatwoot y activación Gate 1 en 1 comando.
+- [x] **[VERIFY]** Ejecutar el comando de validación exacto comprobando la suite `autonomous-infra.test.mjs` en verde y la ejecución limpia de `node scripts/activate-autonomous.mjs --dry-run` con código `0`.
 
 ## Comando de Validación Exacto
 

@@ -14,6 +14,7 @@ sites/
 .env
 .env.*
 !.env.example
+!.env.*.example
 
 # OS / Editor / Local Tool Caches
 .DS_Store
