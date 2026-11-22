@@ -12,7 +12,7 @@
 - 61: Seams Puros `NexoBow Autonomous` (WABA, Recordatorios `24h`/`2h`, Lista de Espera FIFO) & 3 Workflows `n8n` JSON en `workflows/n8n/`
 - 62: Endpoint `/api/v1/autonomous/ingest` (Sin PII), Panel Gate 1 en `/admin/settings`, Humanización Ampliada & Auditoría Final E2E (Cierre Frente I)
 
-**Status:** ready-for-agent
+**Status:** done
 
 ## Archivos a Crear o Modificar
 
@@ -45,12 +45,12 @@
 
 ## Acceptance Criteria
 
-- [ ] **[RED]** Crear `tests/review-booster-clients.test.mjs` (Seams 2 y 3 completos) y actualizar `tests/admin-cockpit-e2e.test.mjs` para exigir las 8 tablas y la ruta `/admin/clients`; confirmar fallos antes de implementar.
-- [ ] **[GREEN]** Implementar `scripts/review-booster.mjs` y registrar `"review-booster"` en `package.json`.
-- [ ] **[GREEN]** Crear `supabase/migrations/20261121000000_active_clients_and_autonomous_events.sql` (con `lead_id bigint`, checklist 6 hitos, `autonomous_events` sin PII y políticas RLS `public.is_admin_owner()`).
-- [ ] **[GREEN]** Implementar `web/src/lib/active-clients.ts`, `web/src/components/admin/views/ClientsView.tsx`, la ruta estática en `web/src/pages/admin/[...all].astro`, la navegación en `AdminLayout.tsx` y `AdminApp.tsx`, y el botón 1-clic **`Convertir a Prestador Activo`** en `CrmView.tsx` (`LeadDrawer`).
-- [ ] **[GREEN]** Integrar alertas de Entrega 72h (`<24h`), Fin de Prueba 30d (`<=5d`) y resumen Gate 1 en `cockpit.ts` / `CockpitView.tsx` respetando Verdad Única `{ data, isOffline }`, y ampliar `settings.ts`, `realtime.ts` y `SettingsView.tsx` de 6 a 8 tablas.
-- [ ] **[VERIFY]** Ejecutar el comando de validación exacto comprobando tests en verde, compilación exitosa de `web/dist/admin/clients/index.html` y `0 JS` de negocio en rutas públicas vía `audit-site.mjs web`.
+- [x] **[RED]** Crear `tests/review-booster-clients.test.mjs` (Seams 2 y 3 completos) y actualizar `tests/admin-cockpit-e2e.test.mjs` para exigir las 8 tablas y la ruta `/admin/clients`; confirmar fallos antes de implementar.
+- [x] **[GREEN]** Implementar `scripts/review-booster.mjs` y registrar `"review-booster"` en `package.json`.
+- [x] **[GREEN]** Crear `supabase/migrations/20261121000000_active_clients_and_autonomous_events.sql` (con `lead_id bigint`, checklist 6 hitos, `autonomous_events` sin PII y políticas RLS `public.is_admin_owner()`).
+- [x] **[GREEN]** Implementar `web/src/lib/active-clients.ts`, `web/src/components/admin/views/ClientsView.tsx`, la ruta estática en `web/src/pages/admin/[...all].astro`, la navegación en `AdminLayout.tsx` y `AdminApp.tsx`, y el botón 1-clic **`Convertir a Prestador Activo`** en `CrmView.tsx` (`LeadDrawer`).
+- [x] **[GREEN]** Integrar alertas de Entrega 72h (`<24h`), Fin de Prueba 30d (`<=5d`) y resumen Gate 1 en `cockpit.ts` / `CockpitView.tsx` respetando Verdad Única `{ data, isOffline }`, y ampliar `settings.ts`, `realtime.ts` y `SettingsView.tsx` de 6 a 8 tablas.
+- [x] **[VERIFY]** Ejecutar el comando de validación exacto comprobando tests en verde, compilación exitosa de `web/dist/admin/clients/index.html` y `0 JS` de negocio en rutas públicas vía `audit-site.mjs web`.
 
 ## Comando de Validación Exacto
 

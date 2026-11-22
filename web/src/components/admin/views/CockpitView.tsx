@@ -31,6 +31,8 @@ import {
   Flame,
   ShieldCheck,
   Zap,
+  UserCheck,
+  Activity,
 } from "lucide-react";
 
 interface CockpitViewProps {
@@ -519,6 +521,107 @@ export const CockpitView: React.FC<CockpitViewProps> = ({ user, onNavigate }) =>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* 1C. WIDGET PRESTADORES ACTIVOS (ENTREGA 72H / PRUEBA 30D) & RESUMEN GATE 1 */}
+      <div
+        className="p-6 rounded-2xl border"
+        style={{
+          backgroundColor: "#0B0D12",
+          borderColor:
+            summary.operationalAlerts.length > 0 ? "rgba(56, 189, 248, 0.35)" : "#1A1D26",
+        }}
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-sky-500/15 text-sky-400">
+              <UserCheck className="w-4 h-4" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+                Prestadores Activos: Entrega 72h (&lt;24h), Fin de Prueba 30d (&le;5d) &amp; Gate 1
+              </h2>
+              <p className="text-xs text-zinc-400">
+                {summary.activeClientsCount} prestador(es) activo(s) · {summary.deliveryAlerts24hCount} alerta(s) de entrega · {summary.trialEnding5dCount} prueba(s) por vencer
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="text-xs px-2.5 py-1 rounded-full font-mono border border-zinc-800 bg-[#040607] text-emerald-300 flex items-center gap-1.5">
+              <Activity className="w-3 h-3" />
+              <span>Gate 1: {summary.gate1Summary.totalEvents} eventos</span>
+            </span>
+            <button
+              type="button"
+              onClick={() => onNavigate("/admin/clients")}
+              className="text-xs text-purple-400 hover:text-purple-300 flex items-center gap-1 font-medium transition-colors cursor-pointer"
+            >
+              <span>Ver Prestadores</span>
+              <ArrowRight className="w-3 h-3" />
+            </button>
+          </div>
+        </div>
+
+        {summary.operationalAlerts.length === 0 ? (
+          <div
+            className="py-5 px-4 rounded-xl text-center border"
+            style={{ backgroundColor: "#040607", borderColor: "#1A1D26" }}
+          >
+            <p className="text-xs font-semibold text-zinc-300">
+              Sin vencimientos críticos de Entrega 72h (&lt;24h) ni Fin de Prueba 30d (&le;5d)
+            </p>
+            <p className="text-[11px] text-zinc-500 max-w-lg mx-auto mt-1">
+              Cuando promovás un prestador desde el CRM, acá aparecen automáticamente las ventanas críticas de entrega y renovación.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {summary.operationalAlerts.map((alert) => (
+              <div
+                key={alert.id}
+                className="p-4 rounded-xl border flex flex-col justify-between"
+                style={{
+                  backgroundColor: "#040607",
+                  borderColor:
+                    alert.severity === "critical"
+                      ? "rgba(239, 68, 68, 0.4)"
+                      : "rgba(245, 158, 11, 0.35)",
+                }}
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-200">
+                      {alert.type === "delivery_72h" ? "Entrega 72h" : "Prueba 30d"}
+                    </span>
+                    <span
+                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        alert.severity === "critical"
+                          ? "bg-red-500/20 text-red-300 border border-red-500/40"
+                          : "bg-amber-500/20 text-amber-300 border border-amber-500/40"
+                      }`}
+                    >
+                      {alert.title}
+                    </span>
+                  </div>
+                  <h3 className="text-sm font-bold text-white mb-1 truncate">
+                    {alert.providerName}
+                  </h3>
+                  <p className="text-xs text-zinc-400 mb-3">{alert.description}</p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => onNavigate(alert.actionRoute)}
+                  className="w-full py-1.5 px-3 rounded-lg text-xs font-semibold border border-purple-500/30 bg-purple-600/15 text-purple-200 hover:bg-purple-600/25 flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <span>Gestionar en Prestadores</span>
+                  <ArrowRight className="w-3 h-3" />
+                </button>
               </div>
             ))}
           </div>

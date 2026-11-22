@@ -9,6 +9,7 @@ import {
 import { AdminLayout } from "./AdminLayout";
 import { LoginView } from "./LoginView";
 import { CrmView } from "./views/CrmView";
+import { ClientsView } from "./views/ClientsView";
 import { FinanceView } from "./views/FinanceView";
 import { ScheduleView } from "./views/ScheduleView";
 import { VideosView } from "./views/VideosView";
@@ -185,6 +186,8 @@ export const AdminApp: React.FC = () => {
         <CockpitView user={authorizedUser} onNavigate={navigate} />
       ) : currentPath === "/admin/crm" || currentPath === "/admin/crm/" ? (
         <CrmView onNavigate={navigate} />
+      ) : currentPath === "/admin/clients" || currentPath === "/admin/clients/" ? (
+        <ClientsView onNavigate={navigate} />
       ) : currentPath === "/admin/finances" || currentPath === "/admin/finances/" ? (
         <FinanceView onNavigate={navigate} />
       ) : currentPath === "/admin/calendar" || currentPath === "/admin/calendar/" ? (

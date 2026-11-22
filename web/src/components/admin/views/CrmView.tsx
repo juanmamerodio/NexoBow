@@ -1,6 +1,7 @@
 // web/src/components/admin/views/CrmView.tsx — Workstation CRM & Prospección Gate 0 con Kanban, Data Table, Lote 10 Maps y WhatsApp/Audio 35s 1-Clic
 import React, { useState, useEffect, useMemo } from "react";
 import { getBrowserSupabaseClient } from "../../../lib/supabase";
+import { promoteLeadToActiveClient } from "../../../lib/active-clients";
 import {
   Columns,
   Table as TableIcon,
@@ -24,6 +25,7 @@ import {
   Star,
   Volume2,
   MapPin,
+  UserCheck,
 } from "lucide-react";
 
 export interface LeadMetadata {
@@ -654,7 +656,7 @@ export function parseBatchMapsInputForCrm(rawInput: string): {
   return { valid: true, error: null, items };
 }
 
-export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => {
+export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = ({ onNavigate }) => {
   const [leads, setLeads] = useState<LeadEntity[]>([]);
   const [isOffline, setIsOffline] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -673,6 +675,8 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
   const [showBatchModal, setShowBatchModal] = useState(false);
   const [copiedLeadId, setCopiedLeadId] = useState<number | null>(null);
   const [sendingPreviewId, setSendingPreviewId] = useState<number | null>(null);
+  const [promotingLeadId, setPromotingLeadId] = useState<number | null>(null);
+  const [promotedSlugs, setPromotedSlugs] = useState<Record<string, boolean>>({});
   const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
 
   // Cargar prospectos desde Supabase (Single Source of Truth)
@@ -1045,6 +1049,69 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
       showNotification(`⚠ Error de red enviando la preview por email`);
     } finally {
       setSendingPreviewId(null);
+    }
+  };
+
+  const handlePromoteToActiveClient = async (targetLead: LeadEntity) => {
+    setPromotingLeadId(targetLead.id);
+    try {
+      const res = await promoteLeadToActiveClient(targetLead);
+      if (!res.ok) {
+        showNotification(
+          `⚠ No se pudo sincronizar Prestador Activo (${res.error || "verificá migración Supabase"})`
+        );
+        return;
+      }
+
+      const nextMeta = {
+        ...(targetLead.metadata || {}),
+        active_client_promoted_at: res.data.promoted_at,
+        active_client_slug: res.data.slug,
+      };
+
+      let leadSyncError: string | null = null;
+      if (!res.isOffline) {
+        try {
+          const supabase = getBrowserSupabaseClient();
+          const { error } = await supabase
+            .from("leads")
+            .update({
+              business_status: "Prestador Activo",
+              metadata: nextMeta,
+            })
+            .eq("id", targetLead.id);
+          if (error) {
+            leadSyncError = error.message;
+          }
+        } catch (err: any) {
+          leadSyncError = err?.message || "error de conexión";
+        }
+      }
+
+      setPromotedSlugs((prev) => ({ ...prev, [targetLead.slug]: true }));
+
+      if (leadSyncError) {
+        showNotification(
+          `✓ Prestador Activo guardado en active_clients, pero no se pudo actualizar leads (${leadSyncError})`
+        );
+        return;
+      }
+
+      const updatedLead: LeadEntity = {
+        ...targetLead,
+        business_status: "Prestador Activo",
+        metadata: nextMeta,
+      };
+      setLeads((prev) => prev.map((l) => (l.id === targetLead.id ? updatedLead : l)));
+      setSelectedLead((prev) => (prev && prev.id === targetLead.id ? updatedLead : prev));
+
+      showNotification(
+        res.alreadyExisted
+          ? `✓ ${targetLead.name} re-sincronizado conservando hitos y SLA`
+          : `✓ ${targetLead.name} convertido a Prestador Activo (SLA 72h hábiles iniciado)`
+      );
+    } finally {
+      setPromotingLeadId(null);
     }
   };
 
@@ -1896,6 +1963,14 @@ export const CrmView: React.FC<{ onNavigate?: (path: string) => void }> = () => 
           onCopy={(text, label) => handleCopyText(text, label, selectedLead.id)}
           onSendPreviewEmail={handleSendPreviewEmail}
           sendingPreview={sendingPreviewId === selectedLead.id}
+          onPromoteToActiveClient={() => handlePromoteToActiveClient(selectedLead)}
+          promotingClient={promotingLeadId === selectedLead.id}
+          isPromoted={Boolean(
+            promotedSlugs[selectedLead.slug] ||
+              selectedLead.business_status === "Prestador Activo" ||
+              selectedLead.metadata?.active_client_promoted_at
+          )}
+          onGoToClients={onNavigate ? () => onNavigate("/admin/clients") : undefined}
         />
       )}
     </div>
@@ -2296,6 +2371,10 @@ interface LeadDrawerProps {
   onCopy: (text: string, label: string) => void;
   onSendPreviewEmail: (lead: LeadEntity) => Promise<void>;
   sendingPreview?: boolean;
+  onPromoteToActiveClient: () => Promise<void>;
+  promotingClient?: boolean;
+  isPromoted?: boolean;
+  onGoToClients?: () => void;
 }
 
 const LeadDrawer: React.FC<LeadDrawerProps> = ({
@@ -2307,6 +2386,10 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
   onCopy,
   onSendPreviewEmail,
   sendingPreview = false,
+  onPromoteToActiveClient,
+  promotingClient = false,
+  isPromoted = false,
+  onGoToClients,
 }) => {
   const initialMeta = resolveLeadMetadata(lead);
   const [formData, setFormData] = useState<LeadEntity>({
@@ -2476,7 +2559,7 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center justify-between gap-2 pt-1">
+          <div className="flex flex-col gap-2 pt-1">
             <button
               type="button"
               disabled={!currentMeta.email || currentMeta.email_marketing.unsubscribed || sendingPreview}
@@ -2492,6 +2575,35 @@ const LeadDrawer: React.FC<LeadDrawerProps> = ({
                     : "Enviar Preview Lista (Email)"}
               </span>
             </button>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                disabled={promotingClient}
+                onClick={onPromoteToActiveClient}
+                className="flex-1 py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all border border-emerald-500/40 bg-emerald-600/20 text-emerald-200 hover:bg-emerald-600/35 disabled:opacity-50 cursor-pointer"
+              >
+                <UserCheck className="w-3.5 h-3.5" />
+                <span>
+                  {promotingClient
+                    ? "Convirtiendo..."
+                    : isPromoted
+                      ? "Prestador Activo (Re-sincronizar)"
+                      : "Convertir a Prestador Activo"}
+                </span>
+              </button>
+
+              {onGoToClients && (
+                <button
+                  type="button"
+                  onClick={onGoToClients}
+                  className="py-2 px-3 rounded-lg text-xs font-semibold border border-zinc-700 bg-zinc-900 text-zinc-200 hover:border-purple-500 hover:text-white cursor-pointer"
+                  title="Ir a Prestadores & Operaciones"
+                >
+                  Ver en /admin/clients
+                </button>
+              )}
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-3 text-[11px]">

@@ -48,20 +48,22 @@ test("T46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS"
       clearPlatformCache,
     } = await import("../web/src/lib/settings.ts");
 
-    // Verificar las 6 tablas del Cockpit
-    assert.equal(ADMIN_DATABASE_TABLES.length, 6, "Deben existir exactamente 6 tablas registradas");
+    // Verificar las 8 tablas del Cockpit y Gate 1
+    assert.equal(ADMIN_DATABASE_TABLES.length, 8, "Deben existir exactamente 8 tablas registradas");
     const tableNames = ADMIN_DATABASE_TABLES.map((t) => t.name);
     assert.deepEqual(
       tableNames.sort(),
       [
+        "active_clients",
         "alaynow_videos",
+        "autonomous_events",
         "financial_transactions",
         "habit_logs",
         "habits",
         "leads",
         "schedule_blocks",
       ].sort(),
-      "Las tablas deben coincidir con los 6 submódulos del Frente E"
+      "Las tablas deben coincidir con los 8 módulos registrados en Admin"
     );
 
     // Verificar enmascaramiento seguro
@@ -119,7 +121,7 @@ test("T46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS"
     assert.ok(health.connected, "El healthcheck debe reportar conexión exitosa");
     assert.ok(health.latencyMs >= 0, "Debe medir la latencia en ms");
     assert.equal(health.session.isOwner, true, "El usuario juanma@nexobow.site debe ser identificado como owner");
-    assert.equal(health.tables.length, 6, "Debe reportar el conteo de las 6 tablas");
+    assert.equal(health.tables.length, 8, "Debe reportar el conteo de las 8 tablas");
     const leadsTable = health.tables.find((t) => t.name === "leads");
     assert.equal(leadsTable?.count, 25);
 
@@ -147,7 +149,9 @@ test("T46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS"
     });
 
     assert.equal(channel.channelName, "e2e-test-channel");
-    assert.equal(channel.tables.length, 6);
+    assert.equal(channel.tables.length, 8);
+    assert.ok(channel.tables.includes("active_clients"));
+    assert.ok(channel.tables.includes("autonomous_events"));
 
     // Esperar tick asíncrono para status
     await new Promise((resolve) => setTimeout(resolve, 25));
@@ -176,7 +180,7 @@ test("T46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS"
   // -------------------------------------------------------------
   // 3. Flujo E2E de Autenticación, Navegación y Rutas del Cockpit
   // -------------------------------------------------------------
-  await t.test("3. Resolución de rutas protegidas y navegación de los 7 submódulos administrativos", async () => {
+  await t.test("3. Resolución de rutas protegidas y navegación de los 8 submódulos administrativos", async () => {
     const { resolveAdminRouteState } = await import("../web/src/lib/supabase.ts");
     const ownerEmail = "juanma@nexobow.site";
 
@@ -204,6 +208,7 @@ test("T46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS"
     const allRoutes = [
       "/admin",
       "/admin/crm",
+      "/admin/clients",
       "/admin/finances",
       "/admin/calendar",
       "/admin/alaynow",
@@ -354,19 +359,28 @@ test("T46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS"
     assert.ok(existsSync(adminAppPath), "AdminApp.tsx debe existir");
     assert.ok(existsSync(settingsViewPath), "SettingsView.tsx debe existir");
 
-    // Verificar que [...all].astro genera la ruta estática para 'settings'
+    // Verificar que [...all].astro genera la ruta estática para 'settings' y 'clients'
     const adminAstroContent = readFileSync(adminAstroPath, "utf8");
     assert.ok(
       adminAstroContent.includes('{ params: { all: "settings" } }'),
       "[...all].astro debe incluir el static path para settings"
     );
+    assert.ok(
+      adminAstroContent.includes('{ params: { all: "clients" } }'),
+      "[...all].astro debe incluir el static path para clients"
+    );
 
-    // Verificar que AdminApp enruta a SettingsView
+    // Verificar que AdminApp enruta a SettingsView y ClientsView
     const adminAppContent = readFileSync(adminAppPath, "utf8");
     assert.ok(adminAppContent.includes("SettingsView"), "AdminApp debe importar SettingsView");
+    assert.ok(adminAppContent.includes("ClientsView"), "AdminApp debe importar ClientsView");
     assert.ok(
       adminAppContent.includes('currentPath === "/admin/settings"'),
       "AdminApp debe enrutar /admin/settings"
+    );
+    assert.ok(
+      adminAppContent.includes('currentPath === "/admin/clients"'),
+      "AdminApp debe enrutar /admin/clients"
     );
 
     const releaseWebDistLock = acquireWebDistLock();
@@ -513,9 +527,11 @@ test("T46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS"
 
     const today = new Date("2026-11-17T12:00:00Z");
 
-    // A. Supabase online vacío (error === null, data === []) -> 0 datos fantasma
+    // A. Supabase online vacío en las 8 tablas (error === null, data === []) -> 0 datos fantasma
     const emptyOnlineClient = createMockSupabaseClient({
       leads: [],
+      active_clients: [],
+      autonomous_events: [],
       habits: [],
       habit_logs: [],
       schedule_blocks: [],
@@ -527,6 +543,9 @@ test("T46: End-to-End Integration, Settings & Verificación de Aislamiento 0-JS"
     assert.equal(emptySummary.isOffline, false);
     assert.equal(emptySummary.ttlAlerts.length, 0);
     assert.equal(emptySummary.hotLeads.length, 0);
+    assert.equal(emptySummary.activeClientsCount, 0);
+    assert.equal(emptySummary.operationalAlerts.length, 0);
+    assert.equal(emptySummary.gate1Summary.totalEvents, 0);
     assert.equal(emptySummary.todayHabits.length, 0);
     assert.equal(emptySummary.todayBlocks.length, 0);
     assert.equal(emptySummary.activeVideo, null);

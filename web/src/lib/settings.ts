@@ -1,4 +1,4 @@
-// web/src/lib/settings.ts — Diagnóstico de Plataforma, Healthcheck de Supabase y Aislamiento 0-JS (Ticket 46)
+// web/src/lib/settings.ts — Diagnóstico de Plataforma, Healthcheck de Supabase (8 tablas) y Aislamiento 0-JS
 import { getBrowserSupabaseClient, getAdminOwnerEmail, type AdminUser } from "./supabase.ts";
 
 export interface AdminTableInfo {
@@ -16,6 +16,20 @@ export const ADMIN_DATABASE_TABLES: AdminTableInfo[] = [
     description: "Prospectos, estados de embudo, enlaces de contacto y ciclo de vida TTL",
     moduleRoute: "/admin/crm",
     countFallback: 23,
+  },
+  {
+    name: "active_clients",
+    label: "Prestadores & Operaciones",
+    description: "Prestadores activos, SLA 72h hábiles, 6 hitos de entrega, prueba 30d y kit de reseñas",
+    moduleRoute: "/admin/clients",
+    countFallback: 1,
+  },
+  {
+    name: "autonomous_events",
+    label: "Eventos Motor Gate 1 (Sin PII)",
+    description: "Latidos y contadores agregados anónimos de NexoBow Autonomous (Ley 25.326)",
+    moduleRoute: "/admin/settings",
+    countFallback: 0,
   },
   {
     name: "financial_transactions",

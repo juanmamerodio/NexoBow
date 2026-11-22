@@ -34,6 +34,8 @@ export interface AdminRealtimeChannel {
 
 export const DEFAULT_WATCHED_TABLES = [
   "leads",
+  "active_clients",
+  "autonomous_events",
   "financial_transactions",
   "schedule_blocks",
   "alaynow_videos",
@@ -61,7 +63,7 @@ function createSimulateEventHandler(
 }
 
 /**
- * Crea o se suscribe a canales de Supabase Realtime escuchando mutaciones en las 6 tablas clave
+ * Crea o se suscribe a canales de Supabase Realtime escuchando mutaciones en las 8 tablas clave
  */
 export function subscribeToAdminRealtime(
   supabaseClient?: any,

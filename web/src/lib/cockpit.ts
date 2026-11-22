@@ -34,6 +34,16 @@ import {
   logHabitCompletion,
   removeHabitCompletion,
 } from "./streaks.ts";
+import {
+  type ActiveClient,
+  type AutonomousEvent,
+  type OperationalAlert,
+  type Gate1AggregatedSummary,
+  extractOperationalAlerts,
+  aggregateAutonomousEvents,
+  fetchActiveClients,
+  fetchAutonomousEvents,
+} from "./active-clients.ts";
 
 export interface LeadEntity {
   id: number;
@@ -162,6 +172,11 @@ export interface CockpitSummary {
   todayBlocksCount: number;
   activeVideo: CockpitActiveVideo | null;
   cashflow: CockpitCashflowSummary;
+  activeClientsCount: number;
+  operationalAlerts: OperationalAlert[];
+  deliveryAlerts24hCount: number;
+  trialEnding5dCount: number;
+  gate1Summary: Gate1AggregatedSummary;
   isOffline: boolean;
 }
 
@@ -490,6 +505,8 @@ export function aggregateCockpitData(params: {
   scheduleBlocks: ScheduleBlock[];
   videos: AlaynowVideo[];
   transactions: FinancialTransaction[];
+  activeClients?: ActiveClient[];
+  autonomousEvents?: AutonomousEvent[];
   today?: Date;
   exchangeRate?: number;
   isOffline?: boolean;
@@ -537,6 +554,17 @@ export function aggregateCockpitData(params: {
     params.exchangeRate || DEFAULT_USD_EXCHANGE_RATE
   );
 
+  // Operaciones 72h, Fin de Prueba 30d & Resumen Gate 1
+  const activeClientsList = params.activeClients || [];
+  const operationalAlerts = extractOperationalAlerts(activeClientsList, today);
+  const deliveryAlerts24hCount = operationalAlerts.filter(
+    (a) => a.type === "delivery_72h"
+  ).length;
+  const trialEnding5dCount = operationalAlerts.filter(
+    (a) => a.type === "trial_30d"
+  ).length;
+  const gate1Summary = aggregateAutonomousEvents(params.autonomousEvents || []);
+
   const hour = today.getUTCHours();
   let greeting = "¡Buenos días, Juanma!";
   if (hour >= 13 && hour < 20) {
@@ -563,6 +591,11 @@ export function aggregateCockpitData(params: {
     todayBlocksCount: todayBlocks.length,
     activeVideo,
     cashflow,
+    activeClientsCount: activeClientsList.length,
+    operationalAlerts,
+    deliveryAlerts24hCount,
+    trialEnding5dCount,
+    gate1Summary,
     isOffline: Boolean(params.isOffline),
   };
 }
@@ -582,6 +615,8 @@ export async function fetchDailyCockpitSummary(today?: Date, customClient?: any)
   let blocks: ScheduleBlock[] = [];
   let videos: AlaynowVideo[] = [];
   let transactions: FinancialTransaction[] = [];
+  let activeClients: ActiveClient[] = [];
+  let autonomousEvents: AutonomousEvent[] = [];
 
   try {
     const { data: leadsData, error: leadsError } = await supabase
@@ -672,6 +707,22 @@ export async function fetchDailyCockpitSummary(today?: Date, customClient?: any)
     console.warn("Cockpit: usando fallback offline para finanzas");
   }
 
+  try {
+    const remoteClients = await fetchActiveClients(supabase);
+    if (remoteClients.isOffline) anyOffline = true;
+    activeClients = remoteClients.data;
+  } catch {
+    anyOffline = true;
+  }
+
+  try {
+    const remoteEvents = await fetchAutonomousEvents(supabase);
+    if (remoteEvents.isOffline) anyOffline = true;
+    autonomousEvents = remoteEvents.data;
+  } catch {
+    anyOffline = true;
+  }
+
   return aggregateCockpitData({
     leads,
     habits,
@@ -679,6 +730,8 @@ export async function fetchDailyCockpitSummary(today?: Date, customClient?: any)
     scheduleBlocks: blocks,
     videos,
     transactions,
+    activeClients,
+    autonomousEvents,
     today: currentDate,
     isOffline: anyOffline,
   });

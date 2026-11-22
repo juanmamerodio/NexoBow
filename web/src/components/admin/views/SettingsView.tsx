@@ -28,6 +28,7 @@ import {
   Radio,
   Trash2,
   Users,
+  UserCheck,
   DollarSign,
   Calendar,
   Video,
@@ -119,6 +120,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onNavigate }) 
     switch (name) {
       case "leads":
         return <Users className="w-5 h-5 text-purple-400" />;
+      case "active_clients":
+        return <UserCheck className="w-5 h-5 text-sky-400" />;
+      case "autonomous_events":
+        return <Activity className="w-5 h-5 text-emerald-400" />;
       case "financial_transactions":
         return <DollarSign className="w-5 h-5 text-emerald-400" />;
       case "schedule_blocks":
@@ -239,7 +244,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onNavigate }) 
               {realtimeStatus === "SUBSCRIBED" ? "Activo" : realtimeStatus}
             </span>
             <span className="text-xs font-mono text-purple-400">
-              6 tablas
+              8 tablas
             </span>
           </div>
           <p className="text-[11px] text-zinc-400 mt-2 truncate">
@@ -287,12 +292,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onNavigate }) 
             </span>
           </div>
           <p className="text-[11px] text-zinc-400 mt-2 truncate">
-            Distribuidas en los 6 submódulos
+            Distribuidas en los 8 módulos
           </p>
         </div>
       </div>
 
-      {/* Grid de 6 Tablas de Base de Datos */}
+      {/* Grid de 8 Tablas de Base de Datos */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">

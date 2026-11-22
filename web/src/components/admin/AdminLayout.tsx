@@ -4,6 +4,7 @@ import type { AdminUser } from "../../lib/supabase";
 import {
   LayoutDashboard,
   Users,
+  UserCheck,
   DollarSign,
   Calendar,
   Video,
@@ -48,6 +49,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       path: "/admin/crm",
       icon: Users,
       badge: "6 Etapas",
+    },
+    {
+      id: "clients",
+      label: "Prestadores & Operaciones",
+      path: "/admin/clients",
+      icon: UserCheck,
+      badge: "72h SLA",
     },
     {
       id: "finances",
