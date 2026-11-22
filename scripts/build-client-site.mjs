@@ -1,6 +1,6 @@
-// build-client-site.mjs — NexoBow: clona template + inyecta ficha + build con soporte de template_version inmutable.
-// Uso: node scripts/build-client-site.mjs <ruta-a-ficha.md> [--base /slug/] [--upgrade-template] [--skip-build]
-// Códigos de salida: 0 = ok · 1 = error técnico · 2 = ficha inválida (Gate Ask-First)
+// build-client-site.mjs — NexoBow: clona template + inyecta ficha + build con soporte de template_version inmutable y modos preview|production.
+// Uso: node scripts/build-client-site.mjs <ruta-a-ficha.md> [--mode preview|production] [--domain dominio.com] [--out-dir ruta] [--base /slug/] [--upgrade-template] [--skip-build]
+// Códigos de salida: 0 = ok · 1 = error técnico · 2 = ficha o parámetros inválidos (Gate Ask-First)
 
 import { readFileSync, writeFileSync, cpSync, existsSync, rmSync, statSync, symlinkSync, mkdirSync } from "node:fs";
 import { join, dirname, resolve } from "node:path";
@@ -14,8 +14,33 @@ import {
   getTelemetryClientSnippet,
   injectTelemetrySnippetIntoHtml,
 } from "./preview-telemetry.mjs";
+import {
+  buildProviderJsonLd,
+  buildProviderLlmsTxt,
+  buildProviderRobotsTxt,
+  injectAeoIntoHtml,
+  normalizeProductionDomain,
+} from "./aeo-optimizer.mjs";
 
-export { resolveBookingConfig, resolveLeadMetadata, injectTelemetrySnippetIntoHtml };
+export {
+  resolveBookingConfig,
+  resolveLeadMetadata,
+  injectTelemetrySnippetIntoHtml,
+  normalizeProductionDomain,
+};
+
+/**
+ * Remueve import y etiqueta <ThemeSwitcher /> exclusivamente en la copia efímera sites/{slug}/src/pages/index.astro.
+ */
+export function stripPreviewHudFromIndexAstro(source) {
+  return String(source || "")
+    .replace(
+      /^[ \t]*import\s+ThemeSwitcher\s+from\s+["'][^"']*ThemeSwitcher\.astro["'];?\r?\n?/gm,
+      ""
+    )
+    .replace(/^[ \t]*<ThemeSwitcher\b[^>]*>[\s\S]*?<\/ThemeSwitcher>\r?\n?/gm, "")
+    .replace(/^[ \t]*<ThemeSwitcher\b[^>]*\/\s*>\r?\n?/gm, "");
+}
 
 export function injectTelemetryIntoSiteDist(distPath, slug, { endpointUrl = "/api/ping" } = {}) {
   const htmlPath = join(distPath, "index.html");
@@ -271,14 +296,36 @@ function main() {
   const args = process.argv.slice(2);
   let ficheArg = null;
   let baseArg = null;
+  let mode = "preview";
+  let domainArg = null;
+  let hasDomainFlag = false;
+  let outDirArg = null;
   let upgradeRequested = false;
   let skipBuild = false;
   let runQa = false;
   let skipSheetsSync = false;
 
   for (let i = 0; i < args.length; i++) {
-    if (args[i] === "--base" && args[i + 1]) {
+    if (args[i] === "--base" && args[i + 1] && !args[i + 1].startsWith("--")) {
       baseArg = args[i + 1];
+      i++;
+    } else if (args[i] === "--mode") {
+      if (args[i + 1] && !args[i + 1].startsWith("--")) {
+        mode = String(args[i + 1]).trim().toLowerCase();
+        i++;
+      } else {
+        mode = "";
+      }
+    } else if (args[i] === "--domain") {
+      hasDomainFlag = true;
+      if (args[i + 1] && !args[i + 1].startsWith("--")) {
+        domainArg = String(args[i + 1]).trim();
+        i++;
+      } else {
+        domainArg = "";
+      }
+    } else if (args[i] === "--out-dir" && args[i + 1] && !args[i + 1].startsWith("--")) {
+      outDirArg = args[i + 1];
       i++;
     } else if (args[i] === "--upgrade-template") {
       upgradeRequested = true;
@@ -294,7 +341,11 @@ function main() {
   }
 
   if (!ficheArg) {
-    fail("Falta la ruta de la ficha: npm run build-site <ruta-a-ficha.md> [--base /slug/] [--upgrade-template]");
+    fail("Falta la ruta de la ficha: npm run build-site <ruta-a-ficha.md> [--mode preview|production] [--domain dominio.com] [--base /slug/] [--upgrade-template]");
+  }
+
+  if (mode !== "preview" && mode !== "production") {
+    fail(`Modo inválido '${mode}'. Valores permitidos: preview | production.`, 2);
   }
 
   const fichePath = resolve(process.cwd(), ficheArg);
@@ -314,6 +365,21 @@ function main() {
         `\n\n\x1b[31mEl agente no debe adivinar datos faltantes. Deteniendo ejecución.\x1b[0m\n`
     );
     process.exit(2);
+  }
+
+  const rawDomainInput = hasDomainFlag
+    ? domainArg
+    : fm.dominio_propio
+      ? String(fm.dominio_propio)
+      : "";
+  const normalizedDomain =
+    mode === "production" ? normalizeProductionDomain(rawDomainInput) : null;
+
+  if (mode === "production" && !normalizedDomain) {
+    fail(
+      "En --mode production debés indicar un dominio propio válido con --domain <dominio> o dominio_propio en la ficha (ej: clinicaejemplo.com.ar).",
+      2
+    );
   }
 
   const vertical = fm.rubro || "nutricionista";
@@ -576,58 +642,154 @@ function main() {
   }
 
   if (skipBuild) {
+    if (mode === "production") {
+      const indexAstroPath = join(siteDir, "src", "pages", "index.astro");
+      const backupIndexAstroPath = join(siteDir, ".preview-index.astro.bak");
+      if (existsSync(indexAstroPath)) {
+        const currentIndexAstro = readFileSync(indexAstroPath, "utf8");
+        if (!existsSync(backupIndexAstroPath)) {
+          writeFileSync(backupIndexAstroPath, currentIndexAstro, "utf8");
+        }
+        writeFileSync(indexAstroPath, stripPreviewHudFromIndexAstro(currentIndexAstro), "utf8");
+      }
+    }
     console.log(`\x1b[32m[build-site] ✓\x1b[0m Sincronización completada (--skip-build activo).`);
     return;
   }
 
-  // Ejecutar tests unitarios en el clon
-  console.log(`\x1b[36m[build-site]\x1b[0m Ejecutando tests unitarios de tema y orden...`);
-  const testCode = runCmd("npm", ["test"], siteDir);
-  if (testCode !== 0) fail("Los tests unitarios fallaron en el clon.");
+  const indexAstroPath = join(siteDir, "src", "pages", "index.astro");
+  const backupIndexAstroPath = join(siteDir, ".preview-index.astro.bak");
+  let originalIndexAstro = null;
 
-  // Compilar landing estática
-  const effectiveBase = baseArg || `/${slug}/`;
-  console.log(`\x1b[36m[build-site]\x1b[0m Compilando Astro SSG en sites/${slug} (base: ${effectiveBase})...`);
-  const buildArgs = ["run", "build"];
-  if (effectiveBase && effectiveBase !== "/") {
-    buildArgs.push("--", "--base", effectiveBase);
+  if (mode === "preview" && existsSync(backupIndexAstroPath)) {
+    writeFileSync(indexAstroPath, readFileSync(backupIndexAstroPath, "utf8"), "utf8");
+    rmSync(backupIndexAstroPath, { force: true });
+  } else if (mode === "production" && existsSync(indexAstroPath)) {
+    originalIndexAstro = existsSync(backupIndexAstroPath)
+      ? readFileSync(backupIndexAstroPath, "utf8")
+      : readFileSync(indexAstroPath, "utf8");
+    if (existsSync(backupIndexAstroPath)) {
+      rmSync(backupIndexAstroPath, { force: true });
+    }
+    writeFileSync(indexAstroPath, stripPreviewHudFromIndexAstro(originalIndexAstro), "utf8");
+    console.log(`\x1b[36m[build-site]\x1b[0m HUD de preview removido únicamente en sites/${slug}/src/pages/index.astro.`);
   }
-  const buildCode = runCmd("npm", buildArgs, siteDir);
+
+  let testCode = 0;
+  let buildCode = 0;
+  try {
+    // Ejecutar tests unitarios en el clon
+    console.log(`\x1b[36m[build-site]\x1b[0m Ejecutando tests unitarios de tema y orden...`);
+    testCode = runCmd("npm", ["test"], siteDir);
+
+    if (testCode === 0) {
+      // Compilar landing estática
+      const effectiveBase = mode === "production" ? (baseArg || "/") : (baseArg || `/${slug}/`);
+      console.log(`\x1b[36m[build-site]\x1b[0m Compilando Astro SSG en sites/${slug} (modo: ${mode}, base: ${effectiveBase})...`);
+      const buildArgs = ["run", "build"];
+      if (mode === "production" || (effectiveBase && effectiveBase !== "/")) {
+        buildArgs.push("--", "--base", effectiveBase);
+      }
+      buildCode = runCmd("npm", buildArgs, siteDir);
+    }
+  } finally {
+    if (mode === "production" && originalIndexAstro !== null && existsSync(indexAstroPath)) {
+      writeFileSync(indexAstroPath, originalIndexAstro, "utf8");
+    }
+  }
+
+  if (testCode !== 0) fail("Los tests unitarios fallaron en el clon.");
   if (buildCode !== 0) fail(`Fallo en npm run build (código ${buildCode}).`);
 
   const distPath = join(siteDir, "dist");
-  const telemetryRes = injectTelemetryIntoSiteDist(distPath, slug, { endpointUrl: "/api/ping" });
-  if (telemetryRes.injected) {
-    console.log(
-      `\x1b[32m[build-site] ✓\x1b[0m Telemetría pasiva inyectada hacia /api/ping (${telemetryRes.snippetBytes} bytes < 1 KB, 0 cookies).`
-    );
-  }
   const htmlPath = join(distPath, "index.html");
+
+  if (mode === "production") {
+    const canonicalUrl = `https://${normalizedDomain}/`;
+    const origin = `https://${normalizedDomain}`;
+    const jsonLd = buildProviderJsonLd(finalSite, {
+      rubro: vertical,
+      domain: normalizedDomain,
+      canonicalUrl,
+      mode: "production",
+      slug,
+      googleMaps: fm.google_maps,
+      instagram: fm.instagram,
+    });
+
+    if (existsSync(htmlPath)) {
+      const rawHtml = readFileSync(htmlPath, "utf8");
+      const updatedHtml = injectAeoIntoHtml(rawHtml, {
+        jsonLd,
+        canonicalUrl,
+        indexable: true,
+      });
+      writeFileSync(htmlPath, updatedHtml, "utf8");
+    }
+
+    writeFileSync(
+      join(distPath, "llms.txt"),
+      buildProviderLlmsTxt(finalSite, {
+        rubro: vertical,
+        domain: normalizedDomain,
+        canonicalUrl,
+        slug,
+      }),
+      "utf8"
+    );
+    writeFileSync(
+      join(distPath, "robots.txt"),
+      buildProviderRobotsTxt({ origin, allowIndexing: true }),
+      "utf8"
+    );
+
+    if (outDirArg) {
+      const resolvedOutDir = resolve(process.cwd(), outDirArg);
+      if (resolvedOutDir !== resolve(distPath)) {
+        mkdirSync(dirname(resolvedOutDir), { recursive: true });
+        if (existsSync(resolvedOutDir)) {
+          rmSync(resolvedOutDir, { recursive: true, force: true });
+        }
+        cpSync(distPath, resolvedOutDir, { recursive: true });
+      }
+      console.log(`\x1b[32m[build-site] ✓\x1b[0m Build productivo copiado a ${resolvedOutDir}`);
+    }
+  } else {
+    const telemetryRes = injectTelemetryIntoSiteDist(distPath, slug, { endpointUrl: "/api/ping" });
+    if (telemetryRes.injected) {
+      console.log(
+        `\x1b[32m[build-site] ✓\x1b[0m Telemetría pasiva inyectada hacia /api/ping (${telemetryRes.snippetBytes} bytes < 1 KB, 0 cookies).`
+      );
+    }
+  }
+
   let htmlSize = 0;
   if (existsSync(htmlPath)) {
     htmlSize = (statSync(htmlPath).size / 1024).toFixed(1);
   }
 
-  // Sincronizar automáticamente hacia dist-previews/{slug}/ para el dominio unificado de previews
-  const distPreviewsTarget = join(REPO_ROOT, "dist-previews", slug);
-  try {
-    mkdirSync(join(REPO_ROOT, "dist-previews"), { recursive: true });
-    if (existsSync(distPreviewsTarget)) {
-      rmSync(distPreviewsTarget, { recursive: true, force: true });
+  if (mode === "preview") {
+    // Sincronizar automáticamente hacia dist-previews/{slug}/ para el dominio unificado de previews
+    const distPreviewsTarget = join(REPO_ROOT, "dist-previews", slug);
+    try {
+      mkdirSync(join(REPO_ROOT, "dist-previews"), { recursive: true });
+      if (existsSync(distPreviewsTarget)) {
+        rmSync(distPreviewsTarget, { recursive: true, force: true });
+      }
+      cpSync(distPath, distPreviewsTarget, { recursive: true });
+      console.log(
+        `\x1b[32m[build-site] ✓\x1b[0m Sincronizado a dist-previews/${slug}/ para https://preview.${
+          process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site"
+        }/${slug}/`
+      );
+    } catch (err) {
+      console.warn(`[build-site] Advertencia al sincronizar con dist-previews: ${err.message}`);
     }
-    cpSync(distPath, distPreviewsTarget, { recursive: true });
-    console.log(
-      `\x1b[32m[build-site] ✓\x1b[0m Sincronizado a dist-previews/${slug}/ para https://preview.${
-        process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site"
-      }/${slug}/`
-    );
-  } catch (err) {
-    console.warn(`[build-site] Advertencia al sincronizar con dist-previews: ${err.message}`);
-  }
 
-  // Sincronizar URL de preview en Columna G de Google Sheets mediante LeadStore
-  if (!skipSheetsSync) {
-    syncBuildPreviewUrlToStore({ fm, slug });
+    // Sincronizar URL de preview en Columna G de Google Sheets mediante LeadStore
+    if (!skipSheetsSync) {
+      syncBuildPreviewUrlToStore({ fm, slug });
+    }
   }
 
   if (runQa) {
@@ -645,14 +807,25 @@ function main() {
     });
   }
 
+  const outputTarget =
+    mode === "production" && outDirArg
+      ? resolve(process.cwd(), outDirArg)
+      : `sites/${slug}/dist/`;
+
   console.log(`
 \x1b[32m=======================================================
-✓ CLON GENERADO CON ÉXITO: sites/${slug}
+✓ CLON GENERADO CON ÉXITO (${mode.toUpperCase()}): sites/${slug}
 =======================================================\x1b[0m
-- Prestador: \x1b[1m${fm.nombre}\x1b[0m (${fm.subdominio})
+- Prestador: \x1b[1m${fm.nombre}\x1b[0m (${mode === "production" ? normalizedDomain : fm.subdominio})
 - Template: ${requestedVersion}
-- Output: sites/${slug}/dist/ (HTML: ${htmlSize} KB)
-- Preview Oficial: https://preview.${process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site"}/${slug}/
+- Output: ${outputTarget} (HTML: ${htmlSize} KB)
+${
+  mode === "production"
+    ? `- URL Canónica: https://${normalizedDomain}/
+- AEO Generado: JSON-LD + /llms.txt + /robots.txt (sin HUD ni /api/ping)
+- Handoff DNS: node scripts/domain-provisioner.mjs --domain ${normalizedDomain} --slug ${slug}`
+    : `- Preview Oficial: https://preview.${process.env.NEXOBOW_ROOT_DOMAIN || "nexobow.site"}/${slug}/`
+}
 - WhatsApp: ${waLink}
 - Calendly: ${fm.calendly}
 `);

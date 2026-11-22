@@ -82,7 +82,7 @@
 - [x] [57: `robots.txt`, Blindaje Cibernético Perimetral & Auditoría Final E2E (Cierre Frente H)](./scratch/nexobow-v2/issues/57-robots-cybersecurity-hardening-e2e-audit.md) (`done`)
 
 ## Frente I — Valor Inmediato Tier 1 & Blueprint Offline Gate 1 — NexoBow Autonomous (`spec-frente-i.md`)
-- [ ] [58: AEO (`scripts/aeo-optimizer.mjs`), `--mode preview|production` en `build-client-site.mjs`, `web/public/llms.txt` (`0 JS`) y `routemap.md` v4.0](./scratch/nexobow-v2/issues/58-aeo-production-mode-llms-routemap-v4.md) (`ready-for-agent`)
+- [x] [58: AEO (`scripts/aeo-optimizer.mjs`), `--mode preview|production` en `build-client-site.mjs`, `web/public/llms.txt` (`0 JS`) y `routemap.md` v4.0](./scratch/nexobow-v2/issues/58-aeo-production-mode-llms-routemap-v4.md) (`done`)
 - [ ] [59: Motor de Reseñas 5★ (`review-booster.mjs`), Migración Supabase (`active_clients`, `autonomous_events`), `/admin/clients` (Entrega 72h, 6 Hitos), Promoción 1-Clic desde CRM, Alertas Cockpit & 8 Tablas](./scratch/nexobow-v2/issues/59-review-booster-active-clients-72h-admin.md) (`ready-for-agent`)
 - [ ] [60: Blueprint IaC Zero-Trust Gate 1 (`infra/autonomous/`, Postgres 16 SQL, `activate-autonomous.mjs --dry-run` y `docs/gate1-vps-activation.md`)](./scratch/nexobow-v2/issues/60-autonomous-gate1-iac-postgres-activation.md) (`ready-for-agent`)
 - [ ] [61: Seams Puros `NexoBow Autonomous` (WABA, Recordatorios `24h`/`2h`, Lista de Espera FIFO) & 3 Workflows `n8n` JSON en `workflows/n8n/`](./scratch/nexobow-v2/issues/61-autonomous-waba-reminders-waitlist-n8n.md) (`ready-for-agent`)

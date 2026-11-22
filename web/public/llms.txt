@@ -1,0 +1,57 @@
+# NexoBow
+
+> Fábrica de páginas web de alta velocidad y sistemas de turnos automatizados por WhatsApp para profesionales de la salud, estudios jurídicos y servicios de alto valor en Argentina.
+
+## Propuesta de Valor (+40)
+
+NexoBow reemplaza páginas lentas y conversaciones dispersas por un embudo directo, sobrio y medible pensado para profesionales consolidados:
+
+- **Carga instantánea (< 0.8s / < 1s):** arquitectura estática en Astro + Cloudflare Pages sin código pesado innecesario, legible en cualquier celular con 4G.
+- **Orden real en tu agenda:** cada paciente o consultante comprende tus honorarios o cobertura, modalidad (presencial u online) y horarios antes de escribir, evitando ida y vuelta innecesario a cualquier hora.
+- **Posicionamiento en Google Maps e IA (AEO):** optimización técnica con `JSON-LD` específico por especialidad, `/llms.txt` y ficha en Google Business Profile.
+- **Entrega garantizada en menos de 72 horas hábiles:** recibís primero una muestra funcional gratuita reservada por 7 días y luego lanzamos tu web definitiva en tu propio dominio (`.com.ar` o `.com`) con certificado SSL.
+
+## Escalera de Planes Vigente
+
+### 1. NexoBow Starter (Tier 1)
+- **Setup único:** `$189.999 ARS` *(precio de lista `$260.000 ARS`)*
+- **Abono mensual Año 1:** `$0 ARS/mes` *(1 año de hosting en Cloudflare incluido, sin débito automático obligatorio)*
+- **Incluye:**
+  - Página web estática de autor adaptada a tu especialidad y ciudad (`< 1s` de carga).
+  - Optimización SEO Local en Google Maps y AEO (`JSON-LD`, `/llms.txt` y `robots.txt`).
+  - Integración ordenada con tu WhatsApp o agenda online y guiones claros de respuesta.
+  - **30 días de prueba** sin cargo del Turno Automatizado por WhatsApp.
+  - Garantía técnica de 14 días corridos (`/terminos/#reembolsos`).
+
+### 2. NexoBow Autonomous (Tier 2)
+- **Setup único:** `$549.999 ARS`
+- **Abono mensual (tras 30 días de prueba):** `$229.999 ARS/mes` *(débito del 1 al 5 de cada mes, sin permanencia mínima)*
+- **Incluye:**
+  - Todo el alcance de NexoBow Starter en dominio propio.
+  - **Atención automática por WhatsApp 24/7** sobre Meta Cloud API oficial (comprende audios y texto en español argentino).
+  - **Confirmación automática de turnos 24h y 2h antes** con lista de espera ordenada para cubrir cancelaciones a tiempo y reducir ausencias.
+  - **Impulso de reseñas 5★ en Google Maps** tras cada consultoría concretada.
+
+### 3. NexoBow Growth Partner (Tier 3 · Plan a medida)
+- **Modalidad:** Propuesta personalizada para clínicas, centros médicos multipersonales y estudios jurídicos.
+- **Incluye:** Todo NexoBow Autonomous multi-profesional + posicionamiento AEO completo + producción audiovisual en alianza con **AfterBow** (`https://www.afterbow.com`).
+
+## Rubros Compatibles
+
+- **Salud:** clínicas médicas y quirúrgicas, odontología e implantología, dermatología y medicina estética, nutrición, psicología, kinesiología y medicina funcional.
+- **Legales y Corporativo:** estudios jurídicos, abogados, escribanías, consultoras B2B y servicios técnicos o de ingeniería.
+
+## Enlaces Oficiales y Marco Legal
+
+- **Sitio oficial:** https://nexobow.site/
+- **Términos, Garantía de Reembolsos y Débito Automático:** https://nexobow.site/terminos/
+- **Política de Privacidad (Ley 25.326, Derechos ARCO y Retención):** https://nexobow.site/privacidad/
+- **Alianza Audiovisual (AfterBow):** https://www.afterbow.com
+- **Perfil del Fundador (Juanma Merodio):** https://juanmamerodio.github.io/cv
+
+## Canal Oficial de Contacto
+
+- **Responsable:** Juanma Merodio
+- **WhatsApp oficial:** +54 9 3489 53-6088 (`https://wa.me/5493489536088`)
+- **Email:** juanma@nexobow.site
+- **Zona de atención:** CABA, Zona Norte, Campana, Zárate y toda la República Argentina.

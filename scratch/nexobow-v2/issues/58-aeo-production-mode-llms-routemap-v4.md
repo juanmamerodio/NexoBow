@@ -10,7 +10,7 @@
 - 59: Motor de Reseñas 5★ (`review-booster.mjs`), Migración Supabase (`active_clients`, `autonomous_events`), `/admin/clients` (Entrega 72h, 6 Hitos), Promoción 1-Clic desde CRM, Alertas Cockpit & 8 Tablas
 - 62: Endpoint `/api/v1/autonomous/ingest` (Sin PII), Panel Gate 1 en `/admin/settings`, Humanización Ampliada & Auditoría Final E2E (Cierre Frente I)
 
-**Status:** ready-for-agent
+**Status:** done
 
 ## Archivos a Crear o Modificar
 
@@ -31,11 +31,11 @@
 
 ## Acceptance Criteria
 
-- [ ] **[RED]** Crear `tests/aeo-production-mode.test.mjs` cubriendo los contratos de `scripts/aeo-optimizer.mjs`, `--mode production` vs `--mode preview` en `scripts/build-client-site.mjs`, compilación real de ficha demo sin HUD `20%` ni `/api/ping`, preservación de `templates/` y `dist-previews/`, existencia de `web/dist/llms.txt` y `0 JS` de negocio en `web/dist/index.html`; confirmar que la suite falla antes de implementar.
-- [ ] **[GREEN]** Implementar `scripts/aeo-optimizer.mjs` con `RUBRO_SCHEMA_MAP`, `buildProviderJsonLd`, `buildProviderLlmsTxt`, `buildProviderRobotsTxt` e `injectAeoIntoHtml` 100% offline.
-- [ ] **[GREEN]** Extender `scripts/build-client-site.mjs` con `--mode preview|production`, `--domain` y `--out-dir`, exportación de `stripPreviewHudFromIndexAstro`, compilación `--base /`, omisión de telemetría de preview, inyección AEO en `dist/index.html` + `dist/llms.txt` + `dist/robots.txt`, preservación de `dist-previews/{slug}/` y Columna G en `LeadStore`, y cero modificaciones en `/templates/*/`.
-- [ ] **[GREEN]** Crear `web/public/llms.txt` (`0 JS`) y actualizar `routemap.md` a **v4.0** separando Gate 0, Gate 1, Gate 2 y Fase 4 con lenguaje sobrio +40 sin ninguna de las frases prohibidas por el Ticket `#55`.
-- [ ] **[VERIFY]** Ejecutar el comando de validación exacto comprobando tests en verde, build limpio de `web/`, aprobación de `audit-site.mjs web` (`0 JS` negocio) y `git diff --exit-code templates/` sin cambios.
+- [x] **[RED]** Crear `tests/aeo-production-mode.test.mjs` cubriendo los contratos de `scripts/aeo-optimizer.mjs`, `--mode production` vs `--mode preview` en `scripts/build-client-site.mjs`, compilación real de ficha demo sin HUD `20%` ni `/api/ping`, preservación de `templates/` y `dist-previews/`, existencia de `web/dist/llms.txt` y `0 JS` de negocio en `web/dist/index.html`; confirmar que la suite falla antes de implementar.
+- [x] **[GREEN]** Implementar `scripts/aeo-optimizer.mjs` con `RUBRO_SCHEMA_MAP`, `buildProviderJsonLd`, `buildProviderLlmsTxt`, `buildProviderRobotsTxt` e `injectAeoIntoHtml` 100% offline.
+- [x] **[GREEN]** Extender `scripts/build-client-site.mjs` con `--mode preview|production`, `--domain` y `--out-dir`, exportación de `stripPreviewHudFromIndexAstro`, compilación `--base /`, omisión de telemetría de preview, inyección AEO en `dist/index.html` + `dist/llms.txt` + `dist/robots.txt`, preservación de `dist-previews/{slug}/` y Columna G en `LeadStore`, y cero modificaciones en `/templates/*/`.
+- [x] **[GREEN]** Crear `web/public/llms.txt` (`0 JS`) y actualizar `routemap.md` a **v4.0** separando Gate 0, Gate 1, Gate 2 y Fase 4 con lenguaje sobrio +40 sin ninguna de las frases prohibidas por el Ticket `#55`.
+- [x] **[VERIFY]** Ejecutar el comando de validación exacto comprobando tests en verde, build limpio de `web/`, aprobación de `audit-site.mjs web` (`0 JS` negocio) y `git diff --exit-code templates/` sin cambios.
 
 ## Comando de Validación Exacto
 
