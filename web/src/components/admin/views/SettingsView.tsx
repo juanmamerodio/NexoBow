@@ -4,8 +4,13 @@ import {
   type SupabaseHealthReport,
   checkSupabaseHealth,
   clearPlatformCache,
+  resolveGate1EngineStatus,
   ADMIN_DATABASE_TABLES,
 } from "../../../lib/settings.ts";
+import {
+  type AutonomousEvent,
+  fetchAutonomousEvents,
+} from "../../../lib/active-clients.ts";
 import {
   subscribeToAdminRealtime,
   type AdminRealtimeChannel,
@@ -24,6 +29,7 @@ import {
   Server,
   CheckCircle2,
   AlertTriangle,
+  Clock,
   Layers,
   Radio,
   Trash2,
@@ -43,8 +49,23 @@ interface SettingsViewProps {
   onNavigate: (path: string) => void;
 }
 
+function formatGate1Timestamp(iso?: string | null): string {
+  if (!iso) return "Sin latidos registrados";
+  const parsed = new Date(iso);
+  if (Number.isNaN(parsed.getTime())) return "Sin latidos registrados";
+  return parsed.toLocaleString("es-AR", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 export const SettingsView: React.FC<SettingsViewProps> = ({ user, onNavigate }) => {
   const [health, setHealth] = useState<SupabaseHealthReport | null>(null);
+  const [autonomousEvents, setAutonomousEvents] = useState<AutonomousEvent[]>([]);
+  const [autonomousOffline, setAutonomousOffline] = useState(false);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [realtimeStatus, setRealtimeStatus] = useState<RealtimeStatus>("CONNECTING");
@@ -52,14 +73,20 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onNavigate }) 
   const [realtimeChannel, setRealtimeChannel] = useState<AdminRealtimeChannel | null>(null);
   const [notificationMsg, setNotificationMsg] = useState<string | null>(null);
 
-  // Ejecutar healthcheck
+  // Ejecutar healthcheck y estado agregado del Motor Gate 1
   const runDiagnostics = async (showSpinner = false) => {
     if (showSpinner) setRefreshing(true);
     try {
-      const report = await checkSupabaseHealth({ user });
+      const [report, eventsRes] = await Promise.all([
+        checkSupabaseHealth({ user }),
+        fetchAutonomousEvents(),
+      ]);
       setHealth(report);
+      setAutonomousEvents(eventsRes.data);
+      setAutonomousOffline(Boolean(eventsRes.isOffline));
     } catch (err: any) {
       console.error("Error al ejecutar diagnóstico de salud:", err);
+      setAutonomousOffline(true);
     } finally {
       setLoading(false);
       if (showSpinner) setRefreshing(false);
@@ -147,6 +174,31 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onNavigate }) 
       </div>
     );
   }
+
+  const gate1Health = resolveGate1EngineStatus({
+    events: autonomousEvents,
+    envConfigured: health ? health.overallStatus !== "disconnected" : true,
+  });
+
+  const gate1LastTimestamp = gate1Health.lastHeartbeatAt || gate1Health.lastEventAt;
+  const gate1StatusColors =
+    gate1Health.tone === "healthy"
+      ? {
+          bg: "rgba(16, 185, 129, 0.14)",
+          border: "rgba(16, 185, 129, 0.35)",
+          text: "#10B981",
+        }
+      : gate1Health.tone === "warning"
+        ? {
+            bg: "rgba(245, 158, 11, 0.14)",
+            border: "rgba(245, 158, 11, 0.38)",
+            text: "#F59E0B",
+          }
+        : {
+            bg: "rgba(56, 189, 248, 0.12)",
+            border: "rgba(56, 189, 248, 0.35)",
+            text: "#38BDF8",
+          };
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
@@ -370,6 +422,139 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onNavigate }) 
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Motor Gate 1 (NexoBow Autonomous) — Salud y Métricas Agregadas Sin PII */}
+      <div className="p-6 rounded-2xl border bg-[#0B0D12] border-zinc-800/80 space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-800">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <Activity className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <h2 className="text-base font-semibold text-[#F8F6FF]">
+                  Motor Gate 1 (NexoBow Autonomous)
+                </h2>
+                <span
+                  className="text-[11px] font-mono px-2.5 py-0.5 rounded-full border"
+                  style={{
+                    backgroundColor: gate1StatusColors.bg,
+                    borderColor: gate1StatusColors.border,
+                    color: gate1StatusColors.text,
+                  }}
+                >
+                  {gate1Health.status}
+                </span>
+                <span
+                  className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${
+                    autonomousOffline
+                      ? "bg-amber-500/10 text-amber-300 border-amber-500/30"
+                      : "bg-emerald-500/10 text-emerald-300 border-emerald-500/30"
+                  }`}
+                >
+                  {autonomousOffline
+                    ? "Modo Offline (Demo)"
+                    : autonomousEvents.length === 0
+                      ? "Supabase Live (0 eventos)"
+                      : `Supabase Live (${autonomousEvents.length} eventos)`}
+                </span>
+              </div>
+              <p className="text-xs text-zinc-400 mt-1">
+                {gate1Health.reason}
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => onNavigate("/admin/clients")}
+            className="flex items-center gap-1.5 text-xs font-semibold text-purple-300 hover:text-purple-200 transition-colors cursor-pointer self-start sm:self-auto"
+          >
+            <span>Ver Prestadores Activos</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="p-4 rounded-xl border border-zinc-800/80 bg-[#040607]">
+            <span className="text-xs font-mono text-zinc-400 uppercase tracking-wider flex items-center gap-1.5 mb-1">
+              {gate1Health.tone === "healthy" ? (
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              ) : (
+                <AlertTriangle className="w-3.5 h-3.5 text-sky-400" />
+              )}
+              <span>Estado Operativo</span>
+            </span>
+            <p className="text-lg font-bold text-[#F8F6FF]">{gate1Health.status}</p>
+            <p className="text-xs text-zinc-400 mt-1">
+              Ingesta Edge autenticada vía cabecera X-Autonomous-Key sin puertos públicos en VPS.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl border border-zinc-800/80 bg-[#040607]">
+            <span className="text-xs font-mono text-zinc-400 uppercase tracking-wider flex items-center gap-1.5 mb-1">
+              <Clock className="w-3.5 h-3.5 text-purple-400" />
+              <span>Último Latido Agregado</span>
+            </span>
+            <p className="text-lg font-bold text-[#E3D9FC] font-mono">
+              {formatGate1Timestamp(gate1LastTimestamp)}
+            </p>
+            <p className="text-xs text-zinc-400 mt-1">
+              {gate1Health.hoursSinceLastEvent !== null
+                ? `Hace ${gate1Health.hoursSinceLastEvent}h desde la última señal de salud.`
+                : "Sin señales recibidas todavía (Gate 0 sin gasto fijo de servidor)."}
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl border border-zinc-800/80 bg-[#040607]">
+            <span className="text-xs font-mono text-zinc-400 uppercase tracking-wider flex items-center gap-1.5 mb-1">
+              <Layers className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Contadores Agregados</span>
+            </span>
+            <p className="text-lg font-bold text-emerald-400 font-mono">
+              {gate1Health.totalEvents} acumulados
+            </p>
+            <p className="text-xs text-zinc-400 mt-1">
+              {gate1Health.eventsLast24h} registrados en las últimas 24h (public.autonomous_events).
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          {[
+            { label: "Latidos", value: gate1Health.byType.heartbeat },
+            { label: "Turnos confirmados", value: gate1Health.byType.appointment_confirmed },
+            {
+              label: "Cambios / bajas turno",
+              value:
+                gate1Health.byType.appointment_rescheduled +
+                gate1Health.byType.appointment_cancelled,
+            },
+            { label: "Lista de espera", value: gate1Health.byType.waitlist_filled },
+            { label: "Invitaciones reseña", value: gate1Health.byType.review_invite_sent },
+            { label: "Derivación humana", value: gate1Health.byType.human_handoff },
+          ].map((metric) => (
+            <div
+              key={metric.label}
+              className="p-3 rounded-xl border border-zinc-800/80 bg-[#040607]"
+            >
+              <span className="text-[11px] text-zinc-400 block truncate">
+                {metric.label}
+              </span>
+              <span className="text-base font-bold font-mono text-[#F8F6FF]">
+                {metric.value}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <p className="text-[11px] text-zinc-400 flex items-center gap-2 pt-1">
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+          <span>
+            Privacidad por diseño (Ley 25.326): este panel muestra únicamente contadores agregados anónimos. Las credenciales y claves privadas compartidas permanecen aisladas en Cloudflare Pages y en el servidor privado.
+          </span>
+        </p>
       </div>
 
       {/* Auditoría de Aislamiento 0-JS */}

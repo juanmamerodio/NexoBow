@@ -72,7 +72,7 @@ const FORBIDDEN_PATTERNS = [
   { label: "disruptivo", regex: /\bdisruptivo\b/i },
 ];
 
-const SOURCE_EXT_RE = /\.(astro|ts|tsx|mjs|js|json|css|html)$/i;
+const SOURCE_EXT_RE = /\.(astro|ts|tsx|mjs|js|json|css|html|yml|yaml|sql|example|md|txt)$/i;
 const SKIP_DIRS = new Set(["node_modules", "dist", ".astro", ".vite"]);
 
 const CASE_IMAGES = [
@@ -125,10 +125,24 @@ function extractSectionById(html, sectionId) {
 
 test("T55 (Seam 2): Humanización 100%, UX Diagram-First +40 y 4 Capturas WebP Reales", async (t) => {
   await t.test(
-    "1. 0 ocurrencias de frases prohibidas en web/src/, los 10 templates/, scripts/ y tests/",
+    "1. 0 ocurrencias de frases prohibidas en web/src/, web/functions/, los 10 templates/, scripts/, tests/, infra/, workflows/, docs/gate1-vps-activation.md, web/public/llms.txt, routemap.md y .env.example",
     () => {
+      const explicitTargets = [
+        join(REPO_ROOT, "docs", "gate1-vps-activation.md"),
+        join(REPO_ROOT, "web", "public", "llms.txt"),
+        join(REPO_ROOT, "routemap.md"),
+        join(REPO_ROOT, ".env.example"),
+      ];
+      for (const explicitPath of explicitTargets) {
+        assert.ok(
+          existsSync(explicitPath),
+          `Archivo auditado requerido no encontrado: ${relative(REPO_ROOT, explicitPath)}`
+        );
+      }
+
       const targetFiles = [
         ...collectFiles(join(REPO_ROOT, "web", "src")),
+        ...collectFiles(join(REPO_ROOT, "web", "functions")),
         ...TEN_TEMPLATES.flatMap((tpl) =>
           collectFiles(join(REPO_ROOT, "templates", tpl, "src"))
         ),
@@ -136,7 +150,27 @@ test("T55 (Seam 2): Humanización 100%, UX Diagram-First +40 y 4 Capturas WebP R
         ...collectFiles(join(REPO_ROOT, "tests"), {
           excludeBasenames: new Set(["copy-humanization.test.mjs"]),
         }),
+        ...collectFiles(join(REPO_ROOT, "infra")),
+        ...collectFiles(join(REPO_ROOT, "workflows")),
+        ...explicitTargets,
       ];
+
+      const relSet = new Set(targetFiles.map((f) => relative(REPO_ROOT, f).replace(/\\/g, "/")));
+      for (const expectedRel of [
+        "infra/autonomous/docker-compose.yml",
+        "infra/autonomous/.env.autonomous.example",
+        "infra/autonomous/sql/001_autonomous_init.sql",
+        "workflows/n8n/01-waba-receptionist.json",
+        "docs/gate1-vps-activation.md",
+        "web/public/llms.txt",
+        "routemap.md",
+        ".env.example",
+      ]) {
+        assert.ok(
+          relSet.has(expectedRel),
+          `La auditoría ampliada debe incluir ${expectedRel}`
+        );
+      }
 
       assert.ok(targetFiles.length > 30, "Debe escanear los archivos fuente reales del repo");
 

@@ -1,5 +1,10 @@
 // web/src/lib/settings.ts — Diagnóstico de Plataforma, Healthcheck de Supabase (8 tablas) y Aislamiento 0-JS
 import { getBrowserSupabaseClient, getAdminOwnerEmail, type AdminUser } from "./supabase.ts";
+import {
+  aggregateAutonomousEvents,
+  type AutonomousEvent,
+  type AutonomousEventType,
+} from "./active-clients.ts";
 
 export interface AdminTableInfo {
   name: string;
@@ -344,4 +349,167 @@ export function clearPlatformCache(): boolean {
     }
   }
   return true;
+}
+
+export type Gate1EngineStatusLabel =
+  | "Preparado (Gate 0 · $0 VPS)"
+  | "Operativo"
+  | "Requiere revisión";
+
+export interface Gate1EngineStatusInput {
+  events?: AutonomousEvent[];
+  envConfigured?: boolean;
+  gate1Active?: boolean;
+  now?: Date | string;
+  staleThresholdHours?: number;
+}
+
+export interface Gate1EngineHealthReport {
+  status: Gate1EngineStatusLabel;
+  code: "prepared_gate0" | "operational" | "needs_review";
+  tone: "neutral" | "healthy" | "warning";
+  lastHeartbeatAt: string | null;
+  lastEventAt: string | null;
+  hoursSinceLastEvent: number | null;
+  totalEvents: number;
+  eventsLast24h: number;
+  byType: Record<AutonomousEventType, number>;
+  reason: string;
+}
+
+const VALID_GATE1_EVENT_TYPES = new Set<AutonomousEventType>([
+  "heartbeat",
+  "appointment_confirmed",
+  "appointment_rescheduled",
+  "appointment_cancelled",
+  "waitlist_filled",
+  "review_invite_sent",
+  "human_handoff",
+]);
+
+/**
+ * Resuelve el estado operativo del Motor Gate 1 (NexoBow Autonomous) a partir de eventos agregados sin PII.
+ */
+export function resolveGate1EngineStatus(
+  input: Gate1EngineStatusInput = {}
+): Gate1EngineHealthReport {
+  const referenceDate =
+    input.now instanceof Date
+      ? input.now
+      : input.now
+        ? new Date(input.now)
+        : new Date();
+  const nowMs = Number.isNaN(referenceDate.getTime())
+    ? Date.now()
+    : referenceDate.getTime();
+  const thresholdHours = Math.max(
+    1,
+    Number(input.staleThresholdHours) || 24
+  );
+  const windowMs = thresholdHours * 60 * 60 * 1000;
+  const maxClockSkewMs = 5 * 60 * 1000;
+
+  const validEvents: AutonomousEvent[] = [];
+  for (const ev of input.events || []) {
+    if (!ev || !VALID_GATE1_EVENT_TYPES.has(ev.event_type)) continue;
+    const ms = ev.received_at ? new Date(ev.received_at).getTime() : NaN;
+    if (Number.isNaN(ms) || ms > nowMs + maxClockSkewMs) continue;
+    validEvents.push(ev);
+  }
+
+  const summary = aggregateAutonomousEvents(validEvents);
+
+  let lastHeartbeatAt: string | null = null;
+  let lastHeartbeatMs = -1;
+  let lastEventAt: string | null = null;
+  let lastEventMs = -1;
+  let eventsLast24h = 0;
+  let hasRecentEvent = false;
+
+  for (const ev of validEvents) {
+    const ms = new Date(ev.received_at).getTime();
+    if (ms > lastEventMs) {
+      lastEventMs = ms;
+      lastEventAt = ev.received_at;
+    }
+    if (ev.event_type === "heartbeat" && ms > lastHeartbeatMs) {
+      lastHeartbeatMs = ms;
+      lastHeartbeatAt = ev.received_at;
+    }
+    if (nowMs - ms <= windowMs) {
+      hasRecentEvent = true;
+      eventsLast24h += Math.max(0, Number(ev.count_delta) || 0);
+    }
+  }
+
+  const hoursSinceLastEvent =
+    lastEventMs >= 0
+      ? Math.max(0, Math.round(((nowMs - lastEventMs) / (1000 * 60 * 60)) * 10) / 10)
+      : null;
+
+  const envConfigured = input.envConfigured !== false;
+  const gate1Active = Boolean(input.gate1Active);
+
+  if (!envConfigured) {
+    return {
+      status: "Requiere revisión",
+      code: "needs_review",
+      tone: "warning",
+      lastHeartbeatAt,
+      lastEventAt,
+      hoursSinceLastEvent,
+      totalEvents: summary.totalEvents,
+      eventsLast24h,
+      byType: summary.byType,
+      reason:
+        "Entorno Supabase desconectado o credenciales incompletas para recibir eventos del motor Gate 1.",
+    };
+  }
+
+  if (hasRecentEvent) {
+    return {
+      status: "Operativo",
+      code: "operational",
+      tone: "healthy",
+      lastHeartbeatAt,
+      lastEventAt,
+      hoursSinceLastEvent,
+      totalEvents: summary.totalEvents,
+      eventsLast24h,
+      byType: summary.byType,
+      reason: `Motor Gate 1 reportando métricas agregadas sin PII dentro de las últimas ${thresholdHours}h.`,
+    };
+  }
+
+  if (gate1Active || validEvents.length > 0) {
+    return {
+      status: "Requiere revisión",
+      code: "needs_review",
+      tone: "warning",
+      lastHeartbeatAt,
+      lastEventAt,
+      hoursSinceLastEvent,
+      totalEvents: summary.totalEvents,
+      eventsLast24h,
+      byType: summary.byType,
+      reason:
+        validEvents.length > 0
+          ? `Último evento registrado hace ${hoursSinceLastEvent}h (supera el umbral de ${thresholdHours}h).`
+          : "Gate 1 marcado como activo sin latidos recientes en public.autonomous_events.",
+    };
+  }
+
+  return {
+    status: "Preparado (Gate 0 · $0 VPS)",
+    code: "prepared_gate0",
+    tone: "neutral",
+    lastHeartbeatAt: null,
+    lastEventAt: null,
+    hoursSinceLastEvent: null,
+    totalEvents: 0,
+    eventsLast24h: 0,
+    byType: summary.byType,
+    reason:
+      "Blueprint offline listo sin costo fijo de VPS hasta activar el primer abono Tier 2.",
+  };
 }

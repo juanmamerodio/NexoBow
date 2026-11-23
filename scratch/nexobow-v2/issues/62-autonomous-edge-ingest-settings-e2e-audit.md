@@ -12,7 +12,7 @@
 
 **Blocks:** None (cierra integralmente el Frente I `#58`–`#62` dejando listo Bloque 1 Tier 1 y Blueprint Gate 1 `$0`).
 
-**Status:** ready-for-agent
+**Status:** done
 
 ## Archivos a Crear o Modificar
 
@@ -35,11 +35,11 @@
 
 ## Acceptance Criteria
 
-- [ ] **[RED]** Crear `tests/autonomous-ingest-e2e.test.mjs` y ampliar `tests/copy-humanization.test.mjs` a `infra/`, `workflows/`, `docs/gate1-vps-activation.md`, `web/public/llms.txt` y `routemap.md` (incluyendo extensiones `.yml/.yaml/.sql/.example/.md/.txt`); confirmar fallos antes de implementar.
-- [ ] **[GREEN]** Implementar `web/functions/api/v1/autonomous/ingest.ts` (`0` imports `node:*`, autenticación constante, falla cerrada `503`, `413`, rechazo recursivo de PII, inserción en `autonomous_events`) y documentar `AUTONOMOUS_INGEST_KEY` en `.env.example`.
-- [ ] **[GREEN]** Implementar `resolveGate1EngineStatus` en `web/src/lib/settings.ts` e integrar el panel **"Motor Gate 1 (NexoBow Autonomous)"** en `web/src/components/admin/views/SettingsView.tsx`.
-- [ ] **[GREEN]** Actualizar `tickets.md`, `memory.md` y `brain.md` al cierre de la implementación registrando la finalización de los Tickets `#58`–`#62`.
-- [ ] **[VERIFY]** Ejecutar la regresión completa (`npm test`), build de `web/` + `audit-site.mjs web` (`0 JS` de negocio), `npx wrangler pages functions build`, compilación demo con `--mode production` + `impeccable detect` tanto en `web/dist/index.html` como en el **clon** demo productivo, y auditoría `/audit-code` en **sub-agente con sesión limpia** emitiendo dictamen **`APROBADO`**.
+- [x] **[RED]** Crear `tests/autonomous-ingest-e2e.test.mjs` y ampliar `tests/copy-humanization.test.mjs` a `infra/`, `workflows/`, `docs/gate1-vps-activation.md`, `web/public/llms.txt` y `routemap.md` (incluyendo extensiones `.yml/.yaml/.sql/.example/.md/.txt`); confirmar fallos antes de implementar.
+- [x] **[GREEN]** Implementar `web/functions/api/v1/autonomous/ingest.ts` (`0` imports `node:*`, autenticación constante, falla cerrada `503`, `413`, rechazo recursivo de PII, inserción en `autonomous_events`) y documentar `AUTONOMOUS_INGEST_KEY` en `.env.example`.
+- [x] **[GREEN]** Implementar `resolveGate1EngineStatus` en `web/src/lib/settings.ts` e integrar el panel **"Motor Gate 1 (NexoBow Autonomous)"** en `web/src/components/admin/views/SettingsView.tsx`.
+- [x] **[GREEN]** Actualizar `tickets.md`, `memory.md` y `brain.md` al cierre de la implementación registrando la finalización de los Tickets `#58`–`#62`.
+- [x] **[VERIFY]** Ejecutar la regresión completa (`npm test`), build de `web/` + `audit-site.mjs web` (`0 JS` de negocio), `npx wrangler pages functions build`, compilación demo con `--mode production` + `impeccable detect` tanto en `web/dist/index.html` como en el **clon** demo productivo, y auditoría `/audit-code` en **sub-agente con sesión limpia** emitiendo dictamen **`APROBADO`**.
 
 ## Comando de Validación Exacto
 
